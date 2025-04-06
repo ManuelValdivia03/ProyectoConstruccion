@@ -188,7 +188,7 @@ class UserDAOTest {
         assertEquals(1, userDAO.countUsers());
 
         User newUser = new User();
-        newUser.setFullName("Ana López");
+        newUser.setFullName("Ana López Rojo");
         userDAO.addUser(newUser);
 
         assertEquals(2, userDAO.countUsers());
