@@ -17,11 +17,9 @@ class UserDAOTest {
 
     @BeforeAll
     static void setUpAll() throws SQLException {
-        // Configuración inicial para todas las pruebas
         userDAO = new UserDAO();
         testConnection = ConnectionDataBase.getConnection();
 
-        // Crear tabla de prueba si no existe
         try (var statement = testConnection.createStatement()) {
             statement.execute("CREATE TABLE IF NOT EXISTS usuario (" +
                     "id_usuario INT AUTO_INCREMENT PRIMARY KEY, " +
@@ -49,14 +47,12 @@ class UserDAOTest {
 
     @AfterEach
     void tearDown() throws SQLException {
-        // Limpiar la tabla después de cada prueba
         try (var statement = testConnection.createStatement()) {
             statement.execute("DELETE FROM usuario");
             statement.execute("ALTER TABLE usuario AUTO_INCREMENT = 1");
         }
     }
 
-    // Pruebas para addUser()
     @Test
     void testAddUser_Success() throws SQLException {
         User newUser = new User();
@@ -78,7 +74,6 @@ class UserDAOTest {
         assertThrows(SQLException.class, () -> userDAO.addUser(invalidUser));
     }
 
-    // Pruebas para getAllUsers()
     @Test
     void testGetAllUsers_WithData() throws SQLException {
         List<User> users = userDAO.getAllUsers();
@@ -89,7 +84,6 @@ class UserDAOTest {
 
     @Test
     void testGetAllUsers_Empty() throws SQLException {
-        // Limpiar datos primero
         try (var statement = testConnection.createStatement()) {
             statement.execute("DELETE FROM usuario");
         }
@@ -98,7 +92,6 @@ class UserDAOTest {
         assertTrue(users.isEmpty());
     }
 
-    // Pruebas para getUserById()
     @Test
     void testGetUserById_Exists() throws SQLException {
         User foundUser = userDAO.getUserById(testUser.getIdUser());
@@ -114,7 +107,6 @@ class UserDAOTest {
         assertNull(foundUser);
     }
 
-    // Pruebas para updateUser()
     @Test
     void testUpdateUser_Success() throws SQLException {
         testUser.setFullName("Nombre Actualizado");
@@ -137,7 +129,6 @@ class UserDAOTest {
         assertFalse(result);
     }
 
-    // Pruebas para deleteUser()
     @Test
     void testDeleteUser_Success() throws SQLException {
         boolean result = userDAO.deleteUser(testUser.getIdUser());
@@ -151,7 +142,6 @@ class UserDAOTest {
         assertFalse(result);
     }
 
-    // Pruebas para searchUsersByName()
     @Test
     void testSearchUsersByName_Match() throws SQLException {
         List<User> results = userDAO.searchUsersByName("Juan");
@@ -171,7 +161,6 @@ class UserDAOTest {
         assertEquals(1, results.size());
     }
 
-    // Pruebas para userExists()
     @Test
     void testUserExists_True() throws SQLException {
         assertTrue(userDAO.userExists(testUser.getIdUser()));
@@ -182,7 +171,6 @@ class UserDAOTest {
         assertFalse(userDAO.userExists(9999));
     }
 
-    // Pruebas para countUsers()
     @Test
     void testCountUsers_WithData() throws SQLException {
         assertEquals(1, userDAO.countUsers());
@@ -196,7 +184,6 @@ class UserDAOTest {
 
     @Test
     void testCountUsers_Empty() throws SQLException {
-        // Limpiar datos primero
         try (var statement = testConnection.createStatement()) {
             statement.execute("DELETE FROM usuario");
         }
