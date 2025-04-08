@@ -14,4 +14,6 @@ public interface IAcademicDAO {
     List<Academic> getAllAcademics() throws SQLException;
     List<Academic> getAllAcademicsByType(AcademicType type) throws SQLException;
     boolean changeAcademicType(Academic academic) throws SQLException;
+    boolean academicExists(String staffNumber) throws SQLException;
+    int countAcademics() throws SQLException;
 }
