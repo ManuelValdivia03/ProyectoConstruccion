@@ -1,11 +1,13 @@
 package dataacces;
 
 import logic.User;
+import logic.interfaces.IUserDAO;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAO {
+public class UserDAO implements IUserDAO {
 
     public boolean addUser(User user) throws SQLException {
         String sql = "INSERT INTO usuario (nombre_completo, telefono) VALUES (?, ?)";

@@ -30,7 +30,6 @@ class UserDAOTest {
 
     @AfterAll
     static void tearDownAll() throws SQLException {
-        // Limpieza final
         if (testConnection != null && !testConnection.isClosed()) {
             testConnection.close();
         }
@@ -38,7 +37,6 @@ class UserDAOTest {
 
     @BeforeEach
     void setUp() throws SQLException {
-        // Datos de prueba iniciales
         testUser = new User();
         testUser.setFullName("Juan Pérez");
         testUser.setCellphone("5551234567");
