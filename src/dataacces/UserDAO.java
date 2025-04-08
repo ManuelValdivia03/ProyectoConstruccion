@@ -16,7 +16,7 @@ public class UserDAO implements IUserDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, user.getFullName());
-            preparedStatement.setString(2, user.getCellphone());
+            preparedStatement.setString(2, user.getCellPhone());
             preparedStatement.executeUpdate();
 
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
@@ -74,7 +74,7 @@ public class UserDAO implements IUserDAO {
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, user.getFullName());
-            statement.setString(2, user.getCellphone());
+            statement.setString(2, user.getCellPhone());
             statement.setInt(3, user.getIdUser());
 
             return statement.executeUpdate() > 0;

@@ -33,7 +33,7 @@ public class User {
         this.fullName = fullName;
     }
 
-    public String getCellphone() {
+    public String getCellPhone() {
         return cellphone;
     }
 
