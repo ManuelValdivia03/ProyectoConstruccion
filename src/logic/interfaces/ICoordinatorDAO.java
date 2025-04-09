@@ -16,4 +16,7 @@ public interface ICoordinatorDAO {
 
     Coordinator getCoordinatorByStaffNumber(String staffNumber) throws SQLException;
 
+    boolean coordinatorExists(String staffNumber) throws SQLException;
+
+    int countCoordinators() throws SQLException;
 }

@@ -8,7 +8,6 @@ import java.util.List;
 
 public class CoordinatorDAO implements ICoordinatorDAO {
 
-    @Override
     public boolean addCoordinator(Coordinator coordinator) throws SQLException {
         String sql = "INSERT INTO coordinadores (id_usuario, numero_personal) VALUES (?, ?)";
 
@@ -22,7 +21,6 @@ public class CoordinatorDAO implements ICoordinatorDAO {
         }
     }
 
-    @Override
     public boolean deleteCoordinator(Coordinator coordinator) throws SQLException {
         String sql = "DELETE FROM coordinadores WHERE numero_personal = ?";
 
@@ -34,7 +32,6 @@ public class CoordinatorDAO implements ICoordinatorDAO {
         }
     }
 
-    @Override
     public boolean updateCoordinator(Coordinator coordinator) throws SQLException {
         String sql = "UPDATE coordinadores SET numero_personal = ? WHERE numero_personal = ?";
 
@@ -48,7 +45,6 @@ public class CoordinatorDAO implements ICoordinatorDAO {
         }
     }
 
-    @Override
     public List<Coordinator> getAllCoordinators() throws SQLException {
         String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, " +
                 "c.numero_personal " +
@@ -74,7 +70,6 @@ public class CoordinatorDAO implements ICoordinatorDAO {
         return coordinators;
     }
 
-    @Override
     public Coordinator getCoordinatorByStaffNumber(String staffNumber) throws SQLException {
         String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, " +
                 "c.numero_personal " +
@@ -125,30 +120,5 @@ public class CoordinatorDAO implements ICoordinatorDAO {
             }
             return 0;
         }
-    }
-
-    public Coordinator getCoordinatorByUserId(int userId) throws SQLException {
-        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, " +
-                "c.numero_personal " +
-                "FROM coordinadores c " +
-                "JOIN usuario u ON c.id_usuario = u.id_usuario " +
-                "WHERE c.id_usuario = ?";
-
-        try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-
-            statement.setInt(1, userId);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    return new Coordinator(
-                            resultSet.getInt("id_usuario"),
-                            resultSet.getString("nombre_completo"),
-                            resultSet.getString("telefono"),
-                            resultSet.getString("numero_personal")
-                    );
-                }
-            }
-        }
-        return null;
     }
 }
