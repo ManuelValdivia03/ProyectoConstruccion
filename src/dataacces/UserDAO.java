@@ -10,13 +10,14 @@ import java.util.List;
 public class UserDAO implements IUserDAO {
 
     public boolean addUser(User user) throws SQLException {
-        String sql = "INSERT INTO usuario (nombre_completo, telefono) VALUES (?, ?)";
+        String sql = "INSERT INTO usuario (nombre_completo, telefono, estado) VALUES (?, ?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, user.getFullName());
             preparedStatement.setString(2, user.getCellPhone());
+            preparedStatement.setString(3, String.valueOf(user.getStatus()));
             preparedStatement.executeUpdate();
 
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
@@ -27,6 +28,7 @@ public class UserDAO implements IUserDAO {
             return true;
         }
     }
+
 
     public List<User> getAllUsers() throws SQLException {
         String sql = "SELECT * FROM usuario";
@@ -41,6 +43,7 @@ public class UserDAO implements IUserDAO {
                 user.setIdUser(resultSet.getInt("id_usuario"));
                 user.setFullName(resultSet.getString("nombre_completo"));
                 user.setCellphone(resultSet.getString("telefono"));
+                user.setStatus(resultSet.getString("estado").charAt(0));
                 users.add(user);
             }
         }
@@ -61,6 +64,7 @@ public class UserDAO implements IUserDAO {
                     user.setIdUser(resultSet.getInt("id_usuario"));
                     user.setFullName(resultSet.getString("nombre_completo"));
                     user.setCellphone(resultSet.getString("telefono"));
+                    user.setStatus(resultSet.getString("estado").charAt(0));
                 }
             }
         }
@@ -68,18 +72,20 @@ public class UserDAO implements IUserDAO {
     }
 
     public boolean updateUser(User user) throws SQLException {
-        String sql = "UPDATE usuario SET nombre_completo = ?, telefono = ? WHERE id_usuario = ?";
+        String sql = "UPDATE usuario SET nombre_completo = ?, telefono = ?, estado = ? WHERE id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, user.getFullName());
             statement.setString(2, user.getCellPhone());
-            statement.setInt(3, user.getIdUser());
+            statement.setString(3, String.valueOf(user.getStatus()));
+            statement.setInt(4, user.getIdUser());
 
             return statement.executeUpdate() > 0;
         }
     }
+
 
     public boolean deleteUser(int id) throws SQLException {
         String sql = "DELETE FROM usuario WHERE id_usuario = ?";
@@ -106,6 +112,7 @@ public class UserDAO implements IUserDAO {
                     user.setIdUser(resultSet.getInt("id_usuario"));
                     user.setFullName(resultSet.getString("nombre_completo"));
                     user.setCellphone(resultSet.getString("telefono"));
+                    user.setStatus(resultSet.getString("estado").charAt(0));
                     users.add(user);
                 }
             }

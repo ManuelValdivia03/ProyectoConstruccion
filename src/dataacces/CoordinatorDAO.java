@@ -7,10 +7,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CoordinatorDAO implements ICoordinatorDAO {
+    private final UserDAO userDAO;
+
+    public CoordinatorDAO() {
+        this.userDAO = new UserDAO();
+    }
 
     public boolean addCoordinator(Coordinator coordinator) throws SQLException {
-        String sql = "INSERT INTO coordinadores (id_usuario, numero_personal) VALUES (?, ?)";
+        boolean userAdded = userDAO.addUser(coordinator);
+        if (!userAdded) {
+            return false;
+        }
 
+        String sql = "INSERT INTO coordinadores (id_usuario, numero_personal) VALUES (?, ?)";
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
@@ -22,31 +31,39 @@ public class CoordinatorDAO implements ICoordinatorDAO {
     }
 
     public boolean deleteCoordinator(Coordinator coordinator) throws SQLException {
-        String sql = "DELETE FROM coordinadores WHERE numero_personal = ?";
-
+        String sql = "DELETE FROM coordinadores WHERE id_usuario = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, coordinator.getStaffNumber());
-            return statement.executeUpdate() > 0;
+            statement.setInt(1, coordinator.getIdUser());
+            int rowsAffected = statement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return userDAO.deleteUser(coordinator.getIdUser());
+            }
+            return false;
         }
     }
 
     public boolean updateCoordinator(Coordinator coordinator) throws SQLException {
-        String sql = "UPDATE coordinadores SET numero_personal = ? WHERE numero_personal = ?";
+        boolean userUpdated = userDAO.updateUser(coordinator);
+        if (!userUpdated) {
+            return false;
+        }
 
+        String sql = "UPDATE coordinadores SET numero_personal = ? WHERE id_usuario = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, coordinator.getStaffNumber());
-            statement.setString(2, coordinator.getStaffNumber());
+            statement.setInt(2, coordinator.getIdUser());
 
             return statement.executeUpdate() > 0;
         }
     }
 
     public List<Coordinator> getAllCoordinators() throws SQLException {
-        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, " +
+        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.estado, " +
                 "c.numero_personal " +
                 "FROM coordinadores c " +
                 "JOIN usuario u ON c.id_usuario = u.id_usuario";
@@ -62,7 +79,8 @@ public class CoordinatorDAO implements ICoordinatorDAO {
                         resultSet.getInt("id_usuario"),
                         resultSet.getString("nombre_completo"),
                         resultSet.getString("telefono"),
-                        resultSet.getString("numero_personal")
+                        resultSet.getString("numero_personal"),
+                        resultSet.getString("estado").charAt(0)
                 );
                 coordinators.add(coordinator);
             }
@@ -71,7 +89,7 @@ public class CoordinatorDAO implements ICoordinatorDAO {
     }
 
     public Coordinator getCoordinatorByStaffNumber(String staffNumber) throws SQLException {
-        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, " +
+        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.estado, " +
                 "c.numero_personal " +
                 "FROM coordinadores c " +
                 "JOIN usuario u ON c.id_usuario = u.id_usuario " +
@@ -87,7 +105,8 @@ public class CoordinatorDAO implements ICoordinatorDAO {
                             resultSet.getInt("id_usuario"),
                             resultSet.getString("nombre_completo"),
                             resultSet.getString("telefono"),
-                            resultSet.getString("numero_personal")
+                            resultSet.getString("numero_personal"),
+                            resultSet.getString("estado").charAt(0)
                     );
                 }
             }
@@ -97,7 +116,6 @@ public class CoordinatorDAO implements ICoordinatorDAO {
 
     public boolean coordinatorExists(String staffNumber) throws SQLException {
         String sql = "SELECT 1 FROM coordinadores WHERE numero_personal = ?";
-
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
@@ -110,7 +128,6 @@ public class CoordinatorDAO implements ICoordinatorDAO {
 
     public int countCoordinators() throws SQLException {
         String sql = "SELECT COUNT(*) FROM coordinadores";
-
         try (Connection connection = ConnectionDataBase.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {

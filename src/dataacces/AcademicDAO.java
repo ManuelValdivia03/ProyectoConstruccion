@@ -8,10 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AcademicDAO implements IAcademicDAO {
+    private final UserDAO userDAO;
+
+    public AcademicDAO() {
+        this.userDAO = new UserDAO();
+    }
 
     public boolean addAcademic(Academic academic) throws SQLException {
-        String sql = "INSERT INTO academicos (id_usuario, numero_personal, tipo) VALUES (?, ?, ?)";
+        boolean userAdded = userDAO.addUser(academic);
+        if (!userAdded) {
+            return false;
+        }
 
+        String sql = "INSERT INTO academicos (id_usuario, numero_personal, tipo) VALUES (?, ?, ?)";
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
@@ -24,7 +33,7 @@ public class AcademicDAO implements IAcademicDAO {
     }
 
     public List<Academic> getAllAcademics() throws SQLException {
-        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, " +
+        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.estado " +
                 "a.numero_personal, a.tipo " +
                 "FROM academicos a " +
                 "JOIN usuario u ON a.id_usuario = u.id_usuario";
@@ -41,6 +50,7 @@ public class AcademicDAO implements IAcademicDAO {
                         resultSet.getString("nombre_completo"),
                         resultSet.getString("telefono"),
                         resultSet.getString("numero_personal"),
+                        resultSet.getString("estado").charAt(0),
                         AcademicType.valueOf(resultSet.getString("tipo"))
                 );
                 academics.add(academic);
@@ -50,7 +60,7 @@ public class AcademicDAO implements IAcademicDAO {
     }
 
     public Academic getAcademicByStaffNumber(String staffNumber) throws SQLException {
-        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, " +
+        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.estado " +
                 "a.numero_personal, a.tipo " +
                 "FROM academicos a " +
                 "JOIN usuario u ON a.id_usuario = u.id_usuario " +
@@ -67,6 +77,7 @@ public class AcademicDAO implements IAcademicDAO {
                             resultSet.getString("nombre_completo"),
                             resultSet.getString("telefono"),
                             resultSet.getString("numero_personal"),
+                            resultSet.getString("estado").charAt(0),
                             AcademicType.valueOf(resultSet.getString("tipo"))
                     );
                 }
@@ -76,31 +87,40 @@ public class AcademicDAO implements IAcademicDAO {
     }
 
     public boolean updateAcademic(Academic academic) throws SQLException {
-        String sql = "UPDATE academicos SET tipo = ? WHERE numero_personal = ?";
+        boolean userUpdated = userDAO.updateUser(academic);
+        if (!userUpdated) {
+            return false;
+        }
 
+        String sql = "UPDATE academicos SET numero_personal = ?, tipo = ? WHERE id_usuario = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, academic.getAcademicType().toString());
-            statement.setString(2, academic.getStaffNumber());
+            statement.setString(1, academic.getStaffNumber());
+            statement.setString(2, academic.getAcademicType().toString());
+            statement.setInt(3, academic.getIdUser());
 
             return statement.executeUpdate() > 0;
         }
     }
 
     public boolean deleteAcademic(Academic academic) throws SQLException {
-        String sql = "DELETE FROM academicos WHERE numero_personal = ?";
-
+        String sql = "DELETE FROM academicos WHERE id_usuario = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, academic.getStaffNumber());
-            return statement.executeUpdate() > 0;
+            statement.setInt(1, academic.getIdUser());
+            int rowsAffected = statement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return userDAO.deleteUser(academic.getIdUser());
+            }
+            return false;
         }
     }
 
     public List<Academic> getAllAcademicsByType(AcademicType type) throws SQLException {
-        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, " +
+        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.estado " +
                 "a.numero_personal, a.tipo " +
                 "FROM academicos a " +
                 "JOIN usuario u ON a.id_usuario = u.id_usuario " +
@@ -119,6 +139,7 @@ public class AcademicDAO implements IAcademicDAO {
                             resultSet.getString("nombre_completo"),
                             resultSet.getString("telefono"),
                             resultSet.getString("numero_personal"),
+                            resultSet.getString("estado").charAt(0),
                             AcademicType.valueOf(resultSet.getString("tipo"))
                     ));
                 }

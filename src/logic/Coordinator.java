@@ -4,8 +4,8 @@ public class Coordinator extends User{
 
     String staffNumber;
 
-    public Coordinator(int idUser, String fullName, String cellPhone, String staffNumber) {
-        super(idUser, fullName, cellPhone);
+    public Coordinator(int idUser, String fullName, String cellPhone, String staffNumber, char status) {
+        super(idUser, fullName, cellPhone, status);
         this.staffNumber = staffNumber;
     }
 

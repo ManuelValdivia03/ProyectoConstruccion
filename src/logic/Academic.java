@@ -2,12 +2,15 @@ package logic;
 
 import logic.enumacademic.AcademicType;
 
-public class Academic extends User{
-    String staffNumber;
-    AcademicType type;
 
-    public Academic(int idUser,String fullName,String cellPhone,String staffNumber, AcademicType type) {
-        super(idUser,fullName,cellPhone);
+
+public class Academic extends User{
+    private String staffNumber;
+    private AcademicType type;
+
+
+    public Academic(int idUser,String fullName,String cellPhone,String staffNumber, char status,AcademicType type) {
+        super(idUser,fullName,cellPhone, status);
         this.staffNumber = staffNumber;
         this.type = type;
     }
@@ -33,4 +36,5 @@ public class Academic extends User{
     public void setAcademicType(AcademicType type) {
         this.type = type;
     }
+
 }

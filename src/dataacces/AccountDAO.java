@@ -3,29 +3,31 @@ package dataacces;
 import dataacces.util.PasswordUtils;
 import logic.Account;
 import logic.interfaces.IAccountDAO;
-
-import java.sql.Connection;
-import java.sql.Statement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AccountDAO implements IAccountDAO {
+    private final UserDAO userDAO;
+
+    public AccountDAO() {
+        this.userDAO = new UserDAO();
+    }
 
     public List<Account> getAllAccounts() throws SQLException {
-        String sql = "SELECT id_usuario, correo_e FROM cuenta";
+        String sql = "SELECT id_usuario, correo_e, contraseña FROM cuenta";
         List<Account> accounts = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(sql)) {
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
 
             while (resultSet.next()) {
-                Account account = new Account();
-                account.setIdUser(resultSet.getInt("id_usuario"));
-                account.setEmail(resultSet.getString("correo_e"));
+                Account account = new Account(
+                        resultSet.getInt("id_usuario"),
+                        resultSet.getString("correo_e"),
+                        resultSet.getString("contraseña")
+                );
                 accounts.add(account);
             }
         }
@@ -33,24 +35,20 @@ public class AccountDAO implements IAccountDAO {
     }
 
     public boolean addAccount(Account account) throws SQLException {
-        String sql = "INSERT INTO cuenta (id_usuario,correo_e, contraseña) VALUES (?, ?, ?)";
+        if (!userDAO.userExists(account.getIdUser())) {
+            throw new SQLException("User doesn't exist");
+        }
+
+        String sql = "INSERT INTO cuenta (id_usuario, correo_e, contraseña) VALUES (?, ?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
-
-            String hashedPassword = PasswordUtils.hashPassword(account.getPassword());
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, account.getIdUser());
             preparedStatement.setString(2, account.getEmail());
-            preparedStatement.setString(3, hashedPassword);
-            preparedStatement.executeUpdate();
+            preparedStatement.setString(3, PasswordUtils.hashPassword(account.getPassword()));
 
-            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    account.setIdUser(generatedKeys.getInt(1));
-                }
-            }
-            return true;
+            return preparedStatement.executeUpdate() > 0;
         }
     }
 
@@ -65,126 +63,110 @@ public class AccountDAO implements IAccountDAO {
         }
     }
 
-    public boolean updateAccount(int idUser, String newEmail, String newPlainPassword) throws SQLException {
-        Account existingAccount = searchAccountById(idUser);
-        if (existingAccount == null) {
-            return false;
-        }
-
-
-        if (newEmail != null && !newEmail.equals(existingAccount.getEmail())) {
-            Account accountWithNewEmail = searchAccountByEmail(newEmail);
-            if (accountWithNewEmail != null && accountWithNewEmail.getIdUser() != idUser) {
-                throw new SQLException("El correo electrónico ya está en uso por otra cuenta");
-            }
-        }
-
-        StringBuilder sqlBuilder = new StringBuilder("UPDATE cuenta SET ");
+    public boolean updateAccount(Account account) throws SQLException {
+        StringBuilder sql = new StringBuilder("UPDATE cuenta SET ");
         List<String> updates = new ArrayList<>();
+        List<Object> params = new ArrayList<>();
 
-        if (newEmail != null && !newEmail.isEmpty()) {
+        if (account.getEmail() != null && !account.getEmail().isEmpty()) {
             updates.add("correo_e = ?");
+            params.add(account.getEmail());
         }
-        if (newPlainPassword != null && !newPlainPassword.isEmpty()) {
+        if (account.getPassword() != null && !account.getPassword().isEmpty()) {
             updates.add("contraseña = ?");
+            params.add(PasswordUtils.hashPassword(account.getPassword()));
         }
 
         if (updates.isEmpty()) {
             return false;
         }
 
-        sqlBuilder.append(String.join(", ", updates));
-        sqlBuilder.append(" WHERE id_usuario = ?");
+        sql.append(String.join(", ", updates));
+        sql.append(" WHERE id_usuario = ?");
+        params.add(account.getIdUser());
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sqlBuilder.toString())) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql.toString())) {
 
-            int paramIndex = 1;
-
-            if (newEmail != null && !newEmail.isEmpty()) {
-                preparedStatement.setString(paramIndex++, newEmail);
+            for (int i = 0; i < params.size(); i++) {
+                preparedStatement.setObject(i + 1, params.get(i));
             }
-            if (newPlainPassword != null && !newPlainPassword.isEmpty()) {
-                String hashedPassword = PasswordUtils.hashPassword(newPlainPassword);
-                preparedStatement.setString(paramIndex++, hashedPassword);
-            }
-
-            preparedStatement.setInt(paramIndex, idUser);
 
             return preparedStatement.executeUpdate() > 0;
         }
     }
 
-
     public boolean verifyCredentials(String email, String plainPassword) throws SQLException {
-        String sql = "SELECT contraseña FROM cuenta WHERE correo_e = ?";
+        String sql = "SELECT c.contraseña, u.estado FROM cuenta c " +
+                "JOIN usuario u ON c.id_usuario = u.id_usuario " +
+                "WHERE c.correo_e = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                String storedHash = resultSet.getString("contraseña");
-                return PasswordUtils.checkPassword(plainPassword, storedHash);
+                if (resultSet.getString("estado").charAt(0) != 'A') {
+                    return false;
+                }
+                return PasswordUtils.checkPassword(plainPassword, resultSet.getString("contraseña"));
             }
             return false;
         }
     }
 
-    public boolean updatePassword(int idUser, String newPlainPassword) throws SQLException {
-        String sql = "UPDATE cuenta SET contraseña = ? WHERE id_usuario = ?";
-
-        try (Connection connection = ConnectionDataBase.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
-            String hashedPassword = PasswordUtils.hashPassword(newPlainPassword);
-            preparedStatement.setString(1, hashedPassword);
-            preparedStatement.setInt(2, idUser);
-
-            return preparedStatement.executeUpdate() > 0;
-        }
-    }
-
-    public Account searchAccountByEmail(String email) throws SQLException {
-        String sql = "SELECT id_usuario, correo_e FROM cuenta WHERE correo_e = ?";
-
-        try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
-            preparedStatement.setString(1, email);
-
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    Account account = new Account();
-                    account.setIdUser(resultSet.getInt("id_usuario"));
-                    account.setEmail(resultSet.getString("correo_e"));
-                    return account;
-                }
-                return null;
-            }
-        }
-    }
-
-    public Account searchAccountById(int idUser) throws SQLException {
-        String sql = "SELECT id_usuario, correo_e FROM cuenta WHERE id_usuario = ?";
+    public Account getAccountByUserId(int idUser) throws SQLException {
+        String sql = "SELECT id_usuario, correo_e, contraseña FROM cuenta WHERE id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, idUser);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    Account account = new Account();
-                    account.setIdUser(resultSet.getInt("id_usuario"));
-                    account.setEmail(resultSet.getString("correo_e"));
-                    return account;
-                }
-                return null;
+            if (resultSet.next()) {
+                return new Account(
+                        resultSet.getInt("id_usuario"),
+                        resultSet.getString("correo_e"),
+                        resultSet.getString("contraseña")
+                );
             }
+            return null;
         }
     }
 
+    public Account getAccountByEmail(String email) throws SQLException {
+        String sql = "SELECT id_usuario, correo_e, contraseña FROM cuenta WHERE correo_e = ?";
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return new Account(
+                        resultSet.getInt("id_usuario"),
+                        resultSet.getString("correo_e"),
+                        resultSet.getString("contraseña")
+                );
+            }
+            return null;
+        }
+    }
+
+    public boolean accountExists(String email) throws SQLException {
+        String sql = "SELECT 1 FROM cuenta WHERE correo_e = ?";
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, email);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return resultSet.next();
+            }
+        }
+    }
 }

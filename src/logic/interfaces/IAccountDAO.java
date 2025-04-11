@@ -12,13 +12,13 @@ public interface IAccountDAO {
 
     boolean deleteAccount(int idUser) throws SQLException;
 
-    boolean updateAccount(int idUser, String newEmail, String newPlainPassword) throws SQLException;
+    boolean updateAccount(Account account) throws SQLException;
 
     boolean verifyCredentials(String email, String plainPassword) throws SQLException;
 
-    boolean updatePassword(int idUser, String newPlainPassword) throws SQLException;
+    Account getAccountByEmail(String email) throws SQLException;
 
-    Account searchAccountByEmail(String email) throws SQLException;
+    Account getAccountByUserId(int idUser) throws SQLException;
 
-    Account searchAccountById(int idUser) throws SQLException;
+    boolean accountExists(String email) throws SQLException;
 }

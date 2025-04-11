@@ -14,4 +14,5 @@ public interface IProyectDAO {
     Proyect getProyectByTitle(String title) throws SQLException;
     int countProyects() throws SQLException;
     boolean proyectExists(String title) throws SQLException;
+    boolean changeProyectStatus(Proyect proyect) throws SQLException;
 }

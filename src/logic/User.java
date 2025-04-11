@@ -4,17 +4,20 @@ public class User {
     private int idUser;
     private String fullName;
     private String cellphone;
+    private char status;
 
-    public User(int idUser, String fullName, String cellphone) {
+    public User(int idUser, String fullName, String cellphone, char status) {
         this.idUser = idUser;
         this.fullName = fullName;
         this.cellphone = cellphone;
+        this.status = status;
     }
 
     public User() {
         idUser = 0;
         fullName = "";
         cellphone = "";
+        status = 'A';
     }
 
     public int getIdUser() {
@@ -39,5 +42,13 @@ public class User {
 
     public void setCellphone(String cellphone) {
         this.cellphone = cellphone;
+    }
+
+    public char getStatus() {
+        return status;
+    }
+
+    public void setStatus(char status) {
+        this.status = status;
     }
 }
