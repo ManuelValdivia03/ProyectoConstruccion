@@ -36,11 +36,18 @@ public class AccountDAO implements IAccountDAO {
 
     public boolean addAccount(Account account) throws SQLException {
         if (account == null) {
-            throw new IllegalArgumentException("Account cannot be null");
+            throw new IllegalArgumentException("");
         }
 
+        validateEmail(account.getEmail());
+
         if (!userDAO.userExists(account.getIdUser())) {
-            throw new SQLException("User doesn't exist");
+            throw new SQLException("");
+        }
+
+        AccountDAO accountDAO = new AccountDAO();
+        if (accountDAO.accountExists(account.getEmail())){
+            throw new SQLException("");
         }
 
         String sql = "INSERT INTO cuenta (id_usuario, correo_e, contraseña) VALUES (?, ?, ?)";
@@ -48,9 +55,11 @@ public class AccountDAO implements IAccountDAO {
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
+            String hashedPassword = PasswordUtils.hashPassword(account.getPassword());
+
             preparedStatement.setInt(1, account.getIdUser());
             preparedStatement.setString(2, account.getEmail());
-            preparedStatement.setString(3, PasswordUtils.hashPassword(account.getPassword()));
+            preparedStatement.setString(3, hashedPassword);
 
             return preparedStatement.executeUpdate() > 0;
         }
@@ -77,6 +86,7 @@ public class AccountDAO implements IAccountDAO {
         List<Object> params = new ArrayList<>();
 
         if (account.getEmail() != null && !account.getEmail().isEmpty()) {
+            validateEmail(account.getEmail());
             updates.add("correo_e = ?");
             params.add(account.getEmail());
         }
@@ -114,18 +124,18 @@ public class AccountDAO implements IAccountDAO {
                 "WHERE c.correo_e = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, email);
-
-            if (resultSet.next()) {
-                if (resultSet.getString("estado").charAt(0) != 'A') {
-                    return false;
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    if (resultSet.getString("estado").charAt(0) != 'A') {
+                        return false;
+                    }
+                    return PasswordUtils.checkPassword(plainPassword, resultSet.getString("contraseña"));
                 }
-                return PasswordUtils.checkPassword(plainPassword, resultSet.getString("contraseña"));
+                return false;
             }
-            return false;
         }
     }
 
@@ -187,6 +197,12 @@ public class AccountDAO implements IAccountDAO {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 return resultSet.next();
             }
+        }
+    }
+
+    private void validateEmail(String email) {
+        if (email == null || !email.contains("@")) {
+            throw new IllegalArgumentException("Invalid email format");
         }
     }
 }

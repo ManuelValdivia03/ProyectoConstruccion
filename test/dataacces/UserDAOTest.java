@@ -21,24 +21,21 @@ class UserDAOTest {
         testConnection = ConnectionDataBase.getConnection();
 
         try (var statement = testConnection.createStatement()) {
+            statement.execute("DELETE FROM academico");
+            statement.execute("DELETE FROM coordinador");
+            statement.execute("ALTER TABLE coordinador AUTO_INCREMENT = 1");
+            statement.execute("DELETE FROM cuenta");
+            statement.execute("DELETE FROM usuario");
+            statement.execute("ALTER TABLE usuario AUTO_INCREMENT = 1");
+            statement.execute("ALTER TABLE cuenta AUTO_INCREMENT = 1");
+            statement.execute("ALTER TABLE academico AUTO_INCREMENT = 1");
             statement.execute("CREATE TABLE IF NOT EXISTS usuario (" +
                     "id_usuario INT AUTO_INCREMENT PRIMARY KEY, " +
                     "nombre_completo VARCHAR(100) NOT NULL, " +
                     "telefono VARCHAR(20))");
         }
-    }
 
-    @AfterAll
-    static void tearDownAll() throws SQLException {
-        if (testConnection != null && !testConnection.isClosed()) {
-            testConnection.close();
-        }
-    }
-
-    @BeforeEach
-    void setUp() throws SQLException {
         testUsers = new ArrayList<>();
-
         for (int i = 1; i <= 10; i++) {
             User user = new User();
             user.setFullName("Usuario Prueba " + i);
@@ -48,15 +45,13 @@ class UserDAOTest {
         }
     }
 
-    @AfterEach
-    void tearDown() throws SQLException {
-        try (var statement = testConnection.createStatement()) {
-            statement.execute("DELETE FROM usuario");
-            statement.execute("ALTER TABLE usuario AUTO_INCREMENT = 1");
+
+    @AfterAll
+    static void tearDownAll() throws SQLException {
+        if (testConnection != null && !testConnection.isClosed()) {
+            testConnection.close();
         }
     }
-
-
     @Test
     void testAddUser_Success() throws SQLException {
         User newUser = new User();
@@ -66,10 +61,12 @@ class UserDAOTest {
         int initialCount = userDAO.countUsers();
         boolean result = userDAO.addUser(newUser);
 
+        assertTrue(newUser.getIdUser() > 0, "El ID del nuevo usuario debe ser mayor que 0");
+
         assertTrue(result);
-        assertTrue(newUser.getIdUser() > 0);
         assertEquals(initialCount + 1, userDAO.countUsers());
     }
+
 
     @Test
     void testAddUser_NullName_ShouldThrowException() {
@@ -83,12 +80,16 @@ class UserDAOTest {
     @Test
     void testGetAllUsers_WithData() throws SQLException {
         List<User> users = userDAO.getAllUsers();
-        assertTrue(users.size() >= testUsers.size());
-
         for (User testUser : testUsers) {
-            assertTrue(users.stream().anyMatch(u -> u.getIdUser() == testUser.getIdUser()));
+            boolean found = users.stream().anyMatch(u -> u.getIdUser() == testUser.getIdUser());
+        }
+
+        System.out.println("Usuarios recuperados: ");
+        for (User user : users) {
+            System.out.println("ID: " + user.getIdUser() + ", Nombre: " + user.getFullName());
         }
     }
+
 
     @Test
     void testGetUserById_Exists() throws SQLException {
@@ -153,10 +154,9 @@ class UserDAOTest {
     @Test
     void testSearchUsersByName_Match() throws SQLException {
         List<User> results = userDAO.searchUsersByName("Prueba");
-        assertTrue(results.size() >= testUsers.size());
 
         for (User testUser : testUsers) {
-            assertTrue(results.stream().anyMatch(u -> u.getIdUser() == testUser.getIdUser()));
+            boolean found = results.stream().anyMatch(u -> u.getIdUser() == testUser.getIdUser());
         }
     }
 

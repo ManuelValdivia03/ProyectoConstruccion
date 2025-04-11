@@ -18,7 +18,7 @@ public class StudentDAO implements IStudentDAO {
             return false;
         }
 
-        String sql = "INSERT INTO estudiantes (id_usuario, matricula) VALUES (?, ?)";
+        String sql = "INSERT INTO estudiante (id_usuario, matricula) VALUES (?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -31,7 +31,7 @@ public class StudentDAO implements IStudentDAO {
     }
 
     public List<Student> getAllStudents() throws SQLException {
-        String sql = "SELECT u.*, e.matricula FROM usuarios u JOIN estudiantes e ON u.id_usuario = e.id_usuario";
+        String sql = "SELECT u.*, e.matricula FROM usuario u JOIN estudiante e ON u.id_usuario = e.id_usuario";
         List<Student> students = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
@@ -52,7 +52,7 @@ public class StudentDAO implements IStudentDAO {
     }
 
     public Student getStudentById(int id) throws SQLException {
-        String sql = "SELECT u.*, e.matricula FROM usuarios u JOIN estudiantes e ON u.id_usuario = e.id_usuario WHERE u.id_usuario = ?";
+        String sql = "SELECT u.*, e.matricula FROM usuario u JOIN estudiante e ON u.id_usuario = e.id_usuario WHERE u.id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -78,7 +78,7 @@ public class StudentDAO implements IStudentDAO {
             return false;
         }
 
-        String sql = "UPDATE estudiantes SET matricula = ? WHERE id_usuario = ?";
+        String sql = "UPDATE estudiante SET matricula = ? WHERE id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -91,7 +91,7 @@ public class StudentDAO implements IStudentDAO {
     }
 
     public boolean deleteStudent(int id) throws SQLException {
-        String sql = "DELETE FROM estudiantes WHERE id_usuario = ?";
+        String sql = "DELETE FROM estudiante WHERE id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -104,8 +104,8 @@ public class StudentDAO implements IStudentDAO {
     }
 
     public List<Student> getStudentsByGroup(int nrc) throws SQLException {
-        String sql = "SELECT u.*, e.matricula FROM usuarios u JOIN estudiantes e ON u.id_usuario = e.id_usuario " +
-                "JOIN grupo_estudiantes ge ON e.id_usuario = ge.id_estudiante WHERE ge.nrc_grupo = ?";
+        String sql = "SELECT u.*, e.matricula FROM usuario u JOIN estudiante e ON u.id_usuario = e.id_usuario " +
+                "JOIN grupo_estudiante ge ON e.id_usuario = ge.id_usuario WHERE ge.nrc = ?";
         List<Student> students = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
@@ -127,8 +127,22 @@ public class StudentDAO implements IStudentDAO {
         return students;
     }
 
+    public boolean assignStudentToGroup(int studentId, int nrcGrupo) throws SQLException {
+        String sql = "UPDATE estudiante SET nrc_grupo = ? WHERE id_usuario = ?";
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1, nrcGrupo);
+            ps.setInt(2, studentId);
+
+            return ps.executeUpdate() > 0;
+        }
+    }
+
+
     public boolean studentExists(int id) throws SQLException {
-        String sql = "SELECT 1 FROM estudiantes WHERE id_usuario = ?";
+        String sql = "SELECT 1 FROM estudiante WHERE id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -141,7 +155,7 @@ public class StudentDAO implements IStudentDAO {
     }
 
     public int countStudents() throws SQLException {
-        String sql = "SELECT COUNT(*) FROM estudiantes";
+        String sql = "SELECT COUNT(*) FROM estudiante";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              Statement stmt = connection.createStatement();

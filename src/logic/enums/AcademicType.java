@@ -1,7 +1,7 @@
 package logic.enums;
 
 public enum AcademicType {
-    EVALUADOR,
+    Evaluador,
     EE,
     NONE
 }

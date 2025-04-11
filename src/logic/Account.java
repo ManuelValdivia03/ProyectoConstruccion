@@ -2,19 +2,19 @@ package logic;
 
 public class Account {
     private int idUser;
-    private String password;
     private String email;
+    private String password;
 
-    public Account(int idUser, String password, String email) {
+    public Account(int idUser, String email,String password) {
         this.idUser = idUser;
-        this.password = password;
         this.email = email;
+        this.password = password;
     }
 
     public Account(){
         idUser = 0;
-        password = "";
         email = "";
+        password = "";
     }
 
     public int getIdUser() {

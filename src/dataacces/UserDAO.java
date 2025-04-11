@@ -10,24 +10,28 @@ import java.util.List;
 public class UserDAO implements IUserDAO {
 
     public boolean addUser(User user) throws SQLException {
-        String sql = "INSERT INTO usuario (nombre_completo, telefono, estado) VALUES (?, ?, ?)";
+        String query = "INSERT INTO usuario (nombre_completo, telefono, estado) VALUES (?, ?, ?)";
+        try (Connection conn = ConnectionDataBase.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
-        try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setString(1, user.getFullName());
+            stmt.setString(2, user.getCellPhone());
+            stmt.setString(3, String.valueOf(user.getStatus()));
 
-            preparedStatement.setString(1, user.getFullName());
-            preparedStatement.setString(2, user.getCellPhone());
-            preparedStatement.setString(3, String.valueOf(user.getStatus()));
-            preparedStatement.executeUpdate();
-
-            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    user.setIdUser(generatedKeys.getInt(1));
+            int rowsInserted = stmt.executeUpdate();
+            if (rowsInserted == 1) {
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        user.setIdUser(generatedKeys.getInt(1));
+                    }
                 }
+                return true;
             }
-            return true;
         }
+        return false;
     }
+
+
 
 
     public List<User> getAllUsers() throws SQLException {

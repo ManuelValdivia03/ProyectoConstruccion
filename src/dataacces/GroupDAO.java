@@ -15,7 +15,7 @@ public class GroupDAO implements IGroupDAO {
     }
 
     public boolean addGroup(Group group) throws SQLException {
-        String sql = "INSERT INTO grupos (nrc, nombre_grupo) VALUES (?, ?)";
+        String sql = "INSERT INTO grupo (nrc, nombre) VALUES (?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -28,16 +28,27 @@ public class GroupDAO implements IGroupDAO {
     }
 
     public boolean deleteGroup(Group group) throws SQLException {
-        // Primero verificar si hay estudiantes en el grupo
+        // Verificar estudiantes en grupo_estudiantes
         List<Student> studentsInGroup = studentDAO.getStudentsByGroup(group.getNrc());
         if (!studentsInGroup.isEmpty()) {
-            throw new SQLException("No se puede eliminar el grupo porque tiene estudiantes asignados");
+            throw new SQLException("No se puede eliminar el grupo porque tiene " +
+                    studentsInGroup.size() + " estudiantes asignados");
         }
-
-        String sql = "DELETE FROM grupos WHERE nrc = ?";
-
+        String checkSql = "SELECT COUNT(*) FROM estudiante WHERE nrc_grupo = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement ps = connection.prepareStatement(checkSql)) {
+
+            ps.setInt(1, group.getNrc());
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next() && rs.getInt(1) > 0) {
+                    throw new SQLException("No se puede eliminar el grupo porque tiene " +
+                            rs.getInt(1) + " estudiantes asignados directamente");
+                }
+            }
+        }
+        String deleteSql = "DELETE FROM grupo WHERE nrc = ?";
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement ps = connection.prepareStatement(deleteSql)) {
 
             ps.setInt(1, group.getNrc());
             return ps.executeUpdate() > 0;
@@ -45,7 +56,7 @@ public class GroupDAO implements IGroupDAO {
     }
 
     public boolean updateGroup(Group group) throws SQLException {
-        String sql = "UPDATE grupos SET nombre_grupo = ? WHERE nrc = ?";
+        String sql = "UPDATE grupo SET nombre = ? WHERE nrc = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -58,7 +69,7 @@ public class GroupDAO implements IGroupDAO {
     }
 
     public List<Group> getAllGroups() throws SQLException {
-        String sql = "SELECT nrc, nombre_grupo FROM grupos";
+        String sql = "SELECT nrc, nombre FROM grupo";
         List<Group> groups = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
@@ -69,7 +80,7 @@ public class GroupDAO implements IGroupDAO {
                 int nrc = rs.getInt("nrc");
                 Group group = new Group(
                         nrc,
-                        rs.getString("nombre_grupo"),
+                        rs.getString("nombre"),
                         studentDAO.getStudentsByGroup(nrc) // Cargar estudiantes del grupo
                 );
                 groups.add(group);
@@ -79,7 +90,7 @@ public class GroupDAO implements IGroupDAO {
     }
 
     public Group getGroupByNrc(int nrc) throws SQLException {
-        String sql = "SELECT nrc, nombre_grupo FROM grupos WHERE nrc = ?";
+        String sql = "SELECT nrc, nombre FROM grupo WHERE nrc = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -89,7 +100,7 @@ public class GroupDAO implements IGroupDAO {
                 if (rs.next()) {
                     return new Group(
                             nrc,
-                            rs.getString("nombre_grupo"),
+                            rs.getString("nombre"),
                             studentDAO.getStudentsByGroup(nrc) // Cargar estudiantes del grupo
                     );
                 }
@@ -99,7 +110,7 @@ public class GroupDAO implements IGroupDAO {
     }
 
     public Group getGroupByName(String groupName) throws SQLException {
-        String sql = "SELECT nrc, nombre_grupo FROM grupos WHERE nombre_grupo = ?";
+        String sql = "SELECT nrc, nombre FROM grupo WHERE nombre = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -110,7 +121,7 @@ public class GroupDAO implements IGroupDAO {
                     int nrc = rs.getInt("nrc");
                     return new Group(
                             nrc,
-                            rs.getString("nombre_grupo"),
+                            rs.getString("nombre"),
                             studentDAO.getStudentsByGroup(nrc)
                     );
                 }
@@ -120,7 +131,7 @@ public class GroupDAO implements IGroupDAO {
     }
 
     public boolean groupExists(int nrc) throws SQLException {
-        String sql = "SELECT 1 FROM grupos WHERE nrc = ?";
+        String sql = "SELECT 1 FROM grupo WHERE nrc = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -133,7 +144,7 @@ public class GroupDAO implements IGroupDAO {
     }
 
     public int countGroups() throws SQLException {
-        String sql = "SELECT COUNT(*) FROM grupos";
+        String sql = "SELECT COUNT(*) FROM grupo";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              Statement stmt = connection.createStatement();
