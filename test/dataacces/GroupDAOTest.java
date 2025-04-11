@@ -31,6 +31,8 @@ class GroupDAOTest {
             statement.execute("DELETE FROM grupo_estudiante");
             statement.execute("DELETE FROM academico");
             statement.execute("DELETE FROM estudiante");
+            statement.execute("DELETE FROM coordinador");
+            statement.execute("ALTER TABLE coordinador AUTO_INCREMENT = 1");
             statement.execute("DELETE FROM grupo");
             statement.execute("DELETE FROM usuario");
             statement.execute("ALTER TABLE academico AUTO_INCREMENT = 1");

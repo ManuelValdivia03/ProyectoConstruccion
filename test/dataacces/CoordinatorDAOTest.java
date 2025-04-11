@@ -23,6 +23,10 @@ class CoordinatorDAOTest {
 
         try (var statement = testConnection.createStatement()) {
             statement.execute("DELETE FROM academico");
+            statement.execute("DELETE FROM grupo");
+            statement.execute("ALTER TABLE grupo AUTO_INCREMENT = 1");
+            statement.execute("DELETE FROM estudiante");
+            statement.execute("ALTER TABLE estudiante AUTO_INCREMENT = 1");
             statement.execute("DELETE FROM coordinador");
             statement.execute("DELETE FROM cuenta");
             statement.execute("DELETE FROM usuario");

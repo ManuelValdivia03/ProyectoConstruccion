@@ -128,7 +128,7 @@ public class StudentDAO implements IStudentDAO {
     }
 
     public boolean assignStudentToGroup(int studentId, int nrcGrupo) throws SQLException {
-        String sql = "UPDATE estudiante SET nrc_grupo = ? WHERE id_usuario = ?";
+        String sql = "INSERT INTO grupo_estudiante (nrc, id_usuario) VALUES (?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -139,7 +139,6 @@ public class StudentDAO implements IStudentDAO {
             return ps.executeUpdate() > 0;
         }
     }
-
 
     public boolean studentExists(int id) throws SQLException {
         String sql = "SELECT 1 FROM estudiante WHERE id_usuario = ?";
