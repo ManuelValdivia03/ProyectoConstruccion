@@ -48,7 +48,6 @@ public class SelfEvaluationDAO implements ISelfEvaluationDAO {
                     selfEvaluation.setFeedBack(resultSet.getString("feedback"));
                     selfEvaluation.setCalification(resultSet.getFloat("calificacion"));
 
-                    // Get associated student
                     StudentDAO studentDAO = new StudentDAO();
                     selfEvaluation.setStudent(studentDAO.getStudentById(resultSet.getInt("id_estudiante")));
                 }
@@ -71,7 +70,6 @@ public class SelfEvaluationDAO implements ISelfEvaluationDAO {
                 selfEvaluation.setFeedBack(resultSet.getString("feedback"));
                 selfEvaluation.setCalification(resultSet.getFloat("calificacion"));
 
-                // Get associated student
                 StudentDAO studentDAO = new StudentDAO();
                 selfEvaluation.setStudent(studentDAO.getStudentById(resultSet.getInt("id_estudiante")));
 
@@ -96,7 +94,6 @@ public class SelfEvaluationDAO implements ISelfEvaluationDAO {
                     selfEvaluation.setFeedBack(resultSet.getString("feedback"));
                     selfEvaluation.setCalification(resultSet.getFloat("calificacion"));
 
-                    // Get associated student (just ID might be enough if full object isn't needed)
                     StudentDAO studentDAO = new StudentDAO();
                     selfEvaluation.setStudent(studentDAO.getStudentById(studentId));
 

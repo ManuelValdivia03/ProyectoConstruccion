@@ -17,4 +17,5 @@ public interface IAcademicDAO {
     boolean academicExists(String staffNumber) throws SQLException;
     int countAcademics() throws SQLException;
     boolean staffNumberExists(String staffNumber) throws SQLException;
+    Academic getAcademicById(int idUser) throws SQLException;
 }

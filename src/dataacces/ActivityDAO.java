@@ -161,22 +161,6 @@ public class ActivityDAO implements IActivityDAO {
         }
     }
 
-    public static void main(String[] args) throws SQLException {
-        Activity activity = new Activity(
-                1,
-                "prueba",
-                "prueba",
-                Timestamp.valueOf("2025-04-11 14:30:00"),
-                Timestamp.valueOf("2025-04-11 14:30:00"),
-                ActivityStatus.PENDIENTE
-        );
-
-        ActivityDAO activityDAO = new ActivityDAO();
-        activityDAO.addActivity(activity);
-
-
-    }
-
     public boolean assignActivityToStudent(int idActivity, int idStudent) throws SQLException {
         String sql = "UPDATE actividad SET id_usuario = ? WHERE id_actividad = ?";
 

@@ -2,12 +2,9 @@ package logic;
 
 import logic.enums.AcademicType;
 
-
-
 public class Academic extends User{
     private String staffNumber;
     private AcademicType type;
-
 
     public Academic(int idUser,String fullName,String cellPhone,String staffNumber, char status,AcademicType type) {
         super(idUser,fullName,cellPhone, status);
