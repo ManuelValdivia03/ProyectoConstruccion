@@ -159,9 +159,9 @@ public class ActivityCronogramDAO implements IActivityCronogramDAO {
                             resultSet.getInt("id_actividad"),
                             resultSet.getString("nombre"),
                             resultSet.getString("descripcion"),
-                            ActivityStatus.valueOf(resultSet.getString("estado")),
                             resultSet.getTimestamp("fecha_inicio"),
-                            resultSet.getTimestamp("fecha_fin")
+                            resultSet.getTimestamp("fecha_fin"),
+                            ActivityStatus.valueOf(resultSet.getString("estado"))
                     ));
                 }
             }

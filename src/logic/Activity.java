@@ -8,26 +8,26 @@ public class Activity {
     private int idActivity;
     private String nameActivity;
     private String descriptionActivity;
-    private ActivityStatus activityStatus;
     private Timestamp startDate;
     private Timestamp endDate;
+    private ActivityStatus activityStatus;
 
-    public Activity(int idActivity, String nameActivity, String descriptionActivity, ActivityStatus activityStatus, Timestamp startDate, Timestamp endDate) {
+    public Activity(int idActivity, String nameActivity, String descriptionActivity, Timestamp startDate, Timestamp endDate, ActivityStatus activityStatus) {
         this.idActivity = idActivity;
         this.nameActivity = nameActivity;
         this.descriptionActivity = descriptionActivity;
-        this.activityStatus = activityStatus;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.activityStatus = activityStatus;
     }
 
     public Activity(){
         idActivity = 0;
         nameActivity = "";
         descriptionActivity = "";
-        activityStatus = ActivityStatus.PENDIENTE;
         startDate = null;
         endDate = null;
+        activityStatus = ActivityStatus.PENDIENTE;
     }
 
     public int getIdActivity() {

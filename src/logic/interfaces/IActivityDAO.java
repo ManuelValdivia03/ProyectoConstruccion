@@ -1,6 +1,7 @@
 package logic.interfaces;
 
 import logic.Activity;
+import logic.Student;
 import logic.enums.ActivityStatus;
 import java.sql.SQLException;
 import java.util.List;
@@ -14,4 +15,6 @@ public interface IActivityDAO {
     List<Activity> getActivitiesByStatus(ActivityStatus status) throws SQLException;
     boolean changeActivityStatus(int idActivity, ActivityStatus newStatus) throws SQLException;
     boolean activityExists(int idActivity) throws SQLException;
+    boolean assignActivityToStudent(int idActivity, int idStudent ) throws SQLException;
+    boolean assignActivityToCronogram(int idActivity, int idCronogram ) throws SQLException;
 }
