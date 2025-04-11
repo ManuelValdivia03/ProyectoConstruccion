@@ -1,0 +1,156 @@
+package dataacces;
+
+import logic.Student;
+import logic.interfaces.IStudentDAO;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class StudentDAO implements IStudentDAO {
+    private final UserDAO userDAO;
+
+    public StudentDAO() {
+        this.userDAO = new UserDAO();
+    }
+
+    public boolean addStudent(Student student) throws SQLException {
+        if (!userDAO.addUser(student)) {
+            return false;
+        }
+
+        String sql = "INSERT INTO estudiantes (id_usuario, matricula) VALUES (?, ?)";
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1, student.getIdUser());
+            ps.setString(2, student.getEnrollment());
+
+            return ps.executeUpdate() > 0;
+        }
+    }
+
+    public List<Student> getAllStudents() throws SQLException {
+        String sql = "SELECT u.*, e.matricula FROM usuarios u JOIN estudiantes e ON u.id_usuario = e.id_usuario";
+        List<Student> students = new ArrayList<>();
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Student student = new Student();
+                student.setIdUser(rs.getInt("id_usuario"));
+                student.setFullName(rs.getString("nombre_completo"));
+                student.setCellphone(rs.getString("telefono"));
+                student.setStatus(rs.getString("estado").charAt(0));
+                student.setEnrollment(rs.getString("matricula"));
+                students.add(student);
+            }
+        }
+        return students;
+    }
+
+    public Student getStudentById(int id) throws SQLException {
+        String sql = "SELECT u.*, e.matricula FROM usuarios u JOIN estudiantes e ON u.id_usuario = e.id_usuario WHERE u.id_usuario = ?";
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Student student = new Student();
+                    student.setIdUser(rs.getInt("id_usuario"));
+                    student.setFullName(rs.getString("nombre_completo"));
+                    student.setCellphone(rs.getString("telefono"));
+                    student.setStatus(rs.getString("estado").charAt(0));
+                    student.setEnrollment(rs.getString("matricula"));
+                    return student;
+                }
+            }
+        }
+        return null;
+    }
+
+    public boolean updateStudent(Student student) throws SQLException {
+        if (!userDAO.updateUser(student)) {
+            return false;
+        }
+
+        String sql = "UPDATE estudiantes SET matricula = ? WHERE id_usuario = ?";
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setString(1, student.getEnrollment());
+            ps.setInt(2, student.getIdUser());
+
+            return ps.executeUpdate() > 0;
+        }
+    }
+
+    public boolean deleteStudent(int id) throws SQLException {
+        String sql = "DELETE FROM estudiantes WHERE id_usuario = ?";
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        }
+
+        return userDAO.deleteUser(id);
+    }
+
+    public List<Student> getStudentsByGroup(int nrc) throws SQLException {
+        String sql = "SELECT u.*, e.matricula FROM usuarios u JOIN estudiantes e ON u.id_usuario = e.id_usuario " +
+                "JOIN grupo_estudiantes ge ON e.id_usuario = ge.id_estudiante WHERE ge.nrc_grupo = ?";
+        List<Student> students = new ArrayList<>();
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1, nrc);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Student student = new Student();
+                    student.setIdUser(rs.getInt("id_usuario"));
+                    student.setFullName(rs.getString("nombre_completo"));
+                    student.setCellphone(rs.getString("telefono"));
+                    student.setStatus(rs.getString("estado").charAt(0));
+                    student.setEnrollment(rs.getString("matricula"));
+                    students.add(student);
+                }
+            }
+        }
+        return students;
+    }
+
+    public boolean studentExists(int id) throws SQLException {
+        String sql = "SELECT 1 FROM estudiantes WHERE id_usuario = ?";
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
+    public int countStudents() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM estudiantes";
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+            return 0;
+        }
+    }
+}

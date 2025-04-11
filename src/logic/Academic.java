@@ -1,6 +1,6 @@
 package logic;
 
-import logic.enumacademic.AcademicType;
+import logic.enums.AcademicType;
 
 
 

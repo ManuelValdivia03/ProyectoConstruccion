@@ -1,4 +1,4 @@
-package logic.enumacademic;
+package logic.enums;
 
 public enum AcademicType {
     EVALUADOR,

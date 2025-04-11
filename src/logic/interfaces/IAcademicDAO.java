@@ -1,7 +1,7 @@
 package logic.interfaces;
 
 import logic.Academic;
-import logic.enumacademic.AcademicType;
+import logic.enums.AcademicType;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -16,4 +16,5 @@ public interface IAcademicDAO {
     boolean changeAcademicType(Academic academic) throws SQLException;
     boolean academicExists(String staffNumber) throws SQLException;
     int countAcademics() throws SQLException;
+    boolean staffNumberExists(String staffNumber) throws SQLException;
 }

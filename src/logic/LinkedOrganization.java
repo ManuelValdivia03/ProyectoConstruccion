@@ -14,10 +14,10 @@ public class LinkedOrganization {
     }
 
     public LinkedOrganization() {
-        int idLinkedOrganization = 0;
-        String nameLinkedOrganization = "";
-        String cellPhoneLinkedOrganization = "";
-        String emailLinkedOrganization = "";
+        idLinkedOrganization = 0;
+        nameLinkedOrganization = "";
+        cellPhoneLinkedOrganization = "";
+        emailLinkedOrganization = "";
     }
 
     public int getIdLinkedOrganization() {

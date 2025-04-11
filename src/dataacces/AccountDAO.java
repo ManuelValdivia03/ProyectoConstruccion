@@ -35,6 +35,10 @@ public class AccountDAO implements IAccountDAO {
     }
 
     public boolean addAccount(Account account) throws SQLException {
+        if (account == null) {
+            throw new IllegalArgumentException("Account cannot be null");
+        }
+
         if (!userDAO.userExists(account.getIdUser())) {
             throw new SQLException("User doesn't exist");
         }
@@ -64,6 +68,10 @@ public class AccountDAO implements IAccountDAO {
     }
 
     public boolean updateAccount(Account account) throws SQLException {
+        if (account == null) {
+            throw new IllegalArgumentException("Account cannot be null");
+        }
+
         StringBuilder sql = new StringBuilder("UPDATE cuenta SET ");
         List<String> updates = new ArrayList<>();
         List<Object> params = new ArrayList<>();
@@ -97,15 +105,19 @@ public class AccountDAO implements IAccountDAO {
     }
 
     public boolean verifyCredentials(String email, String plainPassword) throws SQLException {
+        if (email == null || plainPassword == null) {
+            return false;
+        }
+
         String sql = "SELECT c.contraseña, u.estado FROM cuenta c " +
                 "JOIN usuario u ON c.id_usuario = u.id_usuario " +
                 "WHERE c.correo_e = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
             preparedStatement.setString(1, email);
-            ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
                 if (resultSet.getString("estado").charAt(0) != 'A') {
@@ -124,40 +136,48 @@ public class AccountDAO implements IAccountDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, idUser);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                return new Account(
-                        resultSet.getInt("id_usuario"),
-                        resultSet.getString("correo_e"),
-                        resultSet.getString("contraseña")
-                );
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return new Account(
+                            resultSet.getInt("id_usuario"),
+                            resultSet.getString("correo_e"),
+                            resultSet.getString("contraseña")
+                    );
+                }
             }
-            return null;
         }
+        return null;
     }
 
     public Account getAccountByEmail(String email) throws SQLException {
+        if (email == null || email.isEmpty()) {
+            return null;
+        }
+
         String sql = "SELECT id_usuario, correo_e, contraseña FROM cuenta WHERE correo_e = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, email);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                return new Account(
-                        resultSet.getInt("id_usuario"),
-                        resultSet.getString("correo_e"),
-                        resultSet.getString("contraseña")
-                );
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return new Account(
+                            resultSet.getInt("id_usuario"),
+                            resultSet.getString("correo_e"),
+                            resultSet.getString("contraseña")
+                    );
+                }
             }
-            return null;
         }
+        return null;
     }
 
     public boolean accountExists(String email) throws SQLException {
+        if (email == null || email.isEmpty()) {
+            return false;
+        }
+
         String sql = "SELECT 1 FROM cuenta WHERE correo_e = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
