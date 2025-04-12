@@ -10,10 +10,10 @@ public class Presentation {
     private PresentationType PresentationType;
     private Student student;
 
-    public Presentation(int idPresentation, Timestamp PresentationDate, PresentationType PresentationType, Student student) {
+    public Presentation(int idPresentation, PresentationType PresentationType, Timestamp PresentationDate, Student student) {
         this.idPresentation = idPresentation;
-        this.PresentationDate = PresentationDate;
         this.PresentationType = PresentationType;
+        this.PresentationDate = PresentationDate;
         this.student = student;
     }
 

@@ -26,8 +26,9 @@ class GroupDAOTest {
         studentDAO = new StudentDAO();
         testConnection = ConnectionDataBase.getConnection();
 
-        // Limpiar y preparar la base de datos
         try (var statement = testConnection.createStatement()) {
+            statement.execute("DELETE FROM presentacion");
+            statement.execute("ALTER TABLE presentacion AUTO_INCREMENT = 1");
             statement.execute("DELETE FROM grupo_estudiante");
             statement.execute("DELETE FROM academico");
             statement.execute("DELETE FROM estudiante");
@@ -39,7 +40,6 @@ class GroupDAOTest {
             statement.execute("ALTER TABLE usuario AUTO_INCREMENT = 1");
             statement.execute("ALTER TABLE estudiante AUTO_INCREMENT = 1");
 
-            // Crear tablas necesarias
             statement.execute("CREATE TABLE IF NOT EXISTS usuario (" +
                     "id_usuario INT AUTO_INCREMENT PRIMARY KEY, " +
                     "nombre_completo VARCHAR(100) NOT NULL, " +
@@ -63,14 +63,12 @@ class GroupDAOTest {
                     "FOREIGN KEY (id_usuario) REFERENCES estudiante(id_usuario))");
         }
 
-        // Crear estudiantes de prueba
         testStudents = List.of(
                 createTestStudent("S001", "Estudiante 1", "5551111111"),
                 createTestStudent("S002", "Estudiante 2", "5552222222"),
                 createTestStudent("S003", "Estudiante 3", "5553333333")
         );
 
-        // Crear grupos de prueba
         testGroups = List.of(
                 createTestGroup(1001, "Grupo 1", List.of(testStudents.get(0), testStudents.get(1))),
                 createTestGroup(1002, "Grupo 2", List.of(testStudents.get(2))),
@@ -120,13 +118,11 @@ class GroupDAOTest {
 
     @BeforeEach
     void setUp() throws SQLException {
-        // Limpiar tablas antes de cada prueba
         try (var statement = testConnection.createStatement()) {
             statement.execute("DELETE FROM grupo_estudiante");
             statement.execute("DELETE FROM grupo");
         }
 
-        // Reinsertar datos de prueba
         for (Group group : testGroups) {
             createTestGroup(group.getNrc(), group.getGroupName(), group.getStudents());
         }
@@ -152,7 +148,7 @@ class GroupDAOTest {
     @Test
     void testAddGroup_DuplicateNrc_ShouldFail() {
         Group duplicateGroup = new Group();
-        duplicateGroup.setNrc(1001); // NRC ya existente
+        duplicateGroup.setNrc(1001);
         duplicateGroup.setGroupName("Grupo Duplicado");
 
         assertThrows(SQLException.class, () -> groupDAO.addGroup(duplicateGroup));
@@ -236,8 +232,7 @@ class GroupDAOTest {
 
     @Test
     void testDeleteGroup_Success() throws SQLException {
-        // Eliminar un grupo sin estudiantes
-        Group groupToDelete = groupDAO.getGroupByNrc(1003); // Grupo 3 no tiene estudiantes
+        Group groupToDelete = groupDAO.getGroupByNrc(1003);
         int initialCount = groupDAO.countGroups();
 
         boolean result = groupDAO.deleteGroup(groupToDelete);
@@ -249,13 +244,11 @@ class GroupDAOTest {
 
     @Test
     void testDeleteGroup_WithStudents_ShouldFail() throws SQLException {
-        // 1. Crear y guardar el usuario
         UserDAO userDAO = new UserDAO();
         User user = new User(0, "Rojo Azul", "123445567", 'A');
         boolean userAdded = userDAO.addUser(user);
         assertTrue(userAdded, "El usuario debería haberse creado correctamente");
 
-        // 2. Crear el estudiante con el id_usuario correcto
         Student student = new Student();
         student.setIdUser(user.getIdUser());
         student.setEnrollment("1234");
@@ -263,16 +256,13 @@ class GroupDAOTest {
         student.setStatus('A');
         student.setCellphone("123445567");
 
-        // 3. Agregar el estudiante a la base de datos
         boolean studentAdded = studentDAO.addStudent(student);
         assertTrue(studentAdded, "El estudiante debería haberse creado correctamente");
 
-        // 4. Crear y guardar el grupo
         Group groupToDelete = new Group(10020, "Hoy", new ArrayList<>());
         boolean groupAdded = groupDAO.addGroup(groupToDelete);
         assertTrue(groupAdded, "El grupo debería haberse creado correctamente");
 
-        // 5. Asignar el estudiante al grupo (versión corregida)
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement ps = connection.prepareStatement(
                      "INSERT INTO grupo_estudiante (nrc, id_usuario) VALUES (?, ?)")) {
@@ -282,17 +272,13 @@ class GroupDAOTest {
             assertEquals(1, rowsAffected, "Debería haberse asignado 1 estudiante al grupo");
         }
 
-        // 6. Verificar que el grupo tiene estudiantes
         List<Student> studentsInGroup = studentDAO.getStudentsByGroup(groupToDelete.getNrc());
         assertFalse(studentsInGroup.isEmpty(),
                 "El grupo debería tener estudiantes. Estudiantes encontrados: " + studentsInGroup.size());
 
-        // 7. Intentar eliminar el grupo (debería fallar)
         assertThrows(SQLException.class, () -> groupDAO.deleteGroup(groupToDelete),
                 "Debería lanzar excepción al intentar eliminar grupo con estudiantes");
 
-        // 8. Limpieza (opcional)
-        // Eliminar la relación estudiante-grupo
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement ps = connection.prepareStatement(
                      "DELETE FROM grupo_estudiante WHERE nrc = ? AND id_usuario = ?")) {
@@ -300,11 +286,9 @@ class GroupDAOTest {
             ps.setInt(2, student.getIdUser());
             ps.executeUpdate();
         }
-        // Eliminar el estudiante
+
         studentDAO.deleteStudent(student.getIdUser());
-        // Eliminar el usuario
         userDAO.deleteUser(user.getIdUser());
-        // Eliminar el grupo
         groupDAO.deleteGroup(groupToDelete);
     }
 

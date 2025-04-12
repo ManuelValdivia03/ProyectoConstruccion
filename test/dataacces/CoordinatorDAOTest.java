@@ -22,6 +22,8 @@ class CoordinatorDAOTest {
         testConnection = ConnectionDataBase.getConnection();
 
         try (var statement = testConnection.createStatement()) {
+            statement.execute("DELETE FROM presentacion");
+            statement.execute("ALTER TABLE presentacion AUTO_INCREMENT = 1");
             statement.execute("DELETE FROM academico");
             statement.execute("DELETE FROM grupo");
             statement.execute("ALTER TABLE grupo AUTO_INCREMENT = 1");
@@ -45,7 +47,6 @@ class CoordinatorDAOTest {
                     "FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario))");
         }
 
-        // Crear datos de prueba
         testCoordinators = List.of(
                 createTestCoordinator("C001", "Coordinador 1", "5551111111"),
                 createTestCoordinator("C002", "Coordinador 2", "5552222222"),
@@ -104,7 +105,7 @@ class CoordinatorDAOTest {
     @Test
     void testAddCoordinator_DuplicateStaffNumber_ShouldFail() {
         Coordinator duplicateCoordinator = new Coordinator();
-        duplicateCoordinator.setStaffNumber("C001"); // Número de personal ya existente
+        duplicateCoordinator.setStaffNumber("C001");
         duplicateCoordinator.setFullName("Coordinador Duplicado");
         duplicateCoordinator.setCellphone("5555555555");
 

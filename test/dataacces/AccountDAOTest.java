@@ -25,6 +25,8 @@ class AccountDAOTest {
         userDAO = new UserDAO();
         testConnection = ConnectionDataBase.getConnection();
         try (var statement = testConnection.createStatement()) {
+            statement.execute("DELETE FROM presentacion");
+            statement.execute("ALTER TABLE presentacion AUTO_INCREMENT = 1");
             statement.execute("DELETE FROM academico");
             statement.execute("DELETE FROM coordinador");
             statement.execute("ALTER TABLE coordinador AUTO_INCREMENT = 1");
@@ -118,7 +120,7 @@ class AccountDAOTest {
     @Test
     void testAddAccount_UserNotExists_ShouldThrowException() {
         Account invalidAccount = new Account(
-                9999, // Non-existent user ID
+                9999,
                 "nonexistent@test.com",
                 "somePassword"
         );
@@ -140,7 +142,7 @@ class AccountDAOTest {
 
         Account duplicateAccount = new Account(
                 newUser.getIdUser(),
-                testAccounts.get(1).getEmail(), // Using existing email
+                testAccounts.get(1).getEmail(),
                 "somePassword"
         );
 
@@ -174,7 +176,7 @@ class AccountDAOTest {
         Account accountToUpdate = testAccounts.get(2);
         String originalPassword = accountToUpdate.getPassword();
         accountToUpdate.setEmail("only.email.updated@test.com");
-        accountToUpdate.setPassword(null); // Don't update password
+        accountToUpdate.setPassword(null);
 
         boolean result = accountDAO.updateAccount(accountToUpdate);
         assertTrue(result);

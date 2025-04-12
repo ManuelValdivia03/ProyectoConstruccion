@@ -31,8 +31,7 @@ public class GroupDAO implements IGroupDAO {
         // Verificar estudiantes en grupo_estudiantes
         List<Student> studentsInGroup = studentDAO.getStudentsByGroup(group.getNrc());
         if (!studentsInGroup.isEmpty()) {
-            throw new SQLException("No se puede eliminar el grupo porque tiene " +
-                    studentsInGroup.size() + " estudiantes asignados");
+            throw new SQLException();
         }
         String checkSql = "SELECT COUNT(*) FROM estudiante WHERE nrc_grupo = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
@@ -41,8 +40,7 @@ public class GroupDAO implements IGroupDAO {
             ps.setInt(1, group.getNrc());
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next() && rs.getInt(1) > 0) {
-                    throw new SQLException("No se puede eliminar el grupo porque tiene " +
-                            rs.getInt(1) + " estudiantes asignados directamente");
+                    throw new SQLException();
                 }
             }
         }

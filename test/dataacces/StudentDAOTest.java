@@ -24,8 +24,9 @@ class StudentDAOTest {
         userDAO = new UserDAO();
         testConnection = ConnectionDataBase.getConnection();
 
-        // Limpiar y preparar la base de datos
         try (var statement = testConnection.createStatement()) {
+            statement.execute("DELETE FROM presentacion");
+            statement.execute("ALTER TABLE presentacion AUTO_INCREMENT = 1");
             statement.execute("DELETE FROM grupo_estudiante");
             statement.execute("DELETE FROM estudiante");
             statement.execute("ALTER TABLE estudiante AUTO_INCREMENT = 1");
@@ -38,7 +39,6 @@ class StudentDAOTest {
             statement.execute("DELETE FROM usuario");
             statement.execute("ALTER TABLE usuario AUTO_INCREMENT = 1");
 
-            // Crear tablas necesarias si no existen
             statement.execute("CREATE TABLE IF NOT EXISTS usuario (" +
                     "id_usuario INT AUTO_INCREMENT PRIMARY KEY, " +
                     "nombre_completo VARCHAR(100) NOT NULL, " +
@@ -57,7 +57,6 @@ class StudentDAOTest {
                     "FOREIGN KEY (id_usuario) REFERENCES estudiante(id_usuario))");
         }
 
-        // Crear estudiantes de prueba
         testStudents = List.of(
                 createTestStudent("S001", "Estudiante 1", "5551111111"),
                 createTestStudent("S002", "Estudiante 2", "5552222222"),
@@ -83,7 +82,6 @@ class StudentDAOTest {
 
     @BeforeEach
     void setUp() throws SQLException {
-        // Limpiar tablas antes de cada prueba
         try (var statement = testConnection.createStatement()) {
             statement.execute("DELETE FROM grupo_estudiante");
             statement.execute("DELETE FROM estudiante");
@@ -91,7 +89,6 @@ class StudentDAOTest {
             statement.execute("ALTER TABLE usuario AUTO_INCREMENT = 1");
         }
 
-        // Reinsertar datos de prueba
         for (Student student : testStudents) {
             createTestStudent(student.getEnrollment(), student.getFullName(), student.getCellPhone());
         }
@@ -119,7 +116,7 @@ class StudentDAOTest {
     @Test
     void testAddStudent_DuplicateEnrollment_ShouldFail() {
         Student duplicateStudent = new Student();
-        duplicateStudent.setEnrollment("S001"); // Matrícula ya existente
+        duplicateStudent.setEnrollment("S001");
         duplicateStudent.setFullName("Estudiante Duplicado");
         duplicateStudent.setCellphone("5555555555");
 
@@ -211,7 +208,6 @@ class StudentDAOTest {
 
     @Test
     void testGetStudentsByGroup() throws SQLException {
-        // Crear un grupo de prueba
         int testNrc = 1001;
         try (PreparedStatement ps = testConnection.prepareStatement(
                 "INSERT INTO grupo (nrc, nombre) VALUES (?, 'Grupo Test2')")) {
@@ -219,7 +215,6 @@ class StudentDAOTest {
             ps.executeUpdate();
         }
 
-        // Asignar estudiantes al grupo
         Student student1 = testStudents.get(0);
         Student student2 = testStudents.get(1);
 
@@ -234,7 +229,6 @@ class StudentDAOTest {
             ps.executeUpdate();
         }
 
-        // Probar el método
         List<Student> studentsInGroup = studentDAO.getStudentsByGroup(testNrc);
         assertEquals(2, studentsInGroup.size());
         assertTrue(studentsInGroup.stream().anyMatch(s -> s.getIdUser() == student1.getIdUser()));
@@ -243,7 +237,6 @@ class StudentDAOTest {
 
     @Test
     void testAssignStudentToGroup_Success() throws SQLException {
-        // 1. Crear grupo de prueba directamente
         int testNrc = 1005;
         try (Connection conn = ConnectionDataBase.getConnection();
              PreparedStatement ps = conn.prepareStatement(
@@ -252,14 +245,11 @@ class StudentDAOTest {
             ps.executeUpdate();
         }
 
-        // 2. Obtener estudiante de prueba
         Student student = testStudents.get(0);
 
-        // 3. Asignar estudiante al grupo
         boolean result = studentDAO.assignStudentToGroup(student.getIdUser(), testNrc);
         assertTrue(result, "El método debería reportar éxito en la asignación");
 
-        // 4. Verificar directamente en la base de datos
         try (Connection conn = ConnectionDataBase.getConnection();
              PreparedStatement ps = conn.prepareStatement(
                      "SELECT COUNT(*) FROM grupo_estudiante WHERE nrc = ? AND id_usuario = ?")) {

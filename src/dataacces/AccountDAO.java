@@ -78,7 +78,7 @@ public class AccountDAO implements IAccountDAO {
 
     public boolean updateAccount(Account account) throws SQLException {
         if (account == null) {
-            throw new IllegalArgumentException("Account cannot be null");
+            throw new IllegalArgumentException();
         }
 
         StringBuilder sql = new StringBuilder("UPDATE cuenta SET ");
@@ -202,7 +202,7 @@ public class AccountDAO implements IAccountDAO {
 
     private void validateEmail(String email) {
         if (email == null || !email.contains("@")) {
-            throw new IllegalArgumentException("Invalid email format");
+            throw new IllegalArgumentException();
         }
     }
 }

@@ -1,7 +1,7 @@
 package logic.enums;
 
 public enum PresentationType {
-    PARCIAL,
-    FINAL,
+    Parcial,
+    Final,
     NONE
 }

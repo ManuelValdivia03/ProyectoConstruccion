@@ -21,6 +21,8 @@ class UserDAOTest {
         testConnection = ConnectionDataBase.getConnection();
 
         try (var statement = testConnection.createStatement()) {
+            statement.execute("DELETE FROM presentacion");
+            statement.execute("ALTER TABLE presentacion AUTO_INCREMENT = 1");
             statement.execute("DELETE FROM academico");
             statement.execute("DELETE FROM estudiante");
             statement.execute("ALTER TABLE estudiante AUTO_INCREMENT = 1");
