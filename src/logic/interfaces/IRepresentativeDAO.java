@@ -1,6 +1,6 @@
 package logic.interfaces;
 
-import logic.Representative;
+import logic.logicclasses.Representative;
 import java.sql.SQLException;
 import java.util.List;
 

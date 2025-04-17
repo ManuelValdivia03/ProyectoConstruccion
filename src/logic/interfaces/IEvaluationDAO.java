@@ -1,6 +1,6 @@
 package logic.interfaces;
 
-import logic.Evaluation;
+import logic.logicclasses.Evaluation;
 import java.sql.SQLException;
 import java.util.List;
 

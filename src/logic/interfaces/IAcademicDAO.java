@@ -1,6 +1,6 @@
 package logic.interfaces;
 
-import logic.Academic;
+import logic.logicclasses.Academic;
 import logic.enums.AcademicType;
 
 import java.sql.SQLException;

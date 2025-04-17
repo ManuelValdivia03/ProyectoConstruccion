@@ -1,7 +1,6 @@
 package logic.interfaces;
 
-import logic.Activity;
-import logic.Student;
+import logic.logicclasses.Activity;
 import logic.enums.ActivityStatus;
 import java.sql.SQLException;
 import java.util.List;

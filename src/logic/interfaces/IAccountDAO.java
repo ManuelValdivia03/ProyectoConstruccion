@@ -1,6 +1,6 @@
 package logic.interfaces;
 
-import logic.Account;
+import logic.logicclasses.Account;
 import java.sql.SQLException;
 import java.util.List;
 

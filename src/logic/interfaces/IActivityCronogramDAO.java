@@ -1,6 +1,6 @@
 package logic.interfaces;
 
-import logic.ActivityCronogram;
+import logic.logicclasses.ActivityCronogram;
 import java.sql.SQLException;
 import java.util.List;
 

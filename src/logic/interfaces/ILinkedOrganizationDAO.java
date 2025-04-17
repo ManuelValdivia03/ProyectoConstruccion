@@ -1,6 +1,6 @@
 package logic.interfaces;
 
-import logic.LinkedOrganization;
+import logic.logicclasses.LinkedOrganization;
 
 import java.sql.SQLException;
 import java.util.List;

@@ -1,6 +1,6 @@
 package logic.interfaces;
 
-import logic.Coordinator;
+import logic.logicclasses.Coordinator;
 
 import java.sql.SQLException;
 import java.util.List;
