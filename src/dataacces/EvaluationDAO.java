@@ -86,7 +86,7 @@ public class EvaluationDAO implements IEvaluationDAO {
                     Presentation presentation = new Presentation();
                     presentation.setIdPresentation(rs.getInt("id_presentacion"));
                     presentation.setPresentationDate(rs.getTimestamp("p_fecha"));
-                    presentation.setPresentationType(PresentationType.fromDatabase(rs.getString("tipo")));
+                    presentation.setPresentationType(PresentationType.valueOf(rs.getString("tipo")));
                     presentation.setStudent(student);
 
                     // Crear y retornar Evaluation usando el constructor
@@ -225,7 +225,9 @@ public class EvaluationDAO implements IEvaluationDAO {
                     student.setIdUser(rs.getInt("id_estudiante"));
                     presentation.setStudent(student);
 
+                    evaluation.setPresentation(presentation);
                     evaluations.add(evaluation);
+
                 }
             }
         }
