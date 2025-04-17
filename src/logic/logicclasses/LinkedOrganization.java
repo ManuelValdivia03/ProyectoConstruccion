@@ -5,12 +5,14 @@ public class LinkedOrganization {
     private String nameLinkedOrganization;
     private String cellPhoneLinkedOrganization;
     private String emailLinkedOrganization;
+    private char status;
 
-    public LinkedOrganization(int idLinkedOrganization, String nameLinkedOrganization, String cellPhoneLinkedOrganization, String emailLinkedOrganization) {
+    public LinkedOrganization(int idLinkedOrganization, String nameLinkedOrganization, String cellPhoneLinkedOrganization, String emailLinkedOrganization, char status) {
         this.idLinkedOrganization = idLinkedOrganization;
         this.nameLinkedOrganization = nameLinkedOrganization;
         this.cellPhoneLinkedOrganization = cellPhoneLinkedOrganization;
         this.emailLinkedOrganization = emailLinkedOrganization;
+        this.status = status;
     }
 
     public LinkedOrganization() {
@@ -18,6 +20,7 @@ public class LinkedOrganization {
         nameLinkedOrganization = "";
         cellPhoneLinkedOrganization = "";
         emailLinkedOrganization = "";
+        status = ' ';
     }
 
     public int getIdLinkedOrganization() {
@@ -50,5 +53,13 @@ public class LinkedOrganization {
 
     public void setEmailLinkedOrganization(String emailLinkedOrganization) {
         this.emailLinkedOrganization = emailLinkedOrganization;
+    }
+
+    public char getStatus() {
+        return status;
+    }
+
+    public void setStatus(char status) {
+        this.status = status;
     }
 }

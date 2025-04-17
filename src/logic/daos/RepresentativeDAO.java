@@ -11,7 +11,7 @@ import java.util.List;
 public class RepresentativeDAO implements IRepresentativeDAO {
 
     public boolean addRepresentative(Representative representative) throws SQLException {
-        String sql = "INSERT INTO representantes (nombre_completo, correo_electronico, telefono, id_organizacion) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO representante (nombre_completo, correo_electronico, telefono, id_organizacion) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -36,7 +36,7 @@ public class RepresentativeDAO implements IRepresentativeDAO {
     }
 
     public boolean deleteRepresentative(Representative representative) throws SQLException {
-        String sql = "DELETE FROM representantes WHERE id_representante = ?";
+        String sql = "DELETE FROM representante WHERE id_representante = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -47,7 +47,7 @@ public class RepresentativeDAO implements IRepresentativeDAO {
     }
 
     public boolean updateRepresentative(Representative representative) throws SQLException {
-        String sql = "UPDATE representantes SET nombre_completo = ?, correo_electronico = ?, telefono = ?, id_organizacion = ? WHERE id_representante = ?";
+        String sql = "UPDATE representante SET nombre_completo = ?, correo_electronico = ?, telefono = ?, id_organizacion = ? WHERE id_representante = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -63,9 +63,9 @@ public class RepresentativeDAO implements IRepresentativeDAO {
     }
 
     public List<Representative> getAllRepresentatives() throws SQLException {
-        String sql = "SELECT r.*, o.nombre as org_nombre, o.telefono as org_telefono, o.correo_electronico as org_email " +
-                "FROM representantes r " +
-                "JOIN organizaciones_vinculadas o ON r.id_organizacion = o.id_organizacion";
+        String sql = "SELECT r.*, o.nombre_empresa as org_nombre, o.telefono as org_telefono, o.correo_empresarial as org_email, o.estado as org_status " +
+                "FROM representante r " +
+                "JOIN organizacion_vinculada o ON r.id_empresa= o.id_empresa";
         List<Representative> representatives = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
@@ -74,10 +74,11 @@ public class RepresentativeDAO implements IRepresentativeDAO {
 
             while (rs.next()) {
                 LinkedOrganization org = new LinkedOrganization(
-                        rs.getInt("id_organizacion"),
-                        rs.getString("org_nombre"),
-                        rs.getString("org_telefono"),
-                        rs.getString("org_email")
+                        rs.getInt("id_empresa"),
+                        rs.getString("nombre_empresa"),
+                        rs.getString("telefono"),
+                        rs.getString("correo_empresarial"),
+                        rs.getString("estado").charAt(0)
                 );
 
                 Representative rep = new Representative(
@@ -94,9 +95,9 @@ public class RepresentativeDAO implements IRepresentativeDAO {
     }
 
     public Representative getRepresentativeById(int id) throws SQLException {
-        String sql = "SELECT r.*, o.nombre as org_nombre, o.telefono as org_telefono, o.correo_electronico as org_email " +
-                "FROM representantes r " +
-                "JOIN organizaciones_vinculadas o ON r.id_organizacion = o.id_organizacion " +
+        String sql = "SELECT r.*, o.nombre_empresa as org_nombre, o.telefono as org_telefono, o.correo_empresarial as org_email, o.estado as org_status " +
+                "FROM representante r " +
+                "JOIN organizacion_vinculada o ON r.id_organizacion = o.id_organizacion " +
                 "WHERE r.id_representante = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
@@ -106,10 +107,11 @@ public class RepresentativeDAO implements IRepresentativeDAO {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     LinkedOrganization org = new LinkedOrganization(
-                            rs.getInt("id_organizacion"),
-                            rs.getString("org_nombre"),
-                            rs.getString("org_telefono"),
-                            rs.getString("org_email")
+                            rs.getInt("id_empresa"),
+                            rs.getString("nombre_empresa"),
+                            rs.getString("telefono"),
+                            rs.getString("correo_empresarial"),
+                            rs.getString("estado").charAt(0)
                     );
 
                     return new Representative(
@@ -126,9 +128,9 @@ public class RepresentativeDAO implements IRepresentativeDAO {
     }
 
     public Representative getRepresentativeByEmail(String email) throws SQLException {
-        String sql = "SELECT r.*, o.nombre as org_nombre, o.telefono as org_telefono, o.correo_electronico as org_email " +
-                "FROM representantes r " +
-                "JOIN organizaciones_vinculadas o ON r.id_organizacion = o.id_organizacion " +
+        String sql = "SELECT r.*, o.nombre_empresa as org_nombre, o.telefono as org_telefono, o.correo_empresarial as org_email, o.estado as org_status" +
+                "FROM representante r " +
+                "JOIN organizacion_vinculada o ON r.id_empresa = o.id_empresa " +
                 "WHERE r.correo_electronico = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
@@ -138,10 +140,11 @@ public class RepresentativeDAO implements IRepresentativeDAO {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     LinkedOrganization org = new LinkedOrganization(
-                            rs.getInt("id_organizacion"),
-                            rs.getString("org_nombre"),
-                            rs.getString("org_telefono"),
-                            rs.getString("org_email")
+                            rs.getInt("id_empresa"),
+                            rs.getString("nombre_empresa"),
+                            rs.getString("telefono"),
+                            rs.getString("correo_empresarial"),
+                            rs.getString("estado").charAt(0)
                     );
 
                     return new Representative(
@@ -158,10 +161,10 @@ public class RepresentativeDAO implements IRepresentativeDAO {
     }
 
     public List<Representative> getRepresentativesByOrganization(int organizationId) throws SQLException {
-        String sql = "SELECT r.*, o.nombre as org_nombre, o.telefono as org_telefono, o.correo_electronico as org_email " +
-                "FROM representantes r " +
-                "JOIN organizaciones_vinculadas o ON r.id_organizacion = o.id_organizacion " +
-                "WHERE r.id_organizacion = ?";
+        String sql = "SELECT r.*, o.nombre_empresa as org_nombre, o.telefono as org_telefono, o.correo_empresarial as org_email, o.estado as org_statusil " +
+                "FROM representante r " +
+                "JOIN organizacion_vinculada o ON r.id_empresa = o.id_empresa " +
+                "WHERE r.id_empresa = ?";
         List<Representative> representatives = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
@@ -171,10 +174,11 @@ public class RepresentativeDAO implements IRepresentativeDAO {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     LinkedOrganization org = new LinkedOrganization(
-                            rs.getInt("id_organizacion"),
-                            rs.getString("org_nombre"),
-                            rs.getString("org_telefono"),
-                            rs.getString("org_email")
+                            rs.getInt("id_empresa"),
+                            rs.getString("nombre_empresa"),
+                            rs.getString("telefono"),
+                            rs.getString("correo_empresarial"),
+                            rs.getString("estado").charAt(0)
                     );
 
                     Representative rep = new Representative(
