@@ -27,7 +27,7 @@ public class Activity {
         descriptionActivity = "";
         startDate = null;
         endDate = null;
-        activityStatus = ActivityStatus.PENDIENTE;
+        activityStatus = ActivityStatus.Pendiente;
     }
 
     public int getIdActivity() {

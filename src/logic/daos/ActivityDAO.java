@@ -11,6 +11,16 @@ import java.util.List;
 public class ActivityDAO implements IActivityDAO {
 
     public boolean addActivity(Activity activity) throws SQLException {
+        // Validate input parameters
+        if (activity == null ||
+                activity.getNameActivity() == null ||
+                activity.getDescriptionActivity() == null ||
+                activity.getStartDate() == null ||
+                activity.getEndDate() == null ||
+                activity.getActivityStatus() == null) {
+            throw new SQLException();
+        }
+
         String sql = "INSERT INTO actividad (nombre, descripcion, fecha_inicial, fecha_terminal, estado) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
@@ -20,7 +30,7 @@ public class ActivityDAO implements IActivityDAO {
             statement.setString(2, activity.getDescriptionActivity());
             statement.setTimestamp(3, activity.getStartDate());
             statement.setTimestamp(4, activity.getEndDate());
-            statement.setString(5, activity.getActivityStatus().toString());
+            statement.setString(5, activity.getActivityStatus().getDbValue());
 
             int affectedRows = statement.executeUpdate();
 
@@ -54,7 +64,7 @@ public class ActivityDAO implements IActivityDAO {
     }
 
     public boolean deleteActivity(int idActivity) throws SQLException {
-        String sql = "DELETE FROM actividades WHERE id_actividad = ?";
+        String sql = "DELETE FROM actividad WHERE id_actividad = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -80,7 +90,7 @@ public class ActivityDAO implements IActivityDAO {
                             resultSet.getString("descripcion"),
                             resultSet.getTimestamp("fecha_inicial"),
                             resultSet.getTimestamp("fecha_terminal"),
-                            ActivityStatus.valueOf(resultSet.getString("estado"))
+                            ActivityStatus.fromDbValue(resultSet.getString("estado"))
                     );
                 }
             }
@@ -103,7 +113,7 @@ public class ActivityDAO implements IActivityDAO {
                         resultSet.getString("descripcion"),
                         resultSet.getTimestamp("fecha_inicial"),
                         resultSet.getTimestamp("fecha_terminal"),
-                        ActivityStatus.valueOf(resultSet.getString("estado"))
+                        ActivityStatus.fromDbValue(resultSet.getString("estado"))
                 ));
             }
         }
@@ -127,7 +137,7 @@ public class ActivityDAO implements IActivityDAO {
                             resultSet.getString("descripcion"),
                             resultSet.getTimestamp("fecha_inicial"),
                             resultSet.getTimestamp("fecha_terminal"),
-                            ActivityStatus.valueOf(resultSet.getString("estado"))
+                            ActivityStatus.fromDbValue(resultSet.getString("estado"))
                     ));
                 }
             }

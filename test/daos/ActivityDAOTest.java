@@ -23,12 +23,10 @@ class ActivityDAOTest {
         activityDAO = new ActivityDAO();
         testConnection = ConnectionDataBase.getConnection();
 
-        // Limpiar y crear la tabla de actividades
         try (var statement = testConnection.createStatement()) {
             statement.execute("DELETE FROM actividad");
             statement.execute("ALTER TABLE actividad AUTO_INCREMENT = 1");
 
-            // Crear tabla de actividades si no existe
             statement.execute("CREATE TABLE IF NOT EXISTS actividad (" +
                     "id_actividad INT AUTO_INCREMENT PRIMARY KEY, " +
                     "nombre VARCHAR(200) NOT NULL, " +
@@ -40,21 +38,21 @@ class ActivityDAOTest {
                     "id_cronograma INT)");
         }
 
-        // Crear actividades de prueba
         testActivities = new ArrayList<>();
         testActivities.add(createTestActivity(
                 "Revisión de documentos",
                 "Revisar documentos del proyecto",
                 Timestamp.from(Instant.now()),
                 Timestamp.from(Instant.now().plusSeconds(86400)),
-                ActivityStatus.PENDIENTE));
+                ActivityStatus.fromDbValue("Pendiente")));
 
         testActivities.add(createTestActivity(
                 "Presentación final",
                 "Preparar presentación para la entrega",
                 Timestamp.from(Instant.now().plusSeconds(172800)),
                 Timestamp.from(Instant.now().plusSeconds(259200)),
-                ActivityStatus.EN_PROGRESO));
+                ActivityStatus.fromDbValue("En progreso")));
+
     }
 
     private static Activity createTestActivity(String name, String description,
@@ -78,27 +76,25 @@ class ActivityDAOTest {
 
     @BeforeEach
     void setUp() throws SQLException {
-        // Limpiar actividades antes de cada prueba
         try (Statement stmt = testConnection.createStatement()) {
             stmt.execute("DELETE FROM actividad");
             stmt.execute("ALTER TABLE actividad AUTO_INCREMENT = 1");
         }
 
-        // Recrear actividades de prueba
         testActivities = new ArrayList<>();
         testActivities.add(createTestActivity(
                 "Revisión de documentos",
                 "Revisar documentos del proyecto",
                 Timestamp.from(Instant.now()),
                 Timestamp.from(Instant.now().plusSeconds(86400)),
-                ActivityStatus.PENDIENTE));
+                ActivityStatus.Pendiente));
 
         testActivities.add(createTestActivity(
                 "Presentación final",
                 "Preparar presentación para la entrega",
                 Timestamp.from(Instant.now().plusSeconds(172800)),
                 Timestamp.from(Instant.now().plusSeconds(259200)),
-                ActivityStatus.EN_PROGRESO));
+                ActivityStatus.En_progreso));
     }
 
     @Test
@@ -108,7 +104,7 @@ class ActivityDAOTest {
         newActivity.setDescriptionActivity("Descripción de la nueva actividad");
         newActivity.setStartDate(Timestamp.from(Instant.now()));
         newActivity.setEndDate(Timestamp.from(Instant.now().plusSeconds(86400)));
-        newActivity.setActivityStatus(ActivityStatus.PENDIENTE);
+        newActivity.setActivityStatus(ActivityStatus.Pendiente);
 
         int initialCount = testActivities.size();
         boolean result = activityDAO.addActivity(newActivity);
@@ -120,7 +116,7 @@ class ActivityDAOTest {
         assertNotNull(addedActivity);
         assertEquals("Nueva Actividad", addedActivity.getNameActivity());
         assertEquals("Descripción de la nueva actividad", addedActivity.getDescriptionActivity());
-        assertEquals(ActivityStatus.PENDIENTE, addedActivity.getActivityStatus());
+        assertEquals(ActivityStatus.Pendiente, addedActivity.getActivityStatus());
     }
 
     @Test
@@ -167,11 +163,11 @@ class ActivityDAOTest {
 
     @Test
     void testGetActivitiesByStatus() throws SQLException {
-        List<Activity> pendingActivities = activityDAO.getActivitiesByStatus(ActivityStatus.PENDIENTE);
+        List<Activity> pendingActivities = activityDAO.getActivitiesByStatus(ActivityStatus.Pendiente);
         assertFalse(pendingActivities.isEmpty());
 
         for (Activity activity : pendingActivities) {
-            assertEquals(ActivityStatus.PENDIENTE, activity.getActivityStatus());
+            assertEquals(ActivityStatus.Pendiente, activity.getActivityStatus());
         }
     }
 
@@ -180,7 +176,7 @@ class ActivityDAOTest {
         Activity activityToUpdate = testActivities.get(0);
         activityToUpdate.setNameActivity("Nombre actualizado");
         activityToUpdate.setDescriptionActivity("Descripción actualizada");
-        activityToUpdate.setActivityStatus(ActivityStatus.COMPLETADA);
+        activityToUpdate.setActivityStatus(ActivityStatus.Completada);
 
         boolean result = activityDAO.updateActivity(activityToUpdate);
         assertTrue(result);
@@ -188,7 +184,7 @@ class ActivityDAOTest {
         Activity updatedActivity = activityDAO.getActivityById(activityToUpdate.getIdActivity());
         assertEquals("Nombre actualizado", updatedActivity.getNameActivity());
         assertEquals("Descripción actualizada", updatedActivity.getDescriptionActivity());
-        assertEquals(ActivityStatus.COMPLETADA, updatedActivity.getActivityStatus());
+        assertEquals(ActivityStatus.Completada, updatedActivity.getActivityStatus());
     }
 
     @Test
@@ -199,7 +195,7 @@ class ActivityDAOTest {
         nonExistentActivity.setDescriptionActivity("Esta actividad no existe");
         nonExistentActivity.setStartDate(Timestamp.from(Instant.now()));
         nonExistentActivity.setEndDate(Timestamp.from(Instant.now().plusSeconds(86400)));
-        nonExistentActivity.setActivityStatus(ActivityStatus.PENDIENTE);
+        nonExistentActivity.setActivityStatus(ActivityStatus.Pendiente);
 
         boolean result = activityDAO.updateActivity(nonExistentActivity);
         assertFalse(result);
@@ -224,16 +220,16 @@ class ActivityDAOTest {
     @Test
     void testChangeActivityStatus_Success() throws SQLException {
         Activity testActivity = testActivities.get(0);
-        boolean result = activityDAO.changeActivityStatus(testActivity.getIdActivity(), ActivityStatus.COMPLETADA);
+        boolean result = activityDAO.changeActivityStatus(testActivity.getIdActivity(), ActivityStatus.Completada);
         assertTrue(result);
 
         Activity updatedActivity = activityDAO.getActivityById(testActivity.getIdActivity());
-        assertEquals(ActivityStatus.COMPLETADA, updatedActivity.getActivityStatus());
+        assertEquals(ActivityStatus.Completada, updatedActivity.getActivityStatus());
     }
 
     @Test
     void testChangeActivityStatus_NotExists() throws SQLException {
-        boolean result = activityDAO.changeActivityStatus(9999, ActivityStatus.COMPLETADA);
+        boolean result = activityDAO.changeActivityStatus(9999, ActivityStatus.Completada);
         assertFalse(result);
     }
 
@@ -257,7 +253,6 @@ class ActivityDAOTest {
         assertTrue(result);
 
         Activity assignedActivity = activityDAO.getActivityById(testActivity.getIdActivity());
-        // Nota: Necesitarías un método getStudentId() en Activity para verificar esto completamente
     }
 
     @Test
@@ -269,6 +264,5 @@ class ActivityDAOTest {
         assertTrue(result);
 
         Activity assignedActivity = activityDAO.getActivityById(testActivity.getIdActivity());
-        // Nota: Necesitarías un método getCronogramId() en Activity para verificar esto completamente
     }
 }
