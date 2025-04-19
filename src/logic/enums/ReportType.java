@@ -1,8 +1,8 @@
 package logic.enums;
 
 public enum ReportType {
-    SEMANAL,
-    FINAL,
-    MENSUAL,
+    Semanal,
+    Final,
+    Mensual,
     NONE
 }

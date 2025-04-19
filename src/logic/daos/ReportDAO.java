@@ -12,14 +12,18 @@ import java.util.List;
 public class ReportDAO implements IReportDAO {
 
     public boolean addReport(Report report) throws SQLException {
-        String sql = "INSERT INTO reporte (fecha_reporte, horas_reportadas, tipo_reporte, id_estudiante) VALUES (?, ?, ?, ?)";
+        if (report == null || report.getReportDate() == null || report.getStudent() == null) {
+            throw new SQLException();
+        }
+
+        String sql = "INSERT INTO reporte (tipo, horas, fecha_reporte, id_estudiante) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            statement.setTimestamp(1, report.getReportDate());
+            statement.setString(1, report.getReportType().toString());
             statement.setInt(2, report.getHoursReport());
-            statement.setString(3, report.getReportType().name());
+            statement.setDate(3, new Date(report.getReportDate().getTime()));
             statement.setInt(4, report.getStudent().getIdUser());
 
             int affectedRows = statement.executeUpdate();
@@ -49,8 +53,8 @@ public class ReportDAO implements IReportDAO {
                     report = new Report();
                     report.setIdReport(resultSet.getInt("id_reporte"));
                     report.setReportDate(resultSet.getTimestamp("fecha_reporte"));
-                    report.setHoursReport(resultSet.getInt("horas_reportadas"));
-                    report.setReportType(ReportType.valueOf(resultSet.getString("tipo_reporte")));
+                    report.setHoursReport(resultSet.getInt("horas"));
+                    report.setReportType(ReportType.valueOf(resultSet.getString("tipo")));
 
                     // Get associated student (assuming StudentDAO exists)
                     StudentDAO studentDAO = new StudentDAO();
@@ -73,8 +77,8 @@ public class ReportDAO implements IReportDAO {
                 Report report = new Report();
                 report.setIdReport(resultSet.getInt("id_reporte"));
                 report.setReportDate(resultSet.getTimestamp("fecha_reporte"));
-                report.setHoursReport(resultSet.getInt("horas_reportadas"));
-                report.setReportType(ReportType.valueOf(resultSet.getString("tipo_reporte")));
+                report.setHoursReport(resultSet.getInt("horas"));
+                report.setReportType(ReportType.valueOf(resultSet.getString("tipo")));
 
                 // Get associated student
                 StudentDAO studentDAO = new StudentDAO();
@@ -99,8 +103,8 @@ public class ReportDAO implements IReportDAO {
                     Report report = new Report();
                     report.setIdReport(resultSet.getInt("id_reporte"));
                     report.setReportDate(resultSet.getTimestamp("fecha_reporte"));
-                    report.setHoursReport(resultSet.getInt("horas_reportadas"));
-                    report.setReportType(ReportType.valueOf(resultSet.getString("tipo_reporte")));
+                    report.setHoursReport(resultSet.getInt("horas"));
+                    report.setReportType(ReportType.valueOf(String.valueOf(resultSet.getString("tipo"))));
 
                     StudentDAO studentDAO = new StudentDAO();
                     report.setStudent(studentDAO.getStudentById(studentId));
@@ -113,14 +117,14 @@ public class ReportDAO implements IReportDAO {
     }
 
     public boolean updateReport(Report report) throws SQLException {
-        String sql = "UPDATE reporte SET fecha_reporte = ?, horas_reportadas = ?, tipo_reporte = ?, id_estudiante = ? WHERE id_reporte = ?";
+        String sql = "UPDATE reporte SET tipo = ?, horas = ?, fecha_reporte = ?, id_estudiante = ? WHERE id_reporte = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setTimestamp(1, report.getReportDate());
+            statement.setString(1, String.valueOf(report.getReportType()));
             statement.setInt(2, report.getHoursReport());
-            statement.setString(3, report.getReportType().name());
+            statement.setDate(3, new Date(report.getReportDate().getTime()));
             statement.setInt(4, report.getStudent().getIdUser());
             statement.setInt(5, report.getIdReport());
 
