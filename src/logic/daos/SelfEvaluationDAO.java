@@ -2,8 +2,8 @@ package logic.daos;
 
 import dataaccess.ConnectionDataBase;
 import logic.logicclasses.SelfEvaluation;
+import logic.logicclasses.Student;
 import logic.interfaces.ISelfEvaluationDAO;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,13 +11,19 @@ import java.util.List;
 public class SelfEvaluationDAO implements ISelfEvaluationDAO {
 
     public boolean addSelfEvaluation(SelfEvaluation selfEvaluation) throws SQLException {
-        String sql = "INSERT INTO autoevaluacion (feedback, calificacion, id_estudiante) VALUES (?, ?, ?)";
+        if (selfEvaluation == null ||
+                selfEvaluation.getFeedBack() == null ||
+                selfEvaluation.getStudent() == null) {
+            throw new SQLException();
+        }
+
+        String sql = "INSERT INTO autoevaluacion (calificacion, comentarios, id_usuario) VALUES (?, ?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            statement.setString(1, selfEvaluation.getFeedBack());
-            statement.setFloat(2, selfEvaluation.getCalification());
+            statement.setFloat(1, selfEvaluation.getCalification());
+            statement.setString(2, selfEvaluation.getFeedBack());
             statement.setInt(3, selfEvaluation.getStudent().getIdUser());
 
             int affectedRows = statement.executeUpdate();
@@ -46,11 +52,11 @@ public class SelfEvaluationDAO implements ISelfEvaluationDAO {
                 if (resultSet.next()) {
                     selfEvaluation = new SelfEvaluation();
                     selfEvaluation.setIdSelfEvaluation(resultSet.getInt("id_autoevaluacion"));
-                    selfEvaluation.setFeedBack(resultSet.getString("feedback"));
+                    selfEvaluation.setFeedBack(resultSet.getString("comentarios"));
                     selfEvaluation.setCalification(resultSet.getFloat("calificacion"));
 
                     StudentDAO studentDAO = new StudentDAO();
-                    selfEvaluation.setStudent(studentDAO.getStudentById(resultSet.getInt("id_estudiante")));
+                    selfEvaluation.setStudent(studentDAO.getStudentById(resultSet.getInt("id_usuario")));
                 }
             }
         }
@@ -68,11 +74,11 @@ public class SelfEvaluationDAO implements ISelfEvaluationDAO {
             while (resultSet.next()) {
                 SelfEvaluation selfEvaluation = new SelfEvaluation();
                 selfEvaluation.setIdSelfEvaluation(resultSet.getInt("id_autoevaluacion"));
-                selfEvaluation.setFeedBack(resultSet.getString("feedback"));
+                selfEvaluation.setFeedBack(resultSet.getString("comentarios"));
                 selfEvaluation.setCalification(resultSet.getFloat("calificacion"));
 
                 StudentDAO studentDAO = new StudentDAO();
-                selfEvaluation.setStudent(studentDAO.getStudentById(resultSet.getInt("id_estudiante")));
+                selfEvaluation.setStudent(studentDAO.getStudentById(resultSet.getInt("id_usuario")));
 
                 selfEvaluations.add(selfEvaluation);
             }
@@ -81,7 +87,7 @@ public class SelfEvaluationDAO implements ISelfEvaluationDAO {
     }
 
     public List<SelfEvaluation> getSelfEvaluationsByStudent(int studentId) throws SQLException {
-        String sql = "SELECT * FROM autoevaluacion WHERE id_estudiante = ?";
+        String sql = "SELECT * FROM autoevaluacion WHERE id_usuario = ?";
         List<SelfEvaluation> selfEvaluations = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
@@ -92,7 +98,7 @@ public class SelfEvaluationDAO implements ISelfEvaluationDAO {
                 while (resultSet.next()) {
                     SelfEvaluation selfEvaluation = new SelfEvaluation();
                     selfEvaluation.setIdSelfEvaluation(resultSet.getInt("id_autoevaluacion"));
-                    selfEvaluation.setFeedBack(resultSet.getString("feedback"));
+                    selfEvaluation.setFeedBack(resultSet.getString("comentarios"));
                     selfEvaluation.setCalification(resultSet.getFloat("calificacion"));
 
                     StudentDAO studentDAO = new StudentDAO();
@@ -106,13 +112,13 @@ public class SelfEvaluationDAO implements ISelfEvaluationDAO {
     }
 
     public boolean updateSelfEvaluation(SelfEvaluation selfEvaluation) throws SQLException {
-        String sql = "UPDATE autoevaluacion SET feedback = ?, calificacion = ?, id_estudiante = ? WHERE id_autoevaluacion = ?";
+        String sql = "UPDATE autoevaluacion SET calificacion = ?, comentarios = ?, id_usuario = ? WHERE id_autoevaluacion = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, selfEvaluation.getFeedBack());
-            statement.setFloat(2, selfEvaluation.getCalification());
+            statement.setFloat(1, selfEvaluation.getCalification());
+            statement.setString(2, selfEvaluation.getFeedBack());
             statement.setInt(3, selfEvaluation.getStudent().getIdUser());
             statement.setInt(4, selfEvaluation.getIdSelfEvaluation());
 
