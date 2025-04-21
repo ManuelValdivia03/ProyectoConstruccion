@@ -2,18 +2,19 @@ package main;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import userinterface.windows.CreateUserWindow;
+import userinterface.windows.controllers.ControllerCreateUserWindow;
 
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
-        Label label = new Label("¡Hola JavaFX!");
-        StackPane root = new StackPane(label);
-        Scene scene = new Scene(root, 300, 200);
+        CreateUserWindow userView = new CreateUserWindow();
+        ControllerCreateUserWindow controller = new ControllerCreateUserWindow(userView);
+
+        Scene scene = new Scene(userView.getView(), 400, 300);
+        primaryStage.setTitle("Gestión de Usuarios");
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Prueba JavaFX");
         primaryStage.show();
     }
 
