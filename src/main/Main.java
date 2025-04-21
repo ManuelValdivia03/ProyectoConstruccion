@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import userinterface.windows.CreateUserWindow;
-import userinterface.windows.controllers.ControllerCreateUserWindow;
+import userinterface.controllers.ControllerCreateUserWindow;
 
 public class Main extends Application {
     @Override

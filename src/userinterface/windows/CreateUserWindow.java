@@ -25,10 +25,6 @@ public class CreateUserWindow {
         Label phoneLabel = new Label("Teléfono:");
         phoneField = new TextField();
 
-        Label statusLabel = new Label("Estado:");
-        statusCombo = new ComboBox<>();
-        statusCombo.getItems().addAll("A - Activo", "I - Inactivo");
-        statusCombo.setValue("A - Activo");
 
         addButton = new Button("Agregar Usuario");
 
@@ -45,8 +41,6 @@ public class CreateUserWindow {
         grid.add(nameField, 1, 0);
         grid.add(phoneLabel, 0, 1);
         grid.add(phoneField, 1, 1);
-        grid.add(statusLabel, 0, 2);
-        grid.add(statusCombo, 1, 2);
 
         view = new VBox(15);
         view.setPadding(new Insets(10));

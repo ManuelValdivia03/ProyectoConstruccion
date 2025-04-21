@@ -1,4 +1,4 @@
-package userinterface.windows.controllers;
+package userinterface.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -27,7 +27,7 @@ public class ControllerCreateUserWindow implements EventHandler<ActionEvent> {
         try {
             String name = view.getNameField().getText();
             String phone = view.getPhoneField().getText();
-            char status = view.getStatusCombo().getValue().charAt(0);
+            char status = 'A';
 
             if (name.isEmpty() || phone.isEmpty()) {
                 view.getResultLabel().setText("Nombre y teléfono son obligatorios");
