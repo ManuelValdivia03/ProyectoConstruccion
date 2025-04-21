@@ -1,0 +1,4 @@
+2025-04-19 16:49:21 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-19 16:49:21 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [250 ms]
+2025-04-19 16:49:21 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-19 16:49:21 [main] INFO  dataaccess.ConnectionDataBase - Prueba de conexión exitosa

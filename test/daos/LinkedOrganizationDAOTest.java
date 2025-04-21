@@ -23,7 +23,9 @@ class LinkedOrganizationDAOTest {
 
         // Limpiar completamente la base de datos
         try (var statement = testConnection.createStatement()) {
+            statement.execute("DELETE FROM representante");
             statement.execute("DELETE FROM organizacion_vinculada");
+            statement.execute("ALTER TABLE representante AUTO_INCREMENT = 1");
             statement.execute("ALTER TABLE organizacion_vinculada AUTO_INCREMENT = 1");
 
             // Crear tabla de organizaciones vinculadas si no existe

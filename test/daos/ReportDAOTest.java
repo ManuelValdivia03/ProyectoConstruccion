@@ -31,6 +31,8 @@ class ReportDAOTest {
 
         // Limpiar completamente las tablas relacionadas
         try (var statement = testConnection.createStatement()) {
+            statement.execute("DELETE FROM autoevaluacion");
+            statement.execute("ALTER TABLE autoevaluacion AUTO_INCREMENT = 1");
             statement.execute("DELETE FROM reporte");
             statement.execute("DELETE FROM evaluacion");
             statement.execute("DELETE FROM presentacion");

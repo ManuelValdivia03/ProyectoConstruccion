@@ -4,11 +4,15 @@ import dataaccess.ConnectionDataBase;
 import logic.logicclasses.Academic;
 import logic.enums.AcademicType;
 import logic.interfaces.IAcademicDAO;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AcademicDAO implements IAcademicDAO {
+    private static final Logger logger = LogManager.getLogger(AcademicDAO.class);
     private final UserDAO userDAO;
 
     public AcademicDAO() {
@@ -17,11 +21,15 @@ public class AcademicDAO implements IAcademicDAO {
 
     public boolean addAcademic(Academic academic) throws SQLException {
         if (academic == null) {
+            logger.warn("Intento de agregar un académico nulo");
             return false;
         }
 
+        logger.debug("Agregando académico: {}", academic.getStaffNumber());
+
         boolean userAdded = userDAO.addUser(academic);
         if (!userAdded) {
+            logger.warn("No se pudo agregar el usuario del académico {}", academic.getStaffNumber());
             return false;
         }
 
@@ -33,16 +41,23 @@ public class AcademicDAO implements IAcademicDAO {
             preparedStatement.setString(2, academic.getStaffNumber());
             preparedStatement.setString(3, academic.getAcademicType().toString());
 
-            return preparedStatement.executeUpdate() > 0;
+            boolean result = preparedStatement.executeUpdate() > 0;
+            if (result) {
+                logger.info("Académico agregado: {}", academic.getStaffNumber());
+            } else {
+                logger.warn("No se pudo agregar el académico: {}", academic.getStaffNumber());
+            }
+            return result;
+        } catch (SQLException e) {
+            logger.error("Error al agregar académico {}", academic.getStaffNumber(), e);
+            throw e;
         }
     }
 
     public List<Academic> getAllAcademics() throws SQLException {
         String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.estado, " +
-                "a.numero_personal, a.tipo " +
-                "FROM academico a " +
+                "a.numero_personal, a.tipo FROM academico a " +
                 "JOIN usuario u ON a.id_usuario = u.id_usuario";
-
         List<Academic> academics = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
@@ -50,28 +65,31 @@ public class AcademicDAO implements IAcademicDAO {
              ResultSet resultSet = statement.executeQuery(sql)) {
 
             while (resultSet.next()) {
-                Academic academic = new Academic(
+                academics.add(new Academic(
                         resultSet.getInt("id_usuario"),
                         resultSet.getString("nombre_completo"),
                         resultSet.getString("telefono"),
                         resultSet.getString("estado").charAt(0),
                         resultSet.getString("numero_personal"),
                         AcademicType.valueOf(resultSet.getString("tipo"))
-                );
-                academics.add(academic);
+                ));
             }
+            logger.info("Se recuperaron {} académicos", academics.size());
+        } catch (SQLException e) {
+            logger.error("Error al obtener académicos", e);
+            throw e;
         }
         return academics;
     }
 
     public Academic getAcademicByStaffNumber(String staffNumber) throws SQLException {
         if (staffNumber == null || staffNumber.isEmpty()) {
+            logger.warn("Número de personal nulo o vacío");
             return null;
         }
 
         String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.estado, " +
-                "a.numero_personal, a.tipo " +
-                "FROM academico a " +
+                "a.numero_personal, a.tipo FROM academico a " +
                 "JOIN usuario u ON a.id_usuario = u.id_usuario " +
                 "WHERE a.numero_personal = ?";
 
@@ -81,6 +99,7 @@ public class AcademicDAO implements IAcademicDAO {
             statement.setString(1, staffNumber);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
+                    logger.debug("Académico encontrado: {}", staffNumber);
                     return new Academic(
                             resultSet.getInt("id_usuario"),
                             resultSet.getString("nombre_completo"),
@@ -91,17 +110,23 @@ public class AcademicDAO implements IAcademicDAO {
                     );
                 }
             }
+        } catch (SQLException e) {
+            logger.error("Error al buscar académico {}", staffNumber, e);
+            throw e;
         }
+        logger.info("No se encontró académico con número de personal {}", staffNumber);
         return null;
     }
 
     public boolean updateAcademic(Academic academic) throws SQLException {
         if (academic == null) {
+            logger.warn("Intento de actualizar un académico nulo");
             return false;
         }
 
         boolean userUpdated = userDAO.updateUser(academic);
         if (!userUpdated) {
+            logger.warn("No se pudo actualizar el usuario asociado al académico {}", academic.getStaffNumber());
             return false;
         }
 
@@ -113,12 +138,22 @@ public class AcademicDAO implements IAcademicDAO {
             statement.setString(2, academic.getAcademicType().toString());
             statement.setInt(3, academic.getIdUser());
 
-            return statement.executeUpdate() > 0;
+            boolean updated = statement.executeUpdate() > 0;
+            if (updated) {
+                logger.info("Académico actualizado: {}", academic.getStaffNumber());
+            } else {
+                logger.warn("No se pudo actualizar académico {}", academic.getStaffNumber());
+            }
+            return updated;
+        } catch (SQLException e) {
+            logger.error("Error al actualizar académico {}", academic.getStaffNumber(), e);
+            throw e;
         }
     }
 
     public boolean deleteAcademic(Academic academic) throws SQLException {
         if (academic == null) {
+            logger.warn("Intento de eliminar un académico nulo");
             return false;
         }
 
@@ -130,25 +165,30 @@ public class AcademicDAO implements IAcademicDAO {
             int rowsAffected = statement.executeUpdate();
 
             if (rowsAffected > 0) {
+                logger.info("Académico eliminado: {}", academic.getStaffNumber());
                 return userDAO.deleteUser(academic.getIdUser());
+            } else {
+                logger.warn("No se encontró académico para eliminar: {}", academic.getStaffNumber());
+                return false;
             }
-            return false;
+        } catch (SQLException e) {
+            logger.error("Error al eliminar académico {}", academic.getStaffNumber(), e);
+            throw e;
         }
     }
 
     public List<Academic> getAllAcademicsByType(AcademicType type) throws SQLException {
         if (type == null) {
+            logger.warn("Tipo de académico nulo");
             return new ArrayList<>();
         }
 
         String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.estado, " +
-                "a.numero_personal, a.tipo " +
-                "FROM academico a " +
+                "a.numero_personal, a.tipo FROM academico a " +
                 "JOIN usuario u ON a.id_usuario = u.id_usuario " +
                 "WHERE a.tipo = ?";
 
         List<Academic> academics = new ArrayList<>();
-
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
@@ -165,14 +205,17 @@ public class AcademicDAO implements IAcademicDAO {
                     ));
                 }
             }
+            logger.info("Se encontraron {} académicos del tipo {}", academics.size(), type);
+        } catch (SQLException e) {
+            logger.error("Error al obtener académicos por tipo {}", type, e);
+            throw e;
         }
         return academics;
     }
 
     public Academic getAcademicById(int idUser) throws SQLException {
         String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.estado, " +
-                "a.numero_personal, a.tipo " +
-                "FROM academico a " +
+                "a.numero_personal, a.tipo FROM academico a " +
                 "JOIN usuario u ON a.id_usuario = u.id_usuario " +
                 "WHERE u.id_usuario = ?";
 
@@ -182,6 +225,7 @@ public class AcademicDAO implements IAcademicDAO {
             statement.setInt(1, idUser);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
+                    logger.debug("Académico encontrado con ID {}", idUser);
                     return new Academic(
                             resultSet.getInt("id_usuario"),
                             resultSet.getString("nombre_completo"),
@@ -192,13 +236,16 @@ public class AcademicDAO implements IAcademicDAO {
                     );
                 }
             }
+        } catch (SQLException e) {
+            logger.error("Error al buscar académico por ID {}", idUser, e);
+            throw e;
         }
         return null;
     }
 
-
     public boolean academicExists(String staffNumber) throws SQLException {
         if (staffNumber == null || staffNumber.isEmpty()) {
+            logger.warn("Número de personal nulo o vacío en academicExists");
             return false;
         }
 
@@ -207,9 +254,12 @@ public class AcademicDAO implements IAcademicDAO {
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, staffNumber);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                return resultSet.next();
-            }
+            boolean exists = statement.executeQuery().next();
+            logger.debug("¿Académico {} existe?: {}", staffNumber, exists);
+            return exists;
+        } catch (SQLException e) {
+            logger.error("Error al verificar existencia del académico {}", staffNumber, e);
+            throw e;
         }
     }
 
@@ -219,12 +269,18 @@ public class AcademicDAO implements IAcademicDAO {
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
 
-            return resultSet.next() ? resultSet.getInt(1) : 0;
+            int count = resultSet.next() ? resultSet.getInt(1) : 0;
+            logger.info("Cantidad total de académicos: {}", count);
+            return count;
+        } catch (SQLException e) {
+            logger.error("Error al contar académicos", e);
+            throw e;
         }
     }
 
     public boolean changeAcademicType(Academic academic) throws SQLException {
         if (academic == null) {
+            logger.warn("Académico nulo al intentar cambiar tipo");
             return false;
         }
 
@@ -235,12 +291,18 @@ public class AcademicDAO implements IAcademicDAO {
             statement.setString(1, academic.getAcademicType().toString());
             statement.setString(2, academic.getStaffNumber());
 
-            return statement.executeUpdate() > 0;
+            boolean updated = statement.executeUpdate() > 0;
+            logger.info("Cambio de tipo para {} a {}: {}", academic.getStaffNumber(), academic.getAcademicType(), updated);
+            return updated;
+        } catch (SQLException e) {
+            logger.error("Error al cambiar tipo de académico {}", academic.getStaffNumber(), e);
+            throw e;
         }
     }
 
     public boolean staffNumberExists(String staffNumber) throws SQLException {
         if (staffNumber == null || staffNumber.isEmpty()) {
+            logger.warn("Número de personal nulo o vacío en staffNumberExists");
             return false;
         }
 
@@ -249,9 +311,12 @@ public class AcademicDAO implements IAcademicDAO {
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, staffNumber);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                return resultSet.next();
-            }
+            boolean exists = statement.executeQuery().next();
+            logger.debug("¿Número de personal {} existe?: {}", staffNumber, exists);
+            return exists;
+        } catch (SQLException e) {
+            logger.error("Error al verificar número de personal {}", staffNumber, e);
+            throw e;
         }
     }
 }
