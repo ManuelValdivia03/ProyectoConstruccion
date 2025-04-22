@@ -1,6 +1,7 @@
 package logic.daos;
 
 import dataaccess.ConnectionDataBase;
+import logic.exceptions.RepeatedStaffNumber;
 import logic.logicclasses.Academic;
 import logic.enums.AcademicType;
 import logic.interfaces.IAcademicDAO;
@@ -19,37 +20,27 @@ public class AcademicDAO implements IAcademicDAO {
         this.userDAO = new UserDAO();
     }
 
-    public boolean addAcademic(Academic academic) throws SQLException {
+    public boolean addAcademic(Academic academic) throws SQLException, RepeatedStaffNumber {
         if (academic == null) {
             logger.warn("Intento de agregar un académico nulo");
             return false;
         }
 
-        logger.debug("Agregando académico: {}", academic.getStaffNumber());
-
-        boolean userAdded = userDAO.addUser(academic);
-        if (!userAdded) {
-            logger.warn("No se pudo agregar el usuario del académico {}", academic.getStaffNumber());
-            return false;
+        if (academicExists(academic.getStaffNumber())) {
+            throw new RepeatedStaffNumber();
         }
 
         String sql = "INSERT INTO academico (id_usuario, numero_personal, tipo) VALUES (?, ?, ?)";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
 
-            preparedStatement.setInt(1, academic.getIdUser());
-            preparedStatement.setString(2, academic.getStaffNumber());
-            preparedStatement.setString(3, academic.getAcademicType().toString());
+            stmt.setInt(1, academic.getIdUser());
+            stmt.setString(2, academic.getStaffNumber());
+            stmt.setString(3, academic.getAcademicType().toString());
 
-            boolean result = preparedStatement.executeUpdate() > 0;
-            if (result) {
-                logger.info("Académico agregado: {}", academic.getStaffNumber());
-            } else {
-                logger.warn("No se pudo agregar el académico: {}", academic.getStaffNumber());
-            }
-            return result;
+            return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
-            logger.error("Error al agregar académico {}", academic.getStaffNumber(), e);
+            logger.error("Error al agregar académico", e);
             throw e;
         }
     }
@@ -300,7 +291,7 @@ public class AcademicDAO implements IAcademicDAO {
         }
     }
 
-    public boolean staffNumberExists(String staffNumber) throws SQLException {
+    public boolean staffNumberExists(String staffNumber) throws RepeatedStaffNumber {
         if (staffNumber == null || staffNumber.isEmpty()) {
             logger.warn("Número de personal nulo o vacío en staffNumberExists");
             return false;
@@ -316,7 +307,7 @@ public class AcademicDAO implements IAcademicDAO {
             return exists;
         } catch (SQLException e) {
             logger.error("Error al verificar número de personal {}", staffNumber, e);
-            throw e;
         }
+        return false;
     }
 }

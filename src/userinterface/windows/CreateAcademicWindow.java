@@ -5,26 +5,35 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import logic.enums.AcademicType;
 
-public class CreateUserWindow {
+public class CreateAcademicWindow {
     private VBox view;
-    private TextField nameField;
-    private TextField phoneField;
-    private ComboBox<String> statusCombo;
+    private TextField nameField, phoneField, staffNumberField;
+    private ComboBox<String> typeComboBox;
     private Button addButton;
     private Label resultLabel;
 
-    public CreateUserWindow() {
+    public CreateAcademicWindow() {
         createView();
     }
 
     private void createView() {
+        Label title = new Label("Registra academico");
+
         Label nameLabel = new Label("Nombre Completo:");
         nameField = new TextField();
 
         Label phoneLabel = new Label("Teléfono:");
         phoneField = new TextField();
 
+        Label staffNumberLabel = new Label("Numero de personal:");
+        staffNumberField = new TextField();
+
+        Label statusLabel = new Label("Tipo de academico:");
+        typeComboBox = new ComboBox<>();
+        typeComboBox.getItems().addAll("Evaluador", "EE");
+        typeComboBox.setValue("Evaluador");
 
         addButton = new Button("Agregar Usuario");
 
@@ -41,6 +50,10 @@ public class CreateUserWindow {
         grid.add(nameField, 1, 0);
         grid.add(phoneLabel, 0, 1);
         grid.add(phoneField, 1, 1);
+        grid.add(staffNumberLabel, 0, 2);
+        grid.add(staffNumberField, 1, 2);
+        grid.add(statusLabel, 0, 3);
+        grid.add(typeComboBox, 1, 3);
 
         view = new VBox(15);
         view.setPadding(new Insets(10));
@@ -60,8 +73,12 @@ public class CreateUserWindow {
         return phoneField;
     }
 
-    public ComboBox<String> getStatusCombo() {
-        return statusCombo;
+    public TextField getStaffNumberField() {
+        return staffNumberField;
+    }
+
+    public ComboBox<String> getTypeComboBox() {
+        return typeComboBox;
     }
 
     public Button getAddButton() {
