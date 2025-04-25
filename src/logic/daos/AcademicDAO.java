@@ -313,4 +313,27 @@ public class AcademicDAO implements IAcademicDAO {
         }
         return false;
     }
+
+    public List<Academic> getAllAcademicsFromView() throws SQLException {
+        String sql = "SELECT * FROM vista_academicos_completa";
+        List<Academic> academics = new ArrayList<>();
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Academic academic = new Academic(
+                        rs.getInt("id_usuario"),
+                        rs.getString("nombre_completo"),
+                        rs.getString("telefono"),
+                        rs.getString("estado").charAt(0),
+                        rs.getString("numero_personal"),
+                        AcademicType.valueOf(rs.getString("tipo_academico"))
+                );
+                academics.add(academic);
+            }
+        }
+        return academics;
+    }
 }
