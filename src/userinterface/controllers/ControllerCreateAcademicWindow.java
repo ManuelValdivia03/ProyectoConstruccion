@@ -1,6 +1,5 @@
 package userinterface.controllers;
 
-
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -130,7 +129,7 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
             isValid = false;
         }
 
-        if (!Validators.validarPassword(view.getPassword())) {
+        if (!Validators.validatePassword(view.getPassword())) {
             showError("La contraseña debe tener al menos 8 caracteres");
             isValid = false;
         }

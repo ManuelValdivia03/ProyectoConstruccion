@@ -24,7 +24,7 @@ public class Validators {
         return enrollment.matches("^S\\d{8}$");
     }
 
-    public static boolean validarPassword(String password) {
+    public static boolean validatePassword(String password) {
         if (password == null) return false;
         return password.length() >= 8;
     }

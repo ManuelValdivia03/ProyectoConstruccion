@@ -1,6 +1,7 @@
 package logic.daos;
 
 import dataaccess.ConnectionDataBase;
+import logic.exceptions.RepeatedEnrollmentException;
 import logic.logicclasses.Student;
 import logic.interfaces.IStudentDAO;
 import java.sql.*;
@@ -15,10 +16,6 @@ public class StudentDAO implements IStudentDAO {
     }
 
     public boolean addStudent(Student student) throws SQLException {
-        if (!userDAO.addUser(student)) {
-            return false;
-        }
-
         String sql = "INSERT INTO estudiante (id_usuario, matricula) VALUES (?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
@@ -141,13 +138,26 @@ public class StudentDAO implements IStudentDAO {
         }
     }
 
-    public boolean studentExists(int id) throws SQLException {
+    public boolean studentExistsById(int id) throws SQLException {
         String sql = "SELECT 1 FROM estudiante WHERE id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
+    public boolean enrollmentExists(String enrollment) throws RepeatedEnrollmentException, SQLException {
+        String sql = "SELECT 1 FROM estudiante WHERE matricula = ?";
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setString(1, enrollment);
             try (ResultSet rs = ps.executeQuery()) {
                 return rs.next();
             }

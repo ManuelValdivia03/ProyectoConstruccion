@@ -11,6 +11,6 @@ public interface IStudentDAO {
     boolean updateStudent(Student student) throws SQLException;
     boolean deleteStudent(int id) throws SQLException;
     List<Student> getStudentsByGroup(int nrc) throws SQLException;
-    boolean studentExists(int id) throws SQLException;
+    boolean studentExistsById(int id) throws SQLException;
     int countStudents() throws SQLException;
 }

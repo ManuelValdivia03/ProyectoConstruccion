@@ -386,3 +386,151 @@
 2025-04-25 00:45:39 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
 2025-04-25 00:45:39 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Generando hash para una contraseña
 2025-04-25 00:45:39 [JavaFX Application Thread] INFO  dataaccess.PasswordUtils - Hash generado correctamente
+2025-04-25 03:08:16 [JavaFX Application Thread] INFO  dataaccess.ConfigLoader - Archivo config.properties cargado correctamente
+2025-04-25 03:08:16 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:08:16 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [356 ms]
+2025-04-25 03:08:16 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:08:20 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:08:20 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [24 ms]
+2025-04-25 03:08:20 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:08:20 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:08:20 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-04-25 03:08:20 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:08:21 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:08:21 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [11 ms]
+2025-04-25 03:08:21 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:08:21 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:08:21 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [11 ms]
+2025-04-25 03:08:21 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:08:21 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:08:21 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [16 ms]
+2025-04-25 03:08:21 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:08:21 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:08:21 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-04-25 03:08:21 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:14:57 [JavaFX Application Thread] INFO  dataaccess.ConfigLoader - Archivo config.properties cargado correctamente
+2025-04-25 03:14:57 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:14:57 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [204 ms]
+2025-04-25 03:14:57 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:14:57 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:14:58 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [17 ms]
+2025-04-25 03:14:58 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:14:58 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:14:58 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [12 ms]
+2025-04-25 03:14:58 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:14:58 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:14:58 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-04-25 03:14:58 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:14:58 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:14:58 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-04-25 03:14:58 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:14:58 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:14:58 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-04-25 03:14:58 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:18:44 [JavaFX Application Thread] INFO  dataaccess.ConfigLoader - Archivo config.properties cargado correctamente
+2025-04-25 03:18:44 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:18:44 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [284 ms]
+2025-04-25 03:18:44 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:18:44 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:18:44 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [14 ms]
+2025-04-25 03:18:44 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:18:44 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:18:44 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-04-25 03:18:44 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:19:15 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:19:15 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [12 ms]
+2025-04-25 03:19:15 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:19:15 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:19:15 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-04-25 03:19:15 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:19:15 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:19:15 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
+2025-04-25 03:19:15 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:19:15 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:19:15 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-04-25 03:19:15 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:19:15 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:19:15 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-04-25 03:19:15 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:19:15 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:19:15 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-04-25 03:19:15 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:21:00 [JavaFX Application Thread] INFO  dataaccess.ConfigLoader - Archivo config.properties cargado correctamente
+2025-04-25 03:21:00 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:21:01 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [216 ms]
+2025-04-25 03:21:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:21:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:21:01 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [15 ms]
+2025-04-25 03:21:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:21:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:21:01 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
+2025-04-25 03:21:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:21:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:21:01 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-04-25 03:21:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:21:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:21:01 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-04-25 03:21:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:21:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:21:01 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-04-25 03:21:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:24:47 [JavaFX Application Thread] INFO  dataaccess.ConfigLoader - Archivo config.properties cargado correctamente
+2025-04-25 03:24:47 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:24:47 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [216 ms]
+2025-04-25 03:24:47 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:24:47 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:24:47 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [16 ms]
+2025-04-25 03:24:47 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:24:47 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:24:47 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
+2025-04-25 03:24:47 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:24:47 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:24:47 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-04-25 03:24:47 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:24:47 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:24:47 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-04-25 03:24:47 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:24:47 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:24:47 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-04-25 03:24:47 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:24:47 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:24:47 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-04-25 03:24:47 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:24:47 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:24:47 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-04-25 03:24:47 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:24:47 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 03:24:47 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-04-25 03:24:47 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 03:24:47 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Generando hash para una contraseña
+2025-04-25 03:24:48 [JavaFX Application Thread] INFO  dataaccess.PasswordUtils - Hash generado correctamente
+2025-04-25 04:15:03 [JavaFX Application Thread] INFO  dataaccess.ConfigLoader - Archivo config.properties cargado correctamente
+2025-04-25 04:15:03 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 04:15:03 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [221 ms]
+2025-04-25 04:15:03 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 04:15:03 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 04:15:03 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [16 ms]
+2025-04-25 04:15:03 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 04:15:03 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 04:15:03 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [11 ms]
+2025-04-25 04:15:03 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 04:15:03 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 04:15:03 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
+2025-04-25 04:15:03 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 04:15:03 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 04:15:03 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
+2025-04-25 04:15:03 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 04:15:03 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 04:15:03 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-04-25 04:15:03 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 04:15:03 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 04:15:03 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
+2025-04-25 04:15:03 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 04:15:03 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 04:15:03 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-04-25 04:15:03 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 04:15:03 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-04-25 04:15:03 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-04-25 04:15:03 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-04-25 04:15:03 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Generando hash para una contraseña
+2025-04-25 04:15:04 [JavaFX Application Thread] INFO  dataaccess.PasswordUtils - Hash generado correctamente
