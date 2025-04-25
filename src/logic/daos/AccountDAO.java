@@ -2,11 +2,14 @@ package logic.daos;
 
 import dataaccess.ConnectionDataBase;
 import dataaccess.PasswordUtils;
+import logic.exceptions.RepeatedEmailException;
 import logic.logicclasses.Account;
 import logic.interfaces.IAccountDAO;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static userinterface.utilities.Validators.validateEmail;
 
 public class AccountDAO implements IAccountDAO {
     private final UserDAO userDAO;
@@ -35,20 +38,17 @@ public class AccountDAO implements IAccountDAO {
         return accounts;
     }
 
-    public boolean addAccount(Account account) throws SQLException {
+    public boolean addAccount(Account account) throws SQLException, RepeatedEmailException {
         if (account == null) {
-            throw new IllegalArgumentException("");
+            throw new IllegalArgumentException("La cuenta no puede ser nula");
         }
 
-        validateEmail(account.getEmail());
+        if (accountExists(account.getEmail())) {
+            throw new RepeatedEmailException("El correo electrónico ya está registrado");
+        }
 
         if (!userDAO.userExists(account.getIdUser())) {
-            throw new SQLException("");
-        }
-
-        AccountDAO accountDAO = new AccountDAO();
-        if (accountDAO.accountExists(account.getEmail())){
-            throw new SQLException("");
+            throw new SQLException("El usuario asociado no existe");
         }
 
         String sql = "INSERT INTO cuenta (id_usuario, correo_e, contraseña) VALUES (?, ?, ?)";
@@ -201,9 +201,4 @@ public class AccountDAO implements IAccountDAO {
         }
     }
 
-    private void validateEmail(String email) {
-        if (email == null || !email.contains("@")) {
-            throw new IllegalArgumentException();
-        }
-    }
 }

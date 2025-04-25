@@ -9,11 +9,11 @@ import userinterface.controllers.ControllerCreateAcademicWindow;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
-        CreateAcademicWindow userView = new CreateAcademicWindow();
-        ControllerCreateAcademicWindow controller = new ControllerCreateAcademicWindow(userView);
+        CreateAcademicWindow window = new CreateAcademicWindow();
+        new ControllerCreateAcademicWindow(window);
 
-        Scene scene = new Scene(userView.getView(), 400, 300);
-        primaryStage.setTitle("Gestión de Usuarios");
+        Scene scene = new Scene(window.getView(), 500, 500);
+        primaryStage.setTitle("Registro de Académicos");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

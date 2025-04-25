@@ -1,10 +1,11 @@
 package logic.daos;
 
 import dataaccess.ConnectionDataBase;
-import logic.exceptions.RepeatedStaffNumber;
+import logic.exceptions.RepeatedStaffNumberException;
 import logic.logicclasses.Academic;
 import logic.enums.AcademicType;
 import logic.interfaces.IAcademicDAO;
+import logic.logicclasses.Account;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,19 +16,21 @@ import java.util.List;
 public class AcademicDAO implements IAcademicDAO {
     private static final Logger logger = LogManager.getLogger(AcademicDAO.class);
     private final UserDAO userDAO;
+    private final AccountDAO accountDAO;
 
     public AcademicDAO() {
         this.userDAO = new UserDAO();
+        this.accountDAO = new AccountDAO();
     }
 
-    public boolean addAcademic(Academic academic) throws SQLException, RepeatedStaffNumber {
+    public boolean addAcademic(Academic academic) throws SQLException, RepeatedStaffNumberException {
         if (academic == null) {
             logger.warn("Intento de agregar un académico nulo");
             return false;
         }
 
         if (academicExists(academic.getStaffNumber())) {
-            throw new RepeatedStaffNumber();
+            throw new RepeatedStaffNumberException();
         }
 
         String sql = "INSERT INTO academico (id_usuario, numero_personal, tipo) VALUES (?, ?, ?)";
@@ -291,7 +294,7 @@ public class AcademicDAO implements IAcademicDAO {
         }
     }
 
-    public boolean staffNumberExists(String staffNumber) throws RepeatedStaffNumber {
+    public boolean staffNumberExists(String staffNumber) throws RepeatedStaffNumberException {
         if (staffNumber == null || staffNumber.isEmpty()) {
             logger.warn("Número de personal nulo o vacío en staffNumberExists");
             return false;

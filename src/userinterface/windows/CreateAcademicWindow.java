@@ -5,40 +5,38 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import logic.enums.AcademicType;
+import userinterface.utilities.PasswordToggleField;
 
 public class CreateAcademicWindow {
-    private VBox view;
-    private TextField nameField, phoneField, staffNumberField;
-    private ComboBox<String> typeComboBox;
-    private Button addButton;
-    private Label resultLabel;
+    private final VBox view;
+    private final TextField nameField;
+    private final TextField phoneField;
+    private final TextField staffNumberField;
+    private final TextField emailField;
+    private final PasswordToggleField passwordToggle;
+    private final ComboBox<String> typeComboBox;
+    private final Button addButton;
+    private final Label resultLabel;
 
     public CreateAcademicWindow() {
-        createView();
-    }
+        Label titleLabel = new Label("Registra académico");
+        titleLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
 
-    private void createView() {
-        Label title = new Label("Registra academico");
-
-        Label nameLabel = new Label("Nombre Completo:");
         nameField = new TextField();
-
-        Label phoneLabel = new Label("Teléfono:");
         phoneField = new TextField();
-
-        Label staffNumberLabel = new Label("Numero de personal:");
         staffNumberField = new TextField();
+        emailField = new TextField();
 
-        Label statusLabel = new Label("Tipo de academico:");
+        passwordToggle = new PasswordToggleField();
+
         typeComboBox = new ComboBox<>();
         typeComboBox.getItems().addAll("Evaluador", "EE");
         typeComboBox.setValue("Evaluador");
 
         addButton = new Button("Agregar Usuario");
+        addButton.setStyle("-fx-background-color: #4a7bed; -fx-text-fill: white;");
 
         resultLabel = new Label();
-        resultLabel.setStyle("-fx-text-fill: #0066cc;");
 
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
@@ -46,19 +44,23 @@ public class CreateAcademicWindow {
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        grid.add(nameLabel, 0, 0);
+        grid.add(new Label("Nombre Completo:"), 0, 0);
         grid.add(nameField, 1, 0);
-        grid.add(phoneLabel, 0, 1);
+        grid.add(new Label("Teléfono:"), 0, 1);
         grid.add(phoneField, 1, 1);
-        grid.add(staffNumberLabel, 0, 2);
+        grid.add(new Label("Número de personal:"), 0, 2);
         grid.add(staffNumberField, 1, 2);
-        grid.add(statusLabel, 0, 3);
+        grid.add(new Label("Tipo de académico:"), 0, 3);
         grid.add(typeComboBox, 1, 3);
+        grid.add(new Label("E-mail:"), 0, 4);
+        grid.add(emailField, 1, 4);
+        grid.add(new Label("Contraseña:"), 0, 5);
+        grid.add(passwordToggle.getContainer(), 1, 5);
 
         view = new VBox(15);
-        view.setPadding(new Insets(10));
+        view.setPadding(new Insets(20));
         view.setAlignment(Pos.CENTER);
-        view.getChildren().addAll(grid, addButton, resultLabel);
+        view.getChildren().addAll(titleLabel, grid, addButton, resultLabel);
     }
 
     public VBox getView() {
@@ -77,6 +79,14 @@ public class CreateAcademicWindow {
         return staffNumberField;
     }
 
+    public TextField getEmailField() {
+        return emailField;
+    }
+
+    public String getPassword() {
+        return passwordToggle.getPassword();
+    }
+
     public ComboBox<String> getTypeComboBox() {
         return typeComboBox;
     }
@@ -87,5 +97,10 @@ public class CreateAcademicWindow {
 
     public Label getResultLabel() {
         return resultLabel;
+    }
+
+
+    public PasswordToggleField getPasswordToggle() {
+        return passwordToggle;
     }
 }

@@ -1,6 +1,8 @@
 package logic.daos;
 
 import dataaccess.ConnectionDataBase;
+import logic.exceptions.InvalidCellPhoneException;
+import logic.exceptions.RepeatedCellPhoneException;
 import logic.logicclasses.User;
 import logic.interfaces.IUserDAO;
 
@@ -10,13 +12,28 @@ import java.util.List;
 
 public class UserDAO implements IUserDAO {
 
-    public boolean addUser(User user) throws SQLException {
+    public boolean addUser(User user) throws SQLException, IllegalArgumentException, RepeatedCellPhoneException {
+        if (user == null) {
+            throw new IllegalArgumentException();
+        }
+
+        String cleanPhone = user.getCellPhone().replaceAll("[^0-9]", "");
+
+        if (!cleanPhone.matches("^\\d{10}$")) {
+            throw new IllegalArgumentException();
+        }
+
+        if (cellPhoneExists(cleanPhone)) {
+            throw new RepeatedCellPhoneException();
+        }
+
         String query = "INSERT INTO usuario (nombre_completo, telefono, estado) VALUES (?, ?, ?)";
+
         try (Connection conn = ConnectionDataBase.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setString(1, user.getFullName());
-            stmt.setString(2, user.getCellPhone());
+            stmt.setString(2, cleanPhone);
             stmt.setString(3, String.valueOf(user.getStatus()));
 
             int rowsInserted = stmt.executeUpdate();
@@ -31,9 +48,6 @@ public class UserDAO implements IUserDAO {
         }
         return false;
     }
-
-
-
 
     public List<User> getAllUsers() throws SQLException {
         String sql = "SELECT * FROM usuario";
@@ -138,6 +152,23 @@ public class UserDAO implements IUserDAO {
         }
     }
 
+    public boolean cellPhoneExists(String cellPhone) throws SQLException, InvalidCellPhoneException {
+        if (cellPhone == null || !cellPhone.matches("^\\d{10}$")){
+            throw new InvalidCellPhoneException();
+        }
+
+        String sql = "SELECT 1 FROM usuario WHERE telefono = ?";
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, cellPhone);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
+        }
+    }
+
     public int countUsers() throws SQLException {
         String sql = "SELECT COUNT(*) FROM usuario";
 
@@ -150,5 +181,20 @@ public class UserDAO implements IUserDAO {
             }
             return 0;
         }
+    }
+
+    public int getIdUserByCellPhone(String cellPhone) throws SQLException {
+        String sql = "SELECT id_usuario FROM usuario WHERE telefono = ?";
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, cellPhone);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("id_usuario");
+                }
+            }
+        }
+        return 0;
     }
 }
