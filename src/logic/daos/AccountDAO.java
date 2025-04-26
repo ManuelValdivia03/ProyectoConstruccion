@@ -201,4 +201,21 @@ public class AccountDAO implements IAccountDAO {
         }
     }
 
+    public String getEmailById(int id) throws SQLException {
+        String sql = "SELECT correo_e FROM cuenta WHERE id_usuario = ?";
+        String email = null;
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, id);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    email = resultSet.getString("correo_e");
+                }
+            }
+        }
+        return email;
+    }
+
 }

@@ -2,6 +2,8 @@ package userinterface.windows;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -21,13 +23,11 @@ public class ConsultAcademicsWindow {
     public ConsultAcademicsWindow() {
         academicTable = new TableView<>();
 
-        // Configurar columnas
         TableColumn<Academic, String> staffNumberCol = createColumn("Núm. Personal", "staffNumber");
         TableColumn<Academic, String> nameCol = createColumn("Nombre", "fullName");
         TableColumn<Academic, String> phoneCol = createColumn("Teléfono", "cellPhone");
         TableColumn<Academic, String> typeCol = createColumn("Tipo", "academicType");
 
-        // Columna para el email
         TableColumn<Academic, String> emailCol = new TableColumn<>("Correo");
         emailCol.setCellValueFactory(cellData -> {
             try {
@@ -39,7 +39,30 @@ public class ConsultAcademicsWindow {
             }
         });
 
-        // Columna de Gestionar
+        academicTable.getColumns().addAll(staffNumberCol, nameCol, phoneCol, emailCol, typeCol);
+
+        // Botones
+        refreshButton = new Button("Actualizar Lista");
+        refreshButton.setStyle("-fx-background-color: #4a7bed; -fx-text-fill: white;");
+
+        backButton = new Button("Regresar");
+        backButton.setStyle("-fx-background-color: #ff4a4a; -fx-text-fill: white;");
+
+        HBox buttonBox = new HBox(10, refreshButton, backButton);
+        buttonBox.setPadding(new Insets(10, 0, 0, 0));
+
+        view = new VBox(10);
+        view.setPadding(new Insets(10));
+        view.getChildren().addAll(academicTable, buttonBox);
+    }
+
+    private TableColumn<Academic, String> createColumn(String title, String propertyName) {
+        TableColumn<Academic, String> column = new TableColumn<>(title);
+        column.setCellValueFactory(new PropertyValueFactory<>(propertyName));
+        return column;
+    }
+
+    public TableColumn<Academic, Void> createManageButtonColumn(EventHandler<ActionEvent> manageAction) {
         TableColumn<Academic, Void> manageCol = new TableColumn<>("Gestionar");
         manageCol.setCellFactory(param -> new TableCell<>() {
             private final Button manageButton = new Button("Gestionar");
@@ -47,8 +70,9 @@ public class ConsultAcademicsWindow {
             {
                 manageButton.setOnAction(event -> {
                     Academic academic = getTableView().getItems().get(getIndex());
-                    System.out.println("Gestionar académico: " + academic.getStaffNumber());
-                    // Aquí irá la lógica de gestión
+                    if (academic != null) {
+                        manageAction.handle(new ActionEvent(academic, manageButton));
+                    }
                 });
             }
 
@@ -62,29 +86,7 @@ public class ConsultAcademicsWindow {
                 }
             }
         });
-
-        academicTable.getColumns().addAll(staffNumberCol, nameCol, phoneCol, emailCol, typeCol, manageCol);
-
-        // Botones
-        refreshButton = new Button("Actualizar Lista");
-        refreshButton.setStyle("-fx-background-color: #4a7bed; -fx-text-fill: white;");
-
-        backButton = new Button("Regresar");
-        backButton.setStyle("-fx-background-color: #ff4a4a; -fx-text-fill: white;");
-
-        // Contenedor de botones
-        HBox buttonBox = new HBox(10, refreshButton, backButton);
-        buttonBox.setPadding(new Insets(10, 0, 0, 0));
-
-        view = new VBox(10);
-        view.setPadding(new Insets(10));
-        view.getChildren().addAll(academicTable, buttonBox);
-    }
-
-    private TableColumn<Academic, String> createColumn(String title, String propertyName) {
-        TableColumn<Academic, String> column = new TableColumn<>(title);
-        column.setCellValueFactory(new PropertyValueFactory<>(propertyName));
-        return column;
+        return manageCol;
     }
 
     public VBox getView() {

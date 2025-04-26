@@ -4,10 +4,12 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import logic.logicclasses.Academic;
 import userinterface.utilities.PasswordToggleField;
 
-public class CreateAcademicWindow {
+public class UpdateAcademicWindow {
     private final VBox view;
     private final TextField nameField;
     private final TextField phoneField;
@@ -15,12 +17,12 @@ public class CreateAcademicWindow {
     private final TextField emailField;
     private final PasswordToggleField passwordToggle;
     private final ComboBox<String> typeComboBox;
-    private final Button addButton;
+    private final Button updateButton;
     private final Button cancelButton;
     private final Label resultLabel;
 
-    public CreateAcademicWindow() {
-        Label titleLabel = new Label("Registra académico");
+    public UpdateAcademicWindow() {
+        Label titleLabel = new Label("Actualizar académico");
         titleLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
 
         nameField = new TextField();
@@ -34,8 +36,8 @@ public class CreateAcademicWindow {
         typeComboBox.getItems().addAll("Evaluador", "EE");
         typeComboBox.setValue("Evaluador");
 
-        addButton = new Button("Agregar Usuario");
-        addButton.setStyle("-fx-background-color: #4a7bed; -fx-text-fill: white;");
+        updateButton = new Button("Actualizar");
+        updateButton.setStyle("-fx-background-color: #4a7bed; -fx-text-fill: white;");
 
         cancelButton = new Button("Cancelar");
         cancelButton.setStyle("-fx-background-color: #ff4a4a; -fx-text-fill: white;");
@@ -61,54 +63,32 @@ public class CreateAcademicWindow {
         grid.add(new Label("Contraseña:"), 0, 5);
         grid.add(passwordToggle.getContainer(), 1, 5);
 
+        HBox buttonBox = new HBox(10, updateButton, cancelButton);
+        buttonBox.setAlignment(Pos.CENTER);
+
         view = new VBox(15);
         view.setPadding(new Insets(20));
         view.setAlignment(Pos.CENTER);
-        view.getChildren().addAll(titleLabel, grid, addButton,cancelButton, resultLabel);
+        view.getChildren().addAll(titleLabel, grid, buttonBox, resultLabel);
     }
 
-    public VBox getView() {
-        return view;
+    public void loadAcademicData(Academic academic, String email) {
+        nameField.setText(academic.getFullName());
+        phoneField.setText(academic.getCellPhone());
+        staffNumberField.setText(academic.getStaffNumber());
+        emailField.setText(email);
+        typeComboBox.setValue(academic.getAcademicType().toString());
     }
 
-    public TextField getNameField() {
-        return nameField;
-    }
-
-    public TextField getPhoneField() {
-        return phoneField;
-    }
-
-    public TextField getStaffNumberField() {
-        return staffNumberField;
-    }
-
-    public TextField getEmailField() {
-        return emailField;
-    }
-
-    public String getPassword() {
-        return passwordToggle.getPassword();
-    }
-
-    public ComboBox<String> getTypeComboBox() {
-        return typeComboBox;
-    }
-
-    public Button getAddButton() {
-        return addButton;
-    }
-
-    public Label getResultLabel() {
-        return resultLabel;
-    }
-
-
-    public PasswordToggleField getPasswordToggle() {
-        return passwordToggle;
-    }
-
-    public Button getCancelButton() {
-        return cancelButton;
-    }
+    public VBox getView() { return view; }
+    public TextField getNameField() { return nameField; }
+    public TextField getPhoneField() { return phoneField; }
+    public TextField getStaffNumberField() { return staffNumberField; }
+    public TextField getEmailField() { return emailField; }
+    public String getPassword() { return passwordToggle.getPassword(); }
+    public ComboBox<String> getTypeComboBox() { return typeComboBox; }
+    public Button getUpdateButton() { return updateButton; }
+    public Button getCancelButton() { return cancelButton; }
+    public Label getResultLabel() { return resultLabel; }
+    public PasswordToggleField getPasswordToggle() { return passwordToggle; }
 }

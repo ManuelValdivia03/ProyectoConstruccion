@@ -183,18 +183,4 @@ public class UserDAO implements IUserDAO {
         }
     }
 
-    public int getIdUserByCellPhone(String cellPhone) throws SQLException {
-        String sql = "SELECT id_usuario FROM usuario WHERE telefono = ?";
-        try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-
-            statement.setString(1, cellPhone);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    return resultSet.getInt("id_usuario");
-                }
-            }
-        }
-        return 0;
-    }
 }

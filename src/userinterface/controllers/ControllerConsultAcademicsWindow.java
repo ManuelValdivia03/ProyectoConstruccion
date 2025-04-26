@@ -5,10 +5,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TableColumn;
 import javafx.stage.Stage;
 import logic.daos.AcademicDAO;
+import logic.daos.AccountDAO;
 import logic.logicclasses.Academic;
 import userinterface.windows.ConsultAcademicsWindow;
+import userinterface.windows.UpdateAcademicWindow;
 
 import java.sql.SQLException;
 
@@ -21,6 +24,13 @@ public class ControllerConsultAcademicsWindow implements EventHandler<ActionEven
         this.view = view;
         this.academicDAO = new AcademicDAO();
         this.currentStage = stage;
+
+        TableColumn<Academic, Void> manageCol = view.createManageButtonColumn(event -> {
+            Academic academic = (Academic) event.getSource();
+            openUpdateAcademicWindow(academic);
+        });
+        view.getAcademicTable().getColumns().add(manageCol);
+
         setupEventHandlers();
         loadAcademicData();
     }
@@ -46,6 +56,31 @@ public class ControllerConsultAcademicsWindow implements EventHandler<ActionEven
             view.setAcademicData(academics);
         } catch (SQLException e) {
             showAlert("Error", "No se pudieron cargar los académicos: " + e.getMessage());
+        }
+    }
+
+    private void openUpdateAcademicWindow(Academic academic) {
+        try {
+            AccountDAO accountDAO = new AccountDAO();
+            String email = accountDAO.getEmailById(academic.getIdUser());
+
+            UpdateAcademicWindow updateWindow = new UpdateAcademicWindow();
+            Stage updateStage = new Stage();
+
+            new ControllerUpdateAcademicWindow(
+                    updateWindow,
+                    academic,
+                    email,
+                    updateStage,
+                    this::loadAcademicData
+            );
+
+            javafx.scene.Scene scene = new javafx.scene.Scene(updateWindow.getView(), 600, 400);
+            updateStage.setScene(scene);
+            updateStage.setTitle("Actualizar Académico");
+            updateStage.show();
+        } catch (SQLException e) {
+            showAlert("Error", "No se pudo abrir la ventana de actualización: " + e.getMessage());
         }
     }
 

@@ -38,6 +38,7 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
 
     private void setupEventHandlers() {
         view.getAddButton().setOnAction(this);
+        view.getCancelButton().setOnAction(event -> handleCancel());
     }
 
     @Override
@@ -61,8 +62,9 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
             String email = view.getEmailField().getText().trim();
             String password = view.getPassword();
             AcademicType type = AcademicType.valueOf(view.getTypeComboBox().getValue());
-
-            verifyDataUniqueness(phone, staffNumber, email);
+            if(!verifyDataUniqueness(phone, staffNumber, email)){
+                return;
+            }
 
             User user = createAndSaveUser(name, phone);
             Academic academic = createAndSaveAcademic(user, staffNumber, type);
@@ -84,6 +86,11 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
         } catch (IllegalArgumentException e) {
             showError("Tipo de académico inválido");
         }
+    }
+
+    private void handleCancel() {
+        clearFields();
+        view.getView().getScene().getWindow().hide();
     }
 
     private boolean validateAllFields() {
@@ -122,7 +129,7 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
         return isValid;
     }
 
-    private void verifyDataUniqueness(String phone, String staffNumber, String email)
+    private boolean verifyDataUniqueness(String phone, String staffNumber, String email)
             throws SQLException, RepeatedCellPhoneException, RepeatedStaffNumberException, RepeatedEmailException {
         if (userDAO.cellPhoneExists(phone)) {
             throw new RepeatedCellPhoneException();
@@ -133,6 +140,7 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
         if (accountDAO.accountExists(email)) {
             throw new RepeatedEmailException();
         }
+        return true;
     }
 
     private User createAndSaveUser(String name, String phone) throws SQLException {
