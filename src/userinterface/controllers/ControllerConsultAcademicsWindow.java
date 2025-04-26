@@ -2,8 +2,6 @@ package userinterface.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.stage.Stage;
@@ -15,7 +13,7 @@ import userinterface.windows.UpdateAcademicWindow;
 
 import java.sql.SQLException;
 
-public class ControllerConsultAcademicsWindow implements EventHandler<ActionEvent> {
+public class ControllerConsultAcademicsWindow {
     private final ConsultAcademicsWindow view;
     private final AcademicDAO academicDAO;
     private final Stage currentStage;
@@ -25,6 +23,7 @@ public class ControllerConsultAcademicsWindow implements EventHandler<ActionEven
         this.academicDAO = new AcademicDAO();
         this.currentStage = stage;
 
+        // Configura la columna "Gestionar" con el manejador
         TableColumn<Academic, Void> manageCol = view.createManageButtonColumn(event -> {
             Academic academic = (Academic) event.getSource();
             openUpdateAcademicWindow(academic);
@@ -36,17 +35,8 @@ public class ControllerConsultAcademicsWindow implements EventHandler<ActionEven
     }
 
     private void setupEventHandlers() {
-        view.getRefreshButton().setOnAction(this);
-        view.getBackButton().setOnAction(this);
-    }
-
-    @Override
-    public void handle(ActionEvent event) {
-        if (event.getSource() == view.getRefreshButton()) {
-            loadAcademicData();
-        } else if (event.getSource() == view.getBackButton()) {
-            currentStage.close();
-        }
+        view.getRefreshButton().setOnAction(e -> loadAcademicData());
+        view.getBackButton().setOnAction(e -> currentStage.close());
     }
 
     private void loadAcademicData() {
@@ -62,7 +52,7 @@ public class ControllerConsultAcademicsWindow implements EventHandler<ActionEven
     private void openUpdateAcademicWindow(Academic academic) {
         try {
             AccountDAO accountDAO = new AccountDAO();
-            String email = accountDAO.getEmailById(academic.getIdUser());
+            String email = accountDAO.getAccountByUserId(academic.getIdUser()).getEmail();
 
             UpdateAcademicWindow updateWindow = new UpdateAcademicWindow();
             Stage updateStage = new Stage();

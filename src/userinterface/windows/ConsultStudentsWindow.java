@@ -10,27 +10,28 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import logic.daos.AccountDAO;
-import logic.logicclasses.Academic;
+import logic.logicclasses.Student;
 
 import java.sql.SQLException;
 
-public class ConsultAcademicsWindow {
+public class ConsultStudentsWindow {
     private final VBox view;
-    private final TableView<Academic> academicTable;
+    private final TableView<Student> studentTable;
     private final Button refreshButton;
     private final Button backButton;
 
-    public ConsultAcademicsWindow() {
-        academicTable = new TableView<>();
-        academicTable.setStyle("-fx-font-size: 14px;");
-        academicTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+    public ConsultStudentsWindow() {
+        // Configuración de la tabla
+        studentTable = new TableView<>();
+        studentTable.setStyle("-fx-font-size: 14px;");
+        studentTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        TableColumn<Academic, String> staffNumberCol = createStyledColumn("Núm. Personal", "staffNumber");
-        TableColumn<Academic, String> nameCol = createStyledColumn("Nombre", "fullName");
-        TableColumn<Academic, String> phoneCol = createStyledColumn("Teléfono", "cellPhone");
-        TableColumn<Academic, String> typeCol = createStyledColumn("Tipo", "academicType");
+        // Columnas de la tabla
+        TableColumn<Student, String> enrollmentCol = createStyledColumn("Matrícula", "enrollment");
+        TableColumn<Student, String> nameCol = createStyledColumn("Nombre", "fullName");
+        TableColumn<Student, String> phoneCol = createStyledColumn("Teléfono", "cellPhone");
 
-        TableColumn<Academic, String> emailCol = new TableColumn<>("Correo");
+        TableColumn<Student, String> emailCol = new TableColumn<>("Correo");
         emailCol.setStyle("-fx-alignment: CENTER;");
         emailCol.setCellValueFactory(cellData -> {
             try {
@@ -42,8 +43,9 @@ public class ConsultAcademicsWindow {
             }
         });
 
-        academicTable.getColumns().addAll(staffNumberCol, nameCol, phoneCol, emailCol, typeCol);
+        studentTable.getColumns().addAll(enrollmentCol, nameCol, phoneCol, emailCol);
 
+        // Botones inferiores
         refreshButton = new Button("Actualizar Lista");
         refreshButton.setStyle("-fx-background-color: #4a7bed; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 16;");
 
@@ -53,29 +55,30 @@ public class ConsultAcademicsWindow {
         HBox buttonBox = new HBox(15, refreshButton, backButton);
         buttonBox.setPadding(new Insets(15, 0, 0, 0));
 
+        // Contenedor principal
         view = new VBox(15);
         view.setPadding(new Insets(15));
         view.setStyle("-fx-background-color: #f5f5f5;");
-        view.getChildren().addAll(academicTable, buttonBox);
+        view.getChildren().addAll(studentTable, buttonBox);
     }
 
-    private TableColumn<Academic, String> createStyledColumn(String title, String propertyName) {
-        TableColumn<Academic, String> column = new TableColumn<>(title);
+    private TableColumn<Student, String> createStyledColumn(String title, String propertyName) {
+        TableColumn<Student, String> column = new TableColumn<>(title);
         column.setCellValueFactory(new PropertyValueFactory<>(propertyName));
         column.setStyle("-fx-alignment: CENTER;");
         return column;
     }
 
-    public TableColumn<Academic, Void> createManageButtonColumn(EventHandler<ActionEvent> manageAction) {
-        TableColumn<Academic, Void> manageCol = new TableColumn<>("Acciones");
+    public TableColumn<Student, Void> createManageButtonColumn(EventHandler<ActionEvent> manageAction) {
+        TableColumn<Student, Void> manageCol = new TableColumn<>("Acciones");
         manageCol.setCellFactory(param -> new TableCell<>() {
             private final Button btn = new Button("Gestionar");
             {
                 btn.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
                 btn.setOnAction(event -> {
-                    Academic academic = getTableView().getItems().get(getIndex());
-                    if (academic != null) {
-                        manageAction.handle(new ActionEvent(academic, btn));
+                    Student student = getTableView().getItems().get(getIndex());
+                    if (student != null) {
+                        manageAction.handle(new ActionEvent(student, btn));
                     }
                 });
             }
@@ -93,8 +96,8 @@ public class ConsultAcademicsWindow {
         return view;
     }
 
-    public TableView<Academic> getAcademicTable() {
-        return academicTable;
+    public TableView<Student> getStudentTable() {
+        return studentTable;
     }
 
     public Button getRefreshButton() {
@@ -105,7 +108,7 @@ public class ConsultAcademicsWindow {
         return backButton;
     }
 
-    public void setAcademicData(ObservableList<Academic> academics) {
-        academicTable.setItems(academics);
+    public void setStudentData(ObservableList<Student> students) {
+        studentTable.setItems(students);
     }
 }

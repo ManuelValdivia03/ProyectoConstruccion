@@ -13,7 +13,7 @@ public class ConsultAcademicsTest extends Application {
         ConsultAcademicsWindow window = new ConsultAcademicsWindow();
         Stage academicListStage = new Stage();
 
-        Scene scene = new Scene(window.getView(), 650, 420);
+        Scene scene = new Scene(window.getView(), 800, 420);
         academicListStage.setScene(scene);
         academicListStage.setTitle("Lista de Académicos");
 
