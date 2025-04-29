@@ -6,7 +6,7 @@ import javafx.stage.Stage;
 import userinterface.controllers.ControllerConsultStudentsWindow;
 import userinterface.windows.ConsultStudentsWindow;
 
-public class ConsultStudents extends Application {
+public class ConsultStudentsTest extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {

@@ -96,6 +96,7 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
     private boolean validateAllFields() {
         boolean isValid = true;
         resetFieldStyles();
+        Validators validators = new Validators();
 
         if (view.getNameField().getText().trim().isEmpty()) {
             showError("Nombre completo es obligatorio");
@@ -103,25 +104,25 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
             isValid = false;
         }
 
-        if (!Validators.validateCellPhone(view.getPhoneField().getText())) {
+        if (!validators.validateCellPhone(view.getPhoneField().getText())) {
             showError("Teléfono debe tener 10 dígitos");
             highlightField(view.getPhoneField());
             isValid = false;
         }
 
-        if (!Validators.validateStaffNumber(view.getStaffNumberField().getText())) {
+        if (!validators.validateStaffNumber(view.getStaffNumberField().getText())) {
             showError("Número de personal debe tener 5 dígitos");
             highlightField(view.getStaffNumberField());
             isValid = false;
         }
 
-        if (!Validators.validateEmail(view.getEmailField().getText())) {
+        if (!validators.validateEmail(view.getEmailField().getText())) {
             showError("Formato de email inválido");
             highlightField(view.getEmailField());
             isValid = false;
         }
 
-        if (!Validators.validatePassword(view.getPassword())) {
+        if (!validators.validatePassword(view.getPassword())) {
             showError("Contraseña debe tener al menos 8 caracteres");
             isValid = false;
         }

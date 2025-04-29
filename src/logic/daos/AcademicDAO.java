@@ -16,11 +16,9 @@ import java.util.List;
 public class AcademicDAO implements IAcademicDAO {
     private static final Logger logger = LogManager.getLogger(AcademicDAO.class);
     private final UserDAO userDAO;
-    private final AccountDAO accountDAO;
 
     public AcademicDAO() {
         this.userDAO = new UserDAO();
-        this.accountDAO = new AccountDAO();
     }
 
     public boolean addAcademic(Academic academic) throws SQLException, RepeatedStaffNumberException {
@@ -77,6 +75,7 @@ public class AcademicDAO implements IAcademicDAO {
     }
 
     public Academic getAcademicByStaffNumber(String staffNumber) throws SQLException {
+        Academic academic = new Academic(-1, "", "", 'I', "", AcademicType.NONE);
         if (staffNumber == null || staffNumber.isEmpty()) {
             logger.warn("Número de personal nulo o vacío");
             return null;
@@ -109,7 +108,7 @@ public class AcademicDAO implements IAcademicDAO {
             throw e;
         }
         logger.info("No se encontró académico con número de personal {}", staffNumber);
-        return null;
+        return academic;
     }
 
     public boolean updateAcademic(Academic academic) throws SQLException {

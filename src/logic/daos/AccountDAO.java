@@ -5,13 +5,16 @@ import dataaccess.PasswordUtils;
 import logic.exceptions.RepeatedEmailException;
 import logic.logicclasses.Account;
 import logic.interfaces.IAccountDAO;
+import userinterface.utilities.Validators;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static userinterface.utilities.Validators.validateEmail;
-
 public class AccountDAO implements IAccountDAO {
+    private static final Logger logger = LogManager.getLogger(AccountDAO.class);
     private final UserDAO userDAO;
 
     public AccountDAO() {
@@ -19,6 +22,7 @@ public class AccountDAO implements IAccountDAO {
     }
 
     public List<Account> getAllAccounts() throws SQLException {
+        logger.info("Obteniendo todas las cuentas");
         String sql = "SELECT id_usuario, correo_e, contraseña FROM cuenta";
         List<Account> accounts = new ArrayList<>();
 
@@ -34,20 +38,29 @@ public class AccountDAO implements IAccountDAO {
                 );
                 accounts.add(account);
             }
+            logger.debug("Se recuperaron {} cuentas", accounts.size());
+        } catch (SQLException e) {
+            logger.error("Error al obtener todas las cuentas", e);
+            throw e;
         }
         return accounts;
     }
 
     public boolean addAccount(Account account) throws SQLException, RepeatedEmailException {
         if (account == null) {
+            logger.warn("Intento de agregar una cuenta nula");
             throw new IllegalArgumentException("La cuenta no puede ser nula");
         }
 
+        logger.debug("Intentando agregar cuenta para usuario {}", account.getIdUser());
+
         if (accountExists(account.getEmail())) {
+            logger.warn("Correo electrónico ya registrado: {}", account.getEmail());
             throw new RepeatedEmailException("El correo electrónico ya está registrado");
         }
 
         if (!userDAO.userExists(account.getIdUser())) {
+            logger.error("El usuario asociado no existe: {}", account.getIdUser());
             throw new SQLException("El usuario asociado no existe");
         }
 
@@ -62,32 +75,55 @@ public class AccountDAO implements IAccountDAO {
             preparedStatement.setString(2, account.getEmail());
             preparedStatement.setString(3, hashedPassword);
 
-            return preparedStatement.executeUpdate() > 0;
+            boolean result = preparedStatement.executeUpdate() > 0;
+            if (result) {
+                logger.info("Cuenta agregada exitosamente para usuario {}", account.getIdUser());
+            } else {
+                logger.warn("No se pudo agregar la cuenta para usuario {}", account.getIdUser());
+            }
+            return result;
+        } catch (SQLException e) {
+            logger.error("Error al agregar cuenta para usuario {}", account.getIdUser(), e);
+            throw e;
         }
     }
 
     public boolean deleteAccount(int idUser) throws SQLException {
+        logger.debug("Intentando eliminar cuenta para usuario {}", idUser);
         String sql = "DELETE FROM cuenta WHERE id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, idUser);
-            return preparedStatement.executeUpdate() > 0;
+            boolean result = preparedStatement.executeUpdate() > 0;
+            if (result) {
+                logger.info("Cuenta eliminada exitosamente para usuario {}", idUser);
+            } else {
+                logger.warn("No se encontró cuenta para eliminar para usuario {}", idUser);
+            }
+            return result;
+        } catch (SQLException e) {
+            logger.error("Error al eliminar cuenta para usuario {}", idUser, e);
+            throw e;
         }
     }
 
     public boolean updateAccount(Account account) throws SQLException {
+        Validators validators = new Validators();
         if (account == null) {
+            logger.warn("Intento de actualizar una cuenta nula");
             throw new IllegalArgumentException();
         }
+
+        logger.debug("Intentando actualizar cuenta para usuario {}", account.getIdUser());
 
         StringBuilder sql = new StringBuilder("UPDATE cuenta SET ");
         List<String> updates = new ArrayList<>();
         List<Object> params = new ArrayList<>();
 
         if (account.getEmail() != null && !account.getEmail().isEmpty()) {
-            validateEmail(account.getEmail());
+            validators.validateEmail(account.getEmail());
             updates.add("correo_e = ?");
             params.add(account.getEmail());
         }
@@ -97,6 +133,7 @@ public class AccountDAO implements IAccountDAO {
         }
 
         if (updates.isEmpty()) {
+            logger.warn("No hay campos para actualizar en la cuenta del usuario {}", account.getIdUser());
             return false;
         }
 
@@ -111,15 +148,26 @@ public class AccountDAO implements IAccountDAO {
                 preparedStatement.setObject(i + 1, params.get(i));
             }
 
-            return preparedStatement.executeUpdate() > 0;
+            boolean result = preparedStatement.executeUpdate() > 0;
+            if (result) {
+                logger.info("Cuenta actualizada exitosamente para usuario {}", account.getIdUser());
+            } else {
+                logger.warn("No se pudo actualizar la cuenta para usuario {}", account.getIdUser());
+            }
+            return result;
+        } catch (SQLException e) {
+            logger.error("Error al actualizar cuenta para usuario {}", account.getIdUser(), e);
+            throw e;
         }
     }
 
     public boolean verifyCredentials(String email, String plainPassword) throws SQLException {
         if (email == null || plainPassword == null) {
+            logger.warn("Credenciales nulas al verificar");
             return false;
         }
 
+        logger.debug("Verificando credenciales para {}", email);
         String sql = "SELECT c.contraseña, u.estado FROM cuenta c " +
                 "JOIN usuario u ON c.id_usuario = u.id_usuario " +
                 "WHERE c.correo_e = ?";
@@ -131,16 +179,24 @@ public class AccountDAO implements IAccountDAO {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     if (resultSet.getString("estado").charAt(0) != 'A') {
+                        logger.warn("Usuario inactivo intentando iniciar sesión: {}", email);
                         return false;
                     }
-                    return PasswordUtils.checkPassword(plainPassword, resultSet.getString("contraseña"));
+                    boolean passwordMatch = PasswordUtils.checkPassword(plainPassword, resultSet.getString("contraseña"));
+                    logger.debug("Verificación de credenciales para {}: {}", email, passwordMatch ? "éxito" : "fallo");
+                    return passwordMatch;
                 }
+                logger.warn("No se encontró cuenta para el correo: {}", email);
                 return false;
             }
+        } catch (SQLException e) {
+            logger.error("Error al verificar credenciales para {}", email, e);
+            throw e;
         }
     }
 
     public Account getAccountByUserId(int idUser) throws SQLException {
+        logger.debug("Buscando cuenta por ID de usuario: {}", idUser);
         String sql = "SELECT id_usuario, correo_e, contraseña FROM cuenta WHERE id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
@@ -149,6 +205,7 @@ public class AccountDAO implements IAccountDAO {
             preparedStatement.setInt(1, idUser);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
+                    logger.debug("Cuenta encontrada para usuario {}", idUser);
                     return new Account(
                             resultSet.getInt("id_usuario"),
                             resultSet.getString("correo_e"),
@@ -156,15 +213,21 @@ public class AccountDAO implements IAccountDAO {
                     );
                 }
             }
+        } catch (SQLException e) {
+            logger.error("Error al buscar cuenta por ID de usuario {}", idUser, e);
+            throw e;
         }
+        logger.info("No se encontró cuenta para usuario {}", idUser);
         return null;
     }
 
     public Account getAccountByEmail(String email) throws SQLException {
         if (email == null || email.isEmpty()) {
+            logger.warn("Correo electrónico nulo o vacío al buscar cuenta");
             return null;
         }
 
+        logger.debug("Buscando cuenta por correo: {}", email);
         String sql = "SELECT id_usuario, correo_e, contraseña FROM cuenta WHERE correo_e = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
@@ -173,6 +236,7 @@ public class AccountDAO implements IAccountDAO {
             preparedStatement.setString(1, email);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
+                    logger.debug("Cuenta encontrada para correo {}", email);
                     return new Account(
                             resultSet.getInt("id_usuario"),
                             resultSet.getString("correo_e"),
@@ -180,28 +244,38 @@ public class AccountDAO implements IAccountDAO {
                     );
                 }
             }
+        } catch (SQLException e) {
+            logger.error("Error al buscar cuenta por correo {}", email, e);
+            throw e;
         }
+        logger.info("No se encontró cuenta para correo {}", email);
         return null;
     }
 
     public boolean accountExists(String email) throws SQLException {
         if (email == null || email.isEmpty()) {
+            logger.warn("Correo electrónico nulo o vacío al verificar existencia");
             return false;
         }
 
+        logger.debug("Verificando existencia de cuenta para correo: {}", email);
         String sql = "SELECT 1 FROM cuenta WHERE correo_e = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, email);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                return resultSet.next();
-            }
+            boolean exists = preparedStatement.executeQuery().next();
+            logger.debug("¿Cuenta {} existe?: {}", email, exists);
+            return exists;
+        } catch (SQLException e) {
+            logger.error("Error al verificar existencia de cuenta para correo {}", email, e);
+            throw e;
         }
     }
 
     public String getEmailById(int id) throws SQLException {
+        logger.debug("Obteniendo correo por ID de usuario: {}", id);
         String sql = "SELECT correo_e FROM cuenta WHERE id_usuario = ?";
         String email = null;
 
@@ -212,10 +286,15 @@ public class AccountDAO implements IAccountDAO {
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     email = resultSet.getString("correo_e");
+                    logger.debug("Correo encontrado para usuario {}: {}", id, email);
+                } else {
+                    logger.info("No se encontró correo para usuario {}", id);
                 }
             }
+        } catch (SQLException e) {
+            logger.error("Error al obtener correo para usuario {}", id, e);
+            throw e;
         }
         return email;
     }
-
 }

@@ -90,18 +90,19 @@ public class ControllerUpdateStudentWindow implements EventHandler<ActionEvent> 
     private boolean validateAllFields() {
         boolean isValid = true;
         resetFieldStyles();
+        Validators validators = new Validators();
 
         if (view.getNameField().getText().trim().isEmpty()) {
             showError("Nombre completo es obligatorio");
             isValid = false;
         }
 
-        if (!Validators.validateCellPhone(view.getPhoneField().getText())) {
+        if (!validators.validateCellPhone(view.getPhoneField().getText())) {
             showError("Teléfono debe tener 10 dígitos");
             isValid = false;
         }
 
-        if (!Validators.validateEmail(view.getEmailField().getText())) {
+        if (!validators.validateEmail(view.getEmailField().getText())) {
             showError("Formato de email inválido");
             isValid = false;
         }

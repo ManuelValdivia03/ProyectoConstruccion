@@ -94,7 +94,7 @@ public class ControllerUpdateAcademicWindow implements EventHandler<ActionEvent>
     private boolean validateAllFields() {
         boolean isValid = true;
         resetFieldStyles();
-
+        Validators validators = new Validators();
 
         if (view.getNameField().getText().trim().isEmpty()) {
             showError("Nombre completo es obligatorio");
@@ -102,13 +102,13 @@ public class ControllerUpdateAcademicWindow implements EventHandler<ActionEvent>
             isValid = false;
         }
 
-        if (!Validators.validateCellPhone(view.getPhoneField().getText())) {
+        if (!validators.validateCellPhone(view.getPhoneField().getText())) {
             showError("Teléfono debe tener 10 dígitos");
             highlightField(view.getPhoneField());
             isValid = false;
         }
 
-        if (!Validators.validateEmail(view.getEmailField().getText())) {
+        if (!validators.validateEmail(view.getEmailField().getText())) {
             showError("Formato de email inválido");
             highlightField(view.getEmailField());
             isValid = false;
