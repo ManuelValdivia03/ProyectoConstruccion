@@ -27,18 +27,19 @@ public class StudentDAO implements IStudentDAO {
 
         logger.debug("Agregando nuevo estudiante con matrícula: {}", student.getEnrollment());
 
-        String sql = "INSERT INTO estudiante (id_usuario, matricula) VALUES (?, ?)";
+        String sql = "INSERT INTO estudiante (id_usuario, matricula, calificacion) VALUES (?, ?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, student.getIdUser());
             ps.setString(2, student.getEnrollment());
+            ps.setInt(3, student.getGrade());
 
             boolean result = ps.executeUpdate() > 0;
             if (result) {
-                logger.info("Estudiante agregado exitosamente - ID: {}, Matrícula: {}",
-                        student.getIdUser(), student.getEnrollment());
+                logger.info("Estudiante agregado exitosamente - ID: {}, Matrícula: {}, Calificación: {}",
+                        student.getIdUser(), student.getEnrollment(), student.getGrade());
             } else {
                 logger.warn("No se pudo agregar el estudiante con matrícula: {}", student.getEnrollment());
             }
@@ -50,7 +51,7 @@ public class StudentDAO implements IStudentDAO {
     }
 
     public Student getStudentByEnrollment(String enrollment) throws SQLException {
-        Student studentVoid = new Student(-1, null, null, 'I', null);
+        Student studentVoid = new Student(-1, null, null, 'I', null, 0);
 
         if (enrollment == null || enrollment.isEmpty()) {
             logger.warn("Intento de buscar estudiante con matrícula nula o vacía");
@@ -59,7 +60,7 @@ public class StudentDAO implements IStudentDAO {
 
         logger.debug("Buscando estudiante por matrícula: {}", enrollment);
 
-        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.estado, e.matricula " +
+        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.estado, e.matricula, e.calificacion " +
                 "FROM usuario u JOIN estudiante e ON u.id_usuario = e.id_usuario " +
                 "WHERE e.matricula = ?";
 
@@ -81,6 +82,7 @@ public class StudentDAO implements IStudentDAO {
                     student.setStatus(estado != null && !estado.isEmpty() ? estado.charAt(0) : 'I');
 
                     student.setEnrollment(rs.getString("matricula"));
+                    student.setGrade(rs.getInt("calificacion"));
                     return student;
                 }
 
@@ -96,7 +98,7 @@ public class StudentDAO implements IStudentDAO {
     public List<Student> getAllStudents() throws SQLException {
         logger.info("Obteniendo todos los estudiantes");
 
-        String sql = "SELECT u.*, e.matricula FROM usuario u JOIN estudiante e ON u.id_usuario = e.id_usuario";
+        String sql = "SELECT u.*, e.matricula, e.calificacion FROM usuario u JOIN estudiante e ON u.id_usuario = e.id_usuario";
         List<Student> students = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
@@ -110,6 +112,7 @@ public class StudentDAO implements IStudentDAO {
                 student.setCellphone(rs.getString("telefono"));
                 student.setStatus(rs.getString("estado").charAt(0));
                 student.setEnrollment(rs.getString("matricula"));
+                student.setGrade(rs.getInt("calificacion"));
                 students.add(student);
             }
             logger.debug("Se encontraron {} estudiantes", students.size());
@@ -128,7 +131,7 @@ public class StudentDAO implements IStudentDAO {
 
         logger.debug("Buscando estudiante por ID: {}", id);
 
-        String sql = "SELECT u.*, e.matricula FROM usuario u JOIN estudiante e ON u.id_usuario = e.id_usuario WHERE u.id_usuario = ?";
+        String sql = "SELECT u.*, e.matricula, e.calificacion FROM usuario u JOIN estudiante e ON u.id_usuario = e.id_usuario WHERE u.id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -143,6 +146,7 @@ public class StudentDAO implements IStudentDAO {
                     student.setCellphone(rs.getString("telefono"));
                     student.setStatus(rs.getString("estado").charAt(0));
                     student.setEnrollment(rs.getString("matricula"));
+                    student.setGrade(rs.getInt("calificacion"));
                     return student;
                 }
             }
@@ -167,23 +171,55 @@ public class StudentDAO implements IStudentDAO {
             return false;
         }
 
-        String sql = "UPDATE estudiante SET matricula = ? WHERE id_usuario = ?";
+        String sql = "UPDATE estudiante SET matricula = ?, calificacion = ? WHERE id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, student.getEnrollment());
-            ps.setInt(2, student.getIdUser());
+            ps.setInt(2, student.getGrade());
+            ps.setInt(3, student.getIdUser());
 
             boolean result = ps.executeUpdate() > 0;
             if (result) {
-                logger.info("Estudiante actualizado exitosamente - ID: {}", student.getIdUser());
+                logger.info("Estudiante actualizado exitosamente - ID: {}, Calificación: {}",
+                        student.getIdUser(), student.getGrade());
             } else {
                 logger.warn("No se encontró estudiante con ID: {} para actualizar", student.getIdUser());
             }
             return result;
         } catch (SQLException e) {
             logger.error("Error al actualizar estudiante ID: {}", student.getIdUser(), e);
+            throw e;
+        }
+    }
+
+    public boolean updateStudentGrade(int studentId, int grade) throws SQLException {
+        if (studentId <= 0) {
+            logger.warn("Intento de actualizar calificación con ID inválido: {}", studentId);
+            return false;
+        }
+
+        logger.debug("Actualizando calificación del estudiante ID: {}", studentId);
+
+        String sql = "UPDATE estudiante SET calificacion = ? WHERE id_usuario = ?";
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1, grade);
+            ps.setInt(2, studentId);
+
+            boolean result = ps.executeUpdate() > 0;
+            if (result) {
+                logger.info("Calificación actualizada exitosamente - ID: {}, Nueva calificación: {}",
+                        studentId, grade);
+            } else {
+                logger.warn("No se encontró estudiante con ID: {} para actualizar calificación", studentId);
+            }
+            return result;
+        } catch (SQLException e) {
+            logger.error("Error al actualizar calificación del estudiante ID: {}", studentId, e);
             throw e;
         }
     }
@@ -225,7 +261,7 @@ public class StudentDAO implements IStudentDAO {
 
         logger.debug("Buscando estudiantes por grupo NRC: {}", nrc);
 
-        String sql = "SELECT u.*, e.matricula FROM usuario u JOIN estudiante e ON u.id_usuario = e.id_usuario " +
+        String sql = "SELECT u.*, e.matricula, e.calificacion FROM usuario u JOIN estudiante e ON u.id_usuario = e.id_usuario " +
                 "JOIN grupo_estudiante ge ON e.id_usuario = ge.id_usuario WHERE ge.nrc = ?";
         List<Student> students = new ArrayList<>();
 
@@ -241,6 +277,7 @@ public class StudentDAO implements IStudentDAO {
                     student.setCellphone(rs.getString("telefono"));
                     student.setStatus(rs.getString("estado").charAt(0));
                     student.setEnrollment(rs.getString("matricula"));
+                    student.setGrade(rs.getInt("calificacion"));
                     students.add(student);
                 }
             }

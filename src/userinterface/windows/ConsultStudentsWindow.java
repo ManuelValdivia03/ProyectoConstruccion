@@ -84,7 +84,7 @@ public class ConsultStudentsWindow {
     }
 
     public TableColumn<Student, Void> createManageButtonColumn(EventHandler<ActionEvent> manageAction) {
-        TableColumn<Student, Void> manageCol = new TableColumn<>("Acciones");
+        TableColumn<Student, Void> manageCol = new TableColumn<>("Gestionar");
         manageCol.setCellFactory(param -> new TableCell<>() {
             private final Button btn = new Button("Gestionar");
             {
@@ -104,6 +104,29 @@ public class ConsultStudentsWindow {
             }
         });
         return manageCol;
+    }
+
+    public TableColumn<Student, Void> createAssignGradeButtonColumn(EventHandler<ActionEvent> assignGradeAction) {
+        TableColumn<Student, Void> gradeCol = new TableColumn<>("Calificación");
+        gradeCol.setCellFactory(param -> new TableCell<>() {
+            private final Button btn = new Button("Asignar");
+            {
+                btn.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;");
+                btn.setOnAction(event -> {
+                    Student student = getTableView().getItems().get(getIndex());
+                    if (student != null) {
+                        assignGradeAction.handle(new ActionEvent(student, btn));
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(empty ? null : btn);
+            }
+        });
+        return gradeCol;
     }
 
     public VBox getView() {

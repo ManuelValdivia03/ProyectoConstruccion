@@ -6,8 +6,6 @@ import javafx.stage.Stage;
 import userinterface.controllers.ControllerCreateStudentWindow;
 import userinterface.windows.CreateStudentWindow;
 
-import static javafx.application.Application.launch;
-
 public class RegisterStudentTest extends Application {
     public void start(Stage primaryStage) {
         CreateStudentWindow window = new CreateStudentWindow();

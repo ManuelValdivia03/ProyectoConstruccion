@@ -5,10 +5,12 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import logic.daos.StudentDAO;
 import logic.logicclasses.Student;
 import userinterface.utilities.Validators;
+import userinterface.windows.AssignGradeWindow;
 import userinterface.windows.ConsultStudentsWindow;
 import userinterface.windows.UpdateStudentWindow;
 
@@ -29,8 +31,10 @@ public class ControllerConsultStudentsWindow {
         this.validators = new Validators();
         this.allStudents = FXCollections.observableArrayList();
 
+        // Agregar columnas de botones
         TableColumn<Student, Void> manageCol = view.createManageButtonColumn(this::handleManageStudent);
-        view.getStudentTable().getColumns().add(manageCol);
+        TableColumn<Student, Void> assignGradeCol = view.createAssignGradeButtonColumn(this::handleAssignGrade);
+        view.getStudentTable().getColumns().addAll(manageCol, assignGradeCol);
 
         setupEventHandlers();
         loadStudentData();
@@ -71,6 +75,7 @@ public class ControllerConsultStudentsWindow {
                 ObservableList<Student> searchResult = FXCollections.observableArrayList();
                 searchResult.add(student);
                 view.setStudentData(searchResult);
+                hasSearchResults = true;
             } else {
                 view.setStudentData(FXCollections.observableArrayList()); // Limpiar tabla
                 showAlert(Alert.AlertType.INFORMATION, "Búsqueda",
@@ -96,6 +101,11 @@ public class ControllerConsultStudentsWindow {
         openUpdateStudentWindow(student);
     }
 
+    private void handleAssignGrade(ActionEvent event) {
+        Student student = (Student) event.getSource();
+        openAssignGradeWindow(student);
+    }
+
     private void openUpdateStudentWindow(Student student) {
         try {
             UpdateStudentWindow updateWindow = new UpdateStudentWindow();
@@ -115,6 +125,27 @@ public class ControllerConsultStudentsWindow {
         } catch (Exception e) {
             showAlert(Alert.AlertType.ERROR, "Error",
                     "No se pudo abrir la ventana de actualización: " + e.getMessage());
+        }
+    }
+
+    private void openAssignGradeWindow(Student student) {
+        try {
+            AssignGradeWindow gradeWindow = new AssignGradeWindow(student);
+            Stage gradeStage = new Stage();
+
+            new ControllerAssignGradeWindow(
+                    gradeWindow,
+                    student,
+                    this::loadStudentData
+            );
+
+            gradeStage.setScene(new javafx.scene.Scene(gradeWindow.getView()));
+            gradeStage.setTitle("Asignar Calificación");
+            gradeStage.initModality(Modality.APPLICATION_MODAL);
+            gradeStage.showAndWait();
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Error",
+                    "No se pudo abrir la ventana de calificación: " + e.getMessage());
         }
     }
 

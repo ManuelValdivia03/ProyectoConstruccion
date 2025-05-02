@@ -144,7 +144,8 @@ public class ControllerUpdateStudentWindow implements EventHandler<ActionEvent> 
                 view.getNameField().getText().trim(),
                 view.getPhoneField().getText().trim(),
                 originalStudent.getStatus(),
-                originalStudent.getEnrollment()
+                originalStudent.getEnrollment(),
+                originalStudent.getGrade()
         );
 
         if (!studentDAO.updateStudent(student)) {

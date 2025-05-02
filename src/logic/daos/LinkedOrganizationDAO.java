@@ -249,4 +249,46 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
             throw e;
         }
     }
+
+    public boolean phoneNumberExists(String phone) throws SQLException {
+        if (phone == null || phone.isEmpty()) {
+            logger.warn("Intento de verificar teléfono nulo o vacío");
+            return false;
+        }
+
+        String sql = "SELECT 1 FROM organizacion_vinculada WHERE telefono = ?";
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setString(1, phone);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            logger.error("Error al verificar existencia de teléfono: {}", phone, e);
+            throw e;
+        }
+    }
+
+    public boolean emailExists(String email) throws SQLException {
+        if (email == null || email.isEmpty()) {
+            logger.warn("Intento de verificar email nulo o vacío");
+            return false;
+        }
+
+        String sql = "SELECT 1 FROM organizacion_vinculada WHERE correo_empresarial = ?";
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            logger.error("Error al verificar existencia de email: {}", email, e);
+            throw e;
+        }
+    }
 }

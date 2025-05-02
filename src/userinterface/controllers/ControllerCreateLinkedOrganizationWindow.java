@@ -9,30 +9,25 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import logic.daos.AccountDAO;
-import logic.daos.StudentDAO;
-import logic.daos.UserDAO;
-import logic.exceptions.*;
-import logic.logicclasses.Account;
-import logic.logicclasses.Student;
-import logic.logicclasses.User;
+import logic.daos.LinkedOrganizationDAO;
+import logic.exceptions.RepeatedNameLinkedOrganizationException;
+import logic.exceptions.RepeatedEmailException;
+import logic.exceptions.RepeatedCellPhoneException;
+import logic.logicclasses.LinkedOrganization;
 import userinterface.utilities.Validators;
-import userinterface.windows.CreateStudentWindow;
+import userinterface.windows.CreateLinkedOrganizationWindow;
 
 import java.sql.SQLException;
-import java.util.Optional;
 
-public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> {
-    private final CreateStudentWindow view;
-    private final StudentDAO studentDAO;
-    private final UserDAO userDAO;
-    private final AccountDAO accountDAO;
+public class ControllerCreateLinkedOrganizationWindow implements EventHandler<ActionEvent> {
+    private final CreateLinkedOrganizationWindow view;
+    private final LinkedOrganizationDAO linkedOrganizationDAO;
+    private final Validators validators;
 
-    public ControllerCreateStudentWindow(CreateStudentWindow view) {
+    public ControllerCreateLinkedOrganizationWindow(CreateLinkedOrganizationWindow view) {
         this.view = view;
-        this.studentDAO = new StudentDAO();
-        this.userDAO = new UserDAO();
-        this.accountDAO = new AccountDAO();
+        this.linkedOrganizationDAO = new LinkedOrganizationDAO();
+        this.validators = new Validators();
         setupEventHandlers();
     }
 
@@ -44,13 +39,14 @@ public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> 
     @Override
     public void handle(ActionEvent event) {
         if (event.getSource() == view.getAddButton()) {
-            handleAddStudent();
+            handleAddLinkedOrganization();
         }
     }
 
-    private void handleAddStudent() {
+    private void handleAddLinkedOrganization() {
         try {
             clearError();
+            resetFieldStyles();
 
             if (!validateAllFields()) {
                 return;
@@ -58,28 +54,26 @@ public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> 
 
             String name = view.getNameField().getText().trim();
             String phone = view.getPhoneField().getText().trim();
-            String enrollment = view.getEnrollmentField().getText().trim();
             String email = view.getEmailField().getText().trim();
-            String password = view.getPassword();
 
-            if (!verifyDataUniqueness(phone, enrollment, email)) {
-                return;
+            verifyDataUniqueness(name, phone, email);
+
+            LinkedOrganization organization = createOrganization(name, phone, email);
+
+            if (linkedOrganizationDAO.addLinkedOrganization(organization)) {
+                showSuccessAndReset();
+            } else {
+                showError("No se pudo registrar la organización");
             }
 
-            User user = createAndSaveUser(name, phone);
-            Student student = createAndSaveStudent(user, enrollment);
-            createAndSaveAccount(user, email, password);
-
-            showSuccessAndReset();
-
+        } catch (RepeatedNameLinkedOrganizationException e) {
+            showError(e.getMessage());
+            highlightField(view.getNameField());
         } catch (RepeatedCellPhoneException e) {
-            showError("El número de teléfono ya está registrado");
+            showError(e.getMessage());
             highlightField(view.getPhoneField());
-        } catch (RepeatedEnrollmentException e) {
-            showError("La matrícula ya está registrada");
-            highlightField(view.getEnrollmentField());
         } catch (RepeatedEmailException e) {
-            showError("El email ya está registrado");
+            showError(e.getMessage());
             highlightField(view.getEmailField());
         } catch (SQLException e) {
             showError("Error de base de datos: " + e.getMessage());
@@ -88,11 +82,9 @@ public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> 
 
     private boolean validateAllFields() {
         boolean isValid = true;
-        resetFieldStyles();
-        Validators validators = new Validators();
 
         if (view.getNameField().getText().isEmpty()) {
-            showError("Nombre completo es obligatorio");
+            showError("Nombre de la organización es obligatorio");
             highlightField(view.getNameField());
             isValid = false;
         }
@@ -103,64 +95,39 @@ public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> 
             isValid = false;
         }
 
-        if (!validators.validateEnrollment(view.getEnrollmentField().getText())) {
-            showError("Matrícula debe comenzar con S y tener 9 dígitos");
-            highlightField(view.getEnrollmentField());
-            isValid = false;
-        }
-
         if (!validators.validateEmail(view.getEmailField().getText())) {
             showError("Formato de email inválido");
             highlightField(view.getEmailField());
             isValid = false;
         }
 
-        if (!validators.validatePassword(view.getPassword())) {
-            showError("Contraseña debe tener al menos 8 caracteres");
-            isValid = false;
-        }
-
         return isValid;
     }
 
-    private boolean verifyDataUniqueness(String phone, String enrollment, String email)
-            throws SQLException, RepeatedCellPhoneException, RepeatedEnrollmentException, RepeatedEmailException {
-        if (userDAO.cellPhoneExists(phone)) {
+    private void verifyDataUniqueness(String name, String phone, String email)
+            throws SQLException, RepeatedNameLinkedOrganizationException,
+            RepeatedCellPhoneException, RepeatedEmailException {
+
+        if (linkedOrganizationDAO.linkedOrganizationExists(name)) {
+            throw new RepeatedNameLinkedOrganizationException("La organización ya está registrada");
+        }
+
+        if (linkedOrganizationDAO.phoneNumberExists(phone)) {
             throw new RepeatedCellPhoneException("El número de teléfono ya está registrado");
         }
-        if (studentDAO.enrollmentExists(enrollment)) {
-            throw new RepeatedEnrollmentException("La matrícula ya está registrada");
+
+        if (linkedOrganizationDAO.emailExists(email)) {
+            throw new RepeatedEmailException("El correo electrónico ya está registrado");
         }
-        if (accountDAO.accountExists(email)) {
-            throw new RepeatedEmailException("El email ya está registrado");
-        }
-        return true;
     }
 
-    private User createAndSaveUser(String name, String phone) throws SQLException {
-        User user = new User(0, name, phone, 'A');
-        if (!userDAO.addUser(user)) {
-            throw new SQLException("No se pudo registrar el usuario");
-        }
-        return user;
-    }
-
-    private Student createAndSaveStudent(User user, String enrollment) throws SQLException {
-        Student student = new Student(user.getIdUser(), user.getFullName(), user.getCellPhone(), 'A', enrollment,0);
-        if (!studentDAO.addStudent(student)) {
-            userDAO.deleteUser(user.getIdUser());
-            throw new SQLException("No se pudo registrar el estudiante");
-        }
-        return student;
-    }
-
-    private void createAndSaveAccount(User user, String email, String password) throws SQLException {
-        Account account = new Account(user.getIdUser(), email, password);
-        if (!accountDAO.addAccount(account)) {
-            studentDAO.deleteStudent(user.getIdUser());
-            userDAO.deleteUser(user.getIdUser());
-            throw new SQLException("No se pudo registrar la cuenta");
-        }
+    private LinkedOrganization createOrganization(String name, String phone, String email) {
+        LinkedOrganization organization = new LinkedOrganization();
+        organization.setNameLinkedOrganization(name);
+        organization.setCellPhoneLinkedOrganization(phone);
+        organization.setEmailLinkedOrganization(email);
+        organization.setStatus('A'); // Activo por defecto
+        return organization;
     }
 
     private void showSuccessAndReset() {
@@ -173,6 +140,7 @@ public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> 
     private void showCustomSuccessDialog() {
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Operación exitosa");
+        dialog.setHeaderText(null);
 
         ButtonType okButton = new ButtonType("Aceptar", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().add(okButton);
@@ -190,21 +158,18 @@ public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> 
             System.err.println("No se pudo cargar el icono: " + e.getMessage());
         }
 
-        Label message = new Label("¡Estudiante registrado correctamente!");
+        Label message = new Label("¡Organización registrada correctamente!");
         message.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
         content.getChildren().add(message);
 
         dialog.getDialogPane().setContent(content);
-
         dialog.getDialogPane().setStyle(
                 "-fx-background-color: #f8f8f8;" +
                         "-fx-border-color: #4CAF50;" +
                         "-fx-border-width: 2px;"
         );
 
-        dialog.showAndWait().ifPresent(response -> {
-            clearFields();
-        });
+        dialog.showAndWait();
     }
 
     private void handleCancel() {
@@ -215,16 +180,13 @@ public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> 
     private void clearFields() {
         view.getNameField().clear();
         view.getPhoneField().clear();
-        view.getEnrollmentField().clear();
         view.getEmailField().clear();
-        view.getPasswordField().clear();
         clearError();
     }
 
     private void resetFieldStyles() {
         view.getNameField().setStyle("");
         view.getPhoneField().setStyle("");
-        view.getEnrollmentField().setStyle("");
         view.getEmailField().setStyle("");
     }
 
