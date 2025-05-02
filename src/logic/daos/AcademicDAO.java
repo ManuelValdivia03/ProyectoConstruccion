@@ -75,10 +75,11 @@ public class AcademicDAO implements IAcademicDAO {
     }
 
     public Academic getAcademicByStaffNumber(String staffNumber) throws SQLException {
-        Academic academic = new Academic(-1, "", "", 'I', "", AcademicType.NONE);
+        Academic academicVoid = new Academic(-1, "", "", 'I', "", AcademicType.NONE);
+
         if (staffNumber == null || staffNumber.isEmpty()) {
             logger.warn("Número de personal nulo o vacío");
-            return null;
+            return academicVoid;
         }
 
         String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.estado, " +
@@ -102,13 +103,13 @@ public class AcademicDAO implements IAcademicDAO {
                             AcademicType.valueOf(resultSet.getString("tipo"))
                     );
                 }
+                logger.info("No se encontró académico con número de personal {}", staffNumber);
+                return academicVoid;
             }
         } catch (SQLException e) {
             logger.error("Error al buscar académico {}", staffNumber, e);
             throw e;
         }
-        logger.info("No se encontró académico con número de personal {}", staffNumber);
-        return academic;
     }
 
     public boolean updateAcademic(Academic academic) throws SQLException {

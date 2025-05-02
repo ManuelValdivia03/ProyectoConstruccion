@@ -49,6 +49,50 @@ public class StudentDAO implements IStudentDAO {
         }
     }
 
+    public Student getStudentByEnrollment(String enrollment) throws SQLException {
+        Student studentVoid = new Student(-1, null, null, 'I', null);
+
+        if (enrollment == null || enrollment.isEmpty()) {
+            logger.warn("Intento de buscar estudiante con matrícula nula o vacía");
+            return studentVoid;
+        }
+
+        logger.debug("Buscando estudiante por matrícula: {}", enrollment);
+
+        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.estado, e.matricula " +
+                "FROM usuario u JOIN estudiante e ON u.id_usuario = e.id_usuario " +
+                "WHERE e.matricula = ?";
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setString(1, enrollment);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    logger.debug("Estudiante encontrado con matrícula: {}", enrollment);
+                    Student student = new Student();
+                    student.setIdUser(rs.getInt("id_usuario"));
+                    student.setFullName(rs.getString("nombre_completo"));
+                    student.setCellphone(rs.getString("telefono"));
+
+                    // Manejo seguro del estado
+                    String estado = rs.getString("estado");
+                    student.setStatus(estado != null && !estado.isEmpty() ? estado.charAt(0) : 'I');
+
+                    student.setEnrollment(rs.getString("matricula"));
+                    return student;
+                }
+
+                logger.info("No se encontró estudiante con matrícula: {}", enrollment);
+                return studentVoid;
+            }
+        } catch (SQLException e) {
+            logger.error("Error al buscar estudiante por matrícula: {}", enrollment, e);
+            throw e;
+        }
+    }
+
     public List<Student> getAllStudents() throws SQLException {
         logger.info("Obteniendo todos los estudiantes");
 

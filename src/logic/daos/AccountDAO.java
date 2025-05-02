@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 public class AccountDAO implements IAccountDAO {
     private static final Logger logger = LogManager.getLogger(AccountDAO.class);
@@ -195,30 +196,28 @@ public class AccountDAO implements IAccountDAO {
         }
     }
 
-    public Account getAccountByUserId(int idUser) throws SQLException {
-        logger.debug("Buscando cuenta por ID de usuario: {}", idUser);
-        String sql = "SELECT id_usuario, correo_e, contraseña FROM cuenta WHERE id_usuario = ?";
+    public Account getAccountByUserId(int userId) throws SQLException {
+        String sql = "SELECT * FROM cuenta WHERE id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement ps = connection.prepareStatement(sql)) {
 
-            preparedStatement.setInt(1, idUser);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    logger.debug("Cuenta encontrada para usuario {}", idUser);
-                    return new Account(
-                            resultSet.getInt("id_usuario"),
-                            resultSet.getString("correo_e"),
-                            resultSet.getString("contraseña")
-                    );
+            ps.setInt(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Account account = new Account();
+                    account.setIdUser(rs.getInt("id_usuario"));
+                    account.setEmail(rs.getString("correo_e"));
+                    account.setPassword(rs.getString("contraseña"));
+                    account.setIdUser(userId);
+                    return account;
                 }
+                throw new SQLException();
             }
         } catch (SQLException e) {
-            logger.error("Error al buscar cuenta por ID de usuario {}", idUser, e);
+            logger.error("Error al obtener cuenta para usuario ID: " + userId, e);
             throw e;
         }
-        logger.info("No se encontró cuenta para usuario {}", idUser);
-        return null;
     }
 
     public Account getAccountByEmail(String email) throws SQLException {

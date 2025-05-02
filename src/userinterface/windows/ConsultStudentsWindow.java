@@ -17,11 +17,13 @@ import java.sql.SQLException;
 public class ConsultStudentsWindow {
     private final VBox view;
     private final TableView<Student> studentTable;
+    private final TextField searchField;
+    private final Button searchButton;
+    private final Button clearButton;
     private final Button refreshButton;
     private final Button backButton;
 
     public ConsultStudentsWindow() {
-        // Configuración de la tabla
         studentTable = new TableView<>();
         studentTable.setStyle("-fx-font-size: 14px;");
         studentTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -45,7 +47,20 @@ public class ConsultStudentsWindow {
 
         studentTable.getColumns().addAll(enrollmentCol, nameCol, phoneCol, emailCol);
 
-        // Botones inferiores
+        searchField = new TextField();
+        searchField.setPromptText("Ingrese matrícula (S seguida de 8 dígitos)");
+        searchField.setStyle("-fx-font-size: 14px; -fx-padding: 5px;");
+        searchField.setPrefWidth(300);
+
+        searchButton = new Button("Buscar");
+        searchButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
+
+        clearButton = new Button("Limpiar");
+        clearButton.setStyle("-fx-background-color: #ff9800; -fx-text-fill: white; -fx-font-weight: bold;");
+
+        HBox searchBox = new HBox(5, searchField, searchButton, clearButton);
+        searchBox.setPadding(new Insets(0, 0, 10, 0));
+
         refreshButton = new Button("Actualizar Lista");
         refreshButton.setStyle("-fx-background-color: #4a7bed; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 16;");
 
@@ -55,11 +70,10 @@ public class ConsultStudentsWindow {
         HBox buttonBox = new HBox(15, refreshButton, backButton);
         buttonBox.setPadding(new Insets(15, 0, 0, 0));
 
-        // Contenedor principal
         view = new VBox(15);
         view.setPadding(new Insets(15));
         view.setStyle("-fx-background-color: #f5f5f5;");
-        view.getChildren().addAll(studentTable, buttonBox);
+        view.getChildren().addAll(searchBox, studentTable, buttonBox);
     }
 
     private TableColumn<Student, String> createStyledColumn(String title, String propertyName) {
@@ -98,6 +112,18 @@ public class ConsultStudentsWindow {
 
     public TableView<Student> getStudentTable() {
         return studentTable;
+    }
+
+    public TextField getSearchField() {
+        return searchField;
+    }
+
+    public Button getSearchButton() {
+        return searchButton;
+    }
+
+    public Button getClearButton() {
+        return clearButton;
     }
 
     public Button getRefreshButton() {

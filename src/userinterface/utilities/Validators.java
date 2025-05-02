@@ -21,7 +21,7 @@ public class Validators {
 
     public boolean validateEnrollment(String enrollment) {
         if (enrollment == null) return false;
-        return enrollment.matches("^S\\d{8}$");
+        return enrollment.matches("^[Ss]\\d{8}$");
     }
 
     public boolean validatePassword(String password) {

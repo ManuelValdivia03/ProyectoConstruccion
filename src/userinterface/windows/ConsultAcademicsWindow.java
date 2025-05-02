@@ -17,6 +17,9 @@ import java.sql.SQLException;
 public class ConsultAcademicsWindow {
     private final VBox view;
     private final TableView<Academic> academicTable;
+    private final TextField searchField;
+    private final Button searchButton;
+    private final Button clearButton;
     private final Button refreshButton;
     private final Button backButton;
 
@@ -36,13 +39,26 @@ public class ConsultAcademicsWindow {
             try {
                 String email = new AccountDAO().getAccountByUserId(
                         cellData.getValue().getIdUser()).getEmail();
-                return new SimpleStringProperty(email);
+                return new SimpleStringProperty(email != null ? email : "Sin correo");
             } catch (SQLException e) {
                 return new SimpleStringProperty("Error");
             }
         });
 
         academicTable.getColumns().addAll(staffNumberCol, nameCol, phoneCol, emailCol, typeCol);
+
+        searchField = new TextField();
+        searchField.setPromptText("Buscar por número de personal...");
+        searchField.setStyle("-fx-font-size: 14px; -fx-padding: 5px;");
+
+        searchButton = new Button("Buscar");
+        searchButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
+
+        clearButton = new Button("Limpiar");
+        clearButton.setStyle("-fx-background-color: #ff9800; -fx-text-fill: white; -fx-font-weight: bold;");
+
+        HBox searchBox = new HBox(5, searchField, searchButton, clearButton);
+        searchBox.setPadding(new Insets(0, 0, 10, 0));
 
         refreshButton = new Button("Actualizar Lista");
         refreshButton.setStyle("-fx-background-color: #4a7bed; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 16;");
@@ -56,7 +72,7 @@ public class ConsultAcademicsWindow {
         view = new VBox(15);
         view.setPadding(new Insets(15));
         view.setStyle("-fx-background-color: #f5f5f5;");
-        view.getChildren().addAll(academicTable, buttonBox);
+        view.getChildren().addAll(searchBox, academicTable, buttonBox);
     }
 
     private TableColumn<Academic, String> createStyledColumn(String title, String propertyName) {
@@ -87,6 +103,18 @@ public class ConsultAcademicsWindow {
             }
         });
         return manageCol;
+    }
+
+    public TextField getSearchField() {
+        return searchField;
+    }
+
+    public Button getSearchButton() {
+        return searchButton;
+    }
+
+    public Button getClearButton() {
+        return clearButton;
     }
 
     public VBox getView() {
