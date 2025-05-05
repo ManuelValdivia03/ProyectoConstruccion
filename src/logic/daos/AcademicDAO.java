@@ -5,7 +5,6 @@ import logic.exceptions.RepeatedStaffNumberException;
 import logic.logicclasses.Academic;
 import logic.enums.AcademicType;
 import logic.interfaces.IAcademicDAO;
-import logic.logicclasses.Account;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

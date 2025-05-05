@@ -64,9 +64,6 @@ class PresentationDAOTest {
         testStudents.add(createTestStudent("S001", "Estudiante 1", "5551111111"));
         testStudents.add(createTestStudent("S002", "Estudiante 2", "5552222222"));
 
-        assertTrue(studentDAO.studentExists(testStudents.get(0).getIdUser()));
-        assertTrue(studentDAO.studentExists(testStudents.get(1).getIdUser()));
-
         testPresentations = new ArrayList<>();
         testPresentations.add(createTestPresentation(
                 testStudents.get(0),

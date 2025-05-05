@@ -13,7 +13,6 @@ import userinterface.utilities.Validators;
 import userinterface.windows.AssignGradeWindow;
 import userinterface.windows.ConsultStudentsWindow;
 import userinterface.windows.UpdateStudentWindow;
-
 import java.sql.SQLException;
 
 public class ControllerConsultStudentsWindow {
@@ -71,7 +70,7 @@ public class ControllerConsultStudentsWindow {
         try {
             Student student = studentDAO.getStudentByEnrollment(enrollment);
 
-            if (student.getIdUser() != -1) { // Si NO es el estudiante vacío
+            if (student.getIdUser() != -1) {
                 ObservableList<Student> searchResult = FXCollections.observableArrayList();
                 searchResult.add(student);
                 view.setStudentData(searchResult);

@@ -65,8 +65,8 @@ public class ControllerAssignGradeWindow implements EventHandler<ActionEvent> {
 
         try {
             int grade = Integer.parseInt(gradeText);
-            if (grade < 0 || grade > 100) {
-                showError("La calificación debe estar entre 0 y 100");
+            if (grade < 0 || grade > 10) {
+                showError("La calificación debe estar entre 0 y 10");
                 return false;
             }
             return true;
