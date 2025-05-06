@@ -46,7 +46,7 @@ public class ControllerConsultProyectsWindow implements EventHandler<ActionEvent
 
     private void loadAllProjects() {
         try {
-            projectsList.setAll(proyectDAO.getAllProyects());
+            projectsList.setAll(proyectDAO.getProyectsByStatus('A'));
             view.setProjectsList(projectsList);
             view.getResultLabel().setText("");
         } catch (SQLException e) {

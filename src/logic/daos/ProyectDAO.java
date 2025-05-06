@@ -142,6 +142,37 @@ public class ProyectDAO implements IProyectDAO {
         return proyects;
     }
 
+    public List<Proyect> getProyectsByStatus(char status) throws SQLException {
+        logger.debug("Buscando proyectos con estado: {}", status);
+
+        String sql = "SELECT id_proyecto, titulo, descripcion, fecha_inicial, fecha_terminal, estado FROM proyecto WHERE estado = ?";
+        List<Proyect> proyects = new ArrayList<>();
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setString(1, String.valueOf(status));
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Proyect proyect = new Proyect(
+                            rs.getInt("id_proyecto"),
+                            rs.getString("titulo"),
+                            rs.getString("descripcion"),
+                            rs.getTimestamp("fecha_inicial"),
+                            rs.getTimestamp("fecha_terminal"),
+                            rs.getString("estado").charAt(0)
+                    );
+                    proyects.add(proyect);
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Error al buscar proyectos por estado: {}", status, e);
+            throw e;
+        }
+        logger.info("Se encontraron {} proyectos con estado: {}", proyects.size(), status);
+        return proyects;
+    }
+
     public Proyect getProyectById(int id) throws SQLException {
         if (id <= 0) {
             logger.warn("Intento de buscar proyecto con ID inválido: {}", id);
