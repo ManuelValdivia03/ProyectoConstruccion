@@ -5,22 +5,26 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import logic.daos.AccountDAO;
 import logic.daos.StudentDAO;
 import logic.daos.UserDAO;
-import logic.exceptions.*;
+import logic.exceptions.RepeatedCellPhoneException;
+import logic.exceptions.RepeatedEmailException;
+import logic.exceptions.RepeatedEnrollmentException;
 import logic.logicclasses.Account;
 import logic.logicclasses.Student;
 import logic.logicclasses.User;
 import userinterface.utilities.Validators;
 import userinterface.windows.CreateStudentWindow;
-
 import java.sql.SQLException;
-import java.util.Optional;
 
 public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> {
     private final CreateStudentWindow view;

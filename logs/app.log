@@ -19608,3 +19608,14 @@ java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child 
 2025-05-02 17:48:50 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
 2025-05-02 17:48:50 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [16 ms]
 2025-05-02 17:48:50 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-05 18:13:56 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Verificando existencia de proyecto con título: El arte del abstract factory
+2025-05-05 18:13:56 [JavaFX Application Thread] INFO  dataaccess.ConfigLoader - Archivo config.properties cargado correctamente
+2025-05-05 18:13:56 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-05 18:13:57 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [285 ms]
+2025-05-05 18:13:57 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-05 18:13:57 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - ¿Proyecto 'El arte del abstract factory' existe?: false
+2025-05-05 18:13:57 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Agregando nuevo proyecto: El arte del abstract factory
+2025-05-05 18:13:57 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-05 18:13:57 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [18 ms]
+2025-05-05 18:13:57 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-05 18:13:57 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Proyecto agregado exitosamente - ID: 1, Título: El arte del abstract factory

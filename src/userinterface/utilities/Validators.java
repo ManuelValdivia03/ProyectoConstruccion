@@ -28,4 +28,11 @@ public class Validators {
         if (password == null) return false;
         return password.length() >= 8;
     }
+
+    public boolean validateDate(String date) {
+        if (date == null) return false;
+        return date.matches("^\\d{4}-\\d{2}-\\d{2}$") ||
+                date.matches("^\\d{2}/\\d{2}/\\d{4}$") ||
+                date.matches("^\\d{2}-\\d{2}-\\d{4}$");
+    }
 }
