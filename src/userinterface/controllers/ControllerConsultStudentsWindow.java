@@ -49,7 +49,7 @@ public class ControllerConsultStudentsWindow {
 
     private void loadStudentData() {
         try {
-            allStudents.setAll(studentDAO.getAllStudents());
+            allStudents.setAll(studentDAO.getSudentsByStatus('A'));
             view.setStudentData(allStudents);
             view.getSearchField().clear();
             hasSearchResults = false;

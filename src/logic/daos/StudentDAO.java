@@ -126,6 +126,37 @@ public class StudentDAO implements IStudentDAO {
         return students;
     }
 
+    public List<Student> getSudentsByStatus(char status) throws SQLException {
+        logger.info("Obteniendo estudiantes con estado: {}", status);
+
+        String sql = "SELECT u.*, e.matricula, e.calificacion FROM usuario u JOIN estudiante e ON u.id_usuario = e.id_usuario WHERE u.estado = ?";
+        List<Student> students = new ArrayList<>();
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setString(1, String.valueOf(status));
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Student student = new Student();
+                    student.setIdUser(rs.getInt("id_usuario"));
+                    student.setFullName(rs.getString("nombre_completo"));
+                    student.setCellphone(rs.getString("telefono"));
+                    student.setStatus(rs.getString("estado").charAt(0));
+                    student.setEnrollment(rs.getString("matricula"));
+                    student.setGrade(rs.getInt("calificacion"));
+                    students.add(student);
+                }
+                logger.debug("Se encontraron {} estudiantes con estado: {}", students.size(), status);
+            }
+        } catch (SQLException e) {
+            logger.error("Error al obtener estudiantes por estado: {}", status, e);
+            throw e;
+        }
+        return students;
+    }
+
     public Student getStudentById(int id) throws SQLException {
         if (id <= 0) {
             logger.warn("Intento de buscar estudiante con ID inválido: {}", id);

@@ -139,11 +139,12 @@ public class ControllerUpdateStudentWindow implements EventHandler<ActionEvent> 
     }
 
     private void updateStudent() throws SQLException {
+        char status = view.getStatusComboBox().getValue().equals("Activo") ? 'A' : 'I';
         Student student = new Student(
                 originalStudent.getIdUser(),
                 view.getNameField().getText().trim(),
                 view.getPhoneField().getText().trim(),
-                originalStudent.getStatus(),
+                status,
                 originalStudent.getEnrollment(),
                 originalStudent.getGrade()
         );

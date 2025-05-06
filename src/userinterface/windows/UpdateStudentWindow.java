@@ -16,6 +16,7 @@ public class UpdateStudentWindow {
     private final TextField enrollmentField;
     private final TextField emailField;
     private final PasswordToggleField passwordField;
+    private final ComboBox<String> statusComboBox;
     private final Button updateButton;
     private final Button cancelButton;
     private final Label resultLabel;
@@ -30,6 +31,9 @@ public class UpdateStudentWindow {
         enrollmentField.setEditable(false);
         emailField = new TextField();
         passwordField = new PasswordToggleField();
+        statusComboBox = new ComboBox<>();
+        statusComboBox.getItems().addAll("Activo", "Inactivo");
+        statusComboBox.setValue("Activo");
 
         updateButton = new Button("Actualizar");
         updateButton.setStyle("-fx-background-color: #4a7bed; -fx-text-fill: white;");
@@ -55,6 +59,8 @@ public class UpdateStudentWindow {
         grid.add(emailField, 1, 3);
         grid.add(new Label("Contraseña:"), 0, 4);
         grid.add(passwordField.getContainer(), 1, 4);
+        grid.add(new Label("Estado:"), 0, 5);
+        grid.add(statusComboBox, 1, 5);
 
         HBox buttonBox = new HBox(10, updateButton, cancelButton);
         buttonBox.setAlignment(Pos.CENTER);
@@ -72,7 +78,7 @@ public class UpdateStudentWindow {
         emailField.setText(email);
     }
 
-    // Getters para los campos y botones
+
     public VBox getView() { return view; }
     public TextField getNameField() { return nameField; }
     public TextField getPhoneField() { return phoneField; }
@@ -83,4 +89,5 @@ public class UpdateStudentWindow {
     public Button getCancelButton() { return cancelButton; }
     public Label getResultLabel() { return resultLabel; }
     public PasswordToggleField getPasswordField() { return passwordField; }
+    public ComboBox<String> getStatusComboBox() { return statusComboBox; }
 }
