@@ -17,7 +17,7 @@ import logic.daos.ProyectDAO;
 import logic.exceptions.RepeatedProyectException;
 import logic.logicclasses.Proyect;
 import userinterface.utilities.Validators;
-import userinterface.windows.RegistProyectWindow;
+import userinterface.windows.UpdateProyectWindow;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -25,31 +25,49 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> {
-    private final RegistProyectWindow view;
+public class ControllerUpdateProyectWindow implements EventHandler<ActionEvent> {
+    private final UpdateProyectWindow view;
     private final ProyectDAO proyectDAO;
     private final Validators validators;
+    private Proyect currentProyect;
 
-    public ControllerRegistProyectWindow(RegistProyectWindow registProyectWindow) {
-        this.view = registProyectWindow;
+    public ControllerUpdateProyectWindow(UpdateProyectWindow updateProyectWindow, Proyect proyect) {
+        this.view = updateProyectWindow;
         this.proyectDAO = new ProyectDAO();
         this.validators = new Validators();
+        this.currentProyect = proyect;
+
+        // Inicializar campos con los datos del proyecto
+        initializeFields();
         setupEventHandlers();
     }
 
+    private void initializeFields() {
+        view.getIdLabel().setText(String.valueOf(currentProyect.getIdProyect()));
+        view.getTitleTextField().setText(currentProyect.getTitle());
+        view.getDescriptionTextField().setText(currentProyect.getDescription());
+
+        // Mostrar solo la parte de fecha, ignorando la hora
+        String startDate = currentProyect.getDateStart().toLocalDateTime().toLocalDate().toString();
+        String endDate = currentProyect.getDateEnd().toLocalDateTime().toLocalDate().toString();
+
+        view.getDateStartTextField().setText(startDate);
+        view.getDateEndTextField().setText(endDate);
+    }
+
     private void setupEventHandlers() {
-        view.getRegisterButton().setOnAction(this);
+        view.getUpdateButton().setOnAction(this);
         view.getCancelButton().setOnAction(event -> handleCancel());
     }
 
     @Override
     public void handle(ActionEvent event) {
-        if (event.getSource() == view.getRegisterButton()) {
-            handleRegisterProyect();
+        if (event.getSource() == view.getUpdateButton()) {
+            handleUpdateProyect();
         }
     }
 
-    private void handleRegisterProyect() {
+    private void handleUpdateProyect() {
         try {
             clearError();
             resetFieldStyles();
@@ -67,23 +85,30 @@ public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> 
                 return;
             }
 
-            if (proyectDAO.proyectExists(title)) {
-                throw new RepeatedProyectException("Ya existe un proyecto con ese título");
+            // Verificar si el título ha cambiado y si el nuevo título ya existe
+            if (!title.equals(currentProyect.getTitle())){
+                if (proyectDAO.proyectExists(title)) {
+                    throw new RepeatedProyectException("Ya existe un proyecto con ese título");
+                }
             }
 
-            Proyect proyect = new Proyect(0, title, description, dateStart, dateEnd, 'A');
+            // Actualizar el proyecto
+            currentProyect.setTitle(title);
+            currentProyect.setDescription(description);
+            currentProyect.setDateStart(dateStart);
+            currentProyect.setDateEnd(dateEnd);
 
-            if (proyectDAO.addProyect(proyect)) {
-                showSuccessAndReset();
+            if (proyectDAO.updateProyect(currentProyect)) {
+                showSuccessAndClose();
             } else {
-                showError("No se pudo registrar el proyecto");
+                showError("No se pudo actualizar el proyecto");
             }
 
         } catch (RepeatedProyectException e) {
             showError(e.getMessage());
             highlightField(view.getTitleTextField());
         } catch (DateTimeParseException e) {
-            showError("Formato de fecha inválido. Use YYYY-MM-DD HH:MM:SS");
+            showError("Formato de fecha inválido. Use YYYY-MM-DD o DD/MM/YYYY");
         } catch (SQLException e) {
             showError("Error de base de datos: " + e.getMessage());
         } catch (Exception e) {
@@ -106,7 +131,6 @@ public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> 
             isValid = false;
         }
 
-        // Validación simplificada de fechas
         try {
             parseDateOnly(view.getDateStartTextField().getText());
         } catch (DateTimeParseException e) {
@@ -165,10 +189,10 @@ public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> 
         throw new DateTimeParseException("Formato no válido. Use YYYY-MM-DD o DD/MM/YYYY", dateString, 0);
     }
 
-    private void showSuccessAndReset() {
+    private void showSuccessAndClose() {
         Platform.runLater(() -> {
             showCustomSuccessDialog();
-            clearFields();
+            handleCancel();
         });
     }
 
@@ -192,7 +216,7 @@ public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> 
             System.err.println("No se pudo cargar el icono: " + e.getMessage());
         }
 
-        Label message = new Label("¡Proyecto registrado correctamente!");
+        Label message = new Label("¡Proyecto actualizado correctamente!");
         message.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
         content.getChildren().add(message);
 
@@ -203,24 +227,11 @@ public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> 
                         "-fx-border-width: 2px;"
         );
 
-        dialog.showAndWait().ifPresent(response -> {
-            if (response == okButton) {
-                handleCancel();
-            }
-        });
+        dialog.showAndWait();
     }
 
     private void handleCancel() {
-        clearFields();
         view.getView().getScene().getWindow().hide();
-    }
-
-    private void clearFields() {
-        view.getTitleTextField().clear();
-        view.getDescriptionTextField().clear();
-        view.getDateStartTextField().clear();
-        view.getDateEndTextField().clear();
-        clearError();
     }
 
     private void resetFieldStyles() {

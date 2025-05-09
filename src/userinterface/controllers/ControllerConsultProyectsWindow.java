@@ -11,6 +11,7 @@ import logic.daos.ProyectDAO;
 import logic.logicclasses.Proyect;
 import userinterface.windows.ConsultProyectsWindow;
 import userinterface.windows.RegistProyectWindow;
+import userinterface.windows.UpdateProyectWindow;
 
 import java.sql.SQLException;
 
@@ -23,6 +24,10 @@ public class ControllerConsultProyectsWindow implements EventHandler<ActionEvent
         this.view = consultProyectsWindow;
         this.proyectDAO = new ProyectDAO();
         this.projectsList = FXCollections.observableArrayList();
+
+        // Establecer el controlador en la tabla
+        view.getProjectsTable().getProperties().put("controller", this);
+
         setupEventHandlers();
         loadAllProjects();
     }
@@ -81,20 +86,13 @@ public class ControllerConsultProyectsWindow implements EventHandler<ActionEvent
 
 
     public void handleEdit(Proyect proyect) {
-        RegistProyectWindow editWindow = new RegistProyectWindow();
-        new ControllerRegistProyectWindow(editWindow);
-
-
-        editWindow.getTitleTextField().setText(proyect.getTitle());
-        editWindow.getDescriptionTextField().setText(proyect.getDescription());
-        editWindow.getDateStartTextField().setText(proyect.getDateStart().toString());
-        editWindow.getDateEndTextField().setText(proyect.getDateEnd().toString());
+        UpdateProyectWindow updateProyectWindow = new UpdateProyectWindow();
+        new ControllerUpdateProyectWindow(updateProyectWindow, proyect);
 
         Stage stage = new Stage();
-        stage.setScene(new Scene(editWindow.getView()));
-        stage.setTitle("Editar Proyecto");
+        stage.setScene(new Scene(updateProyectWindow.getView()));
+        stage.setTitle("Editar proyecto");
         stage.showAndWait();
-
         loadAllProjects();
     }
 

@@ -1,6 +1,8 @@
 package logic.logicclasses;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Proyect {
     private int idProyect;
@@ -19,12 +21,12 @@ public class Proyect {
         this.status = status;
     }
 
-    public Proyect(){
+    public Proyect() {
         idProyect = 0;
         title = "";
         description = "";
-        dateStart = null;
-        dateEnd = null;
+        dateStart = Timestamp.valueOf("2000-01-01 00:00:00");
+        dateEnd = Timestamp.valueOf("2000-01-01 00:00:00");
         status = 'A';
     }
 

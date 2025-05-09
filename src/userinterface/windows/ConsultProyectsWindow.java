@@ -11,6 +11,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.util.Callback;
 import logic.logicclasses.Proyect;
+import userinterface.controllers.ControllerConsultProyectsWindow;
 
 public class ConsultProyectsWindow {
     private final VBox view;
@@ -128,8 +129,12 @@ public class ConsultProyectsWindow {
                         editBtn.setStyle("-fx-background-color: #FFC107; -fx-text-fill: black;");
                         editBtn.setOnAction(event -> {
                             Proyect proyect = getTableView().getItems().get(getIndex());
-                            // Aquí puedes manejar la acción de edición
-                            // Necesitarás pasar una referencia del controlador
+                            // Llamar al controlador principal para manejar la edición
+                            if (getTableView().getProperties().get("controller") != null) {
+                                ControllerConsultProyectsWindow controller =
+                                        (ControllerConsultProyectsWindow) getTableView().getProperties().get("controller");
+                                controller.handleEdit(proyect);
+                            }
                         });
                     }
 
