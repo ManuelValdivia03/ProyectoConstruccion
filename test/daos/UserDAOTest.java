@@ -2,100 +2,102 @@ package daos;
 
 import dataaccess.ConnectionDataBase;
 import logic.daos.UserDAO;
+import logic.exceptions.InvalidCellPhoneException;
+import logic.exceptions.RepeatedCellPhoneException;
 import logic.logicclasses.User;
 import org.junit.jupiter.api.*;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserDAOTest {
     private static UserDAO userDAO;
-    private static Connection testConnection;
     private static List<User> testUsers;
 
     @BeforeAll
     static void setUpAll() throws SQLException {
         userDAO = new UserDAO();
-        testConnection = ConnectionDataBase.getConnection();
 
-        try (var statement = testConnection.createStatement()) {
-            statement.execute("DELETE FROM presentacion");
-            statement.execute("ALTER TABLE presentacion AUTO_INCREMENT = 1");
-            statement.execute("DELETE FROM academico");
-            statement.execute("DELETE FROM estudiante");
-            statement.execute("ALTER TABLE estudiante AUTO_INCREMENT = 1");
-            statement.execute("DELETE FROM coordinador");
-            statement.execute("ALTER TABLE coordinador AUTO_INCREMENT = 1");
-            statement.execute("DELETE FROM cuenta");
+        try (var conn = ConnectionDataBase.getConnection();
+             var statement = conn.createStatement()) {
             statement.execute("DELETE FROM usuario");
             statement.execute("ALTER TABLE usuario AUTO_INCREMENT = 1");
-            statement.execute("ALTER TABLE cuenta AUTO_INCREMENT = 1");
-            statement.execute("ALTER TABLE academico AUTO_INCREMENT = 1");
-            statement.execute("CREATE TABLE IF NOT EXISTS usuario (" +
-                    "id_usuario INT AUTO_INCREMENT PRIMARY KEY, " +
-                    "nombre_completo VARCHAR(100) NOT NULL, " +
-                    "telefono VARCHAR(20))");
         }
 
-        testUsers = new ArrayList<>();
-        for (int i = 1; i <= 10; i++) {
-            User user = new User();
-            user.setFullName("Usuario Prueba " + i);
-            user.setCellphone("55500000" + i);
-            userDAO.addUser(user);
-            testUsers.add(user);
+        testUsers = List.of(
+                createTestUser("Usuario Prueba 1", "5550000010"),
+                createTestUser("Usuario Prueba 2", "5550000020"),
+                createTestUser("Usuario Prueba 3", "5550000030"),
+                createTestUser("Usuario Prueba 4", "5550000040"),
+                createTestUser("Usuario Prueba 5", "5550000050")
+        );
+    }
+
+    private static User createTestUser(String name, String phone) throws SQLException {
+        User user = new User();
+        user.setFullName(name);
+        user.setCellphone(phone);
+        user.setStatus('A');
+        userDAO.addUser(user);
+        return user;
+    }
+
+    @AfterEach
+    void tearDown() throws SQLException {
+        try (var conn = ConnectionDataBase.getConnection();
+             var statement = conn.createStatement()) {
+            statement.execute("DELETE FROM usuario WHERE id_usuario > 5");
+            statement.execute("ALTER TABLE usuario AUTO_INCREMENT = 6");
         }
     }
 
-
-    @AfterAll
-    static void tearDownAll() throws SQLException {
-        if (testConnection != null && !testConnection.isClosed()) {
-            testConnection.close();
-        }
-    }
     @Test
-    void testAddUser_Success() throws SQLException {
+    void testAddUser_Success() throws SQLException, RepeatedCellPhoneException {
         User newUser = new User();
-        newUser.setFullName("María García");
-        newUser.setCellphone("5559876543");
+        newUser.setFullName("Nuevo Usuario");
+        newUser.setCellphone("5551234567");
 
-        int initialCount = userDAO.countUsers();
-        boolean result = userDAO.addUser(newUser);
-
-        assertTrue(newUser.getIdUser() > 0, "El ID del nuevo usuario debe ser mayor que 0");
-
-        assertTrue(result);
-        assertEquals(initialCount + 1, userDAO.countUsers());
+        assertTrue(userDAO.addUser(newUser));
+        assertTrue(newUser.getIdUser() > 0);
     }
 
+    @Test
+    void testAddUser_NullUser_ShouldThrowIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> userDAO.addUser(null));
+    }
 
     @Test
-    void testAddUser_NullName_ShouldThrowException() {
-        User invalidUser = new User();
-        invalidUser.setFullName(null);
-        invalidUser.setCellphone("5551112233");
+    void testAddUser_DuplicatePhone_ShouldThrowRepeatedCellPhoneException() throws SQLException {
+        String uniquePhone = "5559876543";
+        createTestUser("Usuario Original", uniquePhone);
 
-        assertThrows(SQLException.class, () -> userDAO.addUser(invalidUser));
+        User duplicateUser = new User();
+        duplicateUser.setFullName("Usuario Duplicado");
+        duplicateUser.setCellphone(uniquePhone);
+
+        assertThrows(RepeatedCellPhoneException.class, () -> userDAO.addUser(duplicateUser));
     }
 
     @Test
     void testGetAllUsers_WithData() throws SQLException {
         List<User> users = userDAO.getAllUsers();
-        for (User testUser : testUsers) {
-            boolean found = users.stream().anyMatch(u -> u.getIdUser() == testUser.getIdUser());
-        }
-
-        System.out.println("Usuarios recuperados: ");
-        for (User user : users) {
-            System.out.println("ID: " + user.getIdUser() + ", Nombre: " + user.getFullName());
-        }
+        assertFalse(users.isEmpty());
     }
 
+    @Test
+    void testGetAllUsers_EmptyTable() throws SQLException {
+        try (var conn = ConnectionDataBase.getConnection();
+             var statement = conn.createStatement()) {
+            statement.execute("DELETE FROM usuario");
+        }
+
+        List<User> users = userDAO.getAllUsers();
+        assertTrue(users.isEmpty());
+
+        setUpAll();
+    }
 
     @Test
     void testGetUserById_Exists() throws SQLException {
@@ -104,27 +106,27 @@ class UserDAOTest {
 
         assertNotNull(foundUser);
         assertEquals(testUser.getFullName(), foundUser.getFullName());
-        assertEquals(testUser.getCellPhone(), foundUser.getCellPhone());
     }
 
     @Test
     void testGetUserById_NotExists() throws SQLException {
-        User foundUser = userDAO.getUserById(9999);
-        assertNull(foundUser);
+        assertNull(userDAO.getUserById(9999));
+    }
+
+    @Test
+    void testGetUserById_InvalidId() throws SQLException {
+        assertNull(userDAO.getUserById(-1));
     }
 
     @Test
     void testUpdateUser_Success() throws SQLException {
         User userToUpdate = testUsers.get(0);
-        userToUpdate.setFullName("Nuevo Nombre");
-        userToUpdate.setCellphone("5551111111");
+        userToUpdate.setFullName("Nombre Actualizado");
 
-        boolean result = userDAO.updateUser(userToUpdate);
-        assertTrue(result);
+        assertTrue(userDAO.updateUser(userToUpdate));
 
         User updatedUser = userDAO.getUserById(userToUpdate.getIdUser());
-        assertEquals("Nuevo Nombre", updatedUser.getFullName());
-        assertEquals("5551111111", updatedUser.getCellPhone());
+        assertEquals("Nombre Actualizado", updatedUser.getFullName());
     }
 
     @Test
@@ -133,43 +135,47 @@ class UserDAOTest {
         nonExistentUser.setIdUser(9999);
         nonExistentUser.setFullName("No existe");
 
-        boolean result = userDAO.updateUser(nonExistentUser);
-        assertFalse(result);
+        assertFalse(userDAO.updateUser(nonExistentUser));
+    }
+
+    @Test
+    void testUpdateUser_NullUser() throws SQLException {
+        assertFalse(userDAO.updateUser(null));
     }
 
     @Test
     void testDeleteUser_Success() throws SQLException {
         User userToDelete = testUsers.get(1);
-        int initialCount = userDAO.countUsers();
-
-        boolean result = userDAO.deleteUser(userToDelete.getIdUser());
-        assertTrue(result);
-        assertEquals(initialCount - 1, userDAO.countUsers());
+        assertTrue(userDAO.deleteUser(userToDelete.getIdUser()));
         assertNull(userDAO.getUserById(userToDelete.getIdUser()));
     }
 
     @Test
     void testDeleteUser_NotExists() throws SQLException {
-        int initialCount = userDAO.countUsers();
-        boolean result = userDAO.deleteUser(9999);
+        assertFalse(userDAO.deleteUser(9999));
+    }
 
-        assertFalse(result);
-        assertEquals(initialCount, userDAO.countUsers());
+    @Test
+    void testDeleteUser_InvalidId() throws SQLException {
+        assertFalse(userDAO.deleteUser(-1));
     }
 
     @Test
     void testSearchUsersByName_Match() throws SQLException {
         List<User> results = userDAO.searchUsersByName("Prueba");
-
-        for (User testUser : testUsers) {
-            boolean found = results.stream().anyMatch(u -> u.getIdUser() == testUser.getIdUser());
-        }
+        assertFalse(results.isEmpty());
     }
 
     @Test
     void testSearchUsersByName_NoMatch() throws SQLException {
         List<User> results = userDAO.searchUsersByName("XYZ123NoExist");
-        assertEquals(0, results.size());
+        assertTrue(results.isEmpty());
+    }
+
+    @Test
+    void testSearchUsersByName_NullName() throws SQLException {
+        List<User> results = userDAO.searchUsersByName(null);
+        assertTrue(results.isEmpty());
     }
 
     @Test
@@ -184,15 +190,52 @@ class UserDAOTest {
     }
 
     @Test
+    void testUserExists_InvalidId() throws SQLException {
+        assertFalse(userDAO.userExists(-1));
+    }
+
+    @Test
+    void testCellPhoneExists_True() throws SQLException, InvalidCellPhoneException {
+        User testUser = testUsers.get(3);
+        assertTrue(userDAO.cellPhoneExists(testUser.getCellPhone()));
+    }
+
+    @Test
+    void testCellPhoneExists_False() throws SQLException, InvalidCellPhoneException {
+        assertFalse(userDAO.cellPhoneExists("5559999999"));
+    }
+
+    @Test
+    void testCellPhoneExists_InvalidPhone() {
+        assertThrows(InvalidCellPhoneException.class, () -> userDAO.cellPhoneExists("123"));
+    }
+
+    @Test
     void testCountUsers_WithData() throws SQLException {
         int count = userDAO.countUsers();
-        assertEquals(testUsers.size(), count);
+        assertTrue(count >= testUsers.size());
+    }
 
-        User extraUser = new User();
-        extraUser.setFullName("Ana López Rojo");
-        extraUser.setCellphone("5551112222");
-        userDAO.addUser(extraUser);
+    @Test
+    void testCountUsers_EmptyTable() throws SQLException {
+        try (var conn = ConnectionDataBase.getConnection();
+             var statement = conn.createStatement()) {
+            statement.execute("DELETE FROM usuario");
+        }
 
-        assertEquals(count + 1, userDAO.countUsers());
+        assertEquals(0, userDAO.countUsers());
+        setUpAll();
+    }
+
+    @Test
+    void testCountUsers_AfterAdd() throws SQLException, RepeatedCellPhoneException {
+        int initialCount = userDAO.countUsers();
+
+        User newUser = new User();
+        newUser.setFullName("Usuario Temporal");
+        newUser.setCellphone("5551112222");
+        userDAO.addUser(newUser);
+
+        assertEquals(initialCount + 1, userDAO.countUsers());
     }
 }

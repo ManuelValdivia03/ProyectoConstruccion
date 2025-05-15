@@ -68,11 +68,11 @@ public class ControllerUpdateAcademicWindow implements EventHandler<ActionEvent>
             String email = view.getEmailField().getText().trim();
             String password = view.getPassword();
             AcademicType type = AcademicType.valueOf(view.getTypeComboBox().getValue());
+            char status = view.getStatusComboBox().getValue().charAt(0);
 
             verifyDataUniqueness(phone, email);
 
-
-            updateUser(name, phone);
+            updateUser(name, phone, status);
             updateAcademic(type);
             updateAccount(email, password);
 
@@ -108,6 +108,18 @@ public class ControllerUpdateAcademicWindow implements EventHandler<ActionEvent>
             isValid = false;
         }
 
+        if (view.getStaffNumberField().getText().trim().isEmpty()) {
+            showError("Número de personal es obligatorio");
+            highlightField(view.getStaffNumberField());
+            isValid = false;
+        }
+
+        if (!validators.validateStaffNumber(view.getStaffNumberField().getText())) {
+            showError("Número de personal debe tener 5 dígitos");
+            highlightField(view.getStaffNumberField());
+            isValid = false;
+        }
+
         if (!validators.validateEmail(view.getEmailField().getText())) {
             showError("Formato de email inválido");
             highlightField(view.getEmailField());
@@ -132,7 +144,8 @@ public class ControllerUpdateAcademicWindow implements EventHandler<ActionEvent>
         }
     }
 
-    private void updateUser(String name, String phone) throws SQLException {
+    private void updateUser(String name, String phone, char status) throws SQLException {
+        originalAcademic.setStatus(status);
         User user = new User(
                 originalAcademic.getIdUser(),
                 name,

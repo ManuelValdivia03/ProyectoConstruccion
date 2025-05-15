@@ -47,7 +47,7 @@ public class ControllerConsultAcademicsWindow {
 
     private void loadAcademicData() {
         try {
-            allAcademics.setAll(academicDAO.getAllAcademicsFromView());
+            allAcademics.setAll(academicDAO.getAcademicsByStatusFromView('A'));
             view.setAcademicData(allAcademics);
             view.getSearchField().clear();
             hasSearchResults = false;

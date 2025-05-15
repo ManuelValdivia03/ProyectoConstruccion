@@ -236,6 +236,7 @@ public class AcademicDAO implements IAcademicDAO {
         return null;
     }
 
+
     public boolean academicExists(String staffNumber) throws SQLException {
         if (staffNumber == null || staffNumber.isEmpty()) {
             logger.warn("Número de personal nulo o vacío en academicExists");
@@ -314,7 +315,7 @@ public class AcademicDAO implements IAcademicDAO {
     }
 
     public List<Academic> getAllAcademicsFromView() throws SQLException {
-        String sql = "SELECT * FROM vista_academicos_completa";
+        String sql = "SELECT * FROM vista_academicos_completa WHERE estdado = ";
         List<Academic> academics = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
@@ -331,6 +332,31 @@ public class AcademicDAO implements IAcademicDAO {
                         AcademicType.valueOf(rs.getString("tipo_academico"))
                 );
                 academics.add(academic);
+            }
+        }
+        return academics;
+    }
+
+    public List<Academic> getAcademicsByStatusFromView(char estado) throws SQLException {
+        String sql = "SELECT * FROM vista_academicos_completa WHERE estado = ?";
+        List<Academic> academics = new ArrayList<>();
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, String.valueOf(estado));
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    Academic academic = new Academic(
+                            rs.getInt("id_usuario"),
+                            rs.getString("nombre_completo"),
+                            rs.getString("telefono"),
+                            rs.getString("estado").charAt(0),
+                            rs.getString("numero_personal"),
+                            AcademicType.valueOf(rs.getString("tipo_academico"))
+                    );
+                    academics.add(academic);
+                }
             }
         }
         return academics;

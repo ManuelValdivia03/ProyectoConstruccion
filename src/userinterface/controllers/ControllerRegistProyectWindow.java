@@ -106,7 +106,6 @@ public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> 
             isValid = false;
         }
 
-        // Validación simplificada de fechas
         try {
             parseDateOnly(view.getDateStartTextField().getText());
         } catch (DateTimeParseException e) {
@@ -142,7 +141,6 @@ public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> 
             throw new DateTimeParseException("Fecha vacía", dateString, 0);
         }
 
-        // Eliminar parte de hora si existe
         if (dateString.contains(" ")) {
             dateString = dateString.split(" ")[0];
         }
@@ -156,7 +154,7 @@ public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> 
         for (DateTimeFormatter formatter : supportedFormats) {
             try {
                 LocalDate date = LocalDate.parse(dateString, formatter);
-                return Timestamp.valueOf(date.atStartOfDay()); // Hora 00:00:00
+                return Timestamp.valueOf(date.atStartOfDay());
             } catch (DateTimeParseException ignored) {
                 continue;
             }

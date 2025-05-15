@@ -10,7 +10,6 @@ import javafx.stage.Stage;
 import logic.daos.ProyectDAO;
 import logic.logicclasses.Proyect;
 import userinterface.windows.ConsultProyectsWindow;
-import userinterface.windows.RegistProyectWindow;
 import userinterface.windows.UpdateProyectWindow;
 
 import java.sql.SQLException;

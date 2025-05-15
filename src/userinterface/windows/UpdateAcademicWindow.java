@@ -17,6 +17,7 @@ public class UpdateAcademicWindow {
     private final TextField emailField;
     private final PasswordToggleField passwordToggle;
     private final ComboBox<String> typeComboBox;
+    private final ComboBox<String> statusComboBox;
     private final Button updateButton;
     private final Button cancelButton;
     private final Label resultLabel;
@@ -35,6 +36,10 @@ public class UpdateAcademicWindow {
         typeComboBox = new ComboBox<>();
         typeComboBox.getItems().addAll("Evaluador", "EE");
         typeComboBox.setValue("Evaluador");
+
+        statusComboBox = new ComboBox<>();
+        statusComboBox.getItems().addAll("Activo", "Inactivo");
+        statusComboBox.setValue("Activo");
 
         updateButton = new Button("Actualizar");
         updateButton.setStyle("-fx-background-color: #4a7bed; -fx-text-fill: white;");
@@ -62,6 +67,8 @@ public class UpdateAcademicWindow {
         grid.add(emailField, 1, 4);
         grid.add(new Label("Contraseña:"), 0, 5);
         grid.add(passwordToggle.getContainer(), 1, 5);
+        grid.add(new Label("Estado:"), 0, 6);
+        grid.add(statusComboBox, 1, 6);
 
         HBox buttonBox = new HBox(10, updateButton, cancelButton);
         buttonBox.setAlignment(Pos.CENTER);
@@ -78,6 +85,7 @@ public class UpdateAcademicWindow {
         staffNumberField.setText(academic.getStaffNumber());
         emailField.setText(email);
         typeComboBox.setValue(academic.getAcademicType().toString());
+        statusComboBox.setValue(String.valueOf(academic.getStatus()));
     }
 
     public VBox getView() { return view; }
@@ -87,6 +95,7 @@ public class UpdateAcademicWindow {
     public TextField getEmailField() { return emailField; }
     public String getPassword() { return passwordToggle.getPassword(); }
     public ComboBox<String> getTypeComboBox() { return typeComboBox; }
+    public ComboBox<String> getStatusComboBox() { return statusComboBox; }
     public Button getUpdateButton() { return updateButton; }
     public Button getCancelButton() { return cancelButton; }
     public Label getResultLabel() { return resultLabel; }

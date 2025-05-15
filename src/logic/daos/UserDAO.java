@@ -82,7 +82,7 @@ public class UserDAO implements IUserDAO {
             logger.debug("Se encontraron {} usuarios", users.size());
         } catch (SQLException e) {
             logger.error("Error al obtener todos los usuarios", e);
-            throw e;
+            throw new SQLException();
         }
         return users;
     }
@@ -271,7 +271,7 @@ public class UserDAO implements IUserDAO {
             return count;
         } catch (SQLException e) {
             logger.error("Error al contar usuarios", e);
-            throw e;
+            throw new SQLException();
         }
     }
 }
