@@ -29546,3 +29546,328 @@ java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '1001' for ke
 2025-05-15 22:06:24 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
 2025-05-15 22:06:24 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
 2025-05-15 22:06:24 [main] INFO  logic.daos.GroupDAO - No se encontró grupo con NRC: 1003
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConfigLoader - Archivo config.properties cargado correctamente
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [270 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] DEBUG logic.daos.UserDAO - Validando teléfono celular: 5550000000
+2025-05-15 22:23:26 [main] DEBUG logic.daos.UserDAO - Verificando existencia de teléfono celular: 5550000000
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [14 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] DEBUG logic.daos.UserDAO - ¿Teléfono celular '5550000000' existe?: false
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [13 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.UserDAO - Usuario agregado exitosamente - ID: 1, Nombre: Estudiante Prueba, Teléfono: 5550000000
+2025-05-15 22:23:26 [main] DEBUG logic.daos.StudentDAO - Agregando nuevo estudiante con matrícula: 
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [12 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.StudentDAO - Estudiante agregado exitosamente - ID: 1, Matrícula: , Calificación: 0
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 1, Tipo: Semanal
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 2, Tipo: Mensual
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [14 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 1, Tipo: Semanal
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 2, Tipo: Mensual
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Buscando reportes por estudiante ID: 9999
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [11 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Se encontraron 0 reportes para estudiante ID: 9999
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 1, Tipo: Semanal
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 2, Tipo: Mensual
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Contando reportes
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.ReportDAO - Total de reportes: 2
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Eliminando reporte ID: 1
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.ReportDAO - Reporte eliminado exitosamente - ID: 1
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Contando reportes
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.ReportDAO - Total de reportes: 1
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Verificando existencia de reporte ID: 1
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - ¿Reporte ID 1 existe?: false
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [12 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 1, Tipo: Semanal
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 2, Tipo: Mensual
+2025-05-15 22:23:26 [main] WARN  logic.daos.ReportDAO - Intento de agregar reporte con datos nulos
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 1, Tipo: Semanal
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 2, Tipo: Mensual
+2025-05-15 22:23:26 [main] INFO  logic.daos.ReportDAO - Obteniendo todos los reportes
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] DEBUG logic.daos.StudentDAO - Buscando estudiante por ID: 1
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] DEBUG logic.daos.StudentDAO - Estudiante encontrado con ID: 1
+2025-05-15 22:23:26 [main] DEBUG logic.daos.StudentDAO - Buscando estudiante por ID: 1
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] DEBUG logic.daos.StudentDAO - Estudiante encontrado con ID: 1
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Se encontraron 2 reportes
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 1, Tipo: Semanal
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 2, Tipo: Mensual
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Buscando reporte por ID: 1
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] DEBUG logic.daos.StudentDAO - Buscando estudiante por ID: 1
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] DEBUG logic.daos.StudentDAO - Estudiante encontrado con ID: 1
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Reporte encontrado con ID: 1
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 1, Tipo: Semanal
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 2, Tipo: Mensual
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Contando reportes
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.ReportDAO - Total de reportes: 2
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 3, Tipo: Semanal
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Contando reportes
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.ReportDAO - Total de reportes: 3
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 1, Tipo: Semanal
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 2, Tipo: Mensual
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Buscando reporte por ID: 9999
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.ReportDAO - No se encontró reporte con ID: 9999
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 1, Tipo: Semanal
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 2, Tipo: Mensual
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Contando reportes
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.ReportDAO - Total de reportes: 2
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 3, Tipo: Final
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Contando reportes
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:26 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:26 [main] INFO  logic.daos.ReportDAO - Total de reportes: 3
+2025-05-15 22:23:26 [main] DEBUG logic.daos.ReportDAO - Buscando reporte por ID: 3
+2025-05-15 22:23:26 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:27 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:27 [main] DEBUG logic.daos.StudentDAO - Buscando estudiante por ID: 1
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:27 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:27 [main] DEBUG logic.daos.StudentDAO - Estudiante encontrado con ID: 1
+2025-05-15 22:23:27 [main] DEBUG logic.daos.ReportDAO - Reporte encontrado con ID: 3
+2025-05-15 22:23:27 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:27 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:27 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 1, Tipo: Semanal
+2025-05-15 22:23:27 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:27 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:27 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 2, Tipo: Mensual
+2025-05-15 22:23:27 [main] DEBUG logic.daos.ReportDAO - Buscando reportes por estudiante ID: 1
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:27 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:27 [main] DEBUG logic.daos.StudentDAO - Buscando estudiante por ID: 1
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:27 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:27 [main] DEBUG logic.daos.StudentDAO - Estudiante encontrado con ID: 1
+2025-05-15 22:23:27 [main] DEBUG logic.daos.StudentDAO - Buscando estudiante por ID: 1
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:27 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:27 [main] DEBUG logic.daos.StudentDAO - Estudiante encontrado con ID: 1
+2025-05-15 22:23:27 [main] DEBUG logic.daos.ReportDAO - Se encontraron 2 reportes para estudiante ID: 1
+2025-05-15 22:23:27 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:27 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:27 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 1, Tipo: Semanal
+2025-05-15 22:23:27 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:27 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:27 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 2, Tipo: Mensual
+2025-05-15 22:23:27 [main] DEBUG logic.daos.ReportDAO - Verificando existencia de reporte ID: 1
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:27 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:27 [main] DEBUG logic.daos.ReportDAO - ¿Reporte ID 1 existe?: true
+2025-05-15 22:23:27 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:27 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:27 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 1, Tipo: Semanal
+2025-05-15 22:23:27 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:27 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:27 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 2, Tipo: Mensual
+2025-05-15 22:23:27 [main] DEBUG logic.daos.ReportDAO - Actualizando reporte ID: 1
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:27 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:27 [main] INFO  logic.daos.ReportDAO - Reporte actualizado exitosamente - ID: 1
+2025-05-15 22:23:27 [main] DEBUG logic.daos.ReportDAO - Buscando reporte por ID: 1
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:27 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:27 [main] DEBUG logic.daos.StudentDAO - Buscando estudiante por ID: 1
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:27 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:27 [main] DEBUG logic.daos.StudentDAO - Estudiante encontrado con ID: 1
+2025-05-15 22:23:27 [main] DEBUG logic.daos.ReportDAO - Reporte encontrado con ID: 1
+2025-05-15 22:23:27 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:27 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:27 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 1, Tipo: Semanal
+2025-05-15 22:23:27 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:27 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:27 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 2, Tipo: Mensual
+2025-05-15 22:23:27 [main] DEBUG logic.daos.ReportDAO - Verificando existencia de reporte ID: 9999
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:27 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:27 [main] DEBUG logic.daos.ReportDAO - ¿Reporte ID 9999 existe?: false
+2025-05-15 22:23:27 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:27 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:27 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 1, Tipo: Semanal
+2025-05-15 22:23:27 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:27 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [4 ms]
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:27 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 2, Tipo: Mensual
+2025-05-15 22:23:27 [main] DEBUG logic.daos.ReportDAO - Contando reportes
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:27 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:27 [main] INFO  logic.daos.ReportDAO - Total de reportes: 2
+2025-05-15 22:23:27 [main] DEBUG logic.daos.ReportDAO - Eliminando reporte ID: 9999
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:27 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:27 [main] WARN  logic.daos.ReportDAO - No se encontró reporte con ID: 9999 para eliminar
+2025-05-15 22:23:27 [main] DEBUG logic.daos.ReportDAO - Contando reportes
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:27 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:27 [main] INFO  logic.daos.ReportDAO - Total de reportes: 2
+2025-05-15 22:23:27 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:27 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:27 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 1, Tipo: Semanal
+2025-05-15 22:23:27 [main] DEBUG logic.daos.ReportDAO - Agregando nuevo reporte para estudiante ID: 1
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:27 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:27 [main] INFO  logic.daos.ReportDAO - Reporte agregado exitosamente - ID: 2, Tipo: Mensual
+2025-05-15 22:23:27 [main] DEBUG logic.daos.ReportDAO - Actualizando reporte ID: 9999
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:23:27 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:23:27 [main] WARN  logic.daos.ReportDAO - No se encontró reporte con ID: 9999 para actualizar

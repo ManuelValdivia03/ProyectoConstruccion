@@ -3,14 +3,14 @@ package daos;
 import dataaccess.ConnectionDataBase;
 import logic.daos.ReportDAO;
 import logic.daos.StudentDAO;
+import logic.daos.UserDAO;
 import logic.logicclasses.Report;
 import logic.logicclasses.Student;
+import logic.logicclasses.User;
 import logic.enums.ReportType;
 import org.junit.jupiter.api.*;
 
 import java.sql.*;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ReportDAOTest {
     private static ReportDAO reportDAO;
     private static StudentDAO studentDAO;
+    private static UserDAO userDAO;
     private static Connection testConnection;
     private static List<Report> testReports;
     private static Student testStudent;
@@ -27,40 +28,33 @@ class ReportDAOTest {
     static void setUpAll() throws SQLException {
         reportDAO = new ReportDAO();
         studentDAO = new StudentDAO();
+        userDAO = new UserDAO();
         testConnection = ConnectionDataBase.getConnection();
 
         // Limpiar completamente las tablas relacionadas
         try (var statement = testConnection.createStatement()) {
-            statement.execute("DELETE FROM autoevaluacion");
-            statement.execute("ALTER TABLE autoevaluacion AUTO_INCREMENT = 1");
             statement.execute("DELETE FROM reporte");
-            statement.execute("DELETE FROM evaluacion");
-            statement.execute("DELETE FROM presentacion");
-            statement.execute("DELETE FROM proyecto");
             statement.execute("DELETE FROM estudiante");
+            statement.execute("DELETE FROM usuario");
             statement.execute("ALTER TABLE reporte AUTO_INCREMENT = 1");
             statement.execute("ALTER TABLE estudiante AUTO_INCREMENT = 1");
-            statement.execute("ALTER TABLE presentacion AUTO_INCREMENT = 1");
-            statement.execute("ALTER TABLE proyecto AUTO_INCREMENT = 1");
-            statement.execute("ALTER TABLE evaluacion AUTO_INCREMENT = 1");
-            // Crear tabla de estudiantes si no existe (simplificado para pruebas)
-            statement.execute("CREATE TABLE IF NOT EXISTS estudiante (" +
-                    "id_estudiante INT AUTO_INCREMENT PRIMARY KEY, " +
-                    "nombre VARCHAR(100) NOT NULL)");
-
-            // Crear tabla de reportes si no existe
-            statement.execute("CREATE TABLE IF NOT EXISTS reporte (" +
-                    "id_reporte INT AUTO_INCREMENT PRIMARY KEY, " +
-                    "fecha_reporte TIMESTAMP NOT NULL, " +
-                    "horas_reportadas INT NOT NULL, " +
-                    "tipo_reporte ENUM('Semanal','Mensual','Final') NOT NULL, " +
-                    "id_estudiante INT, " +
-                    "FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante))");
+            statement.execute("ALTER TABLE usuario AUTO_INCREMENT = 1");
         }
 
+        // Crear usuario y estudiante de prueba
+        User user = new User();
+        user.setFullName("Estudiante Prueba");
+        user.setCellphone("5550000000");
+        user.setStatus('A');
+        userDAO.addUser(user);
+
         testStudent = new Student();
-        testStudent.setFullName("Estudiante Prueba");
+        testStudent.setIdUser(user.getIdUser());
+        testStudent.setFullName(user.getFullName());
+        testStudent.setCellphone(user.getCellPhone());
+        testStudent.setStatus(user.getStatus());
         studentDAO.addStudent(testStudent);
+
         testReports = new ArrayList<>();
         testReports.add(createTestReport(Timestamp.valueOf(LocalDateTime.now()), 5, ReportType.Semanal, testStudent));
         testReports.add(createTestReport(Timestamp.valueOf(LocalDateTime.now().minusDays(7)), 10, ReportType.Mensual, testStudent));
