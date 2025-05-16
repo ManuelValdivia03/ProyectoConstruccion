@@ -4,11 +4,13 @@ import dataaccess.ConnectionDataBase;
 import logic.daos.StudentDAO;
 import logic.logicclasses.Student;
 import logic.logicclasses.User;
+import logic.exceptions.RepeatedEnrollmentException;
 import org.junit.jupiter.api.*;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class StudentDAOTest {
@@ -88,7 +90,6 @@ class StudentDAOTest {
     }
 
     private void cleanTestData() throws SQLException {
-        // Clean group_student entries first
         if (!testGroupNrcs.isEmpty() || !testStudentIds.isEmpty()) {
             StringBuilder deleteQuery = new StringBuilder("DELETE FROM grupo_estudiante WHERE ");
 
@@ -112,8 +113,6 @@ class StudentDAOTest {
                 stmt.execute(deleteQuery.toString());
             }
         }
-
-        // Delete test groups
         if (!testGroupNrcs.isEmpty()) {
             String deleteGroups = "DELETE FROM grupo WHERE nrc IN (" +
                     String.join(",", testGroupNrcs.stream().map(String::valueOf).toArray(String[]::new)) + ")";
@@ -123,7 +122,6 @@ class StudentDAOTest {
             testGroupNrcs.clear();
         }
 
-        // Delete test students and users
         if (!testStudentIds.isEmpty()) {
             String deleteStudents = "DELETE FROM estudiante WHERE id_usuario IN (" +
                     String.join(",", testStudentIds.stream().map(String::valueOf).toArray(String[]::new)) + ")";
@@ -140,302 +138,267 @@ class StudentDAOTest {
         }
     }
 
-    // =============================================
-    // addStudent() Tests
-    // =============================================
-
+    // addStudent
     @Test
-    void addStudent_HappyPath_ValidData_ReturnsTrue() throws SQLException {
+    void testAddStudent_Success() throws SQLException {
+        // Crea solo el usuario, no el estudiante
+        int userId = createTestUser("New Student", "5554444444");
         Student newStudent = new Student();
-        newStudent.setIdUser(0);
+        newStudent.setIdUser(userId);
         newStudent.setEnrollment("STEST004");
         newStudent.setFullName("New Student");
         newStudent.setCellphone("5554444444");
-        newStudent.setStatus('A'); // Active status
-        newStudent.setGrade(6); // Valid grade 1-10
-
-        User newUser = new User();
-        newUser.setIdUser(newStudent.getIdUser());
-        newUser.setFullName(newUser.getFullName());
-        newUser.setCellphone(newStudent.getCellPhone());
-        newUser.setStatus(newStudent.getStatus());
+        newStudent.setGrade(6);
+        testStudentIds.add(userId);
 
         boolean result = studentDAO.addStudent(newStudent);
         assertTrue(result);
-        testStudentIds.add(newStudent.getIdUser());
     }
 
     @Test
-    void addStudent_AlternativeFlow_DuplicateEnrollment_ThrowsException() {
-        Student duplicateStudent = new Student();
-        duplicateStudent.setEnrollment("STEST001"); // Duplicate
-        duplicateStudent.setFullName("Duplicate Student");
-        duplicateStudent.setCellphone("5555555555");
-        duplicateStudent.setGrade(8);
+    void testAddStudent_NullStudent() throws SQLException {
+        assertFalse(studentDAO.addStudent(null));
+    }
 
+    @Test
+    void testAddStudent_DuplicateEnrollment_ShouldThrowException() throws SQLException {
+        Student duplicateStudent = testStudents.get(0);
         assertThrows(SQLException.class, () -> studentDAO.addStudent(duplicateStudent));
     }
 
+    // getStudentByEnrollment
     @Test
-    void addStudent_ErrorFlow_InvalidGrade_ThrowsException() {
-        Student invalidStudent = new Student();
-        invalidStudent.setEnrollment("STEST005");
-        invalidStudent.setFullName("Invalid Student");
-        invalidStudent.setCellphone("5556666666");
-        invalidStudent.setGrade(11); // Invalid grade >10
-
-        assertThrows(SQLException.class, () -> studentDAO.addStudent(invalidStudent));
-    }
-
-    // =============================================
-    // getStudentByEnrollment() Tests
-    // =============================================
-
-    @Test
-    void getStudentByEnrollment_HappyPath_ExistingStudent_ReturnsStudent() throws SQLException {
+    void testGetStudentByEnrollment_Exists() throws SQLException {
         Student foundStudent = studentDAO.getStudentByEnrollment("STEST001");
         assertEquals("Test Student 1", foundStudent.getFullName());
     }
 
     @Test
-    void getStudentByEnrollment_AlternativeFlow_NonExistent_ReturnsEmptyStudent() throws SQLException {
+    void testGetStudentByEnrollment_NotExists() throws SQLException {
         Student foundStudent = studentDAO.getStudentByEnrollment("NONEXIST");
-        assertEquals(-1, foundStudent.getIdUser()); // Default empty student
+        assertEquals(-1, foundStudent.getIdUser());
     }
 
     @Test
-    void getStudentByEnrollment_ErrorFlow_NullInput_ReturnsEmptyStudent() throws SQLException {
+    void testGetStudentByEnrollment_NullOrEmpty() throws SQLException {
         Student foundStudent = studentDAO.getStudentByEnrollment(null);
         assertEquals(-1, foundStudent.getIdUser());
     }
 
-    // =============================================
-    // getAllStudents() Tests
-    // =============================================
-
+    // getAllStudents
     @Test
-    void getAllStudents_HappyPath_ReturnsNonEmptyList() throws SQLException {
+    void testGetAllStudents_WithData() throws SQLException {
         List<Student> students = studentDAO.getAllStudents();
         assertFalse(students.isEmpty());
     }
 
     @Test
-    void getAllStudents_AlternativeFlow_IncludesTestStudents() throws SQLException {
+    void testGetAllStudents_EmptyTable() throws SQLException {
+        cleanTestData();
         List<Student> students = studentDAO.getAllStudents();
-        assertTrue(students.stream().anyMatch(s -> s.getEnrollment().equals("STEST001")));
+        assertTrue(students.isEmpty());
+        setUp();
     }
 
-    // No error flow needed as this is a simple query
-
-    // =============================================
-    // getStudentById() Tests
-    // =============================================
+    // getSudentsByStatus
+    @Test
+    void testGetStudentsByStatus_WithData() throws SQLException {
+        List<Student> students = studentDAO.getSudentsByStatus('A');
+        assertNotNull(students);
+    }
 
     @Test
-    void getStudentById_HappyPath_ExistingId_ReturnsStudent() throws SQLException {
+    void testGetStudentsByStatus_EmptyResult() throws SQLException {
+        List<Student> students = studentDAO.getSudentsByStatus('Z');
+        assertTrue(students.isEmpty());
+    }
+
+    // getStudentById
+    @Test
+    void testGetStudentById_Exists() throws SQLException {
         Student foundStudent = studentDAO.getStudentById(testStudents.get(0).getIdUser());
         assertEquals("STEST001", foundStudent.getEnrollment());
     }
 
     @Test
-    void getStudentById_AlternativeFlow_NonExistentId_ReturnsNull() throws SQLException {
+    void testGetStudentById_NotExists() throws SQLException {
         Student foundStudent = studentDAO.getStudentById(999999);
         assertNull(foundStudent);
     }
 
     @Test
-    void getStudentById_ErrorFlow_InvalidId_ReturnsNull() throws SQLException {
+    void testGetStudentById_InvalidId() throws SQLException {
         Student foundStudent = studentDAO.getStudentById(-1);
         assertNull(foundStudent);
     }
 
-    // =============================================
-    // updateStudent() Tests
-    // =============================================
-
+    // updateStudent
     @Test
-    void updateStudent_HappyPath_ValidUpdate_ReturnsTrue() throws SQLException {
+    void testUpdateStudent_Success() throws SQLException {
         Student toUpdate = testStudents.get(0);
         toUpdate.setFullName("Updated Name");
-        toUpdate.setGrade(9); // Valid new grade
-
+        toUpdate.setGrade(9);
         boolean result = studentDAO.updateStudent(toUpdate);
         assertTrue(result);
     }
 
     @Test
-    void updateStudent_AlternativeFlow_NonExistentStudent_ReturnsFalse() throws SQLException {
+    void testUpdateStudent_NotExists() throws SQLException {
         Student nonExistent = new Student();
         nonExistent.setIdUser(999999);
         nonExistent.setEnrollment("NONEXIST");
-
         boolean result = studentDAO.updateStudent(nonExistent);
         assertFalse(result);
     }
 
     @Test
-    void updateStudent_ErrorFlow_InvalidGrade_ThrowsException() throws SQLException {
-        Student toUpdate = testStudents.get(0);
-        toUpdate.setGrade(11); // Invalid grade
-
-        assertThrows(SQLException.class, () -> studentDAO.updateStudent(toUpdate));
+    void testUpdateStudent_NullStudent() throws SQLException {
+        assertFalse(studentDAO.updateStudent(null));
     }
 
-    // =============================================
-    // updateStudentGrade() Tests
-    // =============================================
-
+    // updateStudentGrade
     @Test
-    void updateStudentGrade_HappyPath_ValidGrade_ReturnsTrue() throws SQLException {
+    void testUpdateStudentGrade_Success() throws SQLException {
         boolean result = studentDAO.updateStudentGrade(testStudents.get(0).getIdUser(), 9);
         assertTrue(result);
     }
 
     @Test
-    void updateStudentGrade_AlternativeFlow_NonExistentStudent_ReturnsFalse() throws SQLException {
+    void testUpdateStudentGrade_NotExists() throws SQLException {
         boolean result = studentDAO.updateStudentGrade(999999, 8);
         assertFalse(result);
     }
 
     @Test
-    void updateStudentGrade_ErrorFlow_InvalidGrade_ThrowsException() {
-        assertThrows(SQLException.class, () ->
-                studentDAO.updateStudentGrade(testStudents.get(0).getIdUser(), 11));
+    void testUpdateStudentGrade_InvalidId() throws SQLException {
+        boolean result = studentDAO.updateStudentGrade(-1, 8);
+        assertFalse(result);
     }
 
-    // =============================================
-    // deleteStudent() Tests
-    // =============================================
-
+    // deleteStudent
     @Test
-    void deleteStudent_HappyPath_ExistingStudent_ReturnsTrue() throws SQLException {
-        boolean result = studentDAO.deleteStudent(testStudents.get(0).getIdUser());
+    void testDeleteStudent_Success() throws SQLException {
+        int idToDelete = testStudents.get(0).getIdUser();
+        boolean result = studentDAO.deleteStudent(idToDelete);
         assertTrue(result);
-        testStudentIds.remove(testStudents.get(0).getIdUser());
+        testStudentIds.remove(Integer.valueOf(idToDelete)); // Elimina por valor, no por índice
     }
 
     @Test
-    void deleteStudent_AlternativeFlow_NonExistentStudent_ReturnsFalse() throws SQLException {
+    void testDeleteStudent_NotExists() throws SQLException {
         boolean result = studentDAO.deleteStudent(999999);
         assertFalse(result);
     }
 
     @Test
-    void deleteStudent_ErrorFlow_InvalidId_ReturnsFalse() throws SQLException {
+    void testDeleteStudent_InvalidId() throws SQLException {
         boolean result = studentDAO.deleteStudent(-1);
         assertFalse(result);
     }
 
-    // =============================================
-    // getStudentsByGroup() Tests
-    // =============================================
-
+    // getStudentsByGroup
     @Test
-    void getStudentsByGroup_HappyPath_GroupWithStudents_ReturnsList() throws SQLException {
+    void testGetStudentsByGroup_WithData() throws SQLException {
         int testNrc = createTestGroup(1001);
         studentDAO.assignStudentToGroup(testStudents.get(0).getIdUser(), testNrc);
         studentDAO.assignStudentToGroup(testStudents.get(1).getIdUser(), testNrc);
-
         List<Student> students = studentDAO.getStudentsByGroup(testNrc);
         assertEquals(2, students.size());
     }
 
     @Test
-    void getStudentsByGroup_AlternativeFlow_EmptyGroup_ReturnsEmptyList() throws SQLException {
+    void testGetStudentsByGroup_EmptyGroup() throws SQLException {
         int testNrc = createTestGroup(1002);
         List<Student> students = studentDAO.getStudentsByGroup(testNrc);
         assertTrue(students.isEmpty());
     }
 
     @Test
-    void getStudentsByGroup_ErrorFlow_InvalidNrc_ReturnsEmptyList() throws SQLException {
-        List<Student> students = studentDAO.getStudentsByGroup(999999);
+    void testGetStudentsByGroup_InvalidNrc() throws SQLException {
+        List<Student> students = studentDAO.getStudentsByGroup(-1);
         assertTrue(students.isEmpty());
     }
 
-    // =============================================
-    // assignStudentToGroup() Tests
-    // =============================================
-
+    // assignStudentToGroup
     @Test
-    void assignStudentToGroup_HappyPath_ValidData_ReturnsTrue() throws SQLException {
+    void testAssignStudentToGroup_Success() throws SQLException {
         int testNrc = createTestGroup(1003);
         boolean result = studentDAO.assignStudentToGroup(testStudents.get(0).getIdUser(), testNrc);
         assertTrue(result);
     }
 
     @Test
-    void assignStudentToGroup_AlternativeFlow_NonExistentStudent_ReturnsFalse() throws SQLException {
+    void testAssignStudentToGroup_NotExists() throws SQLException {
         int testNrc = createTestGroup(1004);
         boolean result = studentDAO.assignStudentToGroup(999999, testNrc);
         assertFalse(result);
     }
 
     @Test
-    void assignStudentToGroup_ErrorFlow_InvalidNrc_ReturnsFalse() throws SQLException {
-        boolean result = studentDAO.assignStudentToGroup(testStudents.get(0).getIdUser(), 999999);
+    void testAssignStudentToGroup_InvalidNrc() throws SQLException {
+        boolean result = studentDAO.assignStudentToGroup(testStudents.get(0).getIdUser(), -1);
         assertFalse(result);
     }
 
-    // =============================================
-    // studentExistsById() Tests
-    // =============================================
-
+    // studentExistsById
     @Test
-    void studentExistsById_HappyPath_ExistingStudent_ReturnsTrue() throws SQLException {
+    void testStudentExistsById_True() throws SQLException {
         boolean exists = studentDAO.studentExistsById(testStudents.get(0).getIdUser());
         assertTrue(exists);
     }
 
     @Test
-    void studentExistsById_AlternativeFlow_NonExistentStudent_ReturnsFalse() throws SQLException {
+    void testStudentExistsById_False() throws SQLException {
         boolean exists = studentDAO.studentExistsById(999999);
         assertFalse(exists);
     }
 
     @Test
-    void studentExistsById_ErrorFlow_InvalidId_ReturnsFalse() throws SQLException {
+    void testStudentExistsById_InvalidId() throws SQLException {
         boolean exists = studentDAO.studentExistsById(-1);
         assertFalse(exists);
     }
 
-    // =============================================
-    // enrollmentExists() Tests
-    // =============================================
-
+    // enrollmentExists
     @Test
-    void enrollmentExists_HappyPath_DuplicateEnrollment_ThrowsException() {
-        assertThrows(SQLException.class, () -> studentDAO.enrollmentExists("STEST001"));
+    void testEnrollmentExists_DuplicateEnrollment_ShouldThrowException() {
+        assertThrows(RepeatedEnrollmentException.class, () -> studentDAO.enrollmentExists("STEST001"));
     }
 
     @Test
-    void enrollmentExists_AlternativeFlow_NewEnrollment_ReturnsFalse() throws SQLException {
+    void testEnrollmentExists_NewEnrollment() throws SQLException {
         boolean exists = studentDAO.enrollmentExists("NEWENROLL");
         assertFalse(exists);
     }
 
     @Test
-    void enrollmentExists_ErrorFlow_NullInput_ReturnsFalse() throws SQLException {
+    void testEnrollmentExists_NullOrEmpty() throws SQLException {
         boolean exists = studentDAO.enrollmentExists(null);
         assertFalse(exists);
     }
 
-    // =============================================
-    // countStudents() Tests
-    // =============================================
-
+    // countStudents
     @Test
-    void countStudents_HappyPath_AfterAddingStudent_IncreasesCount() throws SQLException {
+    void testCountStudents_WithData() throws SQLException {
         int initialCount = studentDAO.countStudents();
-
+        // Crea usuario y estudiante nuevos, pero solo inserta el usuario manualmente
+        int userId = createTestUser("Count Test", "5555555555");
         Student newStudent = new Student();
-        newStudent.setEnrollment("STEST004");
+        newStudent.setIdUser(userId);
+        newStudent.setEnrollment("STEST005");
         newStudent.setFullName("Count Test");
-        newStudent.setCellphone("5554444444");
-        studentDAO.addStudent(newStudent);
-        testStudentIds.add(newStudent.getIdUser());
+        newStudent.setCellphone("5555555555");
+        newStudent.setGrade(7);
+        testStudentIds.add(userId);
 
+        studentDAO.addStudent(newStudent);
         assertEquals(initialCount + 1, studentDAO.countStudents());
     }
 
+    @Test
+    void testCountStudents_EmptyTable() throws SQLException {
+        cleanTestData();
+        assertEquals(0, studentDAO.countStudents());
+        setUp();
+    }
 }

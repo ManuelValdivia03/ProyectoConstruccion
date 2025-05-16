@@ -347,6 +347,9 @@ public class StudentDAO implements IStudentDAO {
                 logger.warn("No se pudo asignar estudiante ID: {} al grupo NRC: {}", studentId, nrcGrupo);
             }
             return result;
+        } catch (java.sql.SQLIntegrityConstraintViolationException e) {
+            logger.error("Violación de integridad al asignar estudiante ID: {} al grupo NRC: {}. Probablemente el estudiante o grupo no existe.", studentId, nrcGrupo, e);
+            return false;
         } catch (SQLException e) {
             logger.error("Error al asignar estudiante ID: {} al grupo NRC: {}", studentId, nrcGrupo, e);
             throw e;
