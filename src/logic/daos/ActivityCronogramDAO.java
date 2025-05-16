@@ -29,8 +29,9 @@ public class ActivityCronogramDAO implements IActivityCronogramDAO {
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            statement.setTimestamp(1, cronogram.getDateStart());
-            statement.setTimestamp(2, cronogram.getDateEnd());
+            // Usar java.sql.Date para columnas tipo DATE
+            statement.setDate(1, new java.sql.Date(cronogram.getDateStart().getTime()));
+            statement.setDate(2, new java.sql.Date(cronogram.getDateEnd().getTime()));
 
             int affectedRows = statement.executeUpdate();
 
@@ -66,8 +67,8 @@ public class ActivityCronogramDAO implements IActivityCronogramDAO {
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setTimestamp(1, cronogram.getDateStart());
-            statement.setTimestamp(2, cronogram.getDateEnd());
+            statement.setDate(1, new java.sql.Date(cronogram.getDateStart().getTime()));
+            statement.setDate(2, new java.sql.Date(cronogram.getDateEnd().getTime()));
             statement.setInt(3, cronogram.getIdCronogram());
 
             boolean result = statement.executeUpdate() > 0;
@@ -120,8 +121,9 @@ public class ActivityCronogramDAO implements IActivityCronogramDAO {
                 if (resultSet.next()) {
                     cronogram = new ActivityCronogram();
                     cronogram.setIdCronogram(resultSet.getInt("id_cronograma"));
-                    cronogram.setDateStart(resultSet.getTimestamp("fecha_inicial"));
-                    cronogram.setDateEnd(resultSet.getTimestamp("fecha_terminal"));
+                    // Convertir java.sql.Date a Timestamp
+                    cronogram.setDateStart(new Timestamp(resultSet.getDate("fecha_inicial").getTime()));
+                    cronogram.setDateEnd(new Timestamp(resultSet.getDate("fecha_terminal").getTime()));
                     cronogram.setActivities(getActivitiesByCronogram(idCronogram));
 
                     logger.debug("Cronograma ID {} encontrado", idCronogram);
@@ -150,8 +152,8 @@ public class ActivityCronogramDAO implements IActivityCronogramDAO {
                 ActivityCronogram cronogram = new ActivityCronogram();
                 int id = resultSet.getInt("id_cronograma");
                 cronogram.setIdCronogram(id);
-                cronogram.setDateStart(resultSet.getTimestamp("fecha_inicial"));
-                cronogram.setDateEnd(resultSet.getTimestamp("fecha_terminal"));
+                cronogram.setDateStart(new Timestamp(resultSet.getDate("fecha_inicial").getTime()));
+                cronogram.setDateEnd(new Timestamp(resultSet.getDate("fecha_terminal").getTime()));
                 cronogram.setActivities(getActivitiesByCronogram(id));
                 cronograms.add(cronogram);
             }

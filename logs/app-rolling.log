@@ -29871,3 +29871,563 @@ java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '1001' for ke
 2025-05-15 22:23:27 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
 2025-05-15 22:23:27 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
 2025-05-15 22:23:27 [main] WARN  logic.daos.ReportDAO - No se encontró reporte con ID: 9999 para actualizar
+2025-05-15 22:50:03 [main] INFO  dataaccess.ConfigLoader - Archivo config.properties cargado correctamente
+2025-05-15 22:50:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [273 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión inicial
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [13 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando nuevo cronograma con fechas: inicio=2025-05-15T22:50:04.278-0600, fin=2025-05-18T22:50:04.278-0600
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [11 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityCronogramDAO - Cronograma agregado exitosamente con ID: 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando actividad ID 1 al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 1 agregada al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando actividad ID 2 al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 2 agregada al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión inicial
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [11 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando nuevo cronograma con fechas: inicio=2025-05-15T22:50:04.377-0600, fin=2025-05-18T22:50:04.377-0600
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityCronogramDAO - Cronograma agregado exitosamente con ID: 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando actividad ID 1 al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 1 agregada al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando actividad ID 2 al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 2 agregada al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Verificando existencia de cronograma ID: 9999
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - ¿Cronograma ID 9999 existe?: false
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión inicial
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [12 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando nuevo cronograma con fechas: inicio=2025-05-15T22:50:04.488-0600, fin=2025-05-18T22:50:04.488-0600
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityCronogramDAO - Cronograma agregado exitosamente con ID: 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando actividad ID 1 al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 1 agregada al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando actividad ID 2 al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 2 agregada al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Obteniendo cronograma por ID: 1
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Obteniendo actividades para cronograma ID: 1
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Se encontraron 2 actividades para cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Cronograma ID 1 encontrado
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión inicial
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando nuevo cronograma con fechas: inicio=2025-05-15T22:50:04.592-0600, fin=2025-05-18T22:50:04.592-0600
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityCronogramDAO - Cronograma agregado exitosamente con ID: 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando actividad ID 1 al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 1 agregada al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando actividad ID 2 al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 2 agregada al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Verificando existencia de cronograma ID: 1
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - ¿Cronograma ID 1 existe?: true
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión inicial
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando nuevo cronograma con fechas: inicio=2025-05-15T22:50:04.684-0600, fin=2025-05-18T22:50:04.684-0600
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityCronogramDAO - Cronograma agregado exitosamente con ID: 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando actividad ID 1 al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 1 agregada al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando actividad ID 2 al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 2 agregada al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Nueva actividad
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 3
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando actividad ID 3 al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 3 agregada al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Obteniendo cronograma por ID: 1
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Obteniendo actividades para cronograma ID: 1
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Se encontraron 3 actividades para cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Cronograma ID 1 encontrado
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión inicial
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando nuevo cronograma con fechas: inicio=2025-05-15T22:50:04.801-0600, fin=2025-05-18T22:50:04.801-0600
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityCronogramDAO - Cronograma agregado exitosamente con ID: 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando actividad ID 1 al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 1 agregada al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando actividad ID 2 al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 2 agregada al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Actualizando cronograma ID 1 con fechas: inicio=2025-05-16T00:00:00.000-0600, fin=2025-05-23T00:00:00.000-0600
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityCronogramDAO - Cronograma ID 1 actualizado exitosamente
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Obteniendo cronograma por ID: 1
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Obteniendo actividades para cronograma ID: 1
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Se encontraron 2 actividades para cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Cronograma ID 1 encontrado
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión inicial
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando nuevo cronograma con fechas: inicio=2025-05-15T22:50:04.909-0600, fin=2025-05-18T22:50:04.909-0600
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityCronogramDAO - Cronograma agregado exitosamente con ID: 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando actividad ID 1 al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 1 agregada al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando actividad ID 2 al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:04 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 2 agregada al cronograma ID 1
+2025-05-15 22:50:04 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando nuevo cronograma con fechas: inicio=null, fin=null
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:50:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] ERROR logic.daos.ActivityCronogramDAO - Error al agregar cronograma
+java.sql.SQLIntegrityConstraintViolationException: Column 'fecha_inicial' cannot be null
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:109) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:990) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1168) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1103) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1450) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:1086) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at logic.daos.ActivityCronogramDAO.addCronogram(ActivityCronogramDAO.java:35) ~[ProyectoPrincipiosConstruccion/:?]
+	at daos.ActivityCronogramDAOTest.lambda$testAddCronogram_NullDates_ShouldThrowException$0(ActivityCronogramDAOTest.java:192) ~[ProyectoPrincipiosConstruccion/:?]
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:55) ~[junit-jupiter-api-5.8.1.jar:5.8.1]
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37) ~[junit-jupiter-api-5.8.1.jar:5.8.1]
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3082) ~[junit-jupiter-api-5.8.1.jar:5.8.1]
+	at daos.ActivityCronogramDAOTest.testAddCronogram_NullDates_ShouldThrowException(ActivityCronogramDAOTest.java:191) ~[ProyectoPrincipiosConstruccion/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:725) ~[junit-platform-commons-1.8.1.jar:1.8.1]
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60) ~[junit-jupiter-engine-5.8.1.jar:5.8.1]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131) ~[junit-jupiter-engine-5.8.1.jar:5.8.1]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:149) ~[junit-jupiter-engine-5.8.1.jar:5.8.1]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:140) ~[junit-jupiter-engine-5.8.1.jar:5.8.1]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:84) ~[junit-jupiter-engine-5.8.1.jar:5.8.1]
+	at org.junit.jupiter.engine.execution.ExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(ExecutableInvoker.java:115) ~[junit-jupiter-engine-5.8.1.jar:5.8.1]
+	at org.junit.jupiter.engine.execution.ExecutableInvoker.lambda$invoke$0(ExecutableInvoker.java:105) ~[junit-jupiter-engine-5.8.1.jar:5.8.1]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106) ~[junit-jupiter-engine-5.8.1.jar:5.8.1]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64) ~[junit-jupiter-engine-5.8.1.jar:5.8.1]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45) ~[junit-jupiter-engine-5.8.1.jar:5.8.1]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37) ~[junit-jupiter-engine-5.8.1.jar:5.8.1]
+	at org.junit.jupiter.engine.execution.ExecutableInvoker.invoke(ExecutableInvoker.java:104) ~[junit-jupiter-engine-5.8.1.jar:5.8.1]
+	at org.junit.jupiter.engine.execution.ExecutableInvoker.invoke(ExecutableInvoker.java:98) ~[junit-jupiter-engine-5.8.1.jar:5.8.1]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:214) ~[junit-jupiter-engine-5.8.1.jar:5.8.1]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:210) ~[junit-jupiter-engine-5.8.1.jar:5.8.1]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:135) ~[junit-jupiter-engine-5.8.1.jar:5.8.1]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:66) ~[junit-jupiter-engine-5.8.1.jar:5.8.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597) ~[?:?]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597) ~[?:?]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54) ~[junit-platform-engine-1.8.1.jar:1.8.1]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:107) ~[junit-platform-launcher-1.8.1.jar:1.8.1]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88) ~[junit-platform-launcher-1.8.1.jar:1.8.1]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54) ~[junit-platform-launcher-1.8.1.jar:1.8.1]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67) [junit-platform-launcher-1.8.1.jar:1.8.1]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52) [junit-platform-launcher-1.8.1.jar:1.8.1]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114) [junit-platform-launcher-1.8.1.jar:1.8.1]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:86) [junit-platform-launcher-1.8.1.jar:1.8.1]
+	at org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher.execute(DefaultLauncherSession.java:86) [junit-platform-launcher-1.8.1.jar:1.8.1]
+	at org.junit.platform.launcher.core.SessionPerRequestLauncher.execute(SessionPerRequestLauncher.java:53) [junit-platform-launcher-1.8.1.jar:1.8.1]
+	at com.intellij.junit5.JUnit5IdeaTestRunner.startRunnerWithArgs(JUnit5IdeaTestRunner.java:57) [junit5-rt.jar:?]
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater$1.execute(IdeaTestRunner.java:38) [junit-rt.jar:?]
+	at com.intellij.rt.execution.junit.TestsRepeater.repeat(TestsRepeater.java:11) [idea_rt.jar:?]
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:35) [junit-rt.jar:?]
+	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:231) [junit-rt.jar:?]
+	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:55) [junit-rt.jar:?]
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión inicial
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando nuevo cronograma con fechas: inicio=2025-05-15T22:50:05.313-0600, fin=2025-05-18T22:50:05.313-0600
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityCronogramDAO - Cronograma agregado exitosamente con ID: 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando actividad ID 1 al cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 1 agregada al cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando actividad ID 2 al cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 2 agregada al cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Eliminando cronograma ID: 1
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityCronogramDAO - Cronograma ID 1 eliminado exitosamente
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Verificando existencia de cronograma ID: 1
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - ¿Cronograma ID 1 existe?: false
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión inicial
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando nuevo cronograma con fechas: inicio=2025-05-15T22:50:05.392-0600, fin=2025-05-18T22:50:05.392-0600
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityCronogramDAO - Cronograma agregado exitosamente con ID: 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando actividad ID 1 al cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 1 agregada al cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando actividad ID 2 al cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 2 agregada al cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando nuevo cronograma con fechas: inicio=2025-04-17T00:00:00.000-0600, fin=2025-04-24T00:00:00.000-0600
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityCronogramDAO - Cronograma agregado exitosamente con ID: 2
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Obteniendo cronograma por ID: 2
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Obteniendo actividades para cronograma ID: 2
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Se encontraron 0 actividades para cronograma ID 2
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Cronograma ID 2 encontrado
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión inicial
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando nuevo cronograma con fechas: inicio=2025-05-15T22:50:05.487-0600, fin=2025-05-18T22:50:05.487-0600
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityCronogramDAO - Cronograma agregado exitosamente con ID: 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando actividad ID 1 al cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 1 agregada al cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando actividad ID 2 al cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 2 agregada al cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Eliminando cronograma ID: 9999
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] WARN  logic.daos.ActivityCronogramDAO - No se encontró cronograma ID 9999 para eliminar
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión inicial
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando nuevo cronograma con fechas: inicio=2025-05-15T22:50:05.553-0600, fin=2025-05-18T22:50:05.553-0600
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityCronogramDAO - Cronograma agregado exitosamente con ID: 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando actividad ID 1 al cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 1 agregada al cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando actividad ID 2 al cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 2 agregada al cronograma ID 1
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityCronogramDAO - Obteniendo todos los cronogramas
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Obteniendo actividades para cronograma ID: 1
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [4 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Se encontraron 2 actividades para cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Se encontraron 1 cronogramas
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión inicial
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando nuevo cronograma con fechas: inicio=2025-05-15T22:50:05.630-0600, fin=2025-05-18T22:50:05.630-0600
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityCronogramDAO - Cronograma agregado exitosamente con ID: 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando actividad ID 1 al cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 1 agregada al cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando actividad ID 2 al cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [4 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 2 agregada al cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Actualizando cronograma ID 9999 con fechas: inicio=2025-05-15T22:50:05.654-0600, fin=2025-05-16T22:50:05.654-0600
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] WARN  logic.daos.ActivityCronogramDAO - No se encontró cronograma ID 9999 para actualizar
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión inicial
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando nuevo cronograma con fechas: inicio=2025-05-15T22:50:05.699-0600, fin=2025-05-18T22:50:05.699-0600
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityCronogramDAO - Cronograma agregado exitosamente con ID: 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando actividad ID 1 al cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 1 agregada al cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando actividad ID 2 al cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 2 agregada al cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Eliminando actividad ID 1 del cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 1 eliminada del cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Obteniendo cronograma por ID: 1
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Obteniendo actividades para cronograma ID: 1
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Se encontraron 1 actividades para cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Cronograma ID 1 encontrado
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión inicial
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando nuevo cronograma con fechas: inicio=2025-05-15T22:50:05.796-0600, fin=2025-05-18T22:50:05.796-0600
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityCronogramDAO - Cronograma agregado exitosamente con ID: 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando actividad ID 1 al cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 1 agregada al cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Agregando actividad ID 2 al cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityCronogramDAO - Actividad ID 2 agregada al cronograma ID 1
+2025-05-15 22:50:05 [main] DEBUG logic.daos.ActivityCronogramDAO - Obteniendo cronograma por ID: 9999
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityCronogramDAO - No se encontró cronograma con ID: 9999
