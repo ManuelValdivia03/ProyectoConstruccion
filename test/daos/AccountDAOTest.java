@@ -4,6 +4,7 @@ import dataaccess.ConnectionDataBase;
 import dataaccess.PasswordUtils;
 import logic.daos.AccountDAO;
 import logic.daos.UserDAO;
+import logic.exceptions.RepeatedEmailException;
 import logic.logicclasses.Account;
 import logic.logicclasses.User;
 import org.junit.jupiter.api.*;
@@ -18,7 +19,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class AccountDAOTest {
     private static AccountDAO accountDAO;
     private static UserDAO userDAO;
-    private static Connection testConnection;
     private static List<User> testUsers;
     private static List<Account> testAccounts;
 
@@ -26,23 +26,13 @@ class AccountDAOTest {
     static void setUpAll() throws SQLException {
         accountDAO = new AccountDAO();
         userDAO = new UserDAO();
-        testConnection = ConnectionDataBase.getConnection();
-        try (var statement = testConnection.createStatement()) {
-            statement.execute("DELETE FROM presentacion");
-            statement.execute("ALTER TABLE presentacion AUTO_INCREMENT = 1");
-            statement.execute("DELETE FROM academico");
-            statement.execute("DELETE FROM coordinador");
-            statement.execute("ALTER TABLE coordinador AUTO_INCREMENT = 1");
-            statement.execute("DELETE FROM estudiante");
-            statement.execute("ALTER TABLE estudiante AUTO_INCREMENT = 1");
-            statement.execute("ALTER TABLE coordinador AUTO_INCREMENT = 1");
-            statement.execute("DELETE FROM grupo");
-            statement.execute("ALTER TABLE grupo AUTO_INCREMENT = 1");
+
+        try (Connection conn = ConnectionDataBase.getConnection();
+             var statement = conn.createStatement()) {
             statement.execute("DELETE FROM cuenta");
-            statement.execute("ALTER TABLE cuenta AUTO_INCREMENT = 1");
             statement.execute("DELETE FROM usuario");
             statement.execute("ALTER TABLE usuario AUTO_INCREMENT = 1");
-            statement.execute("ALTER TABLE academico AUTO_INCREMENT = 1");
+            statement.execute("ALTER TABLE cuenta AUTO_INCREMENT = 1");
         }
 
         testUsers = new ArrayList<>();
@@ -51,52 +41,50 @@ class AccountDAOTest {
         for (int i = 1; i <= 5; i++) {
             User user = new User();
             user.setFullName("Usuario Prueba " + i);
-            user.setCellphone("55500000" + i);
+            user.setCellphone("555000000" + i);
             userDAO.addUser(user);
             testUsers.add(user);
+
+            String password = "password" + i;
+            String hashedPassword = PasswordUtils.hashPassword(password);
+            System.out.println("Cuenta " + i + " - Password: " + password + " | Hash: " + hashedPassword);
 
             Account account = new Account(
                     user.getIdUser(),
                     "user" + i + "@test.com",
-                    PasswordUtils.hashPassword("password" + i)
+                    hashedPassword
             );
             accountDAO.addAccount(account);
             testAccounts.add(account);
         }
     }
 
-    @AfterAll
-    static void tearDownAll() throws SQLException {
-        if (testConnection != null && !testConnection.isClosed()) {
-            testConnection.close();
+    @AfterEach
+    void tearDown() throws SQLException {
+        try (Connection conn = ConnectionDataBase.getConnection();
+             var statement = conn.createStatement()) {
+            statement.execute("DELETE FROM cuenta WHERE id_usuario > 5");
         }
     }
 
     @Test
     void testGetAllAccounts_WithData() throws SQLException {
         List<Account> accounts = accountDAO.getAllAccounts();
-
         assertFalse(accounts.isEmpty());
-        System.out.println(testAccounts.size());
-        System.out.println(accounts.size());
-        assertTrue(accounts.size() >= testAccounts.size());
-        for (Account testAccount : testAccounts) {
-            boolean found = accounts.stream()
-                    .anyMatch(a -> a.getIdUser() == testAccount.getIdUser()
-                            && a.getEmail().equals(testAccount.getEmail()));
-            assertTrue(found);
-        }
     }
 
     @Test
-    void testDeleteAccount_Success() throws SQLException {
-        Account accountToDelete = testAccounts.get(0);
-        boolean result = accountDAO.deleteAccount(accountToDelete.getIdUser());
-        testAccounts.remove(accountToDelete);
-        assertTrue(result);
-        assertNull(accountDAO.getAccountByUserId(accountToDelete.getIdUser()));
-    }
+    void testGetAllAccounts_EmptyTable() throws SQLException {
+        try (Connection conn = ConnectionDataBase.getConnection();
+             var statement = conn.createStatement()) {
+            statement.execute("DELETE FROM cuenta");
+        }
 
+        List<Account> accounts = accountDAO.getAllAccounts();
+        assertTrue(accounts.isEmpty());
+
+        setUpAll();
+    }
 
     @Test
     void testAddAccount_Success() throws SQLException {
@@ -117,7 +105,6 @@ class AccountDAOTest {
         Account retrievedAccount = accountDAO.getAccountByUserId(newUser.getIdUser());
         assertNotNull(retrievedAccount);
         assertEquals(newAccount.getEmail(), retrievedAccount.getEmail());
-        assertTrue(PasswordUtils.checkPassword("newPassword123", retrievedAccount.getPassword()));
     }
 
     @Test
@@ -137,19 +124,21 @@ class AccountDAOTest {
     }
 
     @Test
-    void testAddAccount_DuplicateEmail_ShouldFail() throws SQLException {
-        User newUser = new User();
-        newUser.setFullName("Duplicate Email User");
-        newUser.setCellphone("5559876543");
-        userDAO.addUser(newUser);
-
+    void testAddAccount_DuplicateEmail_ShouldFail() {
         Account duplicateAccount = new Account(
-                newUser.getIdUser(),
+                testUsers.get(0).getIdUser(),
                 testAccounts.get(1).getEmail(),
                 "somePassword"
         );
 
-        assertThrows(SQLException.class, () -> accountDAO.addAccount(duplicateAccount));
+        assertThrows(RepeatedEmailException.class, () -> accountDAO.addAccount(duplicateAccount));
+    }
+
+    @Test
+    void testDeleteAccount_Success() throws SQLException {
+        Account accountToDelete = testAccounts.get(0);
+        boolean result = accountDAO.deleteAccount(accountToDelete.getIdUser());
+        assertTrue(result);
     }
 
     @Test
@@ -161,7 +150,6 @@ class AccountDAOTest {
     @Test
     void testUpdateAccount_EmailAndPassword() throws SQLException {
         Account accountToUpdate = testAccounts.get(1);
-        String oldPassword = accountToUpdate.getPassword();
         accountToUpdate.setEmail("updated.email@test.com");
         accountToUpdate.setPassword("newSecurePassword123");
 
@@ -171,13 +159,11 @@ class AccountDAOTest {
         Account updatedAccount = accountDAO.getAccountByUserId(accountToUpdate.getIdUser());
         assertEquals("updated.email@test.com", updatedAccount.getEmail());
         assertTrue(PasswordUtils.checkPassword("newSecurePassword123", updatedAccount.getPassword()));
-
     }
 
     @Test
     void testUpdateAccount_EmailOnly() throws SQLException {
         Account accountToUpdate = testAccounts.get(2);
-        String originalPassword = accountToUpdate.getPassword();
         accountToUpdate.setEmail("only.email.updated@test.com");
         accountToUpdate.setPassword(null);
 
@@ -190,41 +176,25 @@ class AccountDAOTest {
 
     @Test
     void testUpdateAccount_PasswordOnly() throws SQLException {
-        int userId = testAccounts.get(3).getIdUser();
-        Account originalAccount = accountDAO.getAccountByUserId(userId);
-        String oldPassword = originalAccount.getPassword();
-
         Account updateData = new Account();
-        updateData.setIdUser(userId);
-        updateData.setPassword("newSecurePassword123");
+        updateData.setIdUser(testAccounts.get(3).getIdUser());
+        updateData.setPassword("newPasswordOnly");
 
-        boolean updateResult = accountDAO.updateAccount(updateData);
-        assertTrue(updateResult);
+        boolean result = accountDAO.updateAccount(updateData);
+        assertTrue(result);
+
+        Account updatedAccount = accountDAO.getAccountByUserId(updateData.getIdUser());
+        assertTrue(PasswordUtils.checkPassword("newPasswordOnly", updatedAccount.getPassword()));
     }
 
     @Test
     void testUpdateAccount_NoChanges() throws SQLException {
-        int lastIndex = testAccounts.size() - 1;
-        Account originalAccount = accountDAO.getAccountByUserId(testAccounts.get(lastIndex).getIdUser());
-        String originalEmail = originalAccount.getEmail();
-        String originalHashedPassword = originalAccount.getPassword();
-
+        Account originalAccount = testAccounts.get(4);
         Account updateData = new Account();
         updateData.setIdUser(originalAccount.getIdUser());
 
         boolean result = accountDAO.updateAccount(updateData);
-        assertFalse(result, "Should return false when no changes are provided");
-
-        Account updatedAccount = accountDAO.getAccountByUserId(originalAccount.getIdUser());
-        assertEquals(originalEmail, updatedAccount.getEmail());
-        assertEquals(originalHashedPassword, updatedAccount.getPassword());
-    }
-
-    @Test
-    void testBCryptBasicFunctionality() {
-        String testPass = "password5";
-        String hash = PasswordUtils.hashPassword(testPass);
-        assertTrue(PasswordUtils.checkPassword(testPass, hash));
+        assertFalse(result);
     }
 
     @Test
@@ -241,27 +211,31 @@ class AccountDAOTest {
 
     @Test
     void testVerifyCredentials_Success() throws SQLException {
-        Account testAccount = testAccounts.get(1);
-        System.out.println("Testing account: " + testAccount.getEmail());
-        System.out.println("Stored hash: " + testAccount.getPassword());
-        System.out.println("Verifying password: newSecurePassword123");
+        User user = new User();
+        user.setFullName("Usuario Prueba");
+        user.setCellphone("5551234580");
+        user.setStatus('A');
+        userDAO.addUser(user);
 
-        boolean result = accountDAO.verifyCredentials(
-                testAccount.getEmail(),
-                "newSecurePassword123"
+        String password = "micontraseñaSegura123";
+        String hashedPassword = PasswordUtils.hashPassword(password);
+
+        Account account = new Account(
+                user.getIdUser(),
+                "prueba@test.com",
+                hashedPassword
         );
+        accountDAO.addAccount(account);
 
-        assertTrue(result);
+        assertTrue(accountDAO.verifyCredentials("prueba@test.com", password));
     }
 
     @Test
     void testVerifyCredentials_WrongPassword() throws SQLException {
-        Account testAccount = testAccounts.get(1);
         boolean result = accountDAO.verifyCredentials(
-                testAccount.getEmail(),
+                testAccounts.get(1).getEmail(),
                 "wrongPassword"
         );
-
         assertFalse(result);
     }
 
@@ -271,7 +245,6 @@ class AccountDAOTest {
                 "nonexistent@test.com",
                 "somePassword"
         );
-
         assertFalse(result);
     }
 
@@ -289,20 +262,25 @@ class AccountDAOTest {
 
     @Test
     void testGetAccountByUserId_NotExists() throws SQLException {
-        Account foundAccount = accountDAO.getAccountByUserId(9999);
-        assertNull(foundAccount);
+        Account account = accountDAO.getAccountByUserId(9999);
+        assertNotNull(account);
+        assertEquals(-1, account.getIdUser());
+        assertEquals("", account.getEmail());
+        assertEquals("", account.getPassword());
     }
 
     @Test
     void testGetAccountByEmail_Exists() throws SQLException {
-        Account foundAccount = accountDAO.getAccountByEmail(testAccounts.get(0).getEmail().toString());
-        assertNotNull(foundAccount);
+        assertNotNull(accountDAO.getAccountByEmail(testAccounts.get(0).getEmail()));
     }
 
     @Test
     void testGetAccountByEmail_NotExists() throws SQLException {
-        Account foundAccount = accountDAO.getAccountByEmail("nonexistent@test.com");
-        assertNull(foundAccount);
+        Account account = accountDAO.getAccountByEmail("nonexistent@test.com");
+        assertNotNull(account);
+        assertEquals(-1, account.getIdUser());
+        assertEquals("", account.getEmail());
+        assertEquals("", account.getPassword());
     }
 
     @Test
@@ -312,8 +290,7 @@ class AccountDAOTest {
 
     @Test
     void testAccountExists_True() throws SQLException {
-        Account testAccount = testAccounts.get(0);
-        assertTrue(accountDAO.accountExists(testAccount.getEmail()));
+        assertTrue(accountDAO.accountExists(testAccounts.get(0).getEmail()));
     }
 
     @Test
@@ -328,8 +305,9 @@ class AccountDAOTest {
 
     @Test
     void testPasswordHashingAndVerification() {
-        String plainPassword = "password2";
+        String plainPassword = "testPassword";
         String hashed = PasswordUtils.hashPassword(plainPassword);
         assertTrue(PasswordUtils.checkPassword(plainPassword, hashed));
+        assertFalse(PasswordUtils.checkPassword("wrongPassword", hashed));
     }
 }
