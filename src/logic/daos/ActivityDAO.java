@@ -27,6 +27,7 @@ public class ActivityDAO implements IActivityDAO {
 
         logger.debug("Agregando nueva actividad: {}", activity.getNameActivity());
 
+        // Cambia a DATE para columnas fecha_inicial y fecha_terminal
         String sql = "INSERT INTO actividad (nombre, descripcion, fecha_inicial, fecha_terminal, estado) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
@@ -34,8 +35,8 @@ public class ActivityDAO implements IActivityDAO {
 
             statement.setString(1, activity.getNameActivity());
             statement.setString(2, activity.getDescriptionActivity());
-            statement.setTimestamp(3, activity.getStartDate());
-            statement.setTimestamp(4, activity.getEndDate());
+            statement.setDate(3, new java.sql.Date(activity.getStartDate().getTime()));
+            statement.setDate(4, new java.sql.Date(activity.getEndDate().getTime()));
             statement.setString(5, activity.getActivityStatus().getDbValue());
 
             int affectedRows = statement.executeUpdate();
@@ -73,9 +74,9 @@ public class ActivityDAO implements IActivityDAO {
 
             statement.setString(1, activity.getNameActivity());
             statement.setString(2, activity.getDescriptionActivity());
-            statement.setTimestamp(4, activity.getStartDate());
-            statement.setTimestamp(5, activity.getEndDate());
             statement.setString(3, activity.getActivityStatus().toString());
+            statement.setDate(4, new java.sql.Date(activity.getStartDate().getTime()));
+            statement.setDate(5, new java.sql.Date(activity.getEndDate().getTime()));
             statement.setInt(6, activity.getIdActivity());
 
             boolean result = statement.executeUpdate() > 0;
@@ -126,12 +127,15 @@ public class ActivityDAO implements IActivityDAO {
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     logger.debug("Actividad ID {} encontrada", idActivity);
+                    // Convierte java.sql.Date a Timestamp
+                    java.sql.Date startDate = resultSet.getDate("fecha_inicial");
+                    java.sql.Date endDate = resultSet.getDate("fecha_terminal");
                     return new Activity(
                             resultSet.getInt("id_actividad"),
                             resultSet.getString("nombre"),
                             resultSet.getString("descripcion"),
-                            resultSet.getTimestamp("fecha_inicial"),
-                            resultSet.getTimestamp("fecha_terminal"),
+                            startDate != null ? new Timestamp(startDate.getTime()) : null,
+                            endDate != null ? new Timestamp(endDate.getTime()) : null,
                             ActivityStatus.fromDbValue(resultSet.getString("estado"))
                     );
                 }
@@ -155,12 +159,14 @@ public class ActivityDAO implements IActivityDAO {
              ResultSet resultSet = statement.executeQuery(sql)) {
 
             while (resultSet.next()) {
+                java.sql.Date startDate = resultSet.getDate("fecha_inicial");
+                java.sql.Date endDate = resultSet.getDate("fecha_terminal");
                 activities.add(new Activity(
                         resultSet.getInt("id_actividad"),
                         resultSet.getString("nombre"),
                         resultSet.getString("descripcion"),
-                        resultSet.getTimestamp("fecha_inicial"),
-                        resultSet.getTimestamp("fecha_terminal"),
+                        startDate != null ? new Timestamp(startDate.getTime()) : null,
+                        endDate != null ? new Timestamp(endDate.getTime()) : null,
                         ActivityStatus.fromDbValue(resultSet.getString("estado"))
                 ));
             }
@@ -190,12 +196,14 @@ public class ActivityDAO implements IActivityDAO {
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
+                    java.sql.Date startDate = resultSet.getDate("fecha_inicial");
+                    java.sql.Date endDate = resultSet.getDate("fecha_terminal");
                     activities.add(new Activity(
                             resultSet.getInt("id_actividad"),
                             resultSet.getString("nombre"),
                             resultSet.getString("descripcion"),
-                            resultSet.getTimestamp("fecha_inicial"),
-                            resultSet.getTimestamp("fecha_terminal"),
+                            startDate != null ? new Timestamp(startDate.getTime()) : null,
+                            endDate != null ? new Timestamp(endDate.getTime()) : null,
                             ActivityStatus.fromDbValue(resultSet.getString("estado"))
                     ));
                 }

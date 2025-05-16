@@ -247,7 +247,7 @@ class ActivityDAOTest {
     @Test
     void testAssignActivityToStudent_Success() throws SQLException {
         Activity testActivity = testActivities.get(0);
-        int studentId = 1; // ID de estudiante de prueba
+        int studentId = 1;
 
         boolean result = activityDAO.assignActivityToStudent(testActivity.getIdActivity(), studentId);
         assertTrue(result);
@@ -258,7 +258,7 @@ class ActivityDAOTest {
     @Test
     void testAssignActivityToCronogram_Success() throws SQLException {
         Activity testActivity = testActivities.get(0);
-        int cronogramId = 1; // ID de cronograma de prueba
+        int cronogramId = 1;
 
         boolean result = activityDAO.assignActivityToCronogram(testActivity.getIdActivity(), cronogramId);
         assertTrue(result);

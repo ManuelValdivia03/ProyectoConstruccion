@@ -30431,3 +30431,283 @@ java.sql.SQLIntegrityConstraintViolationException: Column 'fecha_inicial' cannot
 2025-05-15 22:50:05 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
 2025-05-15 22:50:05 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
 2025-05-15 22:50:05 [main] INFO  logic.daos.ActivityCronogramDAO - No se encontró cronograma con ID: 9999
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConfigLoader - Archivo config.properties cargado correctamente
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [268 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión de documentos
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [14 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión de documentos
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Cambiando estado de actividad ID 1 a Completada
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] INFO  logic.daos.ActivityDAO - Estado de actividad ID 1 cambiado a Completada
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Buscando actividad por ID: 1
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Actividad ID 1 encontrada
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión de documentos
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Asignando actividad ID 1 a estudiante ID 1
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] INFO  logic.daos.ActivityDAO - Actividad ID 1 asignada a estudiante ID 1
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Buscando actividad por ID: 1
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Actividad ID 1 encontrada
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión de documentos
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Buscando actividades con estado: Pendiente
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Se encontraron 1 actividades con estado Pendiente
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión de documentos
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:57:03 [main] WARN  logic.daos.ActivityDAO - Intento de agregar actividad con datos incompletos o nulos
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión de documentos
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Eliminando actividad ID: 9999
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] WARN  logic.daos.ActivityDAO - No se encontró actividad ID 9999 para eliminar
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión de documentos
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Nueva Actividad
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 3
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Buscando actividad por ID: 3
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Actividad ID 3 encontrada
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión de documentos
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Buscando actividad por ID: 1
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [12 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Actividad ID 1 encontrada
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión de documentos
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [5 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Asignando actividad ID 1 a cronograma ID 1
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] INFO  logic.daos.ActivityDAO - Actividad ID 1 asignada a cronograma ID 1
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Buscando actividad por ID: 1
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Actividad ID 1 encontrada
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión de documentos
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Cambiando estado de actividad ID 9999 a Completada
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] WARN  logic.daos.ActivityDAO - No se encontró actividad ID 9999 para cambiar estado
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión de documentos
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:57:03 [main] INFO  logic.daos.ActivityDAO - Obteniendo todas las actividades
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:03 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:57:03 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:03 [main] DEBUG logic.daos.ActivityDAO - Se encontraron 2 actividades
+2025-05-15 22:57:04 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión de documentos
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:04 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:57:04 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:04 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:57:04 [main] DEBUG logic.daos.ActivityDAO - Verificando existencia de actividad ID: 9999
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:04 [main] DEBUG logic.daos.ActivityDAO - ¿Actividad ID 9999 existe?: false
+2025-05-15 22:57:04 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión de documentos
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:04 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:57:04 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:04 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:57:04 [main] DEBUG logic.daos.ActivityDAO - Verificando existencia de actividad ID: 1
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:04 [main] DEBUG logic.daos.ActivityDAO - ¿Actividad ID 1 existe?: true
+2025-05-15 22:57:04 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión de documentos
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:04 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:57:04 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:04 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:57:04 [main] DEBUG logic.daos.ActivityDAO - Actualizando actividad ID: 9999
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:04 [main] WARN  logic.daos.ActivityDAO - No se encontró actividad ID 9999 para actualizar
+2025-05-15 22:57:04 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión de documentos
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:04 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:57:04 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:04 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:57:04 [main] DEBUG logic.daos.ActivityDAO - Eliminando actividad ID: 1
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:04 [main] INFO  logic.daos.ActivityDAO - Actividad ID 1 eliminada exitosamente
+2025-05-15 22:57:04 [main] DEBUG logic.daos.ActivityDAO - Verificando existencia de actividad ID: 1
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:04 [main] DEBUG logic.daos.ActivityDAO - ¿Actividad ID 1 existe?: false
+2025-05-15 22:57:04 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión de documentos
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:04 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:57:04 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:04 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:57:04 [main] DEBUG logic.daos.ActivityDAO - Buscando actividad por ID: 9999
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:04 [main] INFO  logic.daos.ActivityDAO - No se encontró actividad con ID: 9999
+2025-05-15 22:57:04 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Revisión de documentos
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:04 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 1
+2025-05-15 22:57:04 [main] DEBUG logic.daos.ActivityDAO - Agregando nueva actividad: Presentación final
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:04 [main] INFO  logic.daos.ActivityDAO - Actividad agregada exitosamente con ID: 2
+2025-05-15 22:57:04 [main] DEBUG logic.daos.ActivityDAO - Actualizando actividad ID: 1
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:04 [main] INFO  logic.daos.ActivityDAO - Actividad ID 1 actualizada exitosamente
+2025-05-15 22:57:04 [main] DEBUG logic.daos.ActivityDAO - Buscando actividad por ID: 1
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-05-15 22:57:04 [main] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-05-15 22:57:04 [main] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-05-15 22:57:04 [main] DEBUG logic.daos.ActivityDAO - Actividad ID 1 encontrada
