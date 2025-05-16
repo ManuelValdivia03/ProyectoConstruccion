@@ -25,9 +25,11 @@ class CoordinatorDAOTest {
         testConnection = ConnectionDataBase.getConnection();
 
         try (var statement = testConnection.createStatement()) {
+            statement.execute("DELETE FROM reporte");
             statement.execute("DELETE FROM presentacion");
             statement.execute("ALTER TABLE presentacion AUTO_INCREMENT = 1");
             statement.execute("DELETE FROM academico");
+            statement.execute("DELETE FROM grupo_estudiante");
             statement.execute("DELETE FROM grupo");
             statement.execute("ALTER TABLE grupo AUTO_INCREMENT = 1");
             statement.execute("DELETE FROM estudiante");
@@ -76,6 +78,8 @@ class CoordinatorDAOTest {
     @BeforeEach
     void setUp() throws SQLException {
         try (var statement = testConnection.createStatement()) {
+            // Borra primero las tablas hijas para evitar errores de clave foránea
+            statement.execute("DELETE FROM reporte");
             statement.execute("DELETE FROM coordinador");
             statement.execute("DELETE FROM usuario");
             statement.execute("ALTER TABLE usuario AUTO_INCREMENT = 1");
@@ -90,6 +94,7 @@ class CoordinatorDAOTest {
         }
     }
 
+    // addCoordinator
     @Test
     void testAddCoordinator_Success() throws SQLException {
         Coordinator newCoordinator = new Coordinator();
@@ -106,13 +111,18 @@ class CoordinatorDAOTest {
     }
 
     @Test
-    void testAddCoordinator_DuplicateStaffNumber_ShouldFail() {
+    void testAddCoordinator_DuplicateStaffNumber_ShouldThrowException() {
         Coordinator duplicateCoordinator = new Coordinator();
         duplicateCoordinator.setStaffNumber("C001");
         duplicateCoordinator.setFullName("Coordinador Duplicado");
         duplicateCoordinator.setCellphone("5555555555");
 
         assertThrows(SQLException.class, () -> coordinatorDAO.addCoordinator(duplicateCoordinator));
+    }
+
+    @Test
+    void testAddCoordinator_NullCoordinator_ShouldThrowException() {
+        assertThrows(IllegalArgumentException.class, () -> coordinatorDAO.addCoordinator(null));
     }
 
     @Test
@@ -126,6 +136,17 @@ class CoordinatorDAOTest {
     }
 
     @Test
+    void testAddCoordinator_NullStaffNumber_ShouldThrowException() {
+        Coordinator invalidCoordinator = new Coordinator();
+        invalidCoordinator.setStaffNumber(null);
+        invalidCoordinator.setFullName("Nombre");
+        invalidCoordinator.setCellphone("5556666666");
+
+        assertThrows(SQLException.class, () -> coordinatorDAO.addCoordinator(invalidCoordinator));
+    }
+
+    // getAllCoordinators
+    @Test
     void testGetAllCoordinators_WithData() throws SQLException {
         List<Coordinator> coordinators = coordinatorDAO.getAllCoordinators();
         assertEquals(testCoordinators.size(), coordinators.size());
@@ -137,6 +158,18 @@ class CoordinatorDAOTest {
         }
     }
 
+    @Test
+    void testGetAllCoordinators_EmptyTable() throws SQLException {
+        try (var statement = testConnection.createStatement()) {
+            statement.execute("DELETE FROM coordinador");
+            statement.execute("DELETE FROM usuario");
+        }
+        List<Coordinator> coordinators = coordinatorDAO.getAllCoordinators();
+        assertTrue(coordinators.isEmpty());
+        setUp();
+    }
+
+    // getCoordinatorByStaffNumber
     @Test
     void testGetCoordinatorByStaffNumber_Exists() throws SQLException {
         Coordinator testCoordinator = testCoordinators.get(0);
@@ -154,6 +187,13 @@ class CoordinatorDAOTest {
         assertNull(foundCoordinator);
     }
 
+    @Test
+    void testGetCoordinatorByStaffNumber_NullOrEmpty() throws SQLException {
+        assertNull(coordinatorDAO.getCoordinatorByStaffNumber(null));
+        assertNull(coordinatorDAO.getCoordinatorByStaffNumber(""));
+    }
+
+    // updateCoordinator
     @Test
     void testUpdateCoordinator_Success() throws SQLException {
         Coordinator coordinatorToUpdate = coordinatorDAO.getCoordinatorByStaffNumber("C001");
@@ -176,11 +216,29 @@ class CoordinatorDAOTest {
         nonExistentCoordinator.setIdUser(9999);
         nonExistentCoordinator.setFullName("No existe");
         nonExistentCoordinator.setStaffNumber("NOEXISTE");
+        nonExistentCoordinator.setCellphone("5550000000");
 
         boolean result = coordinatorDAO.updateCoordinator(nonExistentCoordinator);
         assertFalse(result);
     }
 
+    @Test
+    void testUpdateCoordinator_NullCoordinator_ShouldThrowException() {
+        assertThrows(SQLException.class, () -> coordinatorDAO.updateCoordinator(null));
+    }
+
+    @Test
+    void testUpdateCoordinator_NullName_ShouldThrowException() {
+        Coordinator invalidCoordinator = new Coordinator();
+        invalidCoordinator.setIdUser(1);
+        invalidCoordinator.setStaffNumber("C006");
+        invalidCoordinator.setFullName(null);
+        invalidCoordinator.setCellphone("5558888888");
+
+        assertThrows(SQLException.class, () -> coordinatorDAO.updateCoordinator(invalidCoordinator));
+    }
+
+    // deleteCoordinator
     @Test
     void testDeleteCoordinator_Success() throws SQLException {
         Coordinator coordinatorToDelete = coordinatorDAO.getCoordinatorByStaffNumber("C001");
@@ -207,6 +265,12 @@ class CoordinatorDAOTest {
     }
 
     @Test
+    void testDeleteCoordinator_NullCoordinator() throws SQLException {
+        assertThrows(NullPointerException.class, () -> coordinatorDAO.deleteCoordinator(null));
+    }
+
+    // coordinatorExists
+    @Test
     void testCoordinatorExists_True() throws SQLException {
         assertTrue(coordinatorDAO.coordinatorExists("C001"));
     }
@@ -216,6 +280,13 @@ class CoordinatorDAOTest {
         assertFalse(coordinatorDAO.coordinatorExists("NOEXISTE"));
     }
 
+    @Test
+    void testCoordinatorExists_NullOrEmpty() throws SQLException {
+        assertFalse(coordinatorDAO.coordinatorExists(null));
+        assertFalse(coordinatorDAO.coordinatorExists(""));
+    }
+
+    // countCoordinators
     @Test
     void testCountCoordinators_WithData() throws SQLException {
         int count = coordinatorDAO.countCoordinators();
@@ -228,5 +299,15 @@ class CoordinatorDAOTest {
         coordinatorDAO.addCoordinator(extraCoordinator);
 
         assertEquals(count + 1, coordinatorDAO.countCoordinators());
+    }
+
+    @Test
+    void testCountCoordinators_EmptyTable() throws SQLException {
+        try (var statement = testConnection.createStatement()) {
+            statement.execute("DELETE FROM coordinador");
+            statement.execute("DELETE FROM usuario");
+        }
+        assertEquals(0, coordinatorDAO.countCoordinators());
+        setUp();
     }
 }
