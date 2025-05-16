@@ -31,17 +31,29 @@ class ReportDAOTest {
         userDAO = new UserDAO();
         testConnection = ConnectionDataBase.getConnection();
 
-        // Limpiar completamente las tablas relacionadas
-        try (var statement = testConnection.createStatement()) {
-            statement.execute("DELETE FROM reporte");
-            statement.execute("DELETE FROM estudiante");
-            statement.execute("DELETE FROM usuario");
-            statement.execute("ALTER TABLE reporte AUTO_INCREMENT = 1");
-            statement.execute("ALTER TABLE estudiante AUTO_INCREMENT = 1");
-            statement.execute("ALTER TABLE usuario AUTO_INCREMENT = 1");
+        try (var conn = ConnectionDataBase.getConnection();
+             var statement = conn.createStatement()) {
+            statement.execute("SET FOREIGN_KEY_CHECKS = 0");
+            statement.execute("TRUNCATE TABLE grupo_estudiante");
+            statement.execute("TRUNCATE TABLE estudiante");
+            statement.execute("TRUNCATE TABLE academico");
+            statement.execute("TRUNCATE TABLE coordinador");
+            statement.execute("TRUNCATE TABLE representante");
+            statement.execute("TRUNCATE TABLE actividad");
+            statement.execute("TRUNCATE TABLE autoevaluacion");
+            statement.execute("TRUNCATE TABLE cronograma_actividad");
+            statement.execute("TRUNCATE TABLE cronograma_actividades");
+            statement.execute("TRUNCATE TABLE evaluacion");
+            statement.execute("TRUNCATE TABLE presentacion");
+            statement.execute("TRUNCATE TABLE proyecto");
+            statement.execute("TRUNCATE TABLE reporte");
+            statement.execute("TRUNCATE TABLE grupo");
+            statement.execute("TRUNCATE TABLE organizacion_vinculada");
+            statement.execute("TRUNCATE TABLE cuenta");
+            statement.execute("TRUNCATE TABLE usuario");
+            statement.execute("SET FOREIGN_KEY_CHECKS = 1");
         }
 
-        // Crear usuario y estudiante de prueba
         User user = new User();
         user.setFullName("Estudiante Prueba");
         user.setCellphone("5550000000");

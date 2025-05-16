@@ -2,7 +2,9 @@ package daos;
 
 import dataaccess.ConnectionDataBase;
 import logic.daos.ActivityDAO;
+import logic.daos.ActivityCronogramDAO;
 import logic.logicclasses.Activity;
+import logic.logicclasses.ActivityCronogram;
 import logic.enums.ActivityStatus;
 import org.junit.jupiter.api.*;
 
@@ -15,28 +17,67 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ActivityDAOTest {
     private static ActivityDAO activityDAO;
+    private static ActivityCronogramDAO cronogramDAO;
     private static Connection testConnection;
     private static List<Activity> testActivities;
+    private static ActivityCronogram testCronogram;
+    private static int testStudentId;
 
     @BeforeAll
     static void setUpAll() throws SQLException {
         activityDAO = new ActivityDAO();
+        cronogramDAO = new ActivityCronogramDAO();
         testConnection = ConnectionDataBase.getConnection();
 
-        try (var statement = testConnection.createStatement()) {
-            statement.execute("DELETE FROM actividad");
-            statement.execute("ALTER TABLE actividad AUTO_INCREMENT = 1");
-
-            statement.execute("CREATE TABLE IF NOT EXISTS actividad (" +
-                    "id_actividad INT AUTO_INCREMENT PRIMARY KEY, " +
-                    "nombre VARCHAR(200) NOT NULL, " +
-                    "descripcion TEXT NOT NULL, " +
-                    "fecha_inicial DATE NOT NULL, " +
-                    "fecha_terminal DATE NOT NULL, " +
-                    "estado ENUM('Pendiente','En progreso','Completada','Cancelada') NOT NULL DEFAULT 'Pendiente', " +
-                    "id_usuario INT, " +
-                    "id_cronograma INT)");
+        try (var conn = ConnectionDataBase.getConnection();
+             var statement = conn.createStatement()) {
+            statement.execute("SET FOREIGN_KEY_CHECKS = 0");
+            statement.execute("TRUNCATE TABLE grupo_estudiante");
+            statement.execute("TRUNCATE TABLE estudiante");
+            statement.execute("TRUNCATE TABLE academico");
+            statement.execute("TRUNCATE TABLE coordinador");
+            statement.execute("TRUNCATE TABLE representante");
+            statement.execute("TRUNCATE TABLE actividad");
+            statement.execute("TRUNCATE TABLE autoevaluacion");
+            statement.execute("TRUNCATE TABLE cronograma_actividad");
+            statement.execute("TRUNCATE TABLE cronograma_actividades");
+            statement.execute("TRUNCATE TABLE evaluacion");
+            statement.execute("TRUNCATE TABLE presentacion");
+            statement.execute("TRUNCATE TABLE proyecto");
+            statement.execute("TRUNCATE TABLE reporte");
+            statement.execute("TRUNCATE TABLE grupo");
+            statement.execute("TRUNCATE TABLE organizacion_vinculada");
+            statement.execute("TRUNCATE TABLE cuenta");
+            statement.execute("TRUNCATE TABLE usuario");
+            statement.execute("SET FOREIGN_KEY_CHECKS = 1");
         }
+
+        // Crea usuario y estudiante de prueba y guarda su ID
+        try (PreparedStatement psUser = testConnection.prepareStatement(
+                "INSERT INTO usuario (nombre_completo, telefono, estado) VALUES (?, ?, 'A')",
+                Statement.RETURN_GENERATED_KEYS)) {
+            psUser.setString(1, "Estudiante Test");
+            psUser.setString(2, "5551234567");
+            psUser.executeUpdate();
+            try (ResultSet rs = psUser.getGeneratedKeys()) {
+                if (rs.next()) {
+                    testStudentId = rs.getInt(1);
+                }
+            }
+        }
+        try (PreparedStatement psEst = testConnection.prepareStatement(
+                "INSERT INTO estudiante (id_usuario, matricula, calificacion) VALUES (?, ?, ?)")) {
+            psEst.setInt(1, testStudentId);
+            psEst.setString(2, "S0001");
+            psEst.setInt(3, 0);
+            psEst.executeUpdate();
+        }
+
+        // Usa el DAO para crear un cronograma real
+        testCronogram = new ActivityCronogram();
+        testCronogram.setDateStart(Timestamp.from(Instant.now()));
+        testCronogram.setDateEnd(Timestamp.from(Instant.now().plusSeconds(604800))); // +7 días
+        cronogramDAO.addCronogram(testCronogram);
 
         testActivities = new ArrayList<>();
         testActivities.add(createTestActivity(
@@ -79,6 +120,30 @@ class ActivityDAOTest {
         try (Statement stmt = testConnection.createStatement()) {
             stmt.execute("DELETE FROM actividad");
             stmt.execute("ALTER TABLE actividad AUTO_INCREMENT = 1");
+        }
+
+        // Asegura que el cronograma de prueba exista antes de cada prueba usando el DAO
+        if (testCronogram == null || !cronogramDAO.cronogramExists(testCronogram.getIdCronogram())) {
+            testCronogram = new ActivityCronogram();
+            testCronogram.setDateStart(Timestamp.from(Instant.now()));
+            testCronogram.setDateEnd(Timestamp.from(Instant.now().plusSeconds(604800)));
+            cronogramDAO.addCronogram(testCronogram);
+        }
+
+        // Asegura que el estudiante de prueba exista antes de cada prueba
+        try (PreparedStatement psUser = testConnection.prepareStatement(
+                "INSERT IGNORE INTO usuario (id_usuario, nombre_completo, telefono, estado) VALUES (?, ?, ?, 'A')")) {
+            psUser.setInt(1, testStudentId);
+            psUser.setString(2, "Estudiante Test");
+            psUser.setString(3, "5551234567");
+            psUser.executeUpdate();
+        }
+        try (PreparedStatement psEst = testConnection.prepareStatement(
+                "INSERT IGNORE INTO estudiante (id_usuario, matricula, calificacion) VALUES (?, ?, ?)")) {
+            psEst.setInt(1, testStudentId);
+            psEst.setString(2, "S0001");
+            psEst.setInt(3, 0);
+            psEst.executeUpdate();
         }
 
         testActivities = new ArrayList<>();
@@ -247,22 +312,25 @@ class ActivityDAOTest {
     @Test
     void testAssignActivityToStudent_Success() throws SQLException {
         Activity testActivity = testActivities.get(0);
-        int studentId = 1;
+        // Usa el id real del estudiante de prueba
+        int studentId = testStudentId;
 
         boolean result = activityDAO.assignActivityToStudent(testActivity.getIdActivity(), studentId);
         assertTrue(result);
 
         Activity assignedActivity = activityDAO.getActivityById(testActivity.getIdActivity());
+        // Puedes agregar más asserts si tu modelo lo permite
     }
 
     @Test
     void testAssignActivityToCronogram_Success() throws SQLException {
         Activity testActivity = testActivities.get(0);
-        int cronogramId = 1;
+        int cronogramId = testCronogram.getIdCronogram();
 
         boolean result = activityDAO.assignActivityToCronogram(testActivity.getIdActivity(), cronogramId);
         assertTrue(result);
 
         Activity assignedActivity = activityDAO.getActivityById(testActivity.getIdActivity());
+        // Puedes agregar más asserts si tu modelo lo permite
     }
 }

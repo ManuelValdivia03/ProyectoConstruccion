@@ -27,7 +27,6 @@ public class ActivityDAO implements IActivityDAO {
 
         logger.debug("Agregando nueva actividad: {}", activity.getNameActivity());
 
-        // Cambia a DATE para columnas fecha_inicial y fecha_terminal
         String sql = "INSERT INTO actividad (nombre, descripcion, fecha_inicial, fecha_terminal, estado) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();

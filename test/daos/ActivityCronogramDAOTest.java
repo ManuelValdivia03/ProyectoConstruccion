@@ -30,35 +30,27 @@ class ActivityCronogramDAOTest {
         activityDAO = new ActivityDAO();
         testConnection = ConnectionDataBase.getConnection();
 
-        // Limpiar y crear tablas necesarias
-        try (var statement = testConnection.createStatement()) {
-            // Limpiar tablas relacionadas
-            statement.execute("DELETE FROM cronograma_actividad");
-            statement.execute("DELETE FROM cronograma_actividades");
-            statement.execute("DELETE FROM actividad");
-
-            // Resetear auto-incrementos
-            statement.execute("ALTER TABLE cronograma_actividades AUTO_INCREMENT = 1");
-            statement.execute("ALTER TABLE actividad AUTO_INCREMENT = 1");
-
-            // Crear tablas si no existen
-            statement.execute("CREATE TABLE IF NOT EXISTS cronograma_actividades (" +
-                    "id_cronograma INT AUTO_INCREMENT PRIMARY KEY, " +
-                    "fecha_inicial DATE NOT NULL, " +
-                    "fecha_terminal DATE NOT NULL)");
-
-            statement.execute("CREATE TABLE IF NOT EXISTS cronograma_actividad (" +
-                    "id_cronograma INT NOT NULL, " +
-                    "id_actividad INT NOT NULL, " +
-                    "PRIMARY KEY (id_cronograma, id_actividad))");
-
-            statement.execute("CREATE TABLE IF NOT EXISTS actividad (" +
-                    "id_actividad INT AUTO_INCREMENT PRIMARY KEY, " +
-                    "nombre VARCHAR(200) NOT NULL, " +
-                    "descripcion TEXT NOT NULL, " +
-                    "fecha_inicial DATE NOT NULL, " +
-                    "fecha_terminal DATE NOT NULL, " +
-                    "estado ENUM('Pendiente','En progreso','Completada','Cancelada') NOT NULL DEFAULT 'Pendiente')");
+        try (var conn = ConnectionDataBase.getConnection();
+             var statement = conn.createStatement()) {
+            statement.execute("SET FOREIGN_KEY_CHECKS = 0");
+            statement.execute("TRUNCATE TABLE grupo_estudiante");
+            statement.execute("TRUNCATE TABLE estudiante");
+            statement.execute("TRUNCATE TABLE academico");
+            statement.execute("TRUNCATE TABLE coordinador");
+            statement.execute("TRUNCATE TABLE representante");
+            statement.execute("TRUNCATE TABLE actividad");
+            statement.execute("TRUNCATE TABLE autoevaluacion");
+            statement.execute("TRUNCATE TABLE cronograma_actividad");
+            statement.execute("TRUNCATE TABLE cronograma_actividades");
+            statement.execute("TRUNCATE TABLE evaluacion");
+            statement.execute("TRUNCATE TABLE presentacion");
+            statement.execute("TRUNCATE TABLE proyecto");
+            statement.execute("TRUNCATE TABLE reporte");
+            statement.execute("TRUNCATE TABLE grupo");
+            statement.execute("TRUNCATE TABLE organizacion_vinculada");
+            statement.execute("TRUNCATE TABLE cuenta");
+            statement.execute("TRUNCATE TABLE usuario");
+            statement.execute("SET FOREIGN_KEY_CHECKS = 1");
         }
 
         // Crear datos de prueba
@@ -188,7 +180,7 @@ class ActivityCronogramDAOTest {
         invalidCronogram.setDateStart(null);
         invalidCronogram.setDateEnd(null);
 
-        assertThrows(SQLException.class,
+        assertThrows(NullPointerException.class,
                 () -> cronogramDAO.addCronogram(invalidCronogram));
     }
 

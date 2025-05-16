@@ -29,7 +29,6 @@ public class ActivityCronogramDAO implements IActivityCronogramDAO {
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            // Usar java.sql.Date para columnas tipo DATE
             statement.setDate(1, new java.sql.Date(cronogram.getDateStart().getTime()));
             statement.setDate(2, new java.sql.Date(cronogram.getDateEnd().getTime()));
 
@@ -121,7 +120,6 @@ public class ActivityCronogramDAO implements IActivityCronogramDAO {
                 if (resultSet.next()) {
                     cronogram = new ActivityCronogram();
                     cronogram.setIdCronogram(resultSet.getInt("id_cronograma"));
-                    // Convertir java.sql.Date a Timestamp
                     cronogram.setDateStart(new Timestamp(resultSet.getDate("fecha_inicial").getTime()));
                     cronogram.setDateEnd(new Timestamp(resultSet.getDate("fecha_terminal").getTime()));
                     cronogram.setActivities(getActivitiesByCronogram(idCronogram));

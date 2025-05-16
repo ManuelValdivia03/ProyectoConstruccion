@@ -24,6 +24,28 @@ class StudentDAOTest {
     static void setUpAll() throws SQLException {
         studentDAO = new StudentDAO();
         testConnection = ConnectionDataBase.getConnection();
+        try (var conn = ConnectionDataBase.getConnection();
+             var statement = conn.createStatement()) {
+            statement.execute("SET FOREIGN_KEY_CHECKS = 0");
+            statement.execute("TRUNCATE TABLE grupo_estudiante");
+            statement.execute("TRUNCATE TABLE estudiante");
+            statement.execute("TRUNCATE TABLE academico");
+            statement.execute("TRUNCATE TABLE coordinador");
+            statement.execute("TRUNCATE TABLE representante");
+            statement.execute("TRUNCATE TABLE actividad");
+            statement.execute("TRUNCATE TABLE autoevaluacion");
+            statement.execute("TRUNCATE TABLE cronograma_actividad");
+            statement.execute("TRUNCATE TABLE cronograma_actividades");
+            statement.execute("TRUNCATE TABLE evaluacion");
+            statement.execute("TRUNCATE TABLE presentacion");
+            statement.execute("TRUNCATE TABLE proyecto");
+            statement.execute("TRUNCATE TABLE reporte");
+            statement.execute("TRUNCATE TABLE grupo");
+            statement.execute("TRUNCATE TABLE organizacion_vinculada");
+            statement.execute("TRUNCATE TABLE cuenta");
+            statement.execute("TRUNCATE TABLE usuario");
+            statement.execute("SET FOREIGN_KEY_CHECKS = 1");
+        }
     }
 
     @BeforeEach

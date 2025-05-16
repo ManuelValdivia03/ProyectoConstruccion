@@ -36,52 +36,27 @@ class EvaluationDAOTest {
         studentDAO = new StudentDAO();
         testConnection = ConnectionDataBase.getConnection();
 
-        try (var statement = testConnection.createStatement()) {
-            statement.execute("DELETE FROM evaluacion");
-            statement.execute("DELETE FROM presentacion");
-            statement.execute("DELETE FROM academico");
-            statement.execute("DELETE FROM estudiante");
-            statement.execute("DELETE FROM coordinador");
-            statement.execute("DELETE FROM usuario");
-
-            statement.execute("ALTER TABLE usuario AUTO_INCREMENT = 1");
-            statement.execute("ALTER TABLE estudiante AUTO_INCREMENT = 1");
-            statement.execute("ALTER TABLE presentacion AUTO_INCREMENT = 1");
-            statement.execute("ALTER TABLE academico AUTO_INCREMENT = 1");
-            statement.execute("ALTER TABLE evaluacion AUTO_INCREMENT = 1");
-
-            statement.execute("CREATE TABLE IF NOT EXISTS usuario (" +
-                    "id_usuario INT AUTO_INCREMENT PRIMARY KEY, " +
-                    "nombre_completo VARCHAR(100) NOT NULL, " +
-                    "telefono VARCHAR(20), " +
-                    "estado CHAR(1) DEFAULT 'A')");
-
-            statement.execute("CREATE TABLE IF NOT EXISTS estudiante (" +
-                    "id_usuario INT PRIMARY KEY, " +
-                    "matricula VARCHAR(50) NOT NULL UNIQUE, " +
-                    "FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario))");
-
-            statement.execute("CREATE TABLE IF NOT EXISTS academico (" +
-                    "id_usuario INT PRIMARY KEY, " +
-                    "numero_personal VARCHAR(50) NOT NULL UNIQUE, " +
-                    "FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario))");
-
-            statement.execute("CREATE TABLE IF NOT EXISTS presentacion (" +
-                    "id_presentacion INT AUTO_INCREMENT PRIMARY KEY, " +
-                    "fecha TIMESTAMP NOT NULL, " +
-                    "tipo enum('Final', 'Parcial') NOT NULL, " +
-                    "id_estudiante INT NOT NULL, " +
-                    "FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_usuario))");
-
-            statement.execute("CREATE TABLE IF NOT EXISTS evaluacion (" +
-                    "id_evaluacion INT AUTO_INCREMENT PRIMARY KEY, " +
-                    "calificacion INT NOT NULL, " +
-                    "comentarios TEXT, " +
-                    "fecha TIMESTAMP NOT NULL, " +
-                    "id_academicoevaluador INT NOT NULL, " +
-                    "id_presentacion INT NOT NULL, " +
-                    "FOREIGN KEY (id_academicoevaluador) REFERENCES academico(id_usuario), " +
-                    "FOREIGN KEY (id_presentacion) REFERENCES presentacion(id_presentacion))");
+        try (var conn = ConnectionDataBase.getConnection();
+             var statement = conn.createStatement()) {
+            statement.execute("SET FOREIGN_KEY_CHECKS = 0");
+            statement.execute("TRUNCATE TABLE grupo_estudiante");
+            statement.execute("TRUNCATE TABLE estudiante");
+            statement.execute("TRUNCATE TABLE academico");
+            statement.execute("TRUNCATE TABLE coordinador");
+            statement.execute("TRUNCATE TABLE representante");
+            statement.execute("TRUNCATE TABLE actividad");
+            statement.execute("TRUNCATE TABLE autoevaluacion");
+            statement.execute("TRUNCATE TABLE cronograma_actividad");
+            statement.execute("TRUNCATE TABLE cronograma_actividades");
+            statement.execute("TRUNCATE TABLE evaluacion");
+            statement.execute("TRUNCATE TABLE presentacion");
+            statement.execute("TRUNCATE TABLE proyecto");
+            statement.execute("TRUNCATE TABLE reporte");
+            statement.execute("TRUNCATE TABLE grupo");
+            statement.execute("TRUNCATE TABLE organizacion_vinculada");
+            statement.execute("TRUNCATE TABLE cuenta");
+            statement.execute("TRUNCATE TABLE usuario");
+            statement.execute("SET FOREIGN_KEY_CHECKS = 1");
         }
 
         testStudents = new ArrayList<>();
