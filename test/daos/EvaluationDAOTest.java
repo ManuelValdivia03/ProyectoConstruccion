@@ -36,23 +36,20 @@ class EvaluationDAOTest {
         studentDAO = new StudentDAO();
         testConnection = ConnectionDataBase.getConnection();
 
-        // Limpiar completamente la base de datos
         try (var statement = testConnection.createStatement()) {
-            // Eliminar tablas en el orden correcto (primero las que tienen FK)
             statement.execute("DELETE FROM evaluacion");
             statement.execute("DELETE FROM presentacion");
             statement.execute("DELETE FROM academico");
             statement.execute("DELETE FROM estudiante");
+            statement.execute("DELETE FROM coordinador");
             statement.execute("DELETE FROM usuario");
 
-            // Resetear auto-incrementos
             statement.execute("ALTER TABLE usuario AUTO_INCREMENT = 1");
             statement.execute("ALTER TABLE estudiante AUTO_INCREMENT = 1");
             statement.execute("ALTER TABLE presentacion AUTO_INCREMENT = 1");
             statement.execute("ALTER TABLE academico AUTO_INCREMENT = 1");
             statement.execute("ALTER TABLE evaluacion AUTO_INCREMENT = 1");
 
-            // Crear tablas (versión actualizada)
             statement.execute("CREATE TABLE IF NOT EXISTS usuario (" +
                     "id_usuario INT AUTO_INCREMENT PRIMARY KEY, " +
                     "nombre_completo VARCHAR(100) NOT NULL, " +
@@ -87,17 +84,14 @@ class EvaluationDAOTest {
                     "FOREIGN KEY (id_presentacion) REFERENCES presentacion(id_presentacion))");
         }
 
-        // Crear estudiantes
         testStudents = new ArrayList<>();
         testStudents.add(createTestStudent("S001", "Estudiante 1", "5551111111"));
         testStudents.add(createTestStudent("S002", "Estudiante 2", "5552222222"));
 
-        // Crear académicos
         testAcademics = new ArrayList<>();
         testAcademics.add(createTestAcademic(1, "Académico 1", "5553333333",'A', "12345", AcademicType.Evaluador ));
-        testAcademics.add(createTestAcademic(2, "Académico 2", "5553333333", 'A', "123456", AcademicType.Evaluador));
+        testAcademics.add(createTestAcademic(2, "Académico 2", "5553333334", 'A', "123456", AcademicType.Evaluador));
 
-        // Crear presentaciones
         testPresentations = new ArrayList<>();
         testPresentations.add(createTestPresentation(
                 testStudents.get(0),
@@ -111,7 +105,6 @@ class EvaluationDAOTest {
                 Timestamp.from(Instant.now())
         ));
 
-        // Crear evaluaciones
         testEvaluations = new ArrayList<>();
         testEvaluations.add(createTestEvaluation(
                 testAcademics.get(0),
@@ -128,22 +121,37 @@ class EvaluationDAOTest {
                 Timestamp.from(Instant.now())
         ));
 
-        // Verificaciones iniciales
         assertEquals(2, evaluationDAO.countEvaluations());
     }
 
     private static Student createTestStudent(String enrollment, String fullName, String phone) throws SQLException {
+        logic.logicclasses.User user = new logic.logicclasses.User();
+        user.setFullName(fullName);
+        user.setCellphone(phone);
+        user.setStatus('A');
+        logic.daos.UserDAO userDAO = new logic.daos.UserDAO();
+        userDAO.addUser(user);
+
         Student student = new Student();
+        student.setIdUser(user.getIdUser());
         student.setEnrollment(enrollment);
         student.setFullName(fullName);
         student.setCellphone(phone);
+        student.setStatus('A');
         studentDAO.addStudent(student);
         return student;
     }
 
     private static Academic createTestAcademic(int idAcademic, String fullName, String phone, char status, String staffNumber, AcademicType type) throws SQLException {
+        logic.logicclasses.User user = new logic.logicclasses.User();
+        user.setFullName(fullName);
+        user.setCellphone(phone);
+        user.setStatus(status);
+        logic.daos.UserDAO userDAO = new logic.daos.UserDAO();
+        userDAO.addUser(user);
+
         Academic academic = new Academic();
-        academic.setIdUser(idAcademic);
+        academic.setIdUser(user.getIdUser());
         academic.setFullName(fullName);
         academic.setCellphone(phone);
         academic.setStatus(status);
@@ -177,19 +185,20 @@ class EvaluationDAOTest {
     @AfterAll
     static void tearDownAll() throws SQLException {
         if (testConnection != null && !testConnection.isClosed()) {
+            try (Statement stmt = testConnection.createStatement()) {
+                stmt.execute("DELETE FROM coordinador");
+            }
             testConnection.close();
         }
     }
 
     @BeforeEach
     void setUp() throws SQLException {
-        // Limpiar evaluaciones
         try (Statement stmt = testConnection.createStatement()) {
             stmt.execute("DELETE FROM evaluacion");
             stmt.execute("ALTER TABLE evaluacion AUTO_INCREMENT = 1");
         }
 
-        // Recrear evaluaciones de prueba
         testEvaluations = new ArrayList<>();
         testEvaluations.add(createTestEvaluation(
                 testAcademics.get(0),

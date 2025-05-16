@@ -93,23 +93,19 @@ public class EvaluationDAO implements IEvaluationDAO {
                 if (rs.next()) {
                     logger.debug("Evaluación encontrada con ID: {}", idEvaluation);
 
-                    // Crear Academic
                     Academic academic = new Academic();
                     academic.setIdUser(rs.getInt("id_academicoevaluador"));
                     academic.setStaffNumber(rs.getString("numero_personal"));
 
-                    // Crear Student
                     Student student = new Student();
                     student.setIdUser(rs.getInt("id_estudiante"));
 
-                    // Crear Presentation
                     Presentation presentation = new Presentation();
                     presentation.setIdPresentation(rs.getInt("id_presentacion"));
                     presentation.setPresentationDate(rs.getTimestamp("p_fecha"));
                     presentation.setPresentationType(PresentationType.valueOf(rs.getString("tipo")));
                     presentation.setStudent(student);
 
-                    // Crear y retornar Evaluation usando el constructor
                     return new Evaluation(
                             rs.getInt("id_evaluacion"),
                             rs.getInt("calificacion"),

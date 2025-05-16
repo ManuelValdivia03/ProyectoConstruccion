@@ -78,7 +78,6 @@ class CoordinatorDAOTest {
     @BeforeEach
     void setUp() throws SQLException {
         try (var statement = testConnection.createStatement()) {
-            // Borra primero las tablas hijas para evitar errores de clave foránea
             statement.execute("DELETE FROM reporte");
             statement.execute("DELETE FROM coordinador");
             statement.execute("DELETE FROM usuario");
@@ -94,7 +93,6 @@ class CoordinatorDAOTest {
         }
     }
 
-    // addCoordinator
     @Test
     void testAddCoordinator_Success() throws SQLException {
         Coordinator newCoordinator = new Coordinator();
@@ -145,7 +143,6 @@ class CoordinatorDAOTest {
         assertThrows(SQLException.class, () -> coordinatorDAO.addCoordinator(invalidCoordinator));
     }
 
-    // getAllCoordinators
     @Test
     void testGetAllCoordinators_WithData() throws SQLException {
         List<Coordinator> coordinators = coordinatorDAO.getAllCoordinators();
@@ -169,7 +166,6 @@ class CoordinatorDAOTest {
         setUp();
     }
 
-    // getCoordinatorByStaffNumber
     @Test
     void testGetCoordinatorByStaffNumber_Exists() throws SQLException {
         Coordinator testCoordinator = testCoordinators.get(0);
@@ -193,7 +189,6 @@ class CoordinatorDAOTest {
         assertNull(coordinatorDAO.getCoordinatorByStaffNumber(""));
     }
 
-    // updateCoordinator
     @Test
     void testUpdateCoordinator_Success() throws SQLException {
         Coordinator coordinatorToUpdate = coordinatorDAO.getCoordinatorByStaffNumber("C001");
@@ -238,7 +233,6 @@ class CoordinatorDAOTest {
         assertThrows(SQLException.class, () -> coordinatorDAO.updateCoordinator(invalidCoordinator));
     }
 
-    // deleteCoordinator
     @Test
     void testDeleteCoordinator_Success() throws SQLException {
         Coordinator coordinatorToDelete = coordinatorDAO.getCoordinatorByStaffNumber("C001");
@@ -269,7 +263,6 @@ class CoordinatorDAOTest {
         assertThrows(NullPointerException.class, () -> coordinatorDAO.deleteCoordinator(null));
     }
 
-    // coordinatorExists
     @Test
     void testCoordinatorExists_True() throws SQLException {
         assertTrue(coordinatorDAO.coordinatorExists("C001"));
@@ -286,7 +279,6 @@ class CoordinatorDAOTest {
         assertFalse(coordinatorDAO.coordinatorExists(""));
     }
 
-    // countCoordinators
     @Test
     void testCountCoordinators_WithData() throws SQLException {
         int count = coordinatorDAO.countCoordinators();
