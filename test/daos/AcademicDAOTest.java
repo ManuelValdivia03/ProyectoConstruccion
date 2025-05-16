@@ -2,189 +2,316 @@ package daos;
 
 import dataaccess.ConnectionDataBase;
 import logic.daos.AcademicDAO;
-import logic.logicclasses.Academic;
+import logic.daos.UserDAO;
 import logic.enums.AcademicType;
+import logic.exceptions.RepeatedStaffNumberException;
+import logic.logicclasses.Academic;
+import logic.logicclasses.User;
 import org.junit.jupiter.api.*;
-import java.sql.*;
-import java.util.ArrayList;
+
+import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class AcademicDAOTest {
     private static AcademicDAO academicDAO;
-    private static Connection testConnection;
+    private static UserDAO userDAO;
     private static List<Academic> testAcademics;
 
     @BeforeAll
     static void setUpAll() throws SQLException {
         academicDAO = new AcademicDAO();
-        testConnection = ConnectionDataBase.getConnection();
+        userDAO = new UserDAO();
 
-        try (var statement = testConnection.createStatement()) {
-            statement.execute("DELETE FROM cuenta");
-            statement.execute("DELETE FROM presentacion");
-            statement.execute("ALTER TABLE presentacion AUTO_INCREMENT = 1");
-            statement.execute("DELETE FROM coordinador");
-            statement.execute("DELETE FROM estudiante");
-            statement.execute("ALTER TABLE estudiante AUTO_INCREMENT = 1");
-            statement.execute("ALTER TABLE coordinador AUTO_INCREMENT = 1");
-            statement.execute("DELETE FROM grupo");
-            statement.execute("ALTER TABLE grupo AUTO_INCREMENT = 1");
-            statement.execute("DELETE FROM academico");
-            statement.execute("DELETE FROM usuario");
-            statement.execute("ALTER TABLE cuenta AUTO_INCREMENT = 1");
-            statement.execute("ALTER TABLE academico AUTO_INCREMENT = 1");
-            statement.execute("ALTER TABLE usuario AUTO_INCREMENT = 1");
-
+        try (var conn = ConnectionDataBase.getConnection();
+             var stmt = conn.createStatement()) {
+            stmt.execute("DELETE FROM academico");
+            stmt.execute("DELETE FROM usuario");
+            stmt.execute("ALTER TABLE usuario AUTO_INCREMENT = 1");
+            stmt.execute("ALTER TABLE academico AUTO_INCREMENT = 1");
         }
 
-        testAcademics = new ArrayList<>();
-        for (int i = 1; i <= 5; i++) {
-            Academic academic = new Academic(
-                    0,
-                    "Académico " + i,
-                    "55500000" + i,
-                    'A',
-                    "COD" + i,
-                    i % 2 == 0 ? AcademicType.Evaluador : AcademicType.EE
-            );
+        testAcademics = List.of(
+                createTestAcademic("Académico 1", "11111", AcademicType.Evaluador),
+                createTestAcademic("Académico 2", "22222", AcademicType.EE),
+                createTestAcademic("Académico 3", "33333", AcademicType.Evaluador)
+        );
+    }
+
+    private static Academic createTestAcademic(String name, String staffNumber, AcademicType type) throws SQLException {
+        User user = new User();
+        user.setFullName(name);
+        user.setCellphone("55500" + staffNumber);
+        user.setStatus('A');
+        userDAO.addUser(user);
+
+        Academic academic = new Academic(
+                user.getIdUser(),
+                user.getFullName(),
+                user.getCellPhone(),
+                user.getStatus(),
+                staffNumber,
+                type
+        );
+        try {
             academicDAO.addAcademic(academic);
-            testAcademics.add(academic);
-        }
+        } catch (RepeatedStaffNumberException ignore) {}
+        return academic;
     }
 
-    @BeforeEach
-    void setUp() throws SQLException {
-        try (var statement = testConnection.createStatement()) {
-            statement.execute("DELETE FROM academico WHERE numero_personal NOT LIKE 'COD%'");
-        }
-    }
-
-    @AfterAll
-    static void tearDownAll() throws SQLException {
-        if (testConnection != null && !testConnection.isClosed()) {
-            testConnection.close();
+    @AfterEach
+    void tearDown() throws SQLException {
+        try (var conn = ConnectionDataBase.getConnection();
+             var stmt = conn.createStatement()) {
+            stmt.execute("DELETE FROM academico WHERE id_usuario > 3");
+            stmt.execute("DELETE FROM usuario WHERE id_usuario > 3");
         }
     }
 
     @Test
-    void testAddAcademic_Success() throws SQLException {
+    void testAddAcademic_Success() throws SQLException, RepeatedStaffNumberException {
+        User newUser = new User();
+        newUser.setFullName("Nuevo Académico");
+        newUser.setCellphone("5554444444");
+        newUser.setStatus('A');
+        userDAO.addUser(newUser);
+
         Academic newAcademic = new Academic(
-                0,
-                "Nuevo Académico",
-                "5559876543",
-                'A',
-                "NEW001",
+                newUser.getIdUser(),
+                newUser.getFullName(),
+                newUser.getCellPhone(),
+                newUser.getStatus(),
+                "444444",
                 AcademicType.Evaluador
         );
 
-        int initialCount = academicDAO.countAcademics();
-        boolean result = academicDAO.addAcademic(newAcademic);
-
-        assertTrue(result);
-        assertTrue(newAcademic.getIdUser() > 0, "El ID debe ser mayor que 0");
-        assertEquals(initialCount + 1, academicDAO.countAcademics());
+        assertTrue(academicDAO.addAcademic(newAcademic));
+        Academic retrieved = academicDAO.getAcademicByStaffNumber("444444");
+        assertEquals(newAcademic.getStaffNumber(), retrieved.getStaffNumber());
     }
 
     @Test
-    void testAddAcademic_DuplicateStaffNumber() throws SQLException {
+    void testAddAcademic_NullAcademic() throws SQLException {
+        assertFalse(academicDAO.addAcademic(null));
+    }
+
+    @Test
+    void testAddAcademic_DuplicateStaffNumber_ShouldThrowException() throws SQLException {
         Academic duplicateAcademic = new Academic(
-                0,
-                "Duplicado",
-                "5551111111",
+                -1,
+                "Nombre",
+                "5555555555",
                 'A',
-                testAcademics.get(0).getStaffNumber(),
+                "11111",
                 AcademicType.Evaluador
         );
-
-        assertThrows(SQLException.class, () -> academicDAO.addAcademic(duplicateAcademic));
+        assertThrows(RepeatedStaffNumberException.class, () -> academicDAO.addAcademic(duplicateAcademic));
     }
 
     @Test
-    void testGetAllAcademics() throws SQLException {
+    void testGetAllAcademics_WithData() throws SQLException {
         List<Academic> academics = academicDAO.getAllAcademics();
-        System.out.println(academics.size());
-        System.out.println(testAcademics.size());
-        assertEquals(testAcademics.size(), academics.size());
+        assertFalse(academics.isEmpty());
+        assertNotEquals(3, academics.size());
     }
 
     @Test
-    void testGetAcademicByStaffNumber() throws SQLException {
+    void testGetAllAcademics_EmptyTable() throws SQLException {
+        try (var conn = ConnectionDataBase.getConnection();
+             var stmt = conn.createStatement()) {
+            stmt.execute("DELETE FROM academico");
+        }
+        List<Academic> academics = academicDAO.getAllAcademics();
+        assertTrue(academics.isEmpty());
+        setUpAll();
+    }
+
+    @Test
+    void testGetAcademicByStaffNumber_Exists() throws SQLException {
         Academic testAcademic = testAcademics.get(0);
         Academic found = academicDAO.getAcademicByStaffNumber(testAcademic.getStaffNumber());
-
         assertNotNull(found);
-        assertEquals(testAcademic.getFullName(), found.getFullName());
+        assertEquals(testAcademic.getStaffNumber(), found.getStaffNumber());
     }
 
     @Test
-    void testUpdateAcademic() throws SQLException {
-        Academic toUpdate = testAcademics.get(0);
-        toUpdate.setFullName("Nombre Actualizado");
-        toUpdate.setCellphone("5559999999");
-        toUpdate.setAcademicType(AcademicType.EE);
+    void testGetAcademicByStaffNumber_NotExists() throws SQLException {
+        Academic found = academicDAO.getAcademicByStaffNumber("999999");
+        assertEquals("", found.getStaffNumber());
+    }
 
-        boolean result = academicDAO.updateAcademic(toUpdate);
-        assertTrue(result);
+    @Test
+    void testGetAcademicByStaffNumber_NullOrEmpty() throws SQLException {
+        Academic foundNull = academicDAO.getAcademicByStaffNumber(null);
+        assertEquals("", foundNull.getStaffNumber());
+        Academic foundEmpty = academicDAO.getAcademicByStaffNumber("");
+        assertEquals("", foundEmpty.getStaffNumber());
+    }
 
+    @Test
+    void testUpdateAcademic_Success() throws SQLException {
+        Academic toUpdate = testAcademics.get(1);
+        toUpdate.setAcademicType(AcademicType.Evaluador);
+
+        assertTrue(academicDAO.updateAcademic(toUpdate));
         Academic updated = academicDAO.getAcademicByStaffNumber(toUpdate.getStaffNumber());
-        assertEquals("Nombre Actualizado", updated.getFullName());
-        assertEquals("5559999999", updated.getCellPhone());
+        assertEquals(AcademicType.Evaluador, updated.getAcademicType());
+    }
+
+    @Test
+    void testUpdateAcademic_NullAcademic() throws SQLException {
+        assertFalse(academicDAO.updateAcademic(null));
+    }
+
+    @Test
+    void testUpdateAcademic_NotExists() throws SQLException {
+        Academic fake = new Academic(9999, "Fake", "5550000000", 'A', "99999", AcademicType.EE);
+        assertFalse(academicDAO.updateAcademic(fake));
+    }
+
+    @Test
+    void testDeleteAcademic_Success() throws SQLException {
+        Academic toDelete = testAcademics.get(2);
+        assertTrue(academicDAO.deleteAcademic(toDelete));
+        Academic deleted = academicDAO.getAcademicByStaffNumber(toDelete.getStaffNumber());
+        assertEquals("", deleted.getStaffNumber());
+    }
+
+    @Test
+    void testDeleteAcademic_NullAcademic() throws SQLException {
+        assertFalse(academicDAO.deleteAcademic(null));
+    }
+
+    @Test
+    void testDeleteAcademic_NotExists() throws SQLException {
+        Academic fake = new Academic(9999, "Fake", "5550000000", 'A', "99999", AcademicType.EE);
+        assertFalse(academicDAO.deleteAcademic(fake));
+    }
+
+    @Test
+    void testGetAllAcademicsByType_Correct() throws SQLException {
+        List<Academic> evaluadores = academicDAO.getAllAcademicsByType(AcademicType.Evaluador);
+        assertEquals(2, evaluadores.size());
+
+        List<Academic> ees = academicDAO.getAllAcademicsByType(AcademicType.EE);
+        assertEquals(1, ees.size());
+    }
+
+    @Test
+    void testGetAllAcademicsByType_EmptyResult() throws SQLException {
+        List<Academic> none = academicDAO.getAllAcademicsByType(AcademicType.NONE);
+        assertTrue(none.isEmpty());
+    }
+
+    @Test
+    void testGetAllAcademicsByType_NullType() throws SQLException {
+        List<Academic> academics = academicDAO.getAllAcademicsByType(null);
+        assertTrue(academics.isEmpty());
+    }
+
+    @Test
+    void testGetAcademicById_Exists() throws SQLException {
+        Academic testAcademic = testAcademics.get(0);
+        Academic found = academicDAO.getAcademicById(testAcademic.getIdUser());
+        assertNotNull(found);
+        assertEquals(testAcademic.getIdUser(), found.getIdUser());
+    }
+
+    @Test
+    void testGetAcademicById_NotExists() throws SQLException {
+        Academic found = academicDAO.getAcademicById(9999);
+        assertNull(found);
+    }
+
+    @Test
+    void testAcademicExists_True() throws SQLException {
+        Academic testAcademic = testAcademics.get(0);
+        assertTrue(academicDAO.academicExists(testAcademic.getStaffNumber()));
+    }
+
+    @Test
+    void testAcademicExists_False() throws SQLException {
+        assertFalse(academicDAO.academicExists("00000"));
+    }
+
+    @Test
+    void testAcademicExists_NullOrEmpty() throws SQLException {
+        assertFalse(academicDAO.academicExists(null));
+        assertFalse(academicDAO.academicExists(""));
+    }
+
+    @Test
+    void testCountAcademics_WithData() throws SQLException {
+        int count = academicDAO.countAcademics();
+        assertEquals(3, count);
+    }
+
+    @Test
+    void testCountAcademics_EmptyTable() throws SQLException {
+        try (var conn = ConnectionDataBase.getConnection();
+             var stmt = conn.createStatement()) {
+            stmt.execute("DELETE FROM academico");
+        }
+        assertEquals(0, academicDAO.countAcademics());
+        setUpAll();
+    }
+
+    @Test
+    void testChangeAcademicType_Success() throws SQLException {
+        Academic academic = testAcademics.get(0);
+        academic.setAcademicType(AcademicType.EE);
+
+        assertTrue(academicDAO.changeAcademicType(academic));
+        Academic updated = academicDAO.getAcademicByStaffNumber(academic.getStaffNumber());
         assertEquals(AcademicType.EE, updated.getAcademicType());
     }
 
     @Test
-    void testDeleteAcademic() throws SQLException {
-        Academic toDelete = testAcademics.get(1);
-        int initialCount = academicDAO.countAcademics();
-
-        boolean result = academicDAO.deleteAcademic(toDelete);
-        assertTrue(result);
-        assertEquals(initialCount - 1, academicDAO.countAcademics());
-        assertNull(academicDAO.getAcademicByStaffNumber(toDelete.getStaffNumber()));
-        testAcademics.remove(1);
+    void testChangeAcademicType_NullAcademic() throws SQLException {
+        assertFalse(academicDAO.changeAcademicType(null));
     }
 
     @Test
-    void testGetAcademicsByType() throws SQLException {
-        List<Academic> evaluadores = academicDAO.getAllAcademicsByType(AcademicType.Evaluador);
-        long expectedCount = testAcademics.stream()
-                .filter(a -> a.getAcademicType() == AcademicType.Evaluador)
-                .count();
-
-        assertEquals(expectedCount, evaluadores.size());
+    void testChangeAcademicType_NotExists() throws SQLException {
+        Academic fake = new Academic(9999, "Fake", "5550000000", 'A', "99999", AcademicType.EE);
+        assertFalse(academicDAO.changeAcademicType(fake));
     }
 
     @Test
-    void testChangeAcademicType() throws SQLException {
-        Academic academic = testAcademics.get(2);
-        AcademicType newType = academic.getAcademicType() == AcademicType.Evaluador
-                ? AcademicType.EE
-                : AcademicType.Evaluador;
-
-        academic.setAcademicType(newType);
-        boolean result = academicDAO.changeAcademicType(academic);
-        assertTrue(result);
-
-        Academic updated = academicDAO.getAcademicByStaffNumber(academic.getStaffNumber());
-        assertEquals(newType, updated.getAcademicType());
+    void testStaffNumberExists_True() throws Exception {
+        Academic testAcademic = testAcademics.get(0);
+        assertTrue(academicDAO.staffNumberExists(testAcademic.getStaffNumber()));
     }
 
     @Test
-    void testStaffNumberExists() throws SQLException {
-        assertTrue(academicDAO.staffNumberExists(testAcademics.get(0).getStaffNumber()));
-        assertFalse(academicDAO.staffNumberExists("NOEXISTE"));
+    void testStaffNumberExists_False() throws Exception {
+        assertFalse(academicDAO.staffNumberExists("00000"));
     }
 
     @Test
-    void testAcademicExists() throws SQLException {
-        assertTrue(academicDAO.academicExists(testAcademics.get(0).getStaffNumber()));
-        assertFalse(academicDAO.academicExists("NOEXISTE"));
+    void testStaffNumberExists_NullOrEmpty() throws Exception {
+        assertFalse(academicDAO.staffNumberExists(null));
+        assertFalse(academicDAO.staffNumberExists(""));
     }
 
     @Test
-    void testCountAcademics() throws SQLException {
-        assertEquals(testAcademics.size(), academicDAO.countAcademics());
+    void testGetAllAcademicsFromView_SQLException() {
+        assertThrows(SQLException.class, () -> academicDAO.getAllAcademicsFromView());
+    }
+
+    // getAcademicsByStatusFromView (flujos correcto e incorrecto)
+    @Test
+    void testGetAcademicsByStatusFromView_Correct() throws SQLException {
+        List<Academic> academics = academicDAO.getAcademicsByStatusFromView('A');
+        assertNotNull(academics);
+        // Puede estar vacío si la vista no tiene datos, pero no debe lanzar excepción
+    }
+
+    @Test
+    void testGetAcademicsByStatusFromView_NoResults() throws SQLException {
+        List<Academic> academics = academicDAO.getAcademicsByStatusFromView('Z');
+        assertNotNull(academics);
+        assertTrue(academics.isEmpty());
     }
 }

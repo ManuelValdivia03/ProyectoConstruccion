@@ -358,6 +358,9 @@ public class AcademicDAO implements IAcademicDAO {
                     academics.add(academic);
                 }
             }
+        } catch (SQLException e) {
+            logger.error("Error al obtener académicos por estado", e);
+            throw e;
         }
         return academics;
     }
