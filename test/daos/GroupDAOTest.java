@@ -81,10 +81,20 @@ class GroupDAOTest {
     }
 
     private static Student createTestStudent(String enrollment, String fullName, String phone) throws SQLException {
+        // Crear usuario primero
+        User user = new User();
+        user.setFullName(fullName);
+        user.setCellphone(phone);
+        user.setStatus('A');
+        UserDAO userDAO = new UserDAO();
+        userDAO.addUser(user);
+
         Student student = new Student();
+        student.setIdUser(user.getIdUser());
         student.setEnrollment(enrollment);
         student.setFullName(fullName);
         student.setCellphone(phone);
+        student.setStatus('A');
         studentDAO.addStudent(student);
         return student;
     }
@@ -150,7 +160,7 @@ class GroupDAOTest {
     }
 
     @Test
-    void testAddGroup_DuplicateNrc_ShouldFail() {
+    void testAddGroup_DuplicateNrc_ShouldThrowException() {
         Group duplicateGroup = new Group();
         duplicateGroup.setNrc(1001);
         duplicateGroup.setGroupName("Grupo Duplicado");
@@ -159,12 +169,17 @@ class GroupDAOTest {
     }
 
     @Test
-    void testAddGroup_NullName_ShouldThrowException() {
+    void testAddGroup_NullGroup() throws SQLException {
+        assertFalse(groupDAO.addGroup(null));
+    }
+
+    @Test
+    void testAddGroup_NullName() throws SQLException {
         Group invalidGroup = new Group();
         invalidGroup.setNrc(1005);
         invalidGroup.setGroupName(null);
 
-        assertThrows(SQLException.class, () -> groupDAO.addGroup(invalidGroup));
+        assertFalse(groupDAO.addGroup(invalidGroup));
     }
 
     @Test
@@ -177,6 +192,17 @@ class GroupDAOTest {
                     .anyMatch(g -> g.getNrc() == testGroup.getNrc());
             assertTrue(found, "No se encontró el grupo con NRC: " + testGroup.getNrc());
         }
+    }
+
+    @Test
+    void testGetAllGroups_EmptyTable() throws SQLException {
+        try (var statement = testConnection.createStatement()) {
+            statement.execute("DELETE FROM grupo_estudiante");
+            statement.execute("DELETE FROM grupo");
+        }
+        List<Group> groups = groupDAO.getAllGroups();
+        assertTrue(groups.isEmpty());
+        setUp();
     }
 
     @Test
@@ -196,6 +222,12 @@ class GroupDAOTest {
     }
 
     @Test
+    void testGetGroupByNrc_InvalidNrc() throws SQLException {
+        Group foundGroup = groupDAO.getGroupByNrc(-1);
+        assertNull(foundGroup);
+    }
+
+    @Test
     void testGetGroupByName_Exists() throws SQLException {
         Group testGroup = testGroups.get(0);
         Group foundGroup = groupDAO.getGroupByName(testGroup.getGroupName());
@@ -209,6 +241,12 @@ class GroupDAOTest {
     void testGetGroupByName_NotExists() throws SQLException {
         Group foundGroup = groupDAO.getGroupByName("NOEXISTE");
         assertNull(foundGroup);
+    }
+
+    @Test
+    void testGetGroupByName_NullOrEmpty() throws SQLException {
+        assertNull(groupDAO.getGroupByName(null));
+        assertNull(groupDAO.getGroupByName(""));
     }
 
     @Test
@@ -235,6 +273,20 @@ class GroupDAOTest {
     }
 
     @Test
+    void testUpdateGroup_NullGroup() throws SQLException {
+        assertFalse(groupDAO.updateGroup(null));
+    }
+
+    @Test
+    void testUpdateGroup_NullName() throws SQLException {
+        Group invalidGroup = new Group();
+        invalidGroup.setNrc(1006);
+        invalidGroup.setGroupName(null);
+
+        assertFalse(groupDAO.updateGroup(invalidGroup));
+    }
+
+    @Test
     void testDeleteGroup_Success() throws SQLException {
         Group groupToDelete = groupDAO.getGroupByNrc(1003);
         int initialCount = groupDAO.countGroups();
@@ -247,9 +299,9 @@ class GroupDAOTest {
     }
 
     @Test
-    void testDeleteGroup_WithStudents_ShouldFail() throws SQLException {
+    void testDeleteGroup_WithStudents_ShouldThrowException() throws SQLException {
         UserDAO userDAO = new UserDAO();
-        User user = new User(0, "Rojo Azul", "123445567", 'A');
+        User user = new User(0, "Rojo Azul", "1234455670", 'A');
         boolean userAdded = userDAO.addUser(user);
         assertTrue(userAdded, "El usuario debería haberse creado correctamente");
 
@@ -296,9 +348,6 @@ class GroupDAOTest {
         groupDAO.deleteGroup(groupToDelete);
     }
 
-
-
-
     @Test
     void testDeleteGroup_NotExists() throws SQLException {
         Group nonExistentGroup = new Group();
@@ -322,6 +371,11 @@ class GroupDAOTest {
     }
 
     @Test
+    void testGroupExists_InvalidNrc() throws SQLException {
+        assertFalse(groupDAO.groupExists(-1));
+    }
+
+    @Test
     void testCountGroups_WithData() throws SQLException {
         int count = groupDAO.countGroups();
         assertEquals(testGroups.size(), count);
@@ -332,5 +386,14 @@ class GroupDAOTest {
         groupDAO.addGroup(extraGroup);
 
         assertEquals(count + 1, groupDAO.countGroups());
+    }
+
+    @Test
+    void testCountGroups_EmptyTable() throws SQLException {
+        try (var statement = testConnection.createStatement()) {
+            statement.execute("DELETE FROM grupo");
+        }
+        assertEquals(0, groupDAO.countGroups());
+        setUp();
     }
 }

@@ -23,12 +23,9 @@ class ProyectDAOTest {
         proyectDAO = new ProyectDAO();
         testConnection = ConnectionDataBase.getConnection();
 
-        // Limpiar completamente la base de datos
         try (var statement = testConnection.createStatement()) {
             statement.execute("DELETE FROM proyecto");
             statement.execute("ALTER TABLE proyecto AUTO_INCREMENT = 1");
-
-            // Crear tabla de proyectos si no existe
             statement.execute("CREATE TABLE IF NOT EXISTS proyecto (" +
                     "id_proyecto INT AUTO_INCREMENT PRIMARY KEY, " +
                     "titulo VARCHAR(100) NOT NULL, " +
@@ -38,14 +35,11 @@ class ProyectDAOTest {
                     "estado CHAR(1) DEFAULT 'A')");
         }
 
-        // Crear proyectos de prueba
         testProyects = new ArrayList<>();
         testProyects.add(createTestProyect("Proyecto 1", "Descripción proyecto 1",
                 Timestamp.from(Instant.now()), Timestamp.from(Instant.now().plusSeconds(86400)), 'A'));
         testProyects.add(createTestProyect("Proyecto 2", "Descripción proyecto 2",
                 Timestamp.from(Instant.now()), Timestamp.from(Instant.now().plusSeconds(172800)), 'P'));
-
-        // Verificaciones iniciales
         assertEquals(2, proyectDAO.countProyects());
     }
 
@@ -74,7 +68,6 @@ class ProyectDAOTest {
             stmt.execute("DELETE FROM proyecto");
             stmt.execute("ALTER TABLE proyecto AUTO_INCREMENT = 1");
         }
-
         testProyects = new ArrayList<>();
         testProyects.add(createTestProyect("Proyecto 1", "Descripción proyecto 1",
                 Timestamp.from(Instant.now()), Timestamp.from(Instant.now().plusSeconds(86400)), 'A'));
@@ -82,6 +75,7 @@ class ProyectDAOTest {
                 Timestamp.from(Instant.now()), Timestamp.from(Instant.now().plusSeconds(172800)), 'P'));
     }
 
+    // addProyect
     @Test
     void testAddProyect_Success() throws SQLException {
         Proyect newProyect = new Proyect();
@@ -105,6 +99,11 @@ class ProyectDAOTest {
     }
 
     @Test
+    void testAddProyect_NullProyect() throws SQLException {
+        assertFalse(proyectDAO.addProyect(null));
+    }
+
+    @Test
     void testAddProyect_NullFields_ShouldThrowException() {
         Proyect invalidProyect = new Proyect();
         invalidProyect.setTitle(null);
@@ -112,66 +111,10 @@ class ProyectDAOTest {
         invalidProyect.setDateStart(null);
         invalidProyect.setDateEnd(null);
         invalidProyect.setStatus('\0');
-
-        assertThrows(SQLException.class,
-                () -> proyectDAO.addProyect(invalidProyect));
+        assertThrows(SQLException.class, () -> proyectDAO.addProyect(invalidProyect));
     }
 
-    @Test
-    void testGetProyectById_Exists() throws SQLException {
-        Proyect testProyect = testProyects.get(0);
-        Proyect foundProyect = proyectDAO.getProyectById(testProyect.getIdProyect());
-
-        assertNotNull(foundProyect);
-        assertEquals(testProyect.getTitle(), foundProyect.getTitle());
-        assertEquals(testProyect.getDescription(), foundProyect.getDescription());
-
-        // Comparar solo la parte de fecha (año, mes, día)
-        LocalDate expectedStart = testProyect.getDateStart().toLocalDateTime().toLocalDate();
-        LocalDate actualStart = foundProyect.getDateStart().toLocalDateTime().toLocalDate();
-        assertEquals(expectedStart, actualStart);
-
-        LocalDate expectedEnd = testProyect.getDateEnd().toLocalDateTime().toLocalDate();
-        LocalDate actualEnd = foundProyect.getDateEnd().toLocalDateTime().toLocalDate();
-        assertEquals(expectedEnd, actualEnd);
-
-        assertEquals(testProyect.getStatus(), foundProyect.getStatus());
-    }
-
-    @Test
-    void testGetProyectById_NotExists() throws SQLException {
-        Proyect foundProyect = proyectDAO.getProyectById(9999);
-        assertNull(foundProyect);
-    }
-
-    @Test
-    void testGetAllProyects_WithData() throws SQLException {
-        List<Proyect> proyects = proyectDAO.getAllProyects();
-        assertEquals(testProyects.size(), proyects.size());
-
-        for (Proyect testProyect : testProyects) {
-            boolean found = proyects.stream()
-                    .anyMatch(p -> p.getIdProyect() == testProyect.getIdProyect());
-            assertTrue(found, "No se encontró el proyecto esperado");
-        }
-    }
-
-    @Test
-    void testGetProyectByTitle_Exists() throws SQLException {
-        Proyect testProyect = testProyects.get(0);
-        Proyect foundProyect = proyectDAO.getProyectByTitle(testProyect.getTitle());
-
-        assertNotNull(foundProyect);
-        assertEquals(testProyect.getIdProyect(), foundProyect.getIdProyect());
-        assertEquals(testProyect.getTitle(), foundProyect.getTitle());
-    }
-
-    @Test
-    void testGetProyectByTitle_NotExists() throws SQLException {
-        Proyect foundProyect = proyectDAO.getProyectByTitle("Título inexistente");
-        assertNull(foundProyect);
-    }
-
+    // updateProyect
     @Test
     void testUpdateProyect_Success() throws SQLException {
         Proyect proyectToUpdate = testProyects.get(0);
@@ -204,6 +147,12 @@ class ProyectDAOTest {
     }
 
     @Test
+    void testUpdateProyect_NullProyect() throws SQLException {
+        assertFalse(proyectDAO.updateProyect(null));
+    }
+
+    // deleteProyect
+    @Test
     void testDeleteProyect_Success() throws SQLException {
         Proyect testProyect = testProyects.get(0);
         int proyectId = testProyect.getIdProyect();
@@ -229,16 +178,102 @@ class ProyectDAOTest {
     }
 
     @Test
-    void testProyectExists_True() throws SQLException {
-        Proyect testProyect = testProyects.get(0);
-        assertTrue(proyectDAO.proyectExists(testProyect.getTitle()));
+    void testDeleteProyect_NullProyect() throws SQLException {
+        assertFalse(proyectDAO.deleteProyect(null));
+    }
+
+    // getAllProyects
+    @Test
+    void testGetAllProyects_WithData() throws SQLException {
+        List<Proyect> proyects = proyectDAO.getAllProyects();
+        assertEquals(testProyects.size(), proyects.size());
+
+        for (Proyect testProyect : testProyects) {
+            boolean found = proyects.stream()
+                    .anyMatch(p -> p.getIdProyect() == testProyect.getIdProyect());
+            assertTrue(found, "No se encontró el proyecto esperado");
+        }
     }
 
     @Test
-    void testProyectExists_False() throws SQLException {
-        assertFalse(proyectDAO.proyectExists("Título inexistente"));
+    void testGetAllProyects_EmptyTable() throws SQLException {
+        try (Statement stmt = testConnection.createStatement()) {
+            stmt.execute("DELETE FROM proyecto");
+        }
+        List<Proyect> proyects = proyectDAO.getAllProyects();
+        assertTrue(proyects.isEmpty());
+        setUp();
     }
 
+    // getProyectsByStatus
+    @Test
+    void testGetProyectsByStatus_WithData() throws SQLException {
+        List<Proyect> activos = proyectDAO.getProyectsByStatus('A');
+        assertEquals(1, activos.size());
+        List<Proyect> pendientes = proyectDAO.getProyectsByStatus('P');
+        assertEquals(1, pendientes.size());
+    }
+
+    @Test
+    void testGetProyectsByStatus_EmptyResult() throws SQLException {
+        List<Proyect> cancelados = proyectDAO.getProyectsByStatus('C');
+        assertTrue(cancelados.isEmpty());
+    }
+
+    // getProyectById
+    @Test
+    void testGetProyectById_Exists() throws SQLException {
+        Proyect testProyect = testProyects.get(0);
+        Proyect foundProyect = proyectDAO.getProyectById(testProyect.getIdProyect());
+
+        assertNotNull(foundProyect);
+        assertEquals(testProyect.getTitle(), foundProyect.getTitle());
+        assertEquals(testProyect.getDescription(), foundProyect.getDescription());
+        LocalDate expectedStart = testProyect.getDateStart().toLocalDateTime().toLocalDate();
+        LocalDate actualStart = foundProyect.getDateStart().toLocalDateTime().toLocalDate();
+        assertEquals(expectedStart, actualStart);
+        LocalDate expectedEnd = testProyect.getDateEnd().toLocalDateTime().toLocalDate();
+        LocalDate actualEnd = foundProyect.getDateEnd().toLocalDateTime().toLocalDate();
+        assertEquals(expectedEnd, actualEnd);
+        assertEquals(testProyect.getStatus(), foundProyect.getStatus());
+    }
+
+    @Test
+    void testGetProyectById_NotExists() throws SQLException {
+        Proyect foundProyect = proyectDAO.getProyectById(9999);
+        assertNull(foundProyect);
+    }
+
+    @Test
+    void testGetProyectById_InvalidId() throws SQLException {
+        Proyect foundProyect = proyectDAO.getProyectById(-1);
+        assertNull(foundProyect);
+    }
+
+    // getProyectByTitle
+    @Test
+    void testGetProyectByTitle_Exists() throws SQLException {
+        Proyect testProyect = testProyects.get(0);
+        Proyect foundProyect = proyectDAO.getProyectByTitle(testProyect.getTitle());
+
+        assertNotNull(foundProyect);
+        assertEquals(testProyect.getIdProyect(), foundProyect.getIdProyect());
+        assertEquals(testProyect.getTitle(), foundProyect.getTitle());
+    }
+
+    @Test
+    void testGetProyectByTitle_NotExists() throws SQLException {
+        Proyect foundProyect = proyectDAO.getProyectByTitle("Título inexistente");
+        assertNull(foundProyect);
+    }
+
+    @Test
+    void testGetProyectByTitle_NullOrEmpty() throws SQLException {
+        assertNull(proyectDAO.getProyectByTitle(null));
+        assertNull(proyectDAO.getProyectByTitle(""));
+    }
+
+    // countProyects
     @Test
     void testCountProyects_WithData() throws SQLException {
         int count = proyectDAO.countProyects();
@@ -255,6 +290,34 @@ class ProyectDAOTest {
         assertEquals(count + 1, proyectDAO.countProyects());
     }
 
+    @Test
+    void testCountProyects_EmptyTable() throws SQLException {
+        try (Statement stmt = testConnection.createStatement()) {
+            stmt.execute("DELETE FROM proyecto");
+        }
+        assertEquals(0, proyectDAO.countProyects());
+        setUp();
+    }
+
+    // proyectExists
+    @Test
+    void testProyectExists_True() throws SQLException {
+        Proyect testProyect = testProyects.get(0);
+        assertTrue(proyectDAO.proyectExists(testProyect.getTitle()));
+    }
+
+    @Test
+    void testProyectExists_False() throws SQLException {
+        assertFalse(proyectDAO.proyectExists("Título inexistente"));
+    }
+
+    @Test
+    void testProyectExists_NullOrEmpty() throws SQLException {
+        assertFalse(proyectDAO.proyectExists(null));
+        assertFalse(proyectDAO.proyectExists(""));
+    }
+
+    // changeProyectStatus
     @Test
     void testChangeProyectStatus_Success() throws SQLException {
         Proyect testProyect = testProyects.get(0);
@@ -275,5 +338,10 @@ class ProyectDAOTest {
 
         boolean result = proyectDAO.changeProyectStatus(nonExistentProyect);
         assertFalse(result);
+    }
+
+    @Test
+    void testChangeProyectStatus_NullProyect() throws SQLException {
+        assertFalse(proyectDAO.changeProyectStatus(null));
     }
 }
