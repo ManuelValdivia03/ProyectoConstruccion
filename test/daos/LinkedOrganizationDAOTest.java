@@ -238,4 +238,26 @@ class LinkedOrganizationDAOTest {
 
         assertEquals(count + 1, linkedOrganizationDAO.countLinkedOrganizations());
     }
+
+    @Test
+    void testPhoneNumberExists_True() throws SQLException {
+        LinkedOrganization testOrg = testOrganizations.get(0);
+        assertTrue(linkedOrganizationDAO.phoneNumberExists(testOrg.getCellPhoneLinkedOrganization()));
+    }
+
+    @Test
+    void testPhoneNumberExists_False() throws SQLException {
+        assertFalse(linkedOrganizationDAO.phoneNumberExists("0000000000"));
+    }
+
+    @Test
+    void testEmailExists_True() throws SQLException {
+        LinkedOrganization testOrg = testOrganizations.get(0);
+        assertTrue(linkedOrganizationDAO.emailExists(testOrg.getEmailLinkedOrganization()));
+    }
+
+    @Test
+    void testEmailExists_False() throws SQLException {
+        assertFalse(linkedOrganizationDAO.emailExists("noexiste@email.com"));
+    }
 }
