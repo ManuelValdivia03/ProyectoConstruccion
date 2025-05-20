@@ -3,6 +3,7 @@ package userinterface.windows;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -14,6 +15,7 @@ public class UpdateProyectWindow {
     private final TextField descriptionTextField;
     private final TextField dateStartTextField;
     private final TextField dateEndTextField;
+    private final ComboBox<String> statusComboBox;
     private final Button updateButton;
     private final Button cancelButton;
     private final Label resultLabel;
@@ -32,6 +34,9 @@ public class UpdateProyectWindow {
         dateStartTextField.setPromptText("YYYY-MM-DD");
         dateEndTextField = new TextField();
         dateEndTextField.setPromptText("YYYY-MM-DD");
+        statusComboBox = new ComboBox<>();
+        statusComboBox.getItems().addAll("Activo", "Inactivo");
+        statusComboBox.setPromptText("Seleccionar Estado");
 
         updateButton = new Button("Actualizar Proyecto");
         updateButton.setStyle("-fx-background-color: #4a7bed; -fx-text-fill: white;");
@@ -57,6 +62,8 @@ public class UpdateProyectWindow {
         grid.add(dateStartTextField, 1, 3);
         grid.add(new Label("Fecha de Fin:"), 0, 4);
         grid.add(dateEndTextField, 1, 4);
+        grid.add(new Label("Estado:"), 0, 5);
+        grid.add(statusComboBox, 1, 5);
 
         view = new VBox(15);
         view.setPadding(new Insets(15));
@@ -101,5 +108,9 @@ public class UpdateProyectWindow {
 
     public Label getIdLabel() {
         return idLabel;
+    }
+
+    public ComboBox<String> getStatusComboBox() {
+        return statusComboBox;
     }
 }

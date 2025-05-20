@@ -37,7 +37,6 @@ public class ControllerUpdateProyectWindow implements EventHandler<ActionEvent> 
         this.validators = new Validators();
         this.currentProyect = proyect;
 
-        // Inicializar campos con los datos del proyecto
         initializeFields();
         setupEventHandlers();
     }
@@ -47,7 +46,6 @@ public class ControllerUpdateProyectWindow implements EventHandler<ActionEvent> 
         view.getTitleTextField().setText(currentProyect.getTitle());
         view.getDescriptionTextField().setText(currentProyect.getDescription());
 
-        // Mostrar solo la parte de fecha, ignorando la hora
         String startDate = currentProyect.getDateStart().toLocalDateTime().toLocalDate().toString();
         String endDate = currentProyect.getDateEnd().toLocalDateTime().toLocalDate().toString();
 
@@ -85,18 +83,17 @@ public class ControllerUpdateProyectWindow implements EventHandler<ActionEvent> 
                 return;
             }
 
-            // Verificar si el título ha cambiado y si el nuevo título ya existe
             if (!title.equals(currentProyect.getTitle())){
                 if (proyectDAO.proyectExists(title)) {
                     throw new RepeatedProyectException("Ya existe un proyecto con ese título");
                 }
             }
 
-            // Actualizar el proyecto
             currentProyect.setTitle(title);
             currentProyect.setDescription(description);
             currentProyect.setDateStart(dateStart);
             currentProyect.setDateEnd(dateEnd);
+            currentProyect.setStatus(view.getStatusComboBox().getValue().charAt(0));
 
             if (proyectDAO.updateProyect(currentProyect)) {
                 showSuccessAndClose();
@@ -166,7 +163,6 @@ public class ControllerUpdateProyectWindow implements EventHandler<ActionEvent> 
             throw new DateTimeParseException("Fecha vacía", dateString, 0);
         }
 
-        // Eliminar parte de hora si existe
         if (dateString.contains(" ")) {
             dateString = dateString.split(" ")[0];
         }
@@ -180,7 +176,7 @@ public class ControllerUpdateProyectWindow implements EventHandler<ActionEvent> 
         for (DateTimeFormatter formatter : supportedFormats) {
             try {
                 LocalDate date = LocalDate.parse(dateString, formatter);
-                return Timestamp.valueOf(date.atStartOfDay()); // Hora 00:00:00
+                return Timestamp.valueOf(date.atStartOfDay());
             } catch (DateTimeParseException ignored) {
                 continue;
             }

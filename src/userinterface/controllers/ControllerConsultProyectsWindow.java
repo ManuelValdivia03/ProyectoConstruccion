@@ -24,7 +24,6 @@ public class ControllerConsultProyectsWindow implements EventHandler<ActionEvent
         this.proyectDAO = new ProyectDAO();
         this.projectsList = FXCollections.observableArrayList();
 
-        // Establecer el controlador en la tabla
         view.getProjectsTable().getProperties().put("controller", this);
 
         setupEventHandlers();

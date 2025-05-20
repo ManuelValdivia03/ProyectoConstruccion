@@ -34,7 +34,7 @@ public class CreateAcademicWindow {
         typeComboBox.getItems().addAll("Evaluador", "EE");
         typeComboBox.setValue("Evaluador");
 
-        addButton = new Button("Agregar Usuario");
+        addButton = new Button("Agregar Académico");
         addButton.setStyle("-fx-background-color: #4a7bed; -fx-text-fill: white;");
 
         cancelButton = new Button("Cancelar");

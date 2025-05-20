@@ -28,9 +28,8 @@ public class ConsultLinkedOrganizationsWindow {
         TableColumn<LinkedOrganization, String> nameCol = createStyledColumn("Nombre", "nameLinkedOrganization");
         TableColumn<LinkedOrganization, String> phoneCol = createStyledColumn("Teléfono", "cellPhoneLinkedOrganization");
         TableColumn<LinkedOrganization, String> emailCol = createStyledColumn("Email", "emailLinkedOrganization");
-        TableColumn<LinkedOrganization, String> statusCol = createStyledColumn("Estado", "status");
 
-        organizationTable.getColumns().addAll(nameCol, phoneCol, emailCol, statusCol);
+        organizationTable.getColumns().addAll(nameCol, phoneCol, emailCol);
 
         // Barra de búsqueda
         searchField = new TextField();

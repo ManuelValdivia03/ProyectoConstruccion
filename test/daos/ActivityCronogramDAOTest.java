@@ -149,7 +149,6 @@ class ActivityCronogramDAOTest {
     void testAddCronogram_Success() throws SQLException {
         ActivityCronogram newCronogram = new ActivityCronogram();
 
-        // Usa fechas sin hora (o con hora 00:00:00)
         Timestamp startDate = Timestamp.valueOf("2025-04-17 00:00:00");
         Timestamp endDate = Timestamp.valueOf("2025-04-24 00:00:00");
 
