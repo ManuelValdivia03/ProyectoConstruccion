@@ -364,4 +364,38 @@ public class AcademicDAO implements IAcademicDAO {
         }
         return academics;
     }
+
+    public boolean existsForUser(int userId) throws SQLException {
+        String sql = "SELECT 1 FROM academico WHERE id_usuario = ?";
+        try (Connection connection = ConnectionDataBase.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            return stmt.executeQuery().next();
+        }
+    }
+
+    public Academic getFullAcademic(int userId) throws SQLException {
+        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.estado, " +
+                "a.numero_personal, a.tipo FROM usuario u " +
+                "JOIN academico a ON u.id_usuario = a.id_usuario " +
+                "WHERE u.id_usuario = ?";
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return new Academic(
+                        rs.getInt("id_usuario"),
+                        rs.getString("nombre_completo"),
+                        rs.getString("telefono"),
+                        rs.getString("estado").charAt(0),
+                        rs.getString("numero_personal"),
+                        AcademicType.valueOf(rs.getString("tipo"))
+                );
+            }
+        }
+        return null;
+    }
 }

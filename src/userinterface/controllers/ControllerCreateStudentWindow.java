@@ -1,5 +1,6 @@
 package userinterface.controllers;
 
+import dataaccess.PasswordUtils;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -64,7 +65,8 @@ public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> 
             String phone = view.getPhoneField().getText().trim();
             String enrollment = view.getEnrollmentField().getText().trim();
             String email = view.getEmailField().getText().trim();
-            String password = view.getPassword();
+            String passwordPlain = view.getPassword();
+            String passwordHashed = PasswordUtils.hashPassword(passwordPlain);
 
             if (!verifyDataUniqueness(phone, enrollment, email)) {
                 return;
@@ -72,7 +74,7 @@ public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> 
 
             User user = createAndSaveUser(name, phone);
             Student student = createAndSaveStudent(user, enrollment);
-            createAndSaveAccount(user, email, password);
+            createAndSaveAccount(user, email, passwordHashed);
 
             showSuccessAndReset();
 

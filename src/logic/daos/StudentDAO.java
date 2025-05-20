@@ -426,4 +426,38 @@ public class StudentDAO implements IStudentDAO {
             throw e;
         }
     }
+
+    public boolean existsForUser(int userId) throws SQLException {
+        String sql = "SELECT 1 FROM estudiante WHERE id_usuario = ?";
+        try (Connection connection = ConnectionDataBase.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            return stmt.executeQuery().next();
+        }
+    }
+
+    public Student getFullStudent(int userId) throws SQLException {
+        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.estado, " +
+                "e.matricula, e.calificacion FROM usuario u " +
+                "JOIN estudiante e ON u.id_usuario = e.id_usuario " +
+                "WHERE u.id_usuario = ?";
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return new Student(
+                        rs.getInt("id_usuario"),
+                        rs.getString("nombre_completo"),
+                        rs.getString("telefono"),
+                        rs.getString("estado").charAt(0),
+                        rs.getString("matricula"),
+                        rs.getInt("calificacion")
+                );
+            }
+        }
+        return null;
+    }
 }

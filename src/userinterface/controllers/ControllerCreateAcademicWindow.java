@@ -1,5 +1,6 @@
 package userinterface.controllers;
 
+import dataaccess.PasswordUtils;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -60,7 +61,8 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
             String phone = view.getPhoneField().getText().trim();
             String staffNumber = view.getStaffNumberField().getText().trim();
             String email = view.getEmailField().getText().trim();
-            String password = view.getPassword();
+            String passwordPlain = view.getPassword();
+            String passwordHashed = PasswordUtils.hashPassword(passwordPlain);
             AcademicType type = AcademicType.valueOf(view.getTypeComboBox().getValue());
             if(!verifyDataUniqueness(phone, staffNumber, email)){
                 return;
@@ -68,7 +70,7 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
 
             User user = createAndSaveUser(name, phone);
             Academic academic = createAndSaveAcademic(user, staffNumber, type);
-            createAndSaveAccount(user, email, password);
+            createAndSaveAccount(user, email, passwordHashed);
 
             showSuccessAndReset();
 

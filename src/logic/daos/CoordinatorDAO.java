@@ -146,4 +146,37 @@ public class CoordinatorDAO implements ICoordinatorDAO {
             return 0;
         }
     }
+
+    public boolean existsForUser(int userId) throws SQLException {
+        String sql = "SELECT 1 FROM coordinador WHERE id_usuario = ?";
+        try (Connection connection = ConnectionDataBase.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            return stmt.executeQuery().next();
+        }
+    }
+
+    public Coordinator getFullCoordinator(int userId) throws SQLException {
+        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.estado, " +
+                "c.numero_personal FROM usuario u " +
+                "JOIN coordinador c ON u.id_usuario = c.id_usuario " +
+                "WHERE u.id_usuario = ?";
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return new Coordinator(
+                        rs.getInt("id_usuario"),
+                        rs.getString("nombre_completo"),
+                        rs.getString("telefono"),
+                        rs.getString("numero_personal"),
+                        rs.getString("estado").charAt(0)
+                );
+            }
+        }
+        return null;
+    }
 }
