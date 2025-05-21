@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import logic.daos.*;
 import logic.services.LoginService;
+import logic.services.PasswordRecoveryService;
 import userinterface.controllers.ControllerLoginWindow;
 import userinterface.windows.LoginWindow;
 
@@ -20,10 +21,16 @@ public class LoginTest extends Application {
                 accountDAO, coordinatorDAO, academicDAO, studentDAO
         );
 
+        PasswordRecoveryService recoveryService = new PasswordRecoveryService(
+                accountDAO, coordinatorDAO, academicDAO, studentDAO
+        );
+
         LoginWindow loginWindow = new LoginWindow();
         Scene scene = new Scene(loginWindow.getView(), 600, 400);
 
-        new ControllerLoginWindow(loginWindow, loginService,
+        ControllerLoginWindow loginController = new ControllerLoginWindow(
+                loginWindow,
+                loginService,
                 user -> {
                     System.out.println("Login exitoso como: " + user.getClass().getSimpleName());
                     primaryStage.close();
@@ -31,7 +38,8 @@ public class LoginTest extends Application {
                 () -> {
                     System.out.println("Saliendo de la aplicación");
                     primaryStage.close();
-                }
+                },
+                recoveryService
         );
 
         primaryStage.setTitle("Sistema de Login");

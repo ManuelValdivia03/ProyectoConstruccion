@@ -15,7 +15,6 @@ public class PasswordToggleField {
     private final Button toggleButton;
 
     public PasswordToggleField() {
-        // Configurar campos de texto
         passwordField = new PasswordField();
         passwordField.setStyle("-fx-pref-width: 200px;");
 
@@ -23,15 +22,12 @@ public class PasswordToggleField {
         visibleField.setStyle("-fx-pref-width: 200px;");
         visibleField.setVisible(false);
 
-        // Configurar botón de toggle con emoji (solución simplificada)
         toggleButton = new Button("👁");
         toggleButton.setStyle("-fx-background-color: transparent; -fx-padding: 0 5 0 5;");
         toggleButton.setTooltip(new Tooltip("Mostrar contraseña"));
 
-        // Sincronizar texto entre campos
         passwordField.textProperty().bindBidirectional(visibleField.textProperty());
 
-        // Configurar acción del botón
         toggleButton.setOnAction(e -> toggleVisibility());
     }
 

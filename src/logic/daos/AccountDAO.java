@@ -306,4 +306,35 @@ public class AccountDAO implements IAccountDAO {
         }
         return email;
     }
+
+    public boolean updatePasswordByEmail(String email, String newHashedPassword) throws SQLException {
+        if (email == null || email.trim().isEmpty() || newHashedPassword == null || newHashedPassword.trim().isEmpty()) {
+            logger.warn("Intento de actualizar contraseña con datos inválidos");
+            throw new IllegalArgumentException("Email y contraseña no pueden ser nulos o vacíos");
+        }
+
+        logger.debug("Actualizando contraseña para el correo: {}", email);
+        String sql = "UPDATE cuenta SET contraseña = ? WHERE correo_e = ?";
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, newHashedPassword);
+            preparedStatement.setString(2, email);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            boolean success = rowsAffected > 0;
+
+            if (success) {
+                logger.info("Contraseña actualizada exitosamente para: {}", email);
+            } else {
+                logger.warn("No se encontró cuenta con el correo: {}", email);
+            }
+
+            return success;
+        } catch (SQLException e) {
+            logger.error("Error al actualizar contraseña para: {}", email, e);
+            throw e;
+        }
+    }
 }

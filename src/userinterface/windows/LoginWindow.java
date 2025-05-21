@@ -1,8 +1,10 @@
 package userinterface.windows;
 
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -19,6 +21,7 @@ public class LoginWindow {
     private final Button loginButton;
     private final Button exitButton;
     private final Label messageLabel;
+    private final Hyperlink recoveryPasswordLink;
 
     public LoginWindow() {
         GridPane grid = new GridPane();
@@ -62,19 +65,28 @@ public class LoginWindow {
         grid.add(buttonsBox, 0, 3, 2, 1);
         GridPane.setMargin(buttonsBox, new Insets(20, 0, 0, 0));
 
+        recoveryPasswordLink = new Hyperlink("¿Olvidaste tu contraseña?");
+        recoveryPasswordLink.setStyle("-fx-text-fill: #1976D2; -fx-border-color: transparent;");
+        grid.add(recoveryPasswordLink, 0, 4, 2, 1);
+        GridPane.setMargin(recoveryPasswordLink, new Insets(10, 0, 0, 0));
+        GridPane.setHalignment(recoveryPasswordLink, HPos.CENTER);
+
         messageLabel = new Label();
         messageLabel.setStyle("-fx-text-fill: #e74c3c; -fx-font-weight: bold;");
-        grid.add(messageLabel, 0, 4, 2, 1);
+        grid.add(messageLabel, 0, 5, 2, 1);
         GridPane.setHalignment(messageLabel, javafx.geometry.HPos.CENTER);
 
         this.view = grid;
     }
 
-    // Getters
+
     public GridPane getView() { return view; }
     public TextField getEmailField() { return emailField; }
     public PasswordToggleField getPasswordField() { return passwordField; }
     public Button getLoginButton() { return loginButton; }
     public Button getExitButton() { return exitButton; }
     public Label getMessageLabel() { return messageLabel; }
+    public Hyperlink getRecoveryPasswordLink() {
+        return recoveryPasswordLink;
+    }
 }

@@ -2,9 +2,12 @@ package userinterface.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.stage.Stage;
 import logic.services.LoginService;
+import logic.services.PasswordRecoveryService;
 import logic.logicclasses.User;
 import userinterface.windows.LoginWindow;
+import userinterface.windows.RecoveryPasswordWindow;
 
 public class ControllerLoginWindow implements EventHandler<ActionEvent> {
     private final LoginWindow view;
@@ -17,12 +20,20 @@ public class ControllerLoginWindow implements EventHandler<ActionEvent> {
     }
 
     public ControllerLoginWindow(LoginWindow view, LoginService loginService,
-                                 LoginSuccessHandler successHandler, Runnable exitHandler) {
+                                 LoginSuccessHandler successHandler, Runnable exitHandler,
+                                 PasswordRecoveryService recoveryService) {
         this.view = view;
         this.loginService = loginService;
         this.successHandler = successHandler;
         this.exitHandler = exitHandler;
+
         setupEventHandlers();
+
+        view.getRecoveryPasswordLink().setOnAction(e -> {
+            Stage recoveryStage = new Stage();
+            recoveryStage.setTitle("Recuperar Contraseña");
+            new ControllerRecoveryPasswordWindow(recoveryStage, recoveryService);
+        });
     }
 
     private void setupEventHandlers() {
@@ -53,5 +64,17 @@ public class ControllerLoginWindow implements EventHandler<ActionEvent> {
             view.getMessageLabel().setText("Credenciales inválidas");
             view.getMessageLabel().setStyle("-fx-text-fill: #e74c3c;");
         }
+    }
+
+    public void setRecoveryPasswordHandler(EventHandler<ActionEvent> handler) {
+        view.getRecoveryPasswordLink().setOnAction(handler);
+    }
+
+    public void enableDefaultRecoveryPasswordFlow(PasswordRecoveryService recoveryService) {
+        view.getRecoveryPasswordLink().setOnAction(e -> {
+            Stage recoveryStage = new Stage();
+            recoveryStage.setTitle("Recuperar Contraseña");
+            new ControllerRecoveryPasswordWindow(recoveryStage, recoveryService);
+        });
     }
 }
