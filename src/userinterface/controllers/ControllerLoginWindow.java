@@ -2,43 +2,40 @@ package userinterface.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
+import logic.logicclasses.Coordinator;
 import logic.services.LoginService;
 import logic.services.PasswordRecoveryService;
 import logic.logicclasses.User;
 import userinterface.windows.LoginWindow;
-import userinterface.windows.RecoveryPasswordWindow;
 
 public class ControllerLoginWindow implements EventHandler<ActionEvent> {
     private final LoginWindow view;
     private final LoginService loginService;
-    private final LoginSuccessHandler successHandler;
-    private final Runnable exitHandler;
+    private final PasswordRecoveryService recoveryService;
+    private final Stage primaryStage;
 
-    public interface LoginSuccessHandler {
-        void onLoginSuccess(User user);
-    }
-
-    public ControllerLoginWindow(LoginWindow view, LoginService loginService,
-                                 LoginSuccessHandler successHandler, Runnable exitHandler,
+    public ControllerLoginWindow(Stage primaryStage, LoginWindow view,
+                                 LoginService loginService,
                                  PasswordRecoveryService recoveryService) {
+        this.primaryStage = primaryStage;
         this.view = view;
         this.loginService = loginService;
-        this.successHandler = successHandler;
-        this.exitHandler = exitHandler;
+        this.recoveryService = recoveryService;
 
         setupEventHandlers();
+    }
+
+    private void setupEventHandlers() {
+        view.getLoginButton().setOnAction(this);
+        view.getExitButton().setOnAction(e -> primaryStage.close());
 
         view.getRecoveryPasswordLink().setOnAction(e -> {
             Stage recoveryStage = new Stage();
             recoveryStage.setTitle("Recuperar Contraseña");
             new ControllerRecoveryPasswordWindow(recoveryStage, recoveryService);
         });
-    }
-
-    private void setupEventHandlers() {
-        view.getLoginButton().setOnAction(this);
-        view.getExitButton().setOnAction(e -> exitHandler.run());
     }
 
     @Override
@@ -57,8 +54,15 @@ public class ControllerLoginWindow implements EventHandler<ActionEvent> {
             view.getMessageLabel().setText("¡Ingreso exitoso!");
             view.getMessageLabel().setStyle("-fx-text-fill: #27ae60;");
 
-            if (successHandler != null) {
-                successHandler.onLoginSuccess(user);
+            if (user instanceof Coordinator) {
+                primaryStage.close();
+
+                Stage coordinatorStage = new Stage();
+                new ControllerCoordinatorMenuWindow(coordinatorStage, (Coordinator) user, () -> {
+                    coordinatorStage.close();
+                    view.clearFields();
+                    launchNewLoginWindow();
+                });
             }
         } else {
             view.getMessageLabel().setText("Credenciales inválidas");
@@ -66,15 +70,17 @@ public class ControllerLoginWindow implements EventHandler<ActionEvent> {
         }
     }
 
-    public void setRecoveryPasswordHandler(EventHandler<ActionEvent> handler) {
-        view.getRecoveryPasswordLink().setOnAction(handler);
-    }
-
-    public void enableDefaultRecoveryPasswordFlow(PasswordRecoveryService recoveryService) {
-        view.getRecoveryPasswordLink().setOnAction(e -> {
-            Stage recoveryStage = new Stage();
-            recoveryStage.setTitle("Recuperar Contraseña");
-            new ControllerRecoveryPasswordWindow(recoveryStage, recoveryService);
-        });
+    private void launchNewLoginWindow() {
+        Stage newLoginStage = new Stage();
+        LoginWindow newLoginView = new LoginWindow();
+        new ControllerLoginWindow(
+                newLoginStage,
+                newLoginView,
+                this.loginService,
+                this.recoveryService
+        );
+        newLoginStage.setScene(new Scene(newLoginView.getView(), 600, 400));
+        newLoginStage.setTitle("Inicio de Sesión");
+        newLoginStage.show();
     }
 }

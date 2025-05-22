@@ -29,16 +29,9 @@ public class LoginTest extends Application {
         Scene scene = new Scene(loginWindow.getView(), 600, 400);
 
         ControllerLoginWindow loginController = new ControllerLoginWindow(
+                primaryStage,
                 loginWindow,
                 loginService,
-                user -> {
-                    System.out.println("Login exitoso como: " + user.getClass().getSimpleName());
-                    primaryStage.close();
-                },
-                () -> {
-                    System.out.println("Saliendo de la aplicación");
-                    primaryStage.close();
-                },
                 recoveryService
         );
 
