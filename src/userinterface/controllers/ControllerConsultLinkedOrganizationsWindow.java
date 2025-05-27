@@ -36,7 +36,6 @@ public class ControllerConsultLinkedOrganizationsWindow {
     private void setupEventHandlers() {
         view.getSearchButton().setOnAction(e -> searchOrganizationByName());
         view.getClearButton().setOnAction(e -> clearSearch());
-        view.getRefreshButton().setOnAction(e -> loadOrganizationData());
         view.getBackButton().setOnAction(e -> currentStage.close());
     }
 

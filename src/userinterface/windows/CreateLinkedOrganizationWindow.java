@@ -26,7 +26,7 @@ public class CreateLinkedOrganizationWindow {
         emailField = new TextField();
 
         addButton = new Button("Agregar Organización");
-        addButton.setStyle("-fx-background-color: #4a7bed; -fx-text-fill: white;");
+        addButton.setStyle("-fx-background-color: #0A1F3F; -fx-text-fill: white;");
         cancelButton = new Button("Regresar");
         cancelButton.setStyle("-fx-background-color: #ff4a4a; -fx-text-fill: white;");
 

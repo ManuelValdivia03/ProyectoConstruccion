@@ -16,7 +16,6 @@ public class ConsultLinkedOrganizationsWindow {
     private final TextField searchField;
     private final Button searchButton;
     private final Button clearButton;
-    private final Button refreshButton;
     private final Button backButton;
 
     public ConsultLinkedOrganizationsWindow() {
@@ -37,7 +36,7 @@ public class ConsultLinkedOrganizationsWindow {
         searchField.setStyle("-fx-font-size: 14px; -fx-padding: 5px;");
 
         searchButton = new Button("Buscar");
-        searchButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
+        searchButton.setStyle("-fx-background-color: #1A5F4B; -fx-text-fill: white; -fx-font-weight: bold;");
 
         clearButton = new Button("Limpiar");
         clearButton.setStyle("-fx-background-color: #ff9800; -fx-text-fill: white; -fx-font-weight: bold;");
@@ -46,13 +45,10 @@ public class ConsultLinkedOrganizationsWindow {
         searchBox.setPadding(new Insets(0, 0, 10, 0));
 
         // Botones inferiores
-        refreshButton = new Button("Actualizar Lista");
-        refreshButton.setStyle("-fx-background-color: #4a7bed; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 16;");
-
         backButton = new Button("Regresar");
         backButton.setStyle("-fx-background-color: #ff4a4a; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 16;");
 
-        HBox buttonBox = new HBox(15, refreshButton, backButton);
+        HBox buttonBox = new HBox(15, backButton);
         buttonBox.setPadding(new Insets(15, 0, 0, 0));
 
         // Contenedor principal
@@ -110,10 +106,6 @@ public class ConsultLinkedOrganizationsWindow {
 
     public Button getClearButton() {
         return clearButton;
-    }
-
-    public Button getRefreshButton() {
-        return refreshButton;
     }
 
     public Button getBackButton() {

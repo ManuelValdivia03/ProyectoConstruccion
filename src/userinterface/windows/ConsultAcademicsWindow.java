@@ -20,7 +20,6 @@ public class ConsultAcademicsWindow {
     private final TextField searchField;
     private final Button searchButton;
     private final Button clearButton;
-    private final Button refreshButton;
     private final Button backButton;
 
     public ConsultAcademicsWindow() {
@@ -52,21 +51,18 @@ public class ConsultAcademicsWindow {
         searchField.setStyle("-fx-font-size: 14px; -fx-padding: 5px;");
 
         searchButton = new Button("Buscar");
-        searchButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
+        searchButton.setStyle("-fx-background-color: #1A5F4B; -fx-text-fill: white; -fx-font-weight: bold;");
 
         clearButton = new Button("Limpiar");
-        clearButton.setStyle("-fx-background-color: #ff9800; -fx-text-fill: white; -fx-font-weight: bold;");
+        clearButton.setStyle("-fx-background-color: #ff8900; -fx-text-fill: white; -fx-font-weight: bold;");
 
         HBox searchBox = new HBox(5, searchField, searchButton, clearButton);
         searchBox.setPadding(new Insets(0, 0, 10, 0));
 
-        refreshButton = new Button("Actualizar Lista");
-        refreshButton.setStyle("-fx-background-color: #4a7bed; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 16;");
-
         backButton = new Button("Regresar");
         backButton.setStyle("-fx-background-color: #ff4a4a; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 16;");
 
-        HBox buttonBox = new HBox(15, refreshButton, backButton);
+        HBox buttonBox = new HBox(15, backButton);
         buttonBox.setPadding(new Insets(15, 0, 0, 0));
 
         view = new VBox(15);
@@ -123,10 +119,6 @@ public class ConsultAcademicsWindow {
 
     public TableView<Academic> getAcademicTable() {
         return academicTable;
-    }
-
-    public Button getRefreshButton() {
-        return refreshButton;
     }
 
     public Button getBackButton() {

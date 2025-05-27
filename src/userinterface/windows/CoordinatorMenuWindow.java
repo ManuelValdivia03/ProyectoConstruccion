@@ -16,6 +16,18 @@ public class CoordinatorMenuWindow {
     private final BorderPane root;
     private final TabPane tabPane;
     private Button logoutButton;
+    private Button registerAcademicButton;
+    private Button consultAcademicButton;
+    private Button registerProjectButton;
+    private Button consultProjectButton;
+    private Button assignProjectButton;
+    private Button reassignStudentButton;
+    private Button manageRequestsButton;
+    private Button registerCronogramButton;
+    private Button enableEvaluationsButton;
+    private Button registerOrganizationButton;
+    private Button consultOrganizationButton;
+    private Button generateStadisticsButton;
 
     private final String BLUE_DARK_COLOR = "#0A1F3F";
     private final String GREEN_DARK_COLOR= "#1A5F4B";
@@ -45,16 +57,13 @@ public class CoordinatorMenuWindow {
     private void styleTabPane() {
         tabPane.setStyle("-fx-background-color: " + BLUE_DARK_COLOR + ";");
         tabPane.setPrefWidth(200);
-
     }
 
     private HBox createHeader(Coordinator coordinator) {
-
         Image logo = new Image(getClass().getResource("/images/uvLogo.png").toExternalForm());
         ImageView logoView = new ImageView(logo);
         logoView.setFitWidth(60);
         logoView.setPreserveRatio(true);
-
 
         Label lblName = new Label(coordinator.getFullName());
         lblName.setFont(Font.font("Arial", FontWeight.BOLD, 18));
@@ -107,10 +116,13 @@ public class CoordinatorMenuWindow {
         VBox content = new VBox(15);
         content.setPadding(new Insets(20));
 
+        registerAcademicButton = createStyledButton("Registrar académico");
+        consultAcademicButton = createStyledButton("Consultar académicos");
+
         content.getChildren().addAll(
                 createSectionTitle("Gestión de Académicos"),
-                createStyledButton("Registrar Nuevo Académico"),
-                createStyledButton("Consultar Académicos")
+                registerAcademicButton,
+                consultAcademicButton
         );
 
         return content;
@@ -120,15 +132,23 @@ public class CoordinatorMenuWindow {
         VBox content = new VBox(15);
         content.setPadding(new Insets(20));
 
+        registerProjectButton = createStyledButton("Registrar Proyecto");
+        consultProjectButton = createStyledButton("Consultar Proyectos");
+        assignProjectButton = createStyledButton("Asignar Proyecto");
+        reassignStudentButton = createStyledButton("Reasignar Estudiante");
+        manageRequestsButton = createStyledButton("Gestionar Solicitudes");
+        registerCronogramButton = createStyledButton("Registrar Cronograma");
+        enableEvaluationsButton = createStyledButton("Habilitar Evaluaciones");
+
         content.getChildren().addAll(
                 createSectionTitle("Gestión de Proyectos"),
-                createStyledButton("Registrar Proyecto"),
-                createStyledButton("Consultar Proyectos"),
-                createStyledButton("Asignar Proyecto"),
-                createStyledButton("Reasignar Estudiante"),
-                createStyledButton("Gestionar Solicitudes"),
-                createStyledButton("Registrar Cronograma"),
-                createStyledButton("Habilitar Evaluaciones")
+                registerProjectButton,
+                consultProjectButton,
+                assignProjectButton,
+                reassignStudentButton,
+                manageRequestsButton,
+                registerCronogramButton,
+                enableEvaluationsButton
         );
         return content;
     }
@@ -137,10 +157,13 @@ public class CoordinatorMenuWindow {
         VBox content = new VBox(15);
         content.setPadding(new Insets(20));
 
+        registerOrganizationButton = createStyledButton("Registrar Organización");
+        consultOrganizationButton = createStyledButton("Consultar Organizaciones");
+
         content.getChildren().addAll(
                 createSectionTitle("Organizaciones Vinculadas"),
-                createStyledButton("Registrar Organización "),
-                createStyledButton("Consultar Organizaciones")
+                registerOrganizationButton,
+                consultOrganizationButton
         );
 
         return content;
@@ -150,9 +173,11 @@ public class CoordinatorMenuWindow {
         VBox content = new VBox(15);
         content.setPadding(new Insets(20));
 
+        generateStadisticsButton = createStyledButton("Generar Estadísticas");
+
         content.getChildren().addAll(
                 createSectionTitle("Estadísticas Académicas"),
-                createStyledButton("Generar Estadísticas")
+                generateStadisticsButton
         );
 
         return content;
@@ -195,4 +220,54 @@ public class CoordinatorMenuWindow {
     public Button getLogoutButton() {
         return logoutButton;
     }
+
+    public Button getRegisterAcademicButton() {
+        return registerAcademicButton;
+    }
+
+    public Button getConsultAcademicButton() {
+        return consultAcademicButton;
+    }
+
+    public Button getRegisterProjectButton() {
+        return registerProjectButton;
+    }
+
+    public Button getConsultProjectButton() {
+        return consultProjectButton;
+    }
+
+    public Button getAssignProjectButton() {
+        return assignProjectButton;
+    }
+
+    public Button getReassignStudentButton() {
+        return reassignStudentButton;
+    }
+
+    public Button getManageRequestsButton() {
+        return manageRequestsButton;
+    }
+
+    public Button getRegisterCronogramButton() {
+        return registerCronogramButton;
+    }
+
+    public Button getEnableEvaluationsButton() {
+        return enableEvaluationsButton;
+    }
+
+    public Button getRegisterOrganizationButton() {
+        return registerOrganizationButton;
+    }
+
+    public Button getConsultOrganizationButton() {
+        return consultOrganizationButton;
+    }
+
+    public Button getGenerateStadisticsButton() {
+        return generateStadisticsButton;
+    }
+
+
 }

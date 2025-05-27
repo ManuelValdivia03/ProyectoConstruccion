@@ -33,10 +33,10 @@ public class ConsultProyectsWindow {
         searchField.setPrefWidth(250);
 
         searchButton = new Button("Buscar");
-        searchButton.setStyle("-fx-background-color: #4a7bed; -fx-text-fill: white;");
+        searchButton.setStyle("-fx-background-color: #1A5F4B; -fx-text-fill: white;");
 
-        refreshButton = new Button("Refrescar");
-        refreshButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
+        refreshButton = new Button("Limpiar");
+        refreshButton.setStyle("-fx-background-color: #ff9800; -fx-text-fill: white;");
 
         HBox searchBox = new HBox(10, searchField, searchButton, refreshButton);
         searchBox.setAlignment(Pos.CENTER);

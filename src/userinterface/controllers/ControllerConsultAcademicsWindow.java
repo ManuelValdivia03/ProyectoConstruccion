@@ -41,7 +41,6 @@ public class ControllerConsultAcademicsWindow {
         view.getSearchButton().setOnAction(e -> searchAcademicByStaffNumber());
         view.getSearchField().setOnAction(e -> searchAcademicByStaffNumber());
         view.getClearButton().setOnAction(e -> clearSearch());
-        view.getRefreshButton().setOnAction(e -> loadAcademicData());
         view.getBackButton().setOnAction(e -> currentStage.close());
     }
 
