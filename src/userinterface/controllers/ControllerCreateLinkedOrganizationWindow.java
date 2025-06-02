@@ -22,12 +22,11 @@ import userinterface.windows.CreateLinkedOrganizationWindow;
 import userinterface.windows.DocumentUploadWindow;
 import java.sql.SQLException;
 
-
-
 public class ControllerCreateLinkedOrganizationWindow implements EventHandler<ActionEvent> {
     private final CreateLinkedOrganizationWindow view;
     private final LinkedOrganizationDAO linkedOrganizationDAO;
     private final Validators validators;
+    private LinkedOrganization organization;
 
     public ControllerCreateLinkedOrganizationWindow(CreateLinkedOrganizationWindow view) {
         this.view = view;
@@ -63,10 +62,10 @@ public class ControllerCreateLinkedOrganizationWindow implements EventHandler<Ac
 
             verifyDataUniqueness(name, phone, email);
 
-            LinkedOrganization organization = createOrganization(name, phone, email);
+            organization = createOrganization(name, phone, email);
 
             if (linkedOrganizationDAO.addLinkedOrganization(organization)) {
-                showSuccessAndReset(organization);
+                showSuccessAndReset();
             } else {
                 showError("No se pudo registrar la organización");
             }
@@ -131,14 +130,12 @@ public class ControllerCreateLinkedOrganizationWindow implements EventHandler<Ac
         organization.setNameLinkedOrganization(name);
         organization.setCellPhoneLinkedOrganization(phone);
         organization.setEmailLinkedOrganization(email);
-        organization.setStatus('A'); // Activo por defecto
+        organization.setStatus('A');
         return organization;
     }
 
-    private void showSuccessAndReset(LinkedOrganization organization) {
+    private void showSuccessAndReset() {
         Platform.runLater(() -> {
-            showCustomSuccessDialog();
-            clearFields();
             openDocumentUploadWindow(organization.getIdLinkedOrganization());
         });
     }
@@ -214,17 +211,51 @@ public class ControllerCreateLinkedOrganizationWindow implements EventHandler<Ac
     private void openDocumentUploadWindow(int organizationId) {
         try {
             DocumentUploadWindow uploadWindow = new DocumentUploadWindow(organizationId);
-            ControllerDocumentUploadWindow uploadController = new ControllerDocumentUploadWindow(uploadWindow);
+            Stage uploadStage = new Stage();
 
-            Stage stage = new Stage();
-            stage.setTitle("Subir Documento Justificativo");
-            stage.setScene(new Scene(uploadWindow.getView(), 400, 300));
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.show();
+            uploadStage.initModality(Modality.APPLICATION_MODAL);
+            uploadStage.setTitle("Subir Documento Justificativo (Obligatorio)");
 
-            view.getView().getScene().getWindow().hide();
+            new ControllerDocumentUploadWindow(
+                    uploadWindow,
+                    uploadStage,
+                    this::handleUploadSuccess,
+                    this::handleUploadCancel
+            );
+
+            uploadStage.setScene(new Scene(uploadWindow.getView(), 500, 350));
+            uploadStage.showAndWait();
+
         } catch (Exception e) {
             showError("Error al abrir ventana de documentos");
+            handleUploadCancel();
         }
+    }
+
+    private void handleUploadSuccess() {
+        showCustomSuccessDialog();
+        clearFields();
+    }
+
+    private void handleUploadCancel() {
+        try {
+            if (organization != null) {
+                linkedOrganizationDAO.deleteLinkedOrganization(organization);
+                showAlert(Alert.AlertType.INFORMATION, "Registro cancelado",
+                        "El registro fue cancelado porque no se subió el documento.");
+            }
+        } catch (SQLException e) {
+            showError("Error al cancelar el registro");
+        }
+    }
+
+    private void showAlert(Alert.AlertType type, String title, String content) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(type);
+            alert.setTitle(title);
+            alert.setHeaderText(null);
+            alert.setContentText(content);
+            alert.showAndWait();
+        });
     }
 }

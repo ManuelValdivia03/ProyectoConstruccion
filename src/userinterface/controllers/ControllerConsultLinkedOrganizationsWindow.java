@@ -181,13 +181,11 @@ public class ControllerConsultLinkedOrganizationsWindow {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Guardar Documento");
 
-        // Configurar extensión según el tipo de archivo
         String extension = getFileExtension(fileType);
         fileChooser.setInitialFileName(
                 "documento_" + orgName.replace(" ", "_") + extension
         );
 
-        // Configurar filtros de extensión
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
                 getFileTypeDescription(fileType),
                 "*" + extension
@@ -198,7 +196,6 @@ public class ControllerConsultLinkedOrganizationsWindow {
 
         if (file != null) {
             try {
-                // Asegurar que el archivo tenga la extensión correcta
                 String filePath = file.getAbsolutePath();
                 if (!filePath.toLowerCase().endsWith(extension.toLowerCase())) {
                     file = new File(filePath + extension);
