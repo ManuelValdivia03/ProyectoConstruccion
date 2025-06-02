@@ -4,7 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import logic.logicclasses.Academic;
 import logic.logicclasses.Coordinator;
+import logic.logicclasses.Student;
 import logic.services.LoginService;
 import logic.services.PasswordRecoveryService;
 import logic.logicclasses.User;
@@ -60,6 +62,23 @@ public class ControllerLoginWindow implements EventHandler<ActionEvent> {
                 Stage coordinatorStage = new Stage();
                 new ControllerCoordinatorMenuWindow(coordinatorStage, (Coordinator) user, () -> {
                     coordinatorStage.close();
+                    view.clearFields();
+                    launchNewLoginWindow();
+                });
+            } else if (user instanceof Student) {
+                primaryStage.close();
+                Stage studentStage = new Stage();
+
+                new ControllerStudentMenuWindow(studentStage, (Student) user, () -> {
+                    studentStage.close();
+                    view.clearFields();
+                    launchNewLoginWindow();
+                });
+            } else if (user instanceof Academic) {
+                primaryStage.close();
+                Stage academicStage = new Stage();
+                new ControllerAcademicMenuWindow(academicStage, (Academic) user, () -> {
+                    academicStage.close();
                     view.clearFields();
                     launchNewLoginWindow();
                 });
