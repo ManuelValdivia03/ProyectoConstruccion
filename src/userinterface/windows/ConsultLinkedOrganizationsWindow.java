@@ -88,6 +88,29 @@ public class ConsultLinkedOrganizationsWindow {
         return manageCol;
     }
 
+    public TableColumn<LinkedOrganization, Void> createDocumentsButtonColumn(EventHandler<ActionEvent> viewDocumentsAction) {
+        TableColumn<LinkedOrganization, Void> documentsCol = new TableColumn<>("Documentos");
+        documentsCol.setCellFactory(param -> new TableCell<>() {
+            private final Button btn = new Button("Ver");
+            {
+                btn.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;");
+                btn.setOnAction(event -> {
+                    LinkedOrganization org = getTableView().getItems().get(getIndex());
+                    if (org != null) {
+                        viewDocumentsAction.handle(new ActionEvent(org, btn));
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(empty ? null : btn);
+            }
+        });
+        return documentsCol;
+    }
+
     public VBox getView() {
         return view;
     }

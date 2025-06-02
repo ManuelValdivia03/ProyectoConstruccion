@@ -1,321 +1,399 @@
-2025-05-27 05:56:29 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Verificando credenciales para: juan.perez@universidad.edu
-2025-05-27 05:56:29 [JavaFX Application Thread] INFO  dataaccess.ConfigLoader - Archivo config.properties cargado correctamente
-2025-05-27 05:56:29 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 05:56:29 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [307 ms]
-2025-05-27 05:56:29 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 05:56:29 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-05-27 05:56:29 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Buscando cuenta por correo: juan.perez@universidad.edu
-2025-05-27 05:56:29 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 05:56:29 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [14 ms]
-2025-05-27 05:56:29 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 05:56:29 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Cuenta encontrada para correo juan.perez@universidad.edu
-2025-05-27 05:56:29 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 05:56:29 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [12 ms]
-2025-05-27 05:56:29 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 05:56:29 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-05-27 05:56:29 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 05:56:29 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [12 ms]
-2025-05-27 05:56:29 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 05:58:03 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Verificando credenciales para: juan.perez@universidad.edu
-2025-05-27 05:58:03 [JavaFX Application Thread] INFO  dataaccess.ConfigLoader - Archivo config.properties cargado correctamente
-2025-05-27 05:58:03 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 05:58:03 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [222 ms]
-2025-05-27 05:58:03 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 05:58:03 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-05-27 05:58:03 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Buscando cuenta por correo: juan.perez@universidad.edu
-2025-05-27 05:58:03 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 05:58:03 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [20 ms]
-2025-05-27 05:58:03 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 05:58:03 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Cuenta encontrada para correo juan.perez@universidad.edu
-2025-05-27 05:58:03 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 05:58:03 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
-2025-05-27 05:58:03 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 05:58:03 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-05-27 05:58:03 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 05:58:03 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
-2025-05-27 05:58:03 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:26:31 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Verificando credenciales para: juan.perez@universidad.edu
-2025-05-27 06:26:31 [JavaFX Application Thread] INFO  dataaccess.ConfigLoader - Archivo config.properties cargado correctamente
-2025-05-27 06:26:31 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:26:31 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [213 ms]
-2025-05-27 06:26:31 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:26:31 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-05-27 06:26:31 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Buscando cuenta por correo: juan.perez@universidad.edu
-2025-05-27 06:26:31 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:26:31 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [14 ms]
-2025-05-27 06:26:31 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:26:31 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Cuenta encontrada para correo juan.perez@universidad.edu
-2025-05-27 06:26:31 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:26:31 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [11 ms]
-2025-05-27 06:26:31 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:26:31 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-05-27 06:26:31 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:26:31 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
-2025-05-27 06:26:31 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:26:32 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:26:32 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [11 ms]
-2025-05-27 06:26:32 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:26:37 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:26:37 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
-2025-05-27 06:26:37 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:26:45 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:26:45 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [17 ms]
-2025-05-27 06:26:45 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:30:48 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Verificando credenciales para: juan.perez@universidad.edu
-2025-05-27 06:30:48 [JavaFX Application Thread] INFO  dataaccess.ConfigLoader - Archivo config.properties cargado correctamente
-2025-05-27 06:30:48 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:30:49 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [217 ms]
-2025-05-27 06:30:49 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:30:49 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-05-27 06:30:49 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Buscando cuenta por correo: juan.perez@universidad.edu
-2025-05-27 06:30:49 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:30:49 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [20 ms]
-2025-05-27 06:30:49 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:30:49 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Cuenta encontrada para correo juan.perez@universidad.edu
-2025-05-27 06:30:49 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:30:49 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
-2025-05-27 06:30:49 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:30:49 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-05-27 06:30:49 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:30:49 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
-2025-05-27 06:30:49 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:30:50 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:30:50 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [11 ms]
-2025-05-27 06:30:50 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:38:55 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Verificando credenciales para: juan.perez@universidad.edu
-2025-05-27 06:38:55 [JavaFX Application Thread] INFO  dataaccess.ConfigLoader - Archivo config.properties cargado correctamente
-2025-05-27 06:38:55 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:38:55 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [233 ms]
-2025-05-27 06:38:55 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:38:55 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-05-27 06:38:55 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Buscando cuenta por correo: juan.perez@universidad.edu
-2025-05-27 06:38:55 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:38:55 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [15 ms]
-2025-05-27 06:38:55 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:38:55 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Cuenta encontrada para correo juan.perez@universidad.edu
-2025-05-27 06:38:55 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:38:55 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
-2025-05-27 06:38:55 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:38:55 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-05-27 06:38:55 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:38:55 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
-2025-05-27 06:38:55 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:41:12 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Verificando credenciales para: juan.perez@universidad.edu
-2025-05-27 06:41:12 [JavaFX Application Thread] INFO  dataaccess.ConfigLoader - Archivo config.properties cargado correctamente
-2025-05-27 06:41:12 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:41:12 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [215 ms]
-2025-05-27 06:41:12 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:41:12 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-05-27 06:41:12 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Buscando cuenta por correo: juan.perez@universidad.edu
-2025-05-27 06:41:12 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:41:12 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [22 ms]
-2025-05-27 06:41:12 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:41:12 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Cuenta encontrada para correo juan.perez@universidad.edu
-2025-05-27 06:41:12 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:41:12 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [16 ms]
-2025-05-27 06:41:12 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:41:12 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-05-27 06:41:12 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:41:12 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
-2025-05-27 06:41:12 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:41:15 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
-2025-05-27 06:41:15 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:41:15 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [11 ms]
-2025-05-27 06:41:15 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:41:15 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 0 proyectos con estado: A
-2025-05-27 06:41:22 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:41:22 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
-2025-05-27 06:41:22 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:41:30 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
-2025-05-27 06:41:30 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:41:30 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
-2025-05-27 06:41:30 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:41:30 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 0 proyectos con estado: A
-2025-05-27 06:42:33 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Verificando credenciales para: juan.perez@universidad.edu
-2025-05-27 06:42:33 [JavaFX Application Thread] INFO  dataaccess.ConfigLoader - Archivo config.properties cargado correctamente
-2025-05-27 06:42:33 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:42:34 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [208 ms]
-2025-05-27 06:42:34 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:42:34 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-05-27 06:42:34 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Buscando cuenta por correo: juan.perez@universidad.edu
-2025-05-27 06:42:34 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:42:34 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [13 ms]
-2025-05-27 06:42:34 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:42:34 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Cuenta encontrada para correo juan.perez@universidad.edu
-2025-05-27 06:42:34 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:42:34 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
-2025-05-27 06:42:34 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:42:34 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-05-27 06:42:34 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:42:34 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
-2025-05-27 06:42:34 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:42:37 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
-2025-05-27 06:42:37 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:42:37 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
-2025-05-27 06:42:37 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:42:37 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 0 proyectos con estado: A
-2025-05-27 06:42:40 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
-2025-05-27 06:42:40 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:42:40 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [16 ms]
-2025-05-27 06:42:40 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:42:40 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 0 proyectos con estado: A
-2025-05-27 06:42:51 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:42:51 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
-2025-05-27 06:42:51 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:42:54 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:42:54 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
-2025-05-27 06:42:54 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:42:58 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:42:58 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
-2025-05-27 06:42:58 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:43:01 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
-2025-05-27 06:43:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:43:01 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [15 ms]
-2025-05-27 06:43:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:43:01 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 0 proyectos con estado: A
-2025-05-27 06:43:06 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
-2025-05-27 06:43:06 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:43:06 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
-2025-05-27 06:43:06 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:43:06 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 0 proyectos con estado: A
-2025-05-27 06:43:37 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
-2025-05-27 06:43:37 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:43:37 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [15 ms]
-2025-05-27 06:43:37 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:43:37 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 0 proyectos con estado: A
-2025-05-27 06:43:42 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:43:42 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [21 ms]
-2025-05-27 06:43:42 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:43:46 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
-2025-05-27 06:43:46 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:43:46 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [13 ms]
-2025-05-27 06:43:46 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:43:46 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 0 proyectos con estado: A
-2025-05-27 06:44:35 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Verificando credenciales para: juan.perez@universidad.edu
-2025-05-27 06:44:35 [JavaFX Application Thread] INFO  dataaccess.ConfigLoader - Archivo config.properties cargado correctamente
-2025-05-27 06:44:35 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:44:35 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [227 ms]
-2025-05-27 06:44:35 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:44:35 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-05-27 06:44:35 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Buscando cuenta por correo: juan.perez@universidad.edu
-2025-05-27 06:44:35 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:44:35 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [14 ms]
-2025-05-27 06:44:35 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:44:35 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Cuenta encontrada para correo juan.perez@universidad.edu
-2025-05-27 06:44:35 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:44:35 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [14 ms]
-2025-05-27 06:44:35 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 06:44:35 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-05-27 06:44:35 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 06:44:35 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
-2025-05-27 06:44:35 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 14:05:00 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Verificando credenciales para: juan.perez@universidad.edu
-2025-05-27 14:05:00 [JavaFX Application Thread] INFO  dataaccess.ConfigLoader - Archivo config.properties cargado correctamente
-2025-05-27 14:05:00 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 14:05:01 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [596 ms]
-2025-05-27 14:05:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 14:05:01 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-05-27 14:05:01 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Buscando cuenta por correo: juan.perez@universidad.edu
-2025-05-27 14:05:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 14:05:01 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [48 ms]
-2025-05-27 14:05:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 14:05:01 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Cuenta encontrada para correo juan.perez@universidad.edu
-2025-05-27 14:05:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 14:05:01 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [24 ms]
-2025-05-27 14:05:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 14:05:01 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-05-27 14:05:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 14:05:01 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [27 ms]
-2025-05-27 14:05:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 14:05:06 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 14:05:06 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [25 ms]
-2025-05-27 14:05:06 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 14:05:12 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
-2025-05-27 14:05:12 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 14:05:12 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [20 ms]
-2025-05-27 14:05:12 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 14:05:12 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 0 proyectos con estado: A
-2025-05-27 16:50:16 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Verificando credenciales para: juan.perez@universidad.edu
-2025-05-27 16:50:17 [JavaFX Application Thread] INFO  dataaccess.ConfigLoader - Archivo config.properties cargado correctamente
-2025-05-27 16:50:17 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 16:50:17 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [599 ms]
-2025-05-27 16:50:17 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 16:50:18 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-05-27 16:50:18 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Buscando cuenta por correo: juan.perez@universidad.edu
-2025-05-27 16:50:18 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 16:50:18 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [48 ms]
-2025-05-27 16:50:18 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 16:50:18 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Cuenta encontrada para correo juan.perez@universidad.edu
-2025-05-27 16:50:18 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 16:50:18 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [22 ms]
-2025-05-27 16:50:18 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 16:50:18 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-05-27 16:50:18 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 16:50:18 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [27 ms]
-2025-05-27 16:50:18 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 16:50:29 [JavaFX Application Thread] INFO  logic.daos.LinkedOrganizationDAO - Obteniendo todas las organizaciones vinculadas
-2025-05-27 16:50:29 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 16:50:29 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [26 ms]
-2025-05-27 16:50:29 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 16:50:29 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDAO - Se encontraron 0 organizaciones vinculadas
-2025-05-27 16:53:33 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Verificando credenciales para: juan.perez@universidad.edu
-2025-05-27 16:53:33 [JavaFX Application Thread] INFO  dataaccess.ConfigLoader - Archivo config.properties cargado correctamente
-2025-05-27 16:53:33 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 16:53:34 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [588 ms]
-2025-05-27 16:53:34 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 16:53:34 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-05-27 16:53:34 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Buscando cuenta por correo: juan.perez@universidad.edu
-2025-05-27 16:53:34 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 16:53:34 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [40 ms]
-2025-05-27 16:53:34 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 16:53:34 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Cuenta encontrada para correo juan.perez@universidad.edu
-2025-05-27 16:53:34 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 16:53:34 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [23 ms]
-2025-05-27 16:53:34 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 16:53:34 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-05-27 16:53:34 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 16:53:34 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [62 ms]
-2025-05-27 16:53:34 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 16:53:41 [JavaFX Application Thread] INFO  logic.daos.LinkedOrganizationDAO - Obteniendo todas las organizaciones vinculadas
-2025-05-27 16:53:41 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 16:53:41 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [24 ms]
-2025-05-27 16:53:41 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 16:53:41 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDAO - Se encontraron 0 organizaciones vinculadas
-2025-05-27 16:54:43 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Verificando credenciales para: juan.perez@universidad.edu
-2025-05-27 16:54:43 [JavaFX Application Thread] INFO  dataaccess.ConfigLoader - Archivo config.properties cargado correctamente
-2025-05-27 16:54:43 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 16:54:43 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [532 ms]
-2025-05-27 16:54:43 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 16:54:44 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-05-27 16:54:44 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Buscando cuenta por correo: juan.perez@universidad.edu
-2025-05-27 16:54:44 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 16:54:44 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [47 ms]
-2025-05-27 16:54:44 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 16:54:44 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Cuenta encontrada para correo juan.perez@universidad.edu
-2025-05-27 16:54:44 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 16:54:44 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [27 ms]
-2025-05-27 16:54:44 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 16:54:44 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-05-27 16:54:44 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 16:54:44 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [34 ms]
-2025-05-27 16:54:44 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 16:54:47 [JavaFX Application Thread] INFO  logic.daos.LinkedOrganizationDAO - Obteniendo todas las organizaciones vinculadas
-2025-05-27 16:54:47 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 16:54:47 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [37 ms]
-2025-05-27 16:54:47 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 16:54:47 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDAO - Se encontraron 0 organizaciones vinculadas
-2025-05-27 16:54:56 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
-2025-05-27 16:54:56 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 16:54:56 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [26 ms]
-2025-05-27 16:54:56 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 16:54:56 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 0 proyectos con estado: A
-2025-05-27 16:55:07 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyecto por título: fhrjyjyj
-2025-05-27 16:55:07 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 16:55:07 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [35 ms]
-2025-05-27 16:55:07 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 16:55:07 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - No se encontró proyecto con título: fhrjyjyj
-2025-05-27 16:55:11 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
-2025-05-27 16:55:11 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
-2025-05-27 16:55:11 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [30 ms]
-2025-05-27 16:55:11 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
-2025-05-27 16:55:11 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 0 proyectos con estado: A
+2025-06-01 20:54:08 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Verificando credenciales para: juan.perez@universidad.edu
+2025-06-01 20:54:08 [JavaFX Application Thread] INFO  dataaccess.ConfigLoader - Archivo config.properties cargado correctamente
+2025-06-01 20:54:08 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 20:54:09 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [662 ms]
+2025-06-01 20:54:09 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 20:54:10 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-01 20:54:10 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Buscando cuenta por correo: juan.perez@universidad.edu
+2025-06-01 20:54:10 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 20:54:10 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [42 ms]
+2025-06-01 20:54:10 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 20:54:10 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Cuenta encontrada para correo juan.perez@universidad.edu
+2025-06-01 20:54:10 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 20:54:10 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [38 ms]
+2025-06-01 20:54:10 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 20:54:10 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-06-01 20:54:10 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 20:54:10 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [36 ms]
+2025-06-01 20:54:10 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 20:54:52 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDAO - Verificando existencia de organización vinculada con título: Antojitos Edith
+2025-06-01 20:54:52 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 20:54:52 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [44 ms]
+2025-06-01 20:54:52 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 20:54:52 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDAO - ¿Organización vinculada 'Antojitos Edith' existe?: false
+2025-06-01 20:54:52 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 20:54:52 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [17 ms]
+2025-06-01 20:54:52 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 20:54:52 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 20:54:52 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [19 ms]
+2025-06-01 20:54:52 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 20:54:52 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDAO - Agregando nueva organización vinculada: Antojitos Edith
+2025-06-01 20:54:52 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 20:54:52 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [21 ms]
+2025-06-01 20:54:52 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 20:54:52 [JavaFX Application Thread] INFO  logic.daos.LinkedOrganizationDAO - Organización vinculada agregada exitosamente - ID: 1, Nombre: Antojitos Edith
+2025-06-01 20:54:53 [JavaFX Application Thread] DEBUG userinterface.controllers.ControllerDocumentUploadWindow - Manejadores de eventos configurados
+2025-06-01 20:54:53 [JavaFX Application Thread] DEBUG userinterface.controllers.ControllerDocumentUploadWindow - Controlador de subida de documentos creado para organización ID: 1
+2025-06-01 20:55:06 [JavaFX Application Thread] DEBUG userinterface.controllers.ControllerDocumentUploadWindow - Iniciando proceso de subida de documento
+2025-06-01 20:55:06 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Insertando documento para organización ID: 1 - Nombre archivo: ED13_ChaconPaola.pdf
+2025-06-01 20:55:06 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 20:55:06 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [30 ms]
+2025-06-01 20:55:07 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 20:55:07 [JavaFX Application Thread] INFO  logic.daos.LinkedOrganizationDocumentDAO - Documento insertado exitosamente para organización ID: 1 - Archivo: ED13_ChaconPaola.pdf
+2025-06-01 20:55:07 [JavaFX Application Thread] INFO  userinterface.controllers.ControllerDocumentUploadWindow - Documento subido correctamente para organización ID: 1. Archivo: ED13_ChaconPaola.pdf
+2025-06-01 20:55:10 [JavaFX Application Thread] INFO  logic.daos.LinkedOrganizationDAO - Obteniendo todas las organizaciones vinculadas
+2025-06-01 20:55:10 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 20:55:10 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [23 ms]
+2025-06-01 20:55:10 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 20:55:10 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDAO - Se encontraron 1 organizaciones vinculadas
+2025-06-01 21:20:34 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Verificando credenciales para: juan.perez@universidad.edu
+2025-06-01 21:20:34 [JavaFX Application Thread] INFO  dataaccess.ConfigLoader - Archivo config.properties cargado correctamente
+2025-06-01 21:20:34 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:20:34 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [276 ms]
+2025-06-01 21:20:34 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:20:34 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-01 21:20:34 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Buscando cuenta por correo: juan.perez@universidad.edu
+2025-06-01 21:20:34 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:20:34 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [16 ms]
+2025-06-01 21:20:34 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:20:34 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Cuenta encontrada para correo juan.perez@universidad.edu
+2025-06-01 21:20:34 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:20:34 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
+2025-06-01 21:20:34 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:20:34 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-06-01 21:20:34 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:20:35 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-06-01 21:20:35 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:20:37 [JavaFX Application Thread] INFO  logic.daos.LinkedOrganizationDAO - Obteniendo todas las organizaciones vinculadas
+2025-06-01 21:20:37 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:20:37 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [11 ms]
+2025-06-01 21:20:37 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:20:37 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDAO - Se encontraron 1 organizaciones vinculadas
+2025-06-01 21:20:39 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Verificando existencia de documento para organización ID: 1
+2025-06-01 21:20:39 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:20:39 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [15 ms]
+2025-06-01 21:20:39 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:20:39 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - ¿Documento existe para organización ID 1?: true
+2025-06-01 21:20:39 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo documento para organización ID: 1
+2025-06-01 21:20:39 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:20:39 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-06-01 21:20:39 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:20:39 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Documento encontrado para organización ID: 1
+2025-06-01 21:20:39 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo información de documento para organización ID: 1
+2025-06-01 21:20:39 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:20:39 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-06-01 21:20:39 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:20:39 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Información de documento encontrada para organización ID: 1 - Nombre: ED13_ChaconPaola.pdf, Tipo: PDF, Fecha: 2025-06-01 20:55:07.0
+2025-06-01 21:20:43 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Verificando existencia de documento para organización ID: 1
+2025-06-01 21:20:43 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:20:43 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [16 ms]
+2025-06-01 21:20:43 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:20:43 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - ¿Documento existe para organización ID 1?: true
+2025-06-01 21:20:43 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo documento para organización ID: 1
+2025-06-01 21:20:43 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:20:43 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-06-01 21:20:43 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:20:43 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Documento encontrado para organización ID: 1
+2025-06-01 21:20:43 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo información de documento para organización ID: 1
+2025-06-01 21:20:43 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:20:43 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-06-01 21:20:43 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:20:43 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Información de documento encontrada para organización ID: 1 - Nombre: ED13_ChaconPaola.pdf, Tipo: PDF, Fecha: 2025-06-01 20:55:07.0
+2025-06-01 21:20:43 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Verificando existencia de documento para organización ID: 1
+2025-06-01 21:20:43 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:20:43 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [14 ms]
+2025-06-01 21:20:43 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:20:43 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - ¿Documento existe para organización ID 1?: true
+2025-06-01 21:20:43 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo documento para organización ID: 1
+2025-06-01 21:20:43 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:20:43 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-06-01 21:20:43 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:20:43 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Documento encontrado para organización ID: 1
+2025-06-01 21:20:43 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo información de documento para organización ID: 1
+2025-06-01 21:20:43 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:20:43 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
+2025-06-01 21:20:43 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:20:43 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Información de documento encontrada para organización ID: 1 - Nombre: ED13_ChaconPaola.pdf, Tipo: PDF, Fecha: 2025-06-01 20:55:07.0
+2025-06-01 21:20:55 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Verificando existencia de documento para organización ID: 1
+2025-06-01 21:20:55 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:20:55 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [15 ms]
+2025-06-01 21:20:55 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:20:55 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - ¿Documento existe para organización ID 1?: true
+2025-06-01 21:20:55 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo documento para organización ID: 1
+2025-06-01 21:20:55 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:20:55 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-06-01 21:20:55 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:20:55 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Documento encontrado para organización ID: 1
+2025-06-01 21:20:55 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo información de documento para organización ID: 1
+2025-06-01 21:20:55 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:20:55 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-06-01 21:20:55 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:20:55 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Información de documento encontrada para organización ID: 1 - Nombre: ED13_ChaconPaola.pdf, Tipo: PDF, Fecha: 2025-06-01 20:55:07.0
+2025-06-01 21:20:59 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Verificando existencia de documento para organización ID: 1
+2025-06-01 21:20:59 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:20:59 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-06-01 21:20:59 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:20:59 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - ¿Documento existe para organización ID 1?: true
+2025-06-01 21:20:59 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo documento para organización ID: 1
+2025-06-01 21:20:59 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:20:59 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-06-01 21:20:59 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:20:59 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Documento encontrado para organización ID: 1
+2025-06-01 21:20:59 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo información de documento para organización ID: 1
+2025-06-01 21:20:59 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:20:59 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [4 ms]
+2025-06-01 21:20:59 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:20:59 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Información de documento encontrada para organización ID: 1 - Nombre: ED13_ChaconPaola.pdf, Tipo: PDF, Fecha: 2025-06-01 20:55:07.0
+2025-06-01 21:21:00 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Verificando existencia de documento para organización ID: 1
+2025-06-01 21:21:00 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:21:00 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [14 ms]
+2025-06-01 21:21:00 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - ¿Documento existe para organización ID 1?: true
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo documento para organización ID: 1
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:21:01 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Documento encontrado para organización ID: 1
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo información de documento para organización ID: 1
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:21:01 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Información de documento encontrada para organización ID: 1 - Nombre: ED13_ChaconPaola.pdf, Tipo: PDF, Fecha: 2025-06-01 20:55:07.0
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Verificando existencia de documento para organización ID: 1
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:21:01 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [15 ms]
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - ¿Documento existe para organización ID 1?: true
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo documento para organización ID: 1
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:21:01 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Documento encontrado para organización ID: 1
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo información de documento para organización ID: 1
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:21:01 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Información de documento encontrada para organización ID: 1 - Nombre: ED13_ChaconPaola.pdf, Tipo: PDF, Fecha: 2025-06-01 20:55:07.0
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Verificando existencia de documento para organización ID: 1
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:21:01 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [17 ms]
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - ¿Documento existe para organización ID 1?: true
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo documento para organización ID: 1
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:21:01 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Documento encontrado para organización ID: 1
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo información de documento para organización ID: 1
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:21:01 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:21:01 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Información de documento encontrada para organización ID: 1 - Nombre: ED13_ChaconPaola.pdf, Tipo: PDF, Fecha: 2025-06-01 20:55:07.0
+2025-06-01 21:22:56 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Verificando credenciales para: juan.perez@universidad.edu
+2025-06-01 21:22:56 [JavaFX Application Thread] INFO  dataaccess.ConfigLoader - Archivo config.properties cargado correctamente
+2025-06-01 21:22:56 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:22:56 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [220 ms]
+2025-06-01 21:22:56 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:22:56 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-01 21:22:56 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Buscando cuenta por correo: juan.perez@universidad.edu
+2025-06-01 21:22:56 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:22:56 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [17 ms]
+2025-06-01 21:22:56 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:22:56 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Cuenta encontrada para correo juan.perez@universidad.edu
+2025-06-01 21:22:56 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:22:56 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-06-01 21:22:56 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:22:56 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-06-01 21:22:56 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:22:56 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-06-01 21:22:56 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:22:59 [JavaFX Application Thread] INFO  logic.daos.LinkedOrganizationDAO - Obteniendo todas las organizaciones vinculadas
+2025-06-01 21:22:59 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:22:59 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-06-01 21:22:59 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:22:59 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDAO - Se encontraron 1 organizaciones vinculadas
+2025-06-01 21:23:00 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Verificando existencia de documento para organización ID: 1
+2025-06-01 21:23:00 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:23:00 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [20 ms]
+2025-06-01 21:23:00 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:23:00 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - ¿Documento existe para organización ID 1?: true
+2025-06-01 21:23:00 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo documento para organización ID: 1
+2025-06-01 21:23:00 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:23:00 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-06-01 21:23:00 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:23:00 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Documento encontrado para organización ID: 1
+2025-06-01 21:23:00 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo información de documento para organización ID: 1
+2025-06-01 21:23:00 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:23:00 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-06-01 21:23:00 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:23:00 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Información de documento encontrada para organización ID: 1 - Nombre: ED13_ChaconPaola.pdf, Tipo: PDF, Fecha: 2025-06-01 20:55:07.0
+2025-06-01 21:23:31 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Verificando existencia de documento para organización ID: 1
+2025-06-01 21:23:31 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:23:31 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [17 ms]
+2025-06-01 21:23:31 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:23:31 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - ¿Documento existe para organización ID 1?: true
+2025-06-01 21:23:31 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo documento para organización ID: 1
+2025-06-01 21:23:31 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:23:31 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-06-01 21:23:31 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:23:31 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Documento encontrado para organización ID: 1
+2025-06-01 21:23:31 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo información de documento para organización ID: 1
+2025-06-01 21:23:31 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:23:31 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-06-01 21:23:31 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:23:31 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Información de documento encontrada para organización ID: 1 - Nombre: ED13_ChaconPaola.pdf, Tipo: PDF, Fecha: 2025-06-01 20:55:07.0
+2025-06-01 21:52:39 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Verificando credenciales para: juan.perez@universidad.edu
+2025-06-01 21:52:39 [JavaFX Application Thread] INFO  dataaccess.ConfigLoader - Archivo config.properties cargado correctamente
+2025-06-01 21:52:39 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:52:40 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [237 ms]
+2025-06-01 21:52:40 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:52:40 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-01 21:52:40 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Buscando cuenta por correo: juan.perez@universidad.edu
+2025-06-01 21:52:40 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:52:40 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [15 ms]
+2025-06-01 21:52:40 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:52:40 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Cuenta encontrada para correo juan.perez@universidad.edu
+2025-06-01 21:52:40 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:52:40 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-06-01 21:52:40 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:52:40 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-06-01 21:52:40 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:52:40 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [15 ms]
+2025-06-01 21:52:40 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:52:43 [JavaFX Application Thread] INFO  logic.daos.LinkedOrganizationDAO - Obteniendo todas las organizaciones vinculadas
+2025-06-01 21:52:43 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:52:43 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [12 ms]
+2025-06-01 21:52:43 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:52:43 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDAO - Se encontraron 1 organizaciones vinculadas
+2025-06-01 21:52:44 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Verificando existencia de documento para organización ID: 1
+2025-06-01 21:52:44 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:52:44 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [14 ms]
+2025-06-01 21:52:44 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:52:44 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - ¿Documento existe para organización ID 1?: true
+2025-06-01 21:52:44 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo documento para organización ID: 1
+2025-06-01 21:52:44 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:52:44 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-06-01 21:52:44 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:52:44 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Documento encontrado para organización ID: 1
+2025-06-01 21:52:44 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo información de documento para organización ID: 1
+2025-06-01 21:52:44 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:52:44 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-06-01 21:52:44 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:52:44 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Información de documento encontrada para organización ID: 1 - Nombre: ED13_ChaconPaola.pdf, Tipo: PDF, Fecha: 2025-06-01 20:55:07.0
+2025-06-01 21:54:48 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Verificando credenciales para: juan.perez@universidad.edu
+2025-06-01 21:54:48 [JavaFX Application Thread] INFO  dataaccess.ConfigLoader - Archivo config.properties cargado correctamente
+2025-06-01 21:54:48 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:54:49 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [230 ms]
+2025-06-01 21:54:49 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:54:49 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-01 21:54:49 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Buscando cuenta por correo: juan.perez@universidad.edu
+2025-06-01 21:54:49 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:54:49 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [18 ms]
+2025-06-01 21:54:49 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:54:49 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Cuenta encontrada para correo juan.perez@universidad.edu
+2025-06-01 21:54:49 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:54:49 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-06-01 21:54:49 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:54:49 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-06-01 21:54:49 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:54:49 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-06-01 21:54:49 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:54:52 [JavaFX Application Thread] INFO  logic.daos.LinkedOrganizationDAO - Obteniendo todas las organizaciones vinculadas
+2025-06-01 21:54:52 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:54:52 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-06-01 21:54:52 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:54:52 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDAO - Se encontraron 1 organizaciones vinculadas
+2025-06-01 21:54:53 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Verificando existencia de documento para organización ID: 1
+2025-06-01 21:54:53 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:54:53 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [15 ms]
+2025-06-01 21:54:53 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:54:53 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - ¿Documento existe para organización ID 1?: true
+2025-06-01 21:54:53 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo documento para organización ID: 1
+2025-06-01 21:54:53 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:54:53 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-06-01 21:54:53 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:54:53 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Documento encontrado para organización ID: 1
+2025-06-01 21:54:53 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo información de documento para organización ID: 1
+2025-06-01 21:54:53 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 21:54:53 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [6 ms]
+2025-06-01 21:54:53 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 21:54:53 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Información de documento encontrada para organización ID: 1 - Nombre: ED13_ChaconPaola.pdf, Tipo: PDF, Fecha: 2025-06-01 20:55:07.0
+2025-06-01 22:00:08 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Verificando credenciales para: juan.perez@universidad.edu
+2025-06-01 22:00:08 [JavaFX Application Thread] INFO  dataaccess.ConfigLoader - Archivo config.properties cargado correctamente
+2025-06-01 22:00:08 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 22:00:08 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [238 ms]
+2025-06-01 22:00:08 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 22:00:09 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-01 22:00:09 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Buscando cuenta por correo: juan.perez@universidad.edu
+2025-06-01 22:00:09 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 22:00:09 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [16 ms]
+2025-06-01 22:00:09 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 22:00:09 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Cuenta encontrada para correo juan.perez@universidad.edu
+2025-06-01 22:00:09 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 22:00:09 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
+2025-06-01 22:00:09 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 22:00:09 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-06-01 22:00:09 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 22:00:09 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-06-01 22:00:09 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 22:00:11 [JavaFX Application Thread] INFO  logic.daos.LinkedOrganizationDAO - Obteniendo todas las organizaciones vinculadas
+2025-06-01 22:00:11 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 22:00:11 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-06-01 22:00:11 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 22:00:11 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDAO - Se encontraron 1 organizaciones vinculadas
+2025-06-01 22:00:12 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Verificando existencia de documento para organización ID: 1
+2025-06-01 22:00:12 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 22:00:12 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [19 ms]
+2025-06-01 22:00:12 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 22:00:12 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - ¿Documento existe para organización ID 1?: true
+2025-06-01 22:00:12 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo documento para organización ID: 1
+2025-06-01 22:00:12 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 22:00:12 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
+2025-06-01 22:00:12 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 22:00:12 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Documento encontrado para organización ID: 1
+2025-06-01 22:00:12 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo información de documento para organización ID: 1
+2025-06-01 22:00:12 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 22:00:12 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [7 ms]
+2025-06-01 22:00:12 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 22:00:12 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Información de documento encontrada para organización ID: 1 - Nombre: ED13_ChaconPaola.pdf, Tipo: PDF, Fecha: 2025-06-01 20:55:07.0
+2025-06-01 22:06:52 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Verificando credenciales para: juan.perez@universidad.edu
+2025-06-01 22:06:52 [JavaFX Application Thread] INFO  dataaccess.ConfigLoader - Archivo config.properties cargado correctamente
+2025-06-01 22:06:52 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 22:06:52 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [226 ms]
+2025-06-01 22:06:52 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 22:06:53 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-01 22:06:53 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Buscando cuenta por correo: juan.perez@universidad.edu
+2025-06-01 22:06:53 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 22:06:53 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [13 ms]
+2025-06-01 22:06:53 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 22:06:53 [JavaFX Application Thread] DEBUG logic.daos.AccountDAO - Cuenta encontrada para correo juan.perez@universidad.edu
+2025-06-01 22:06:53 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 22:06:53 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [9 ms]
+2025-06-01 22:06:53 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 22:06:53 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-06-01 22:06:53 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 22:06:53 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-06-01 22:06:53 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 22:06:55 [JavaFX Application Thread] INFO  logic.daos.LinkedOrganizationDAO - Obteniendo todas las organizaciones vinculadas
+2025-06-01 22:06:55 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 22:06:55 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
+2025-06-01 22:06:55 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 22:06:55 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDAO - Se encontraron 1 organizaciones vinculadas
+2025-06-01 22:06:56 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Verificando existencia de documento para organización ID: 1
+2025-06-01 22:06:56 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 22:06:56 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [20 ms]
+2025-06-01 22:06:56 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 22:06:56 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - ¿Documento existe para organización ID 1?: true
+2025-06-01 22:06:56 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo documento para organización ID: 1
+2025-06-01 22:06:56 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 22:06:56 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
+2025-06-01 22:06:56 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 22:06:56 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Documento encontrado para organización ID: 1
+2025-06-01 22:06:56 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 22:06:56 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [8 ms]
+2025-06-01 22:06:56 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 22:06:56 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo información de documento para organización ID: 1
+2025-06-01 22:06:56 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Iniciando conexión a DB - URL: jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion
+2025-06-01 22:06:56 [JavaFX Application Thread] INFO  dataaccess.ConnectionDataBase - Conexión exitosa a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion [10 ms]
+2025-06-01 22:06:56 [JavaFX Application Thread] DEBUG dataaccess.ConnectionDataBase - Propiedades de conexión: AutoCommit=true, Isolation=4, ReadOnly=false
+2025-06-01 22:06:56 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Información de documento encontrada para organización ID: 1 - Nombre: ED13_ChaconPaola.pdf, Tipo: PDF, Fecha: 2025-06-01 20:55:07.0

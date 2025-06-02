@@ -23,11 +23,9 @@ public class ConsultProyectsWindow {
     private final Label resultLabel;
 
     public ConsultProyectsWindow() {
-        // Crear tabla
         projectsTable = new TableView<>();
         setupTable();
 
-        // Crear controles de búsqueda
         searchField = new TextField();
         searchField.setPromptText("Buscar por título...");
         searchField.setPrefWidth(250);
@@ -41,15 +39,12 @@ public class ConsultProyectsWindow {
         HBox searchBox = new HBox(10, searchField, searchButton, refreshButton);
         searchBox.setAlignment(Pos.CENTER);
 
-        // Botón de regresar
         backButton = new Button("Regresar");
         backButton.setStyle("-fx-background-color: #f44336; -fx-text-fill: white;");
 
-        // Label para mensajes
         resultLabel = new Label();
         resultLabel.setStyle("-fx-text-fill: red;");
 
-        // Configurar vista principal
         view = new VBox(15);
         view.setPadding(new Insets(15));
         view.setAlignment(Pos.TOP_CENTER);
@@ -129,7 +124,6 @@ public class ConsultProyectsWindow {
                         editBtn.setStyle("-fx-background-color: #FFC107; -fx-text-fill: black;");
                         editBtn.setOnAction(event -> {
                             Proyect proyect = getTableView().getItems().get(getIndex());
-                            // Llamar al controlador principal para manejar la edición
                             if (getTableView().getProperties().get("controller") != null) {
                                 ControllerConsultProyectsWindow controller =
                                         (ControllerConsultProyectsWindow) getTableView().getProperties().get("controller");

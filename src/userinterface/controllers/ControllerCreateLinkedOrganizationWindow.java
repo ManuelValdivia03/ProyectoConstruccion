@@ -5,10 +5,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import logic.daos.LinkedOrganizationDAO;
 import logic.exceptions.RepeatedNameLinkedOrganizationException;
 import logic.exceptions.RepeatedEmailException;
@@ -16,8 +19,10 @@ import logic.exceptions.RepeatedCellPhoneException;
 import logic.logicclasses.LinkedOrganization;
 import userinterface.utilities.Validators;
 import userinterface.windows.CreateLinkedOrganizationWindow;
-
+import userinterface.windows.DocumentUploadWindow;
 import java.sql.SQLException;
+
+
 
 public class ControllerCreateLinkedOrganizationWindow implements EventHandler<ActionEvent> {
     private final CreateLinkedOrganizationWindow view;
@@ -61,7 +66,7 @@ public class ControllerCreateLinkedOrganizationWindow implements EventHandler<Ac
             LinkedOrganization organization = createOrganization(name, phone, email);
 
             if (linkedOrganizationDAO.addLinkedOrganization(organization)) {
-                showSuccessAndReset();
+                showSuccessAndReset(organization);
             } else {
                 showError("No se pudo registrar la organización");
             }
@@ -130,10 +135,11 @@ public class ControllerCreateLinkedOrganizationWindow implements EventHandler<Ac
         return organization;
     }
 
-    private void showSuccessAndReset() {
+    private void showSuccessAndReset(LinkedOrganization organization) {
         Platform.runLater(() -> {
             showCustomSuccessDialog();
             clearFields();
+            openDocumentUploadWindow(organization.getIdLinkedOrganization());
         });
     }
 
@@ -203,5 +209,22 @@ public class ControllerCreateLinkedOrganizationWindow implements EventHandler<Ac
 
     private void clearError() {
         view.getResultLabel().setText("");
+    }
+
+    private void openDocumentUploadWindow(int organizationId) {
+        try {
+            DocumentUploadWindow uploadWindow = new DocumentUploadWindow(organizationId);
+            ControllerDocumentUploadWindow uploadController = new ControllerDocumentUploadWindow(uploadWindow);
+
+            Stage stage = new Stage();
+            stage.setTitle("Subir Documento Justificativo");
+            stage.setScene(new Scene(uploadWindow.getView(), 400, 300));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+
+            view.getView().getScene().getWindow().hide();
+        } catch (Exception e) {
+            showError("Error al abrir ventana de documentos");
+        }
     }
 }
