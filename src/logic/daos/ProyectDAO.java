@@ -10,6 +10,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static dataaccess.ConnectionDataBase.getConnection;
+
 public class ProyectDAO implements IProyectDAO {
     private static final Logger logger = LogManager.getLogger(ProyectDAO.class);
 
@@ -23,7 +25,7 @@ public class ProyectDAO implements IProyectDAO {
 
         String sql = "INSERT INTO proyecto (titulo, descripcion, fecha_inicial, fecha_terminal, estado) VALUES (?, ?, ?, ?, ?)";
 
-        try (Connection connection = ConnectionDataBase.getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, proyect.getTitle());
@@ -63,7 +65,7 @@ public class ProyectDAO implements IProyectDAO {
 
         String sql = "UPDATE proyecto SET titulo = ?, descripcion = ?, fecha_inicial = ?, fecha_terminal = ?, estado = ? WHERE id_proyecto = ?";
 
-        try (Connection connection = ConnectionDataBase.getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, proyect.getTitle());
@@ -96,7 +98,7 @@ public class ProyectDAO implements IProyectDAO {
 
         String sql = "DELETE FROM proyecto WHERE id_proyecto = ?";
 
-        try (Connection connection = ConnectionDataBase.getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, proyect.getIdProyect());
@@ -119,7 +121,7 @@ public class ProyectDAO implements IProyectDAO {
         String sql = "SELECT id_proyecto, titulo, descripcion, fecha_inicial, fecha_terminal, estado FROM proyecto";
         List<Proyect> proyects = new ArrayList<>();
 
-        try (Connection connection = ConnectionDataBase.getConnection();
+        try (Connection connection = getConnection();
              Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
@@ -148,7 +150,7 @@ public class ProyectDAO implements IProyectDAO {
         String sql = "SELECT id_proyecto, titulo, descripcion, fecha_inicial, fecha_terminal, estado FROM proyecto WHERE estado = ?";
         List<Proyect> proyects = new ArrayList<>();
 
-        try (Connection connection = ConnectionDataBase.getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, String.valueOf(status));
@@ -183,7 +185,7 @@ public class ProyectDAO implements IProyectDAO {
 
         String sql = "SELECT id_proyecto, titulo, descripcion, fecha_inicial, fecha_terminal, estado FROM proyecto WHERE id_proyecto = ?";
 
-        try (Connection connection = ConnectionDataBase.getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, id);
@@ -218,7 +220,7 @@ public class ProyectDAO implements IProyectDAO {
 
         String sql = "SELECT id_proyecto, titulo, descripcion, fecha_inicial, fecha_terminal, estado FROM proyecto WHERE titulo = ?";
 
-        try (Connection connection = ConnectionDataBase.getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, title);
@@ -248,7 +250,7 @@ public class ProyectDAO implements IProyectDAO {
 
         String sql = "SELECT COUNT(*) FROM proyecto";
 
-        try (Connection connection = ConnectionDataBase.getConnection();
+        try (Connection connection = getConnection();
              Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
@@ -271,7 +273,7 @@ public class ProyectDAO implements IProyectDAO {
 
         String sql = "SELECT 1 FROM proyecto WHERE titulo = ?";
 
-        try (Connection connection = ConnectionDataBase.getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, title);
@@ -297,7 +299,7 @@ public class ProyectDAO implements IProyectDAO {
 
         String sql = "UPDATE proyecto SET estado = ? WHERE id_proyecto = ?";
 
-        try (Connection connection = ConnectionDataBase.getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, String.valueOf(proyect.getStatus()));
@@ -316,6 +318,50 @@ public class ProyectDAO implements IProyectDAO {
             logger.error("Error al cambiar estado de proyecto ID: {}",
                     proyect.getIdProyect(), e);
             throw e;
+        }
+    }
+
+    public int addProyectAndGetId(Proyect proyect) throws SQLException {
+        String sql = "INSERT INTO proyecto (titulo, descripcion, fecha_inicial, fecha_terminal, estado) " +
+                "VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setString(1, proyect.getTitle());
+            stmt.setString(2, proyect.getDescription());
+            stmt.setTimestamp(3, proyect.getDateStart());
+            stmt.setTimestamp(4, proyect.getDateEnd());
+            stmt.setString(5, String.valueOf(proyect.getStatus()));
+
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Creating project failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                } else {
+                    throw new SQLException("Creating project failed, no ID obtained.");
+                }
+            }
+        }
+    }
+
+    public boolean linkProjectToRepresentative(int projectId, int representativeId, int organizationId) throws SQLException {
+        String sql = "UPDATE proyecto SET id_representante = ?, id_organizacion = ? WHERE id_proyecto = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, representativeId);
+            stmt.setInt(2, organizationId);
+            stmt.setInt(3, projectId);
+
+            int affectedRows = stmt.executeUpdate();
+            return affectedRows > 0;
         }
     }
 }

@@ -27,6 +27,8 @@ public class CoordinatorMenuWindow {
     private Button enableEvaluationsButton;
     private Button registerOrganizationButton;
     private Button consultOrganizationButton;
+    private Button registerRepresentativeButton;
+    private Button consultRepresentativesButton; // <-- Nuevo botón
     private Button generateStadisticsButton;
 
     private final String BLUE_DARK_COLOR = "#0A1F3F";
@@ -159,11 +161,15 @@ public class CoordinatorMenuWindow {
 
         registerOrganizationButton = createStyledButton("Registrar Organización");
         consultOrganizationButton = createStyledButton("Consultar Organizaciones");
+        registerRepresentativeButton = createStyledButton("Registrar Representante");
+        consultRepresentativesButton = createStyledButton("Consultar Representantes"); // <-- Nuevo botón
 
         content.getChildren().addAll(
                 createSectionTitle("Organizaciones Vinculadas"),
                 registerOrganizationButton,
-                consultOrganizationButton
+                consultOrganizationButton,
+                registerRepresentativeButton,
+                consultRepresentativesButton // <-- Agregado al layout
         );
 
         return content;
@@ -263,6 +269,14 @@ public class CoordinatorMenuWindow {
 
     public Button getConsultOrganizationButton() {
         return consultOrganizationButton;
+    }
+
+    public Button getRegisterRepresentativeButton() {
+        return registerRepresentativeButton;
+    }
+
+    public Button getConsultRepresentativesButton() { // <-- Getter para el nuevo botón
+        return consultRepresentativesButton;
     }
 
     public Button getGenerateStadisticsButton() {

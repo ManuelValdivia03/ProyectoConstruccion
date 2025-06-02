@@ -5,7 +5,7 @@ public class Representative {
     private String fullName;
     private String email;
     private String cellPhone;
-    private LinkedOrganization linkedOrganization; // Relación con organización vinculada
+    private LinkedOrganization linkedOrganization;
 
     public Representative(int idRepresentative, String fullName, String email,
                           String cellPhone, LinkedOrganization linkedOrganization) {

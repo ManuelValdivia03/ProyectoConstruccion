@@ -10,6 +10,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static dataaccess.ConnectionDataBase.getConnection;
+
 public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
     private static final Logger logger = LogManager.getLogger(LinkedOrganizationDAO.class);
 
@@ -23,7 +25,7 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
 
         String sql = "INSERT INTO organizacion_vinculada (nombre_empresa, telefono, correo_empresarial, estado) VALUES (?, ?, ?, ?)";
 
-        try (Connection connection = ConnectionDataBase.getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, linkedOrganization.getNameLinkedOrganization());
@@ -62,7 +64,7 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
 
         String sql = "DELETE FROM organizacion_vinculada WHERE id_empresa = ?";
 
-        try (Connection connection = ConnectionDataBase.getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, linkedOrganization.getIdLinkedOrganization());
@@ -89,7 +91,7 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
 
         String sql = "UPDATE organizacion_vinculada SET nombre_empresa = ?, telefono = ?, correo_empresarial = ?, estado = ? WHERE id_empresa = ?";
 
-        try (Connection connection = ConnectionDataBase.getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, linkedOrganization.getNameLinkedOrganization());
@@ -117,7 +119,7 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
         String sql = "SELECT id_empresa, nombre_empresa, telefono, correo_empresarial, estado FROM organizacion_vinculada";
         List<LinkedOrganization> organizations = new ArrayList<>();
 
-        try (Connection connection = ConnectionDataBase.getConnection();
+        try (Connection connection = getConnection();
              Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
@@ -149,7 +151,7 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
 
         String sql = "SELECT id_empresa, nombre_empresa, telefono, correo_empresarial, estado FROM organizacion_vinculada WHERE nombre_empresa = ?";
 
-        try (Connection connection = ConnectionDataBase.getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, title);
@@ -183,7 +185,7 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
 
         String sql = "SELECT id_empresa, nombre_empresa, telefono, correo_empresarial, estado FROM organizacion_vinculada WHERE id_empresa = ?";
 
-        try (Connection connection = ConnectionDataBase.getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, id);
@@ -217,7 +219,7 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
 
         String sql = "SELECT 1 FROM organizacion_vinculada WHERE nombre_empresa = ?";
 
-        try (Connection connection = ConnectionDataBase.getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, title);
@@ -237,7 +239,7 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
 
         String sql = "SELECT COUNT(*) FROM organizacion_vinculada";
 
-        try (Connection connection = ConnectionDataBase.getConnection();
+        try (Connection connection = getConnection();
              Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
@@ -258,7 +260,7 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
 
         String sql = "SELECT 1 FROM organizacion_vinculada WHERE telefono = ?";
 
-        try (Connection connection = ConnectionDataBase.getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, phone);
@@ -279,7 +281,7 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
 
         String sql = "SELECT 1 FROM organizacion_vinculada WHERE correo_empresarial = ?";
 
-        try (Connection connection = ConnectionDataBase.getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, email);
@@ -289,6 +291,23 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
         } catch (SQLException e) {
             logger.error("Error al verificar existencia de email: {}", email, e);
             throw e;
+        }
+    }
+
+    public int getRepresentativeId(int organizationId) throws SQLException {
+        String sql = "SELECT id_representante FROM organizacionvinculada WHERE id_organizacion = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, organizationId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("id_representante");
+                }
+                return -1;
+            }
         }
     }
 }

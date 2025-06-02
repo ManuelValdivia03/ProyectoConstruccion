@@ -54,6 +54,68 @@ public class RepresentativeDAO implements IRepresentativeDAO {
         }
     }
 
+    public boolean addRepresentativeWithoutOrganization(Representative representative) throws SQLException {
+        if (representative == null || representative.getFullName() == null) {
+            logger.warn("Intento de agregar representante con datos incompletos o nulos");
+            throw new SQLException("Datos del representante incompletos");
+        }
+
+        logger.debug("Agregando nuevo representante (sin organización): {}", representative.getFullName());
+
+        String sql = "INSERT INTO representante (nombre_completo, correo_e, telefono, Id_empresa) VALUES (?, ?, ?, NULL)";
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            ps.setString(1, representative.getFullName());
+            ps.setString(2, representative.getEmail());
+            ps.setString(3, representative.getCellPhone());
+
+            int affectedRows = ps.executeUpdate();
+
+            if (affectedRows > 0) {
+                try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        int generatedId = generatedKeys.getInt(1);
+                        representative.setIdRepresentative(generatedId);
+                        logger.info("Representante agregado exitosamente - ID: {}, Nombre: {}",
+                                generatedId, representative.getFullName());
+                        return true;
+                    }
+                }
+            }
+            logger.warn("No se pudo agregar el representante: {}", representative.getFullName());
+            return false;
+        } catch (SQLException e) {
+            logger.error("Error al agregar representante: {}", representative.getFullName(), e);
+            throw e;
+        }
+    }
+
+    public boolean linkRepresentativeToOrganization(int representativeId, int organizationId) throws SQLException {
+        logger.debug("Vinculando representante ID {} a organización ID {}", representativeId, organizationId);
+
+        String sql = "UPDATE representante SET Id_empresa = ? WHERE id_representante = ?";
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1, organizationId);
+            ps.setInt(2, representativeId);
+
+            boolean result = ps.executeUpdate() > 0;
+            if (result) {
+                logger.info("Representante ID {} vinculado a organización ID {}", representativeId, organizationId);
+            } else {
+                logger.warn("No se pudo vincular representante ID {} a organización ID {}", representativeId, organizationId);
+            }
+            return result;
+        } catch (SQLException e) {
+            logger.error("Error al vincular representante", e);
+            throw e;
+        }
+    }
+
     public boolean deleteRepresentative(Representative representative) throws SQLException {
         if (representative == null) {
             logger.warn("Intento de eliminar representante nulo");
@@ -296,5 +358,41 @@ public class RepresentativeDAO implements IRepresentativeDAO {
                 rs.getString("telefono"),
                 org
         );
+    }
+
+    public List<Representative> getAllRepresentativesWithOrganizationName() throws SQLException {
+        logger.info("Obteniendo todos los representantes con nombre de organización");
+        return getAllRepresentatives(); // You can reuse your existing method
+    }
+
+    public Representative getRepresentativeByNameWithOrganization(String name) throws SQLException {
+        if (name == null || name.isEmpty()) {
+            logger.warn("Intento de buscar representante con nombre nulo o vacío");
+            return null;
+        }
+
+        logger.debug("Buscando representante por nombre: {}", name);
+
+        String sql = "SELECT r.*, o.nombre_empresa, o.telefono as org_telefono, o.correo_empresarial, o.estado " +
+                "FROM representante r " +
+                "LEFT JOIN organizacion_vinculada o ON r.Id_empresa = o.id_empresa " +
+                "WHERE r.nombre_completo = ?";
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setString(1, name);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    logger.debug("Representante encontrado con nombre: {}", name);
+                    return mapRepresentativeFromResultSet(rs);
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Error al buscar representante por nombre: {}", name, e);
+            throw e;
+        }
+        logger.info("No se encontró representante con nombre: {}", name);
+        return null;
     }
 }

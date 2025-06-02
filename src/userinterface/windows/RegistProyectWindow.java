@@ -3,17 +3,20 @@ package userinterface.windows;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class RegistProyectWindow {
     private final VBox view;
     private final TextField titleTextField;
     private final TextField descriptionTextField;
-    private final TextField dateStartTextField;
-    private final TextField dateEndTextField;
+    private final DatePicker dateStartPicker;
+    private final DatePicker dateEndPicker;
     private final Button registerButton;
     private final Button cancelButton;
     private final Label resultLabel;
@@ -24,10 +27,52 @@ public class RegistProyectWindow {
 
         titleTextField = new TextField();
         descriptionTextField = new TextField();
-        dateStartTextField = new TextField();
-        dateStartTextField.setPromptText("YYYY-MM-DD");
-        dateEndTextField = new TextField();
-        dateEndTextField.setPromptText("YYYY-MM-DD");
+
+        dateStartPicker = new DatePicker();
+        dateStartPicker.setPromptText("Seleccione fecha");
+        dateEndPicker = new DatePicker();
+        dateEndPicker.setPromptText("Seleccione fecha");
+
+        // Set default format and initial values
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        dateStartPicker.setConverter(new javafx.util.StringConverter<LocalDate>() {
+            @Override
+            public String toString(LocalDate date) {
+                if (date != null) {
+                    return formatter.format(date);
+                } else {
+                    return "";
+                }
+            }
+            @Override
+            public LocalDate fromString(String string) {
+                if (string != null && !string.isEmpty()) {
+                    return LocalDate.parse(string, formatter);
+                } else {
+                    return null;
+                }
+            }
+        });
+
+        dateEndPicker.setConverter(new javafx.util.StringConverter<LocalDate>() {
+            @Override
+            public String toString(LocalDate date) {
+                if (date != null) {
+                    return formatter.format(date);
+                } else {
+                    return "";
+                }
+            }
+            @Override
+            public LocalDate fromString(String string) {
+                if (string != null && !string.isEmpty()) {
+                    return LocalDate.parse(string, formatter);
+                } else {
+                    return null;
+                }
+            }
+        });
+
         registerButton = new Button("Registrar Proyecto");
         registerButton.setStyle("-fx-background-color: #0A1F3F; -fx-text-fill: white;");
         cancelButton = new Button("Cancelar");
@@ -47,9 +92,9 @@ public class RegistProyectWindow {
         grid.add(new Label("Descripción:"), 0, 1);
         grid.add(descriptionTextField, 1, 1);
         grid.add(new Label("Fecha de Inicio:"), 0, 2);
-        grid.add(dateStartTextField, 1, 2);
+        grid.add(dateStartPicker, 1, 2);
         grid.add(new Label("Fecha de Fin:"), 0, 3);
-        grid.add(dateEndTextField, 1, 3);
+        grid.add(dateEndPicker, 1, 3);
 
         view = new VBox(15);
         view.setPadding(new Insets(15));
@@ -69,12 +114,12 @@ public class RegistProyectWindow {
         return descriptionTextField;
     }
 
-    public TextField getDateStartTextField() {
-        return dateStartTextField;
+    public DatePicker getDateStartPicker() {
+        return dateStartPicker;
     }
 
-    public TextField getDateEndTextField() {
-        return dateEndTextField;
+    public DatePicker getDateEndPicker() {
+        return dateEndPicker;
     }
 
     public Button getRegisterButton() {

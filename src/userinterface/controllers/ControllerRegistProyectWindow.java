@@ -5,35 +5,42 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ButtonBar;
+import javafx.scene.control.*;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import logic.daos.LinkedOrganizationDAO;
 import logic.daos.ProyectDAO;
 import logic.exceptions.RepeatedProyectException;
+import logic.logicclasses.LinkedOrganization;
 import logic.logicclasses.Proyect;
 import userinterface.utilities.Validators;
+import userinterface.windows.ConsultLinkedOrganizationsWindow;
 import userinterface.windows.RegistProyectWindow;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.Optional;
 
 public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> {
     private final RegistProyectWindow view;
     private final ProyectDAO proyectDAO;
+    private final LinkedOrganizationDAO organizationDAO;
     private final Validators validators;
+    private Stage currentStage;
+    private int createdProjectId;
 
-    public ControllerRegistProyectWindow(RegistProyectWindow registProyectWindow) {
+    public ControllerRegistProyectWindow(RegistProyectWindow registProyectWindow, Stage stage) {
         this.view = registProyectWindow;
         this.proyectDAO = new ProyectDAO();
+        this.organizationDAO = new LinkedOrganizationDAO();
         this.validators = new Validators();
+        this.currentStage = stage;
         setupEventHandlers();
     }
 
@@ -60,8 +67,12 @@ public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> 
 
             String title = view.getTitleTextField().getText().trim();
             String description = view.getDescriptionTextField().getText().trim();
-            Timestamp dateStart = parseDateOnly(view.getDateStartTextField().getText().trim());
-            Timestamp dateEnd = parseDateOnly(view.getDateEndTextField().getText().trim());
+
+            LocalDate startLocalDate = view.getDateStartPicker().getValue();
+            LocalDate endLocalDate = view.getDateEndPicker().getValue();
+
+            Timestamp dateStart = Timestamp.valueOf(startLocalDate.atStartOfDay());
+            Timestamp dateEnd = endLocalDate != null ? Timestamp.valueOf(endLocalDate.atStartOfDay()) : null;
 
             if (!validateDates(dateStart, dateEnd)) {
                 return;
@@ -73,8 +84,9 @@ public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> 
 
             Proyect proyect = new Proyect(0, title, description, dateStart, dateEnd, 'A');
 
-            if (proyectDAO.addProyect(proyect)) {
-                showSuccessAndReset();
+            createdProjectId = proyectDAO.addProyectAndGetId(proyect);
+            if (createdProjectId > 0) {
+                showSuccessAndOpenOrganizationSelector();
             } else {
                 showError("No se pudo registrar el proyecto");
             }
@@ -82,8 +94,6 @@ public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> 
         } catch (RepeatedProyectException e) {
             showError(e.getMessage());
             highlightField(view.getTitleTextField());
-        } catch (DateTimeParseException e) {
-            showError("Formato de fecha inválido. Use YYYY-MM-DD HH:MM:SS");
         } catch (SQLException e) {
             showError("Error de base de datos: " + e.getMessage());
         } catch (Exception e) {
@@ -106,19 +116,9 @@ public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> 
             isValid = false;
         }
 
-        try {
-            parseDateOnly(view.getDateStartTextField().getText());
-        } catch (DateTimeParseException e) {
-            showError("Fecha de inicio inválida. Formatos válidos: YYYY-MM-DD, DD/MM/YYYY");
-            highlightField(view.getDateStartTextField());
-            isValid = false;
-        }
-
-        try {
-            parseDateOnly(view.getDateEndTextField().getText());
-        } catch (DateTimeParseException e) {
-            showError("Fecha de fin inválida. Formatos válidos: YYYY-MM-DD, DD/MM/YYYY");
-            highlightField(view.getDateEndTextField());
+        if (view.getDateStartPicker().getValue() == null) {
+            showError("La fecha de inicio es obligatoria");
+            view.getDateStartPicker().setStyle("-fx-border-color: #ff0000; -fx-border-width: 1px;");
             isValid = false;
         }
 
@@ -126,106 +126,131 @@ public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> 
     }
 
     private boolean validateDates(Timestamp start, Timestamp end) {
-        if (start.after(end)) {
+        if (end != null && start.after(end)) {
             showError("La fecha de inicio debe ser anterior a la fecha de fin");
-            highlightField(view.getDateStartTextField());
-            highlightField(view.getDateEndTextField());
+            view.getDateStartPicker().setStyle("-fx-border-color: #ff0000; -fx-border-width: 1px;");
+            view.getDateEndPicker().setStyle("-fx-border-color: #ff0000; -fx-border-width: 1px;");
             return false;
         }
         return true;
     }
 
-    private Timestamp parseDateOnly(String dateString) throws DateTimeParseException {
-        dateString = dateString.trim();
-        if (dateString.isEmpty()) {
-            throw new DateTimeParseException("Fecha vacía", dateString, 0);
-        }
-
-        if (dateString.contains(" ")) {
-            dateString = dateString.split(" ")[0];
-        }
-
-        DateTimeFormatter[] supportedFormats = {
-                DateTimeFormatter.ofPattern("yyyy-MM-dd"),
-                DateTimeFormatter.ofPattern("dd/MM/yyyy"),
-                DateTimeFormatter.ofPattern("MM/dd/yyyy")
-        };
-
-        for (DateTimeFormatter formatter : supportedFormats) {
-            try {
-                LocalDate date = LocalDate.parse(dateString, formatter);
-                return Timestamp.valueOf(date.atStartOfDay());
-            } catch (DateTimeParseException ignored) {
-                continue;
-            }
-        }
-
-        throw new DateTimeParseException("Formato no válido. Use YYYY-MM-DD o DD/MM/YYYY", dateString, 0);
-    }
-
-    private void showSuccessAndReset() {
+    private void showSuccessAndOpenOrganizationSelector() {
         Platform.runLater(() -> {
             showCustomSuccessDialog();
-            clearFields();
+            openOrganizationSelectionWindow();
         });
     }
 
+    private void openOrganizationSelectionWindow() {
+        ConsultLinkedOrganizationsWindow orgWindow = new ConsultLinkedOrganizationsWindow();
+        Stage orgStage = new Stage();
+
+        // Modify the controller to handle project linking
+        new ControllerConsultLinkedOrganizationsWindow(orgWindow, orgStage) {
+            public TableColumn<LinkedOrganization, Void> createManageButtonColumn(EventHandler<ActionEvent> manageAction) {
+                TableColumn<LinkedOrganization, Void> linkCol = new TableColumn<>("Vincular");
+                linkCol.setCellFactory(param -> new TableCell<>() {
+                    private final Button btn = new Button("Seleccionar");
+                    {
+                        btn.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
+                        btn.setOnAction(event -> {
+                            LinkedOrganization org = getTableView().getItems().get(getIndex());
+                            if (org != null) {
+                                linkProjectToOrganization(org);
+                            }
+                        });
+                    }
+
+                    @Override
+                    protected void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        setGraphic(empty ? null : btn);
+                    }
+                });
+                return linkCol;
+            }
+        };
+
+        javafx.scene.Scene scene = new javafx.scene.Scene(orgWindow.getView(), 800, 600);
+        orgStage.setScene(scene);
+        orgStage.setTitle("Seleccionar Organización para el Proyecto");
+        orgStage.show();
+    }
+
+    private void linkProjectToOrganization(LinkedOrganization org) {
+        try {
+            int representativeId = organizationDAO.getRepresentativeId(org.getIdLinkedOrganization());
+            if (representativeId > 0) {
+                boolean success = proyectDAO.linkProjectToRepresentative(createdProjectId, representativeId, org.getIdLinkedOrganization());
+                if (success) {
+                    showFinalSuccessDialog();
+                    currentStage.close();
+                } else {
+                    showError("No se pudo vincular el proyecto con la organización");
+                }
+            } else {
+                showError("La organización seleccionada no tiene un representante válido");
+            }
+        } catch (SQLException e) {
+            showError("Error al vincular proyecto: " + e.getMessage());
+        }
+    }
+
     private void showCustomSuccessDialog() {
-        Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setTitle("Operación exitosa");
-
-        ButtonType okButton = new ButtonType("Aceptar", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().add(okButton);
-
-        VBox content = new VBox(10);
-        content.setAlignment(Pos.CENTER);
-        content.setPadding(new Insets(20));
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Operación exitosa");
+        alert.setHeaderText(null);
+        alert.setContentText("¡Proyecto registrado correctamente!\nAhora seleccione una organización para vincular.");
 
         try {
             ImageView icon = new ImageView(new Image(getClass().getResourceAsStream("/images/exito.png")));
             icon.setFitHeight(50);
             icon.setFitWidth(50);
-            content.getChildren().add(icon);
+            alert.setGraphic(icon);
         } catch (Exception e) {
             System.err.println("No se pudo cargar el icono: " + e.getMessage());
         }
 
-        Label message = new Label("¡Proyecto registrado correctamente!");
-        message.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
-        content.getChildren().add(message);
+        alert.showAndWait();
+    }
 
-        dialog.getDialogPane().setContent(content);
-        dialog.getDialogPane().setStyle(
-                "-fx-background-color: #f8f8f8;" +
-                        "-fx-border-color: #4CAF50;" +
-                        "-fx-border-width: 2px;"
-        );
+    private void showFinalSuccessDialog() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Proceso completado");
+        alert.setHeaderText(null);
+        alert.setContentText("¡Proyecto registrado y vinculado exitosamente!");
 
-        dialog.showAndWait().ifPresent(response -> {
-            if (response == okButton) {
-                handleCancel();
-            }
-        });
+        try {
+            ImageView icon = new ImageView(new Image(getClass().getResourceAsStream("/images/exito.png")));
+            icon.setFitHeight(50);
+            icon.setFitWidth(50);
+            alert.setGraphic(icon);
+        } catch (Exception e) {
+            System.err.println("No se pudo cargar el icono: " + e.getMessage());
+        }
+
+        alert.showAndWait();
     }
 
     private void handleCancel() {
         clearFields();
-        view.getView().getScene().getWindow().hide();
+        currentStage.close();
     }
 
     private void clearFields() {
         view.getTitleTextField().clear();
         view.getDescriptionTextField().clear();
-        view.getDateStartTextField().clear();
-        view.getDateEndTextField().clear();
+        view.getDateStartPicker().setValue(null);
+        view.getDateEndPicker().setValue(null);
         clearError();
     }
 
     private void resetFieldStyles() {
         view.getTitleTextField().setStyle("");
         view.getDescriptionTextField().setStyle("");
-        view.getDateStartTextField().setStyle("");
-        view.getDateEndTextField().setStyle("");
+        view.getDateStartPicker().setStyle("");
+        view.getDateEndPicker().setStyle("");
     }
 
     private void highlightField(TextField field) {

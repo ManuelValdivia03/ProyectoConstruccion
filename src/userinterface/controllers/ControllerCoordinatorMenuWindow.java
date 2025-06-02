@@ -38,6 +38,8 @@ public class ControllerCoordinatorMenuWindow implements EventHandler<ActionEvent
         view.getEnableEvaluationsButton().setOnAction(e -> {});
         view.getRegisterOrganizationButton().setOnAction(e -> showRegisterOrganizationWindow());
         view.getConsultOrganizationButton().setOnAction(e -> showConsultOrganizationWindow());
+        view.getRegisterRepresentativeButton().setOnAction(e -> showRegisterRepresentativeWindow());
+        view.getConsultRepresentativesButton().setOnAction(e -> showConsultRepresentativesWindow()); // <-- Nuevo handler
         view.getGenerateStadisticsButton().setOnAction(e -> {});
     }
 
@@ -64,7 +66,7 @@ public class ControllerCoordinatorMenuWindow implements EventHandler<ActionEvent
     private void showRegisterProjectWindow() {
         Stage registerStage = new Stage();
         RegistProyectWindow registerWindow = new RegistProyectWindow();
-        new ControllerRegistProyectWindow(registerWindow);
+        new ControllerRegistProyectWindow(registerWindow, registerStage);
 
         registerStage.setScene(new Scene(registerWindow.getView(), 500, 400));
         registerStage.setTitle("Registrar proyecto");
@@ -98,6 +100,26 @@ public class ControllerCoordinatorMenuWindow implements EventHandler<ActionEvent
 
         consultStage.setScene(new Scene(consultWindow.getView(), 800, 600));
         consultStage.setTitle("Consulta de Organizaciones");
+        consultStage.show();
+    }
+
+    private void showRegisterRepresentativeWindow() {
+        Stage registerStage = new Stage();
+        userinterface.windows.RegistRepresentativeWindow registerWindow = new userinterface.windows.RegistRepresentativeWindow();
+        new ControllerRegistRepresentativeWindow(registerWindow, registerStage);
+
+        registerStage.setScene(new Scene(registerWindow.getView(), 500, 400));
+        registerStage.setTitle("Registrar Representante");
+        registerStage.show();
+    }
+
+    private void showConsultRepresentativesWindow() {
+        Stage consultStage = new Stage();
+        userinterface.windows.ConsultRepresentativesWindow consultWindow = new userinterface.windows.ConsultRepresentativesWindow();
+        new userinterface.controllers.ControllerConsultRepresentativesWindow(consultWindow, consultStage);
+
+        consultStage.setScene(new javafx.scene.Scene(consultWindow.getView(), 900, 500));
+        consultStage.setTitle("Consultar Representantes");
         consultStage.show();
     }
 
