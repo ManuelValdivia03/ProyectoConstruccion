@@ -11,10 +11,12 @@ public class ControllerStudentMenuWindow implements EventHandler<ActionEvent> {
     private final StudentMenuWindow view;
     private final Stage stage;
     private final Runnable onLogout;
+    private final Student student;
 
     public ControllerStudentMenuWindow(Stage stage, Student student, Runnable onLogout) {
         this.stage = stage;
         this.onLogout = onLogout;
+        this.student = student;
         this.view = new StudentMenuWindow(student);
 
         setupEventHandlers();
@@ -26,6 +28,8 @@ public class ControllerStudentMenuWindow implements EventHandler<ActionEvent> {
             onLogout.run();
             stage.close();
         });
+
+        view.getProfileButton().setOnAction(e -> showAccountUpdateWindow());
 
         view.getRequestProjectButton().setOnAction(e -> showProjectRequestWindow());
         view.getViewAssignedProjectButton().setOnAction(e -> showAssignedProjectWindow());
@@ -51,6 +55,22 @@ public class ControllerStudentMenuWindow implements EventHandler<ActionEvent> {
     }
 
     private void showEvaluationsWindow() {
+    }
+
+    private void showAccountUpdateWindow() {
+        EditProfileStudentWindow editProfileStudent = new EditProfileStudentWindow();
+        Stage accountStage = new Stage();
+        new ControllerEditProfileStudentWindow(
+                editProfileStudent,
+                student,
+                accountStage,
+                () -> {
+                }
+        );
+
+        accountStage.setScene(new Scene(editProfileStudent.getView(), 600, 400));
+        accountStage.setTitle("Actualizar Cuenta");
+        accountStage.show();
     }
 
     private void initializeStage() {

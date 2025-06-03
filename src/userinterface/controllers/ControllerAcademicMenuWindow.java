@@ -65,7 +65,7 @@ private void showRegisterFinalGradeWindow() {
         ConsultStudentsWindow consultStudentsWindow = new ConsultStudentsWindow();
         new ControllerConsultStudentsWindow(consultStudentsWindow, consultStage);
 
-        consultStage.setScene(new Scene(consultStudentsWindow.getView(), 500, 400));
+        consultStage.setScene(new Scene(consultStudentsWindow.getView(), 800, 600));
         consultStage.setTitle("Registrar Nota Final");
         consultStage.show();
     }

@@ -16,6 +16,7 @@ public class StudentMenuWindow {
     private final BorderPane root;
     private final TabPane tabPane;
     private Button logoutButton;
+    private Button profileButton;
     private Button requestProjectButton;
     private Button viewAssignedProjectButton;
     private Button viewScheduleButton;
@@ -62,6 +63,17 @@ public class StudentMenuWindow {
         lblName.setFont(Font.font("Arial", FontWeight.BOLD, 18));
         lblName.setTextFill(Color.web(WHITE_COLOR));
 
+        Image profileImage = new Image(getClass().getResource("/images/profile.png").toExternalForm());
+        ImageView profileView = new ImageView(profileImage);
+        profileView.setFitWidth(30);
+        profileView.setPreserveRatio(true);
+        profileButton = new Button();
+        profileButton.setGraphic(profileView);
+        profileButton.setStyle("-fx-background-color: transparent;");
+
+        profileButton.setOnMouseEntered(e -> profileButton.setStyle("-fx-background-color: rgba(255,255,255,0.1);"));
+        profileButton.setOnMouseExited(e -> profileButton.setStyle("-fx-background-color: transparent;"));
+
         logoutButton = new Button("Cerrar Sesión");
         logoutButton.setStyle("-fx-background-color: RED; " +
                 "-fx-text-fill: " + WHITE_COLOR + "; " +
@@ -84,7 +96,7 @@ public class StudentMenuWindow {
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        HBox header = new HBox(20, logoView, lblName, spacer, logoutButton);
+        HBox header = new HBox(20, logoView, lblName, spacer, profileButton,logoutButton);
         header.setAlignment(Pos.CENTER_LEFT);
         header.setStyle("-fx-background-color: " + BLUE_DARK_COLOR + "; " +
                 "-fx-padding: 15 20; " +
@@ -213,5 +225,9 @@ public class StudentMenuWindow {
 
     public Button getViewEvaluationsButton() {
         return viewEvaluationsButton;
+    }
+
+    public Button getProfileButton() {
+        return profileButton;
     }
 }

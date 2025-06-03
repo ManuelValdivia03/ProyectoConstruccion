@@ -20,7 +20,6 @@ public class ConsultStudentsWindow {
     private final TextField searchField;
     private final Button searchButton;
     private final Button clearButton;
-    private final Button refreshButton;
     private final Button backButton;
 
     public ConsultStudentsWindow() {
@@ -28,7 +27,6 @@ public class ConsultStudentsWindow {
         studentTable.setStyle("-fx-font-size: 14px;");
         studentTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        // Columnas de la tabla
         TableColumn<Student, String> enrollmentCol = createStyledColumn("Matrícula", "enrollment");
         TableColumn<Student, String> nameCol = createStyledColumn("Nombre", "fullName");
         TableColumn<Student, String> phoneCol = createStyledColumn("Teléfono", "cellPhone");
@@ -61,13 +59,10 @@ public class ConsultStudentsWindow {
         HBox searchBox = new HBox(5, searchField, searchButton, clearButton);
         searchBox.setPadding(new Insets(0, 0, 10, 0));
 
-        refreshButton = new Button("Actualizar Lista");
-        refreshButton.setStyle("-fx-background-color: #4a7bed; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 16;");
-
         backButton = new Button("Regresar");
         backButton.setStyle("-fx-background-color: #ff4a4a; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 16;");
 
-        HBox buttonBox = new HBox(15, refreshButton, backButton);
+        HBox buttonBox = new HBox(15, backButton);
         buttonBox.setPadding(new Insets(15, 0, 0, 0));
 
         view = new VBox(15);
@@ -147,10 +142,6 @@ public class ConsultStudentsWindow {
 
     public Button getClearButton() {
         return clearButton;
-    }
-
-    public Button getRefreshButton() {
-        return refreshButton;
     }
 
     public Button getBackButton() {

@@ -30,7 +30,6 @@ public class ControllerConsultStudentsWindow {
         this.validators = new Validators();
         this.allStudents = FXCollections.observableArrayList();
 
-        // Agregar columnas de botones
         TableColumn<Student, Void> manageCol = view.createManageButtonColumn(this::handleManageStudent);
         TableColumn<Student, Void> assignGradeCol = view.createAssignGradeButtonColumn(this::handleAssignGrade);
         view.getStudentTable().getColumns().addAll(manageCol, assignGradeCol);
@@ -43,7 +42,6 @@ public class ControllerConsultStudentsWindow {
         view.getSearchButton().setOnAction(e -> searchStudentByEnrollment());
         view.getSearchField().setOnAction(e -> searchStudentByEnrollment());
         view.getClearButton().setOnAction(e -> clearSearch());
-        view.getRefreshButton().setOnAction(e -> loadStudentData());
         view.getBackButton().setOnAction(e -> currentStage.close());
     }
 
