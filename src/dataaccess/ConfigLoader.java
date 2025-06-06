@@ -20,12 +20,10 @@ public class ConfigLoader {
                 .getResourceAsStream("config.properties")) {
 
             if (input == null) {
-                logger.fatal("No se encontró el archivo config.properties en el classpath");
                 throw new RuntimeException("No se encontró config.properties");
             }
 
             properties.load(input);
-            logger.info("Archivo config.properties cargado correctamente");
 
         } catch (IOException e) {
             logger.error("Error al cargar config.properties", e);

@@ -3,29 +3,23 @@ package userinterface.controllers;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import logic.daos.LinkedOrganizationDAO;
 import logic.daos.ProyectDAO;
 import logic.exceptions.RepeatedProyectException;
 import logic.logicclasses.LinkedOrganization;
 import logic.logicclasses.Proyect;
+import logic.logicclasses.Representative;
 import userinterface.utilities.Validators;
-import userinterface.windows.ConsultLinkedOrganizationsWindow;
+import userinterface.windows.ConsultRepresentativesWindow;
 import userinterface.windows.RegistProyectWindow;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.Optional;
 
 public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> {
     private final RegistProyectWindow view;
@@ -86,7 +80,7 @@ public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> 
 
             createdProjectId = proyectDAO.addProyectAndGetId(proyect);
             if (createdProjectId > 0) {
-                showSuccessAndOpenOrganizationSelector();
+                showSuccessAndOpenReoresentativenSelector();
             } else {
                 showError("No se pudo registrar el proyecto");
             }
@@ -135,29 +129,28 @@ public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> 
         return true;
     }
 
-    private void showSuccessAndOpenOrganizationSelector() {
+    private void showSuccessAndOpenReoresentativenSelector() {
         Platform.runLater(() -> {
             showCustomSuccessDialog();
-            openOrganizationSelectionWindow();
+            openRepresentativesSelectionWindow();
         });
     }
 
-    private void openOrganizationSelectionWindow() {
-        ConsultLinkedOrganizationsWindow orgWindow = new ConsultLinkedOrganizationsWindow();
-        Stage orgStage = new Stage();
+    private void openRepresentativesSelectionWindow() {
+        ConsultRepresentativesWindow repsWindow = new ConsultRepresentativesWindow();
+        Stage repsStage = new Stage();
 
-        // Modify the controller to handle project linking
-        new ControllerConsultLinkedOrganizationsWindow(orgWindow, orgStage) {
-            public TableColumn<LinkedOrganization, Void> createManageButtonColumn(EventHandler<ActionEvent> manageAction) {
-                TableColumn<LinkedOrganization, Void> linkCol = new TableColumn<>("Vincular");
-                linkCol.setCellFactory(param -> new TableCell<>() {
-                    private final Button btn = new Button("Seleccionar");
+        new ControllerConsultRepresentativesWindow(repsWindow, repsStage) {
+            public TableColumn<Representative, Void> createAssignButtonColumn(EventHandler<ActionEvent> assignAction) {
+                TableColumn<Representative, Void> assignCol = new TableColumn<>("Asignar");
+                assignCol.setCellFactory(param -> new TableCell<>() {
+                    private final Button btn = new Button("Asignar");
                     {
                         btn.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
                         btn.setOnAction(event -> {
-                            LinkedOrganization org = getTableView().getItems().get(getIndex());
-                            if (org != null) {
-                                linkProjectToOrganization(org);
+                            Representative rep = getTableView().getItems().get(getIndex());
+                            if (rep != null) {
+                                assignProjectToRepresentative(rep);
                             }
                         });
                     }
@@ -168,15 +161,17 @@ public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> 
                         setGraphic(empty ? null : btn);
                     }
                 });
-                return linkCol;
+                return assignCol;
             }
         };
 
-        javafx.scene.Scene scene = new javafx.scene.Scene(orgWindow.getView(), 800, 600);
-        orgStage.setScene(scene);
-        orgStage.setTitle("Seleccionar Organización para el Proyecto");
-        orgStage.show();
+        javafx.scene.Scene scene = new javafx.scene.Scene(repsWindow.getView(), 800, 600);
+        repsStage.setScene(scene);
+        repsStage.setTitle("Asignar Representante al Proyecto");
+        repsStage.show();
     }
+
+
 
     private void linkProjectToOrganization(LinkedOrganization org) {
         try {
@@ -197,11 +192,33 @@ public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> 
         }
     }
 
+    private void assignProjectToRepresentative(Representative rep) {
+        try {
+            boolean success = proyectDAO.linkProjectToRepresentative(
+                    createdProjectId,
+                    rep.getIdRepresentative(),
+                    rep.getLinkedOrganization() != null ? rep.getLinkedOrganization().getIdLinkedOrganization() : null
+            );
+
+            if (success) {
+                Platform.runLater(() -> {
+                    showFinalSuccessDialog();
+                    currentStage.close();
+                });
+            } else {
+                showError("No se pudo asignar el representante al proyecto");
+            }
+        } catch (SQLException e) {
+            showError("Error al asignar representante: " + e.getMessage());
+        }
+    }
+
+
     private void showCustomSuccessDialog() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Operación exitosa");
         alert.setHeaderText(null);
-        alert.setContentText("¡Proyecto registrado correctamente!\nAhora seleccione una organización para vincular.");
+        alert.setContentText("¡Proyecto registrado correctamente!\nAhora seleccione un representante para asignar al proyecto.");
 
         try {
             ImageView icon = new ImageView(new Image(getClass().getResourceAsStream("/images/exito.png")));
@@ -215,11 +232,12 @@ public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> 
         alert.showAndWait();
     }
 
+
     private void showFinalSuccessDialog() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Proceso completado");
         alert.setHeaderText(null);
-        alert.setContentText("¡Proyecto registrado y vinculado exitosamente!");
+        alert.setContentText("¡Proyecto registrado y representante asignado exitosamente!");
 
         try {
             ImageView icon = new ImageView(new Image(getClass().getResourceAsStream("/images/exito.png")));

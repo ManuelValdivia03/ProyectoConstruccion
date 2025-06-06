@@ -8,4 +8,8 @@ public class RepeatedStaffNumberException extends RuntimeException {
     public RepeatedStaffNumberException() {
 
     }
+
+    public RepeatedStaffNumberException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

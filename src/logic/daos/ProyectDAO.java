@@ -364,4 +364,23 @@ public class ProyectDAO implements IProyectDAO {
             return affectedRows > 0;
         }
     }
+
+    public boolean linkProjectToRepresentative(int projectId, int representativeId, Integer organizationId) throws SQLException {
+        String sql = "UPDATE proyecto SET id_representante = ?, id_usuario = ? WHERE id_proyecto = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, representativeId);
+            if (organizationId != null) {
+                stmt.setInt(2, organizationId);
+            } else {
+                stmt.setNull(2, Types.INTEGER);
+            }
+            stmt.setInt(3, projectId);
+
+            int affectedRows = stmt.executeUpdate();
+            return affectedRows > 0;
+        }
+    }
 }

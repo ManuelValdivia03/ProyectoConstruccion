@@ -12,7 +12,6 @@ public class ConnectionDataBase {
 
     public static Connection getConnection() throws SQLException {
         if (ConfigLoader.get("db.url") == null) {
-            logger.fatal("Configuración de base de datos no encontrada");
             throw new SQLException("Configuración de DB no disponible");
         }
 
@@ -20,26 +19,8 @@ public class ConnectionDataBase {
         String user = ConfigLoader.get("db.user");
         String password = ConfigLoader.get("db.password");
 
-        logger.debug("Iniciando conexión a DB - URL: {}", url);
-        logger.trace("Credenciales - Usuario: {}", user);
-
-        long startTime = System.currentTimeMillis();
-
         try {
             Connection conn = DriverManager.getConnection(url, user, password);
-            long connectionTime = System.currentTimeMillis() - startTime;
-
-            logger.info("Conexión exitosa a {} [{} ms]",
-                    url.replaceAll("\\?.*", ""), // Limpia parámetros de URL
-                    connectionTime);
-
-            if (logger.isDebugEnabled()) {
-                logger.debug("Propiedades de conexión: AutoCommit={}, Isolation={}, ReadOnly={}",
-                        conn.getAutoCommit(),
-                        conn.getTransactionIsolation(),
-                        conn.isReadOnly());
-            }
-
             return conn;
         } catch (SQLException e) {
             logger.error("Error de conexión a {} - Código: {} - Estado: {} - Mensaje: {}",
@@ -47,8 +28,6 @@ public class ConnectionDataBase {
                     e.getErrorCode(),
                     e.getSQLState(),
                     e.getMessage());
-
-            logger.debug("Stack trace completo:", e);
             throw e;
         }
     }
