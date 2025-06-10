@@ -81,7 +81,7 @@ class GroupDAOTest {
         student.setFullName(fullName);
         student.setCellphone(phone);
         student.setStatus('A');
-        studentDAO.addStudent(student);
+        studentDAO.addStudent(student,0);
         return student;
     }
 
@@ -298,7 +298,7 @@ class GroupDAOTest {
         student.setStatus('A');
         student.setCellphone("123445567");
 
-        boolean studentAdded = studentDAO.addStudent(student);
+        boolean studentAdded = studentDAO.addStudent(student,0);
         assertTrue(studentAdded, "El estudiante debería haberse creado correctamente");
 
         Group groupToDelete = new Group(10020, "Hoy", new ArrayList<>());

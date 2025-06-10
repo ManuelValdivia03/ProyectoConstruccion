@@ -113,7 +113,7 @@ class EvaluationDAOTest {
         student.setFullName(fullName);
         student.setCellphone(phone);
         student.setStatus('A');
-        studentDAO.addStudent(student);
+        studentDAO.addStudent(student,0);
         return student;
     }
 

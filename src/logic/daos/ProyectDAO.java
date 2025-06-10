@@ -2,6 +2,7 @@ package logic.daos;
 
 import logic.logicclasses.Proyect;
 import logic.interfaces.IProyectDAO;
+import logic.logicclasses.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -378,5 +379,55 @@ public class ProyectDAO implements IProyectDAO {
             int affectedRows = statement.executeUpdate();
             return affectedRows > 0;
         }
+    }
+
+    public List<Proyect> getUnassignedProyects() throws SQLException {
+        String sql = "SELECT * FROM proyecto WHERE id_usuario IS NULL AND estado = 'A'";
+        try (Connection conn = getConnection();
+             PreparedStatement statement = conn.prepareStatement(sql)) {
+            return executeQuery(statement);
+        }
+    }
+
+    public Proyect getUnassignedProyectByTitle(String title) throws SQLException {
+        String sql = "SELECT * FROM proyecto WHERE titulo LIKE ? AND id_usuario IS NULL AND estado = 'A' LIMIT 1";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, "%" + title + "%");
+            List<Proyect> result = executeQuery(stmt);
+            return result.isEmpty() ? null : result.get(0);
+        }
+    }
+
+    public boolean assignProjectToCurrentUser(int projectId, User user) throws SQLException {
+        String sql = "UPDATE proyecto SET id_usuario = ? WHERE id_proyecto = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, getCurrentUserId(user));
+            stmt.setInt(2, projectId);
+            return stmt.executeUpdate() > 0;
+        }
+    }
+
+    private int getCurrentUserId(User user) throws SQLException {
+        return user != null ? user.getIdUser() : -1;
+    }
+
+    private List<Proyect> executeQuery(PreparedStatement statement) throws SQLException {
+        List<Proyect> proyects = new ArrayList<>();
+        try (ResultSet resultSet = statement.executeQuery()) {
+            while (resultSet.next()) {
+                Proyect proyect = new Proyect(
+                        resultSet.getInt("id_proyecto"),
+                        resultSet.getString("titulo"),
+                        resultSet.getString("descripcion"),
+                        resultSet.getTimestamp("fecha_inicial"),
+                        resultSet.getTimestamp("fecha_terminal"),
+                        resultSet.getString("estado").charAt(0)
+                );
+                proyects.add(proyect);
+            }
+        }
+        return proyects;
     }
 }

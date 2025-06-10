@@ -65,7 +65,7 @@ class ReportDAOTest {
         testStudent.setFullName(user.getFullName());
         testStudent.setCellphone(user.getCellPhone());
         testStudent.setStatus(user.getStatus());
-        studentDAO.addStudent(testStudent);
+        studentDAO.addStudent(testStudent, 0);
 
         testReports = new ArrayList<>();
         testReports.add(createTestReport(Timestamp.valueOf(LocalDateTime.now()), 5, ReportType.Semanal, testStudent));

@@ -20,6 +20,7 @@ import logic.daos.UserDAO;
 import logic.exceptions.RepeatedCellPhoneException;
 import logic.exceptions.RepeatedEmailException;
 import logic.exceptions.RepeatedEnrollmentException;
+import logic.logicclasses.Academic;
 import logic.logicclasses.Account;
 import logic.logicclasses.Student;
 import logic.logicclasses.User;
@@ -42,14 +43,17 @@ public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> 
     private final UserDAO userDAO;
     private final AccountDAO accountDAO;
     private final Validators validators;
+    private final Academic academic;
 
-    public ControllerCreateStudentWindow(CreateStudentWindow view) {
+    public ControllerCreateStudentWindow(CreateStudentWindow view, Academic academic) {
         this.view = Objects.requireNonNull(view, "CreateStudentWindow view cannot be null");
         this.studentDAO = new StudentDAO();
         this.userDAO = new UserDAO();
         this.accountDAO = new AccountDAO();
         this.validators = new Validators();
         setupEventHandlers();
+        this.academic = Objects.requireNonNull(academic, "Academic cannot be null");
+
     }
 
     private void setupEventHandlers() {
@@ -166,7 +170,7 @@ public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> 
 
     private void createAndSaveStudent(User user, String enrollment) throws SQLException {
         Student student = new Student(user.getIdUser(), user.getFullName(), user.getCellPhone(), 'A', enrollment, 0);
-        if (!studentDAO.addStudent(student)) {
+        if (!studentDAO.addStudent(student, academic.getIdUser())) {
             userDAO.deleteUser(user.getIdUser());
             throw new SQLException("No se pudo registrar el estudiante");
         }

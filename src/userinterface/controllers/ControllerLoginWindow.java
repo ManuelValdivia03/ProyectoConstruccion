@@ -2,8 +2,8 @@ package userinterface.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.Scene;
 import logic.exceptions.InvalidCredentialsException;
 import logic.logicclasses.Academic;
 import logic.logicclasses.Coordinator;
@@ -35,12 +35,6 @@ public class ControllerLoginWindow implements EventHandler<ActionEvent> {
         this.recoveryService = Objects.requireNonNull(recoveryService, "El servicio de recuperación de contraseña no puede ser nulo");
 
         setupEventHandlers();
-        configureStage();
-    }
-
-    private void configureStage() {
-        primaryStage.setScene(new Scene(view.getView(), WINDOW_WIDTH, WINDOW_HEIGHT));
-        primaryStage.setTitle("Inicio de Sesión");
     }
 
     private void setupEventHandlers() {
@@ -112,12 +106,17 @@ public class ControllerLoginWindow implements EventHandler<ActionEvent> {
     private void launchNewLoginWindow() {
         Stage newLoginStage = new Stage();
         LoginWindow newLoginView = new LoginWindow();
-        new ControllerLoginWindow(
+
+        ControllerLoginWindow newController = new ControllerLoginWindow(
                 newLoginStage,
                 newLoginView,
                 loginService,
                 recoveryService
         );
+
+        newLoginStage.setScene(new Scene(newLoginView.getView(), WINDOW_WIDTH, WINDOW_HEIGHT));
+        newLoginStage.setTitle("Inicio de Sesión");
+        newLoginStage.setResizable(false);
         newLoginStage.show();
     }
 }

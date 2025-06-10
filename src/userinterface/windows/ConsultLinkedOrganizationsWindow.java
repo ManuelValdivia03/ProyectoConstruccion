@@ -52,7 +52,6 @@ public class ConsultLinkedOrganizationsWindow {
         HBox buttonBox = new HBox(15, backButton);
         buttonBox.setPadding(new Insets(15, 0, 0, 0));
 
-        // Contenedor principal
         view = new VBox(15);
         view.setPadding(new Insets(15));
         view.setStyle("-fx-background-color: #f5f5f5;");

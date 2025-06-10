@@ -23,11 +23,13 @@ public class ControllerAcademicMenuWindow implements EventHandler<ActionEvent> {
     private final AcademicMenuWindow view;
     private final Stage stage;
     private final Runnable onLogout;
+    private Academic academic;
 
     public ControllerAcademicMenuWindow(Stage stage, Academic academic, Runnable onLogout) {
         this.stage = Objects.requireNonNull(stage, "Stage no puede ser nulo");
         this.onLogout = Objects.requireNonNull(onLogout, "Callback de logout no puede ser nulo");
         this.view = new AcademicMenuWindow(Objects.requireNonNull(academic, "Academic no puede ser nulo"));
+        this.academic = academic;
 
         configureMainWindow();
         setupMenuForAcademicType(academic.getAcademicType());
@@ -69,7 +71,7 @@ public class ControllerAcademicMenuWindow implements EventHandler<ActionEvent> {
     private void showRegisterStudentWindow() {
         Stage registerStage = new Stage();
         CreateStudentWindow registerWindow = new CreateStudentWindow();
-        new ControllerCreateStudentWindow(registerWindow);
+        new ControllerCreateStudentWindow(registerWindow, academic);
 
         configureAndShowWindow(registerStage, registerWindow.getView(),
                 "Registrar Estudiante",
@@ -79,7 +81,7 @@ public class ControllerAcademicMenuWindow implements EventHandler<ActionEvent> {
     private void showConsultStudentsWindow() {
         Stage consultStage = new Stage();
         ConsultStudentsWindow consultWindow = new ConsultStudentsWindow();
-        new ControllerConsultStudentsWindow(consultWindow, consultStage);
+        new ControllerConsultStudentsWindow(consultWindow, consultStage, academic);
 
         configureAndShowWindow(consultStage, consultWindow.getView(),
                 "Consultar Estudiantes",
@@ -89,7 +91,7 @@ public class ControllerAcademicMenuWindow implements EventHandler<ActionEvent> {
     private void showRegisterFinalGradeWindow() {
         Stage gradeStage = new Stage();
         ConsultStudentsWindow consultWindow = new ConsultStudentsWindow();
-        new ControllerConsultStudentsWindow(consultWindow, gradeStage);
+        new ControllerConsultStudentsWindow(consultWindow, gradeStage, academic);
 
         configureAndShowWindow(gradeStage, consultWindow.getView(),
                 "Registrar Nota Final",

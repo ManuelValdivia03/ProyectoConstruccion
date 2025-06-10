@@ -24,7 +24,7 @@ public class StudentDAO implements IStudentDAO {
         this.userDAO = new UserDAO();
     }
 
-    public boolean addStudent(Student student) throws SQLException {
+    public boolean addStudent(Student student, int academicId) throws SQLException {
         if (student == null) {
             logger.warn("Intento de agregar estudiante nulo");
             return false;
@@ -42,13 +42,29 @@ public class StudentDAO implements IStudentDAO {
             preparedStatement.setInt(3, student.getGrade());
 
             boolean result = preparedStatement.executeUpdate() > 0;
-            if (result) {
-                logger.info("Estudiante agregado exitosamente - ID: {}, Matrícula: {}, Calificación: {}",
-                        student.getIdUser(), student.getEnrollment(), student.getGrade());
-            } else {
+            if (!result) {
                 logger.warn("No se pudo agregar el estudiante con matrícula: {}", student.getEnrollment());
+                return false;
             }
-            return result;
+            if (academicId > 0) {
+                String groupSql = "SELECT nrc FROM grupo_academico WHERE id_usuario = ?";
+                try (PreparedStatement groupStmt = connection.prepareStatement(groupSql)) {
+                    groupStmt.setInt(1, academicId);
+                    ResultSet rs = groupStmt.executeQuery();
+
+                    if (rs.next()) {
+                        int nrc = rs.getInt("nrc");
+                        return assignStudentToGroup(student.getIdUser(), nrc);
+                    } else {
+                        logger.warn("El académico con ID {} no tiene un grupo asignado", academicId);
+                        return true;
+                    }
+                }
+            }
+
+            logger.info("Estudiante agregado exitosamente - ID: {}, Matrícula: {}, Calificación: {}",
+                    student.getIdUser(), student.getEnrollment(), student.getGrade());
+            return true;
         } catch (SQLException e) {
             logger.error("Error al agregar estudiante con matrícula: {}", student.getEnrollment(), e);
             throw e;
@@ -463,5 +479,43 @@ public class StudentDAO implements IStudentDAO {
             }
         }
         return EMPTY_STUDENT;
+    }
+
+    public List<Student> getActiveStudentsByGroup(int nrc) throws SQLException {
+        if (nrc <= 0) {
+            logger.warn("Intento de buscar estudiantes activos con NRC inválido: {}", nrc);
+            return Collections.emptyList();
+        }
+
+        logger.debug("Buscando estudiantes activos por grupo NRC: {}", nrc);
+
+        String sql = "SELECT u.*, e.matricula, e.calificacion FROM usuario u " +
+                    "JOIN estudiante e ON u.id_usuario = e.id_usuario " +
+                    "JOIN grupo_estudiante ge ON e.id_usuario = ge.id_usuario " +
+                    "WHERE ge.nrc = ? AND u.estado = 'A'";
+        List<Student> students = new ArrayList<>();
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, nrc);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Student student = new Student();
+                    student.setIdUser(resultSet.getInt("id_usuario"));
+                    student.setFullName(resultSet.getString("nombre_completo"));
+                    student.setCellphone(resultSet.getString("telefono"));
+                    student.setStatus(resultSet.getString("estado").charAt(0));
+                    student.setEnrollment(resultSet.getString("matricula"));
+                    student.setGrade(resultSet.getInt("calificacion"));
+                    students.add(student);
+                }
+            }
+            logger.debug("Se encontraron {} estudiantes activos en el grupo NRC: {}", students.size(), nrc);
+        } catch (SQLException e) {
+            logger.error("Error al obtener estudiantes activos por grupo NRC: {}", nrc, e);
+            throw e;
+        }
+        return students;
     }
 }

@@ -38,6 +38,8 @@ public class CoordinatorMenuWindow {
     private Button registerRepresentativeButton;
     private Button consultRepresentativesButton;
     private Button generateStadisticsButton;
+    private Button registerGroupButton; // <--- Agregado
+    private Button consultGroupsButton; // <--- Agregado
 
     private final String BLUE_DARK_COLOR = "#0A1F3F";
     private final String GREEN_DARK_COLOR= "#1A5F4B";
@@ -149,6 +151,8 @@ public class CoordinatorMenuWindow {
         manageRequestsButton = createStyledButton("Gestionar Solicitudes");
         registerCronogramButton = createStyledButton("Registrar Cronograma");
         enableEvaluationsButton = createStyledButton("Habilitar Evaluaciones");
+        registerGroupButton = createStyledButton("Registrar Grupo"); // <--- Agregado
+        consultGroupsButton = createStyledButton("Consultar Grupos"); // <--- Agregado
 
         content.getChildren().addAll(
                 createSectionTitle("Gestión de Proyectos"),
@@ -158,7 +162,9 @@ public class CoordinatorMenuWindow {
                 reassignStudentButton,
                 manageRequestsButton,
                 registerCronogramButton,
-                enableEvaluationsButton
+                enableEvaluationsButton,
+                registerGroupButton, // <--- Agregado
+                consultGroupsButton // <--- Agregado
         );
         return content;
     }
@@ -291,5 +297,12 @@ public class CoordinatorMenuWindow {
         return generateStadisticsButton;
     }
 
+    public Button getRegisterGroupButton() {
+        return registerGroupButton;
+    }
+
+    public Button getConsultGroupsButton() {
+        return consultGroupsButton;
+    }
 
 }

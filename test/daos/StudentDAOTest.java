@@ -173,19 +173,19 @@ class StudentDAOTest {
         newStudent.setGrade(6);
         testStudentIds.add(userId);
 
-        boolean result = studentDAO.addStudent(newStudent);
+        boolean result = studentDAO.addStudent(newStudent,0);
         assertTrue(result);
     }
 
     @Test
     void testAddStudent_NullStudent() throws SQLException {
-        assertFalse(studentDAO.addStudent(null));
+        assertFalse(studentDAO.addStudent(null, 0));
     }
 
     @Test
     void testAddStudent_DuplicateEnrollment_ShouldThrowException() throws SQLException {
         Student duplicateStudent = testStudents.get(0);
-        assertThrows(SQLException.class, () -> studentDAO.addStudent(duplicateStudent));
+        assertThrows(SQLException.class, () -> studentDAO.addStudent(duplicateStudent,0));
     }
 
     // getStudentByEnrollment
@@ -413,7 +413,7 @@ class StudentDAOTest {
         newStudent.setGrade(7);
         testStudentIds.add(userId);
 
-        studentDAO.addStudent(newStudent);
+        studentDAO.addStudent(newStudent,0);
         assertEquals(initialCount + 1, studentDAO.countStudents());
     }
 

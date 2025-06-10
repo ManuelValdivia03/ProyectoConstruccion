@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import logic.logicclasses.Student;
 import userinterface.windows.EditProfileStudentWindow;
+import userinterface.windows.RequestProjectsWindow;
 import userinterface.windows.StudentMenuWindow;
 
 public class ControllerStudentMenuWindow {
@@ -97,6 +98,13 @@ public class ControllerStudentMenuWindow {
     }
 
     private void showProjectRequestWindow() {
+        RequestProjectsWindow requestWindow = new RequestProjectsWindow();
+        ControllerRequestProjectsWindow controller = new ControllerRequestProjectsWindow(requestWindow, student);
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(requestWindow.getView()));
+        stage.setTitle("Solicitar Proyectos");
+        stage.show();
     }
 
     private void showAssignedProjectWindow() {

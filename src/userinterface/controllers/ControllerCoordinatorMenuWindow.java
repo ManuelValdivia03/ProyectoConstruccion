@@ -15,6 +15,10 @@ import userinterface.windows.ConsultProyectsWindow;
 import userinterface.windows.ConsultRepresentativesWindow;
 import userinterface.windows.RegistProyectWindow;
 import userinterface.windows.RegistRepresentativeWindow;
+import userinterface.windows.CreateGroupWindow;
+import userinterface.controllers.ControllerCreateGroupWindow;
+import userinterface.windows.ConsultGroupsWindow;
+import userinterface.controllers.ControllerConsultGroupsWindow;
 
 public class ControllerCoordinatorMenuWindow implements EventHandler<ActionEvent> {
     private static final int MAIN_WINDOW_WIDTH = 1024;
@@ -43,6 +47,8 @@ public class ControllerCoordinatorMenuWindow implements EventHandler<ActionEvent
         view.getConsultOrganizationButton().setOnAction(e -> showConsultOrganizationWindow());
         view.getRegisterRepresentativeButton().setOnAction(e -> showRegisterRepresentativeWindow());
         view.getConsultRepresentativesButton().setOnAction(e -> showConsultRepresentativesWindow());
+        view.getRegisterGroupButton().setOnAction(e -> showRegisterGroupWindow());
+        view.getConsultGroupsButton().setOnAction(e -> showConsultGroupsWindow()); // <--- Agregado
 
         // Unimplemented actions with clear indication
         view.getAssignProjectButton().setOnAction(this::handleUnimplementedAction);
@@ -121,6 +127,19 @@ public class ControllerCoordinatorMenuWindow implements EventHandler<ActionEvent
         Stage consultStage = new Stage();
         new ControllerConsultRepresentativesWindow(consultWindow, consultStage);
         showWindow("Consultar Representantes", consultWindow.getView(), 900, 500, consultStage);
+    }
+
+    private void showRegisterGroupWindow() {
+        CreateGroupWindow groupWindow = new CreateGroupWindow();
+        new ControllerCreateGroupWindow(groupWindow);
+        showWindow("Registrar Grupo", groupWindow.getView(), 400, 300);
+    }
+
+    private void showConsultGroupsWindow() {
+        ConsultGroupsWindow consultWindow = new ConsultGroupsWindow();
+        Stage consultStage = new Stage();
+        new ControllerConsultGroupsWindow(consultWindow, consultStage);
+        showWindow("Consulta de Grupos", consultWindow.getView(), 600, 400, consultStage);
     }
 
     private void showWindow(String title, javafx.scene.Parent view, int width, int height) {

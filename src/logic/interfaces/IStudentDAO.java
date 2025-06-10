@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface IStudentDAO {
-    boolean addStudent(Student student) throws SQLException;
+    boolean addStudent(Student student, int academicId) throws SQLException;
     List<Student> getAllStudents() throws SQLException;
     Student getStudentById(int id) throws SQLException;
     boolean updateStudent(Student student) throws SQLException;
