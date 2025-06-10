@@ -15,12 +15,12 @@ import logic.daos.LinkedOrganizationDocumentDAO;
 import logic.logicclasses.LinkedOrganization;
 import userinterface.windows.ConsultLinkedOrganizationsWindow;
 import userinterface.windows.UpdateLinkedOrganizationWindow;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class ControllerConsultLinkedOrganizationsWindow {
     private final ConsultLinkedOrganizationsWindow view;
@@ -31,10 +31,10 @@ public class ControllerConsultLinkedOrganizationsWindow {
     private boolean hasSearchResults = false;
 
     public ControllerConsultLinkedOrganizationsWindow(ConsultLinkedOrganizationsWindow view, Stage stage) {
-        this.view = view;
+        this.view = Objects.requireNonNull(view, "La vista no puede ser nula");
         this.documentDAO = new LinkedOrganizationDocumentDAO();
         this.organizationDAO = new LinkedOrganizationDAO();
-        this.currentStage = stage;
+        this.currentStage = Objects.requireNonNull(stage, "El stage no puede ser nulo");
         this.allOrganizations = FXCollections.observableArrayList();
 
         TableColumn<LinkedOrganization, Void> manageCol = view.createManageButtonColumn(this::handleManageOrganization);
@@ -102,11 +102,19 @@ public class ControllerConsultLinkedOrganizationsWindow {
     }
 
     private void handleManageOrganization(ActionEvent event) {
+        if (!(event.getSource() instanceof LinkedOrganization)) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Organización inválida.");
+            return;
+        }
         LinkedOrganization org = (LinkedOrganization) event.getSource();
         openUpdateOrganizationWindow(org);
     }
 
     private void handleViewDocuments(ActionEvent event) {
+        if (!(event.getSource() instanceof LinkedOrganization)) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Organización inválida.");
+            return;
+        }
         LinkedOrganization org = (LinkedOrganization) event.getSource();
         openDocumentsWindow(org);
     }
@@ -149,17 +157,15 @@ public class ControllerConsultLinkedOrganizationsWindow {
                 ButtonType downloadButton = new ButtonType("Descargar", ButtonBar.ButtonData.OK_DONE);
                 alert.getButtonTypes().setAll(downloadButton, ButtonType.CLOSE);
 
-                try {
-                    InputStream iconStream = getClass().getResourceAsStream("/images/document.png");
+                try (InputStream iconStream = getClass().getResourceAsStream("/images/document.png")) {
                     if (iconStream != null) {
                         Image icon = new Image(iconStream);
                         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
                         stage.getIcons().add(icon);
-                    } else {
-                        System.out.println("El ícono no se encontró en la ruta especificada");
                     }
                 } catch (Exception e) {
-                    System.err.println("Error al cargar el ícono: " + e.getMessage());
+                    showAlert(Alert.AlertType.ERROR, "Error",
+                            "No se pudo cargar el icono del documento: " + e.getMessage());
                 }
 
                 alert.showAndWait().ifPresent(buttonType -> {
@@ -212,7 +218,7 @@ public class ControllerConsultLinkedOrganizationsWindow {
     }
 
     private String getFileExtension(String fileType) {
-        switch (fileType.toUpperCase()) {
+        switch (fileType == null ? "" : fileType.toUpperCase()) {
             case "PDF": return ".pdf";
             case "JPG": return ".jpg";
             case "PNG": return ".png";
@@ -223,7 +229,7 @@ public class ControllerConsultLinkedOrganizationsWindow {
     }
 
     private String getFileTypeDescription(String fileType) {
-        switch (fileType.toUpperCase()) {
+        switch (fileType == null ? "" : fileType.toUpperCase()) {
             case "PDF": return "Documento PDF (*.pdf)";
             case "JPG": return "Imagen JPEG (*.jpg)";
             case "PNG": return "Imagen PNG (*.png)";

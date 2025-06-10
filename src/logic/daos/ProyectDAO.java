@@ -1,6 +1,5 @@
 package logic.daos;
 
-import dataaccess.ConnectionDataBase;
 import logic.logicclasses.Proyect;
 import logic.interfaces.IProyectDAO;
 import org.apache.logging.log4j.LogManager;
@@ -14,11 +13,11 @@ import static dataaccess.ConnectionDataBase.getConnection;
 
 public class ProyectDAO implements IProyectDAO {
     private static final Logger logger = LogManager.getLogger(ProyectDAO.class);
+    private static final Proyect EMPTY_PROYECT = new Proyect(-1, "", "", null, null, 'I');
 
     public boolean addProyect(Proyect proyect) throws SQLException {
         if (proyect == null) {
-            logger.warn("Intento de agregar proyecto nulo");
-            return false;
+            throw new IllegalArgumentException("El proyecto no debe ser nulo");
         }
 
         logger.debug("Agregando nuevo proyecto: {}", proyect.getTitle());
@@ -26,18 +25,18 @@ public class ProyectDAO implements IProyectDAO {
         String sql = "INSERT INTO proyecto (titulo, descripcion, fecha_inicial, fecha_terminal, estado) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            ps.setString(1, proyect.getTitle());
-            ps.setString(2, proyect.getDescription());
-            ps.setTimestamp(3, proyect.getDateStart());
-            ps.setTimestamp(4, proyect.getDateEnd());
-            ps.setString(5, String.valueOf(proyect.getStatus()));
+            preparedStatement.setString(1, proyect.getTitle());
+            preparedStatement.setString(2, proyect.getDescription());
+            preparedStatement.setTimestamp(3, proyect.getDateStart());
+            preparedStatement.setTimestamp(4, proyect.getDateEnd());
+            preparedStatement.setString(5, String.valueOf(proyect.getStatus()));
 
-            int affectedRows = ps.executeUpdate();
+            int affectedRows = preparedStatement.executeUpdate();
 
             if (affectedRows > 0) {
-                try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         int generatedId = generatedKeys.getInt(1);
                         proyect.setIdProyect(generatedId);
@@ -57,8 +56,7 @@ public class ProyectDAO implements IProyectDAO {
 
     public boolean updateProyect(Proyect proyect) throws SQLException {
         if (proyect == null) {
-            logger.warn("Intento de actualizar proyecto nulo");
-            return false;
+            throw new IllegalArgumentException("El proyecto no debe ser nulo");
         }
 
         logger.debug("Actualizando proyecto ID: {}", proyect.getIdProyect());
@@ -66,16 +64,16 @@ public class ProyectDAO implements IProyectDAO {
         String sql = "UPDATE proyecto SET titulo = ?, descripcion = ?, fecha_inicial = ?, fecha_terminal = ?, estado = ? WHERE id_proyecto = ?";
 
         try (Connection connection = getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setString(1, proyect.getTitle());
-            ps.setString(2, proyect.getDescription());
-            ps.setTimestamp(3, proyect.getDateStart());
-            ps.setTimestamp(4, proyect.getDateEnd());
-            ps.setString(5, String.valueOf(proyect.getStatus()));
-            ps.setInt(6, proyect.getIdProyect());
+            preparedStatement.setString(1, proyect.getTitle());
+            preparedStatement.setString(2, proyect.getDescription());
+            preparedStatement.setTimestamp(3, proyect.getDateStart());
+            preparedStatement.setTimestamp(4, proyect.getDateEnd());
+            preparedStatement.setString(5, String.valueOf(proyect.getStatus()));
+            preparedStatement.setInt(6, proyect.getIdProyect());
 
-            boolean result = ps.executeUpdate() > 0;
+            boolean result = preparedStatement.executeUpdate() > 0;
             if (result) {
                 logger.info("Proyecto actualizado exitosamente - ID: {}", proyect.getIdProyect());
             } else {
@@ -90,8 +88,7 @@ public class ProyectDAO implements IProyectDAO {
 
     public boolean deleteProyect(Proyect proyect) throws SQLException {
         if (proyect == null) {
-            logger.warn("Intento de eliminar proyecto nulo");
-            return false;
+            throw new IllegalArgumentException("El proyecto no debe ser nulo");
         }
 
         logger.debug("Eliminando proyecto ID: {}", proyect.getIdProyect());
@@ -99,10 +96,10 @@ public class ProyectDAO implements IProyectDAO {
         String sql = "DELETE FROM proyecto WHERE id_proyecto = ?";
 
         try (Connection connection = getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setInt(1, proyect.getIdProyect());
-            boolean result = ps.executeUpdate() > 0;
+            preparedStatement.setInt(1, proyect.getIdProyect());
+            boolean result = preparedStatement.executeUpdate() > 0;
             if (result) {
                 logger.info("Proyecto eliminado exitosamente - ID: {}", proyect.getIdProyect());
             } else {
@@ -122,17 +119,17 @@ public class ProyectDAO implements IProyectDAO {
         List<Proyect> proyects = new ArrayList<>();
 
         try (Connection connection = getConnection();
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
 
-            while (rs.next()) {
+            while (resultSet.next()) {
                 Proyect proyect = new Proyect(
-                        rs.getInt("id_proyecto"),
-                        rs.getString("titulo"),
-                        rs.getString("descripcion"),
-                        rs.getTimestamp("fecha_inicial"),
-                        rs.getTimestamp("fecha_terminal"),
-                        rs.getString("estado").charAt(0)
+                        resultSet.getInt("id_proyecto"),
+                        resultSet.getString("titulo"),
+                        resultSet.getString("descripcion"),
+                        resultSet.getTimestamp("fecha_inicial"),
+                        resultSet.getTimestamp("fecha_terminal"),
+                        resultSet.getString("estado").charAt(0)
                 );
                 proyects.add(proyect);
             }
@@ -151,18 +148,18 @@ public class ProyectDAO implements IProyectDAO {
         List<Proyect> proyects = new ArrayList<>();
 
         try (Connection connection = getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setString(1, String.valueOf(status));
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
+            preparedStatement.setString(1, String.valueOf(status));
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
                     Proyect proyect = new Proyect(
-                            rs.getInt("id_proyecto"),
-                            rs.getString("titulo"),
-                            rs.getString("descripcion"),
-                            rs.getTimestamp("fecha_inicial"),
-                            rs.getTimestamp("fecha_terminal"),
-                            rs.getString("estado").charAt(0)
+                            resultSet.getInt("id_proyecto"),
+                            resultSet.getString("titulo"),
+                            resultSet.getString("descripcion"),
+                            resultSet.getTimestamp("fecha_inicial"),
+                            resultSet.getTimestamp("fecha_terminal"),
+                            resultSet.getString("estado").charAt(0)
                     );
                     proyects.add(proyect);
                 }
@@ -177,8 +174,7 @@ public class ProyectDAO implements IProyectDAO {
 
     public Proyect getProyectById(int id) throws SQLException {
         if (id <= 0) {
-            logger.warn("Intento de buscar proyecto con ID inválido: {}", id);
-            return null;
+            return EMPTY_PROYECT;
         }
 
         logger.debug("Buscando proyecto por ID: {}", id);
@@ -186,19 +182,19 @@ public class ProyectDAO implements IProyectDAO {
         String sql = "SELECT id_proyecto, titulo, descripcion, fecha_inicial, fecha_terminal, estado FROM proyecto WHERE id_proyecto = ?";
 
         try (Connection connection = getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setInt(1, id);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
+            preparedStatement.setInt(1, id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
                     logger.debug("Proyecto encontrado con ID: {}", id);
                     return new Proyect(
-                            rs.getInt("id_proyecto"),
-                            rs.getString("titulo"),
-                            rs.getString("descripcion"),
-                            rs.getTimestamp("fecha_inicial"),
-                            rs.getTimestamp("fecha_terminal"),
-                            rs.getString("estado").charAt(0)
+                            resultSet.getInt("id_proyecto"),
+                            resultSet.getString("titulo"),
+                            resultSet.getString("descripcion"),
+                            resultSet.getTimestamp("fecha_inicial"),
+                            resultSet.getTimestamp("fecha_terminal"),
+                            resultSet.getString("estado").charAt(0)
                     );
                 }
             }
@@ -207,13 +203,12 @@ public class ProyectDAO implements IProyectDAO {
             throw e;
         }
         logger.info("No se encontró proyecto con ID: {}", id);
-        return null;
+        return EMPTY_PROYECT;
     }
 
     public Proyect getProyectByTitle(String title) throws SQLException {
         if (title == null || title.isEmpty()) {
-            logger.warn("Intento de buscar proyecto con título nulo o vacío");
-            return null;
+            throw new IllegalArgumentException("El título no debe ser nulo o vacío");
         }
 
         logger.debug("Buscando proyecto por título: {}", title);
@@ -221,19 +216,19 @@ public class ProyectDAO implements IProyectDAO {
         String sql = "SELECT id_proyecto, titulo, descripcion, fecha_inicial, fecha_terminal, estado FROM proyecto WHERE titulo = ?";
 
         try (Connection connection = getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setString(1, title);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
+            preparedStatement.setString(1, title);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
                     logger.debug("Proyecto encontrado con título: {}", title);
                     return new Proyect(
-                            rs.getInt("id_proyecto"),
-                            rs.getString("titulo"),
-                            rs.getString("descripcion"),
-                            rs.getTimestamp("fecha_inicial"),
-                            rs.getTimestamp("fecha_terminal"),
-                            rs.getString("estado").charAt(0)
+                            resultSet.getInt("id_proyecto"),
+                            resultSet.getString("titulo"),
+                            resultSet.getString("descripcion"),
+                            resultSet.getTimestamp("fecha_inicial"),
+                            resultSet.getTimestamp("fecha_terminal"),
+                            resultSet.getString("estado").charAt(0)
                     );
                 }
             }
@@ -242,7 +237,7 @@ public class ProyectDAO implements IProyectDAO {
             throw e;
         }
         logger.info("No se encontró proyecto con título: {}", title);
-        return null;
+        return EMPTY_PROYECT;
     }
 
     public int countProyects() throws SQLException {
@@ -251,10 +246,10 @@ public class ProyectDAO implements IProyectDAO {
         String sql = "SELECT COUNT(*) FROM proyecto";
 
         try (Connection connection = getConnection();
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
 
-            int count = rs.next() ? rs.getInt(1) : 0;
+            int count = resultSet.next() ? resultSet.getInt(1) : 0;
             logger.info("Total de proyectos: {}", count);
             return count;
         } catch (SQLException e) {
@@ -265,8 +260,7 @@ public class ProyectDAO implements IProyectDAO {
 
     public boolean proyectExists(String title) throws SQLException {
         if (title == null || title.isEmpty()) {
-            logger.warn("Intento de verificar existencia con título nulo o vacío");
-            return false;
+            throw new IllegalArgumentException("El título no debe ser nulo o vacío");
         }
 
         logger.debug("Verificando existencia de proyecto con título: {}", title);
@@ -274,11 +268,11 @@ public class ProyectDAO implements IProyectDAO {
         String sql = "SELECT 1 FROM proyecto WHERE titulo = ?";
 
         try (Connection connection = getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setString(1, title);
-            try (ResultSet rs = ps.executeQuery()) {
-                boolean exists = rs.next();
+            preparedStatement.setString(1, title);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                boolean exists = resultSet.next();
                 logger.debug("¿Proyecto '{}' existe?: {}", title, exists);
                 return exists;
             }
@@ -290,8 +284,7 @@ public class ProyectDAO implements IProyectDAO {
 
     public boolean changeProyectStatus(Proyect proyect) throws SQLException {
         if (proyect == null) {
-            logger.warn("Intento de cambiar estado de proyecto nulo");
-            return false;
+            throw new IllegalArgumentException("El proyecto no debe ser nulo");
         }
 
         logger.debug("Cambiando estado de proyecto ID: {} a {}",
@@ -300,12 +293,12 @@ public class ProyectDAO implements IProyectDAO {
         String sql = "UPDATE proyecto SET estado = ? WHERE id_proyecto = ?";
 
         try (Connection connection = getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setString(1, String.valueOf(proyect.getStatus()));
-            ps.setInt(2, proyect.getIdProyect());
+            preparedStatement.setString(1, String.valueOf(proyect.getStatus()));
+            preparedStatement.setInt(2, proyect.getIdProyect());
 
-            boolean result = ps.executeUpdate() > 0;
+            boolean result = preparedStatement.executeUpdate() > 0;
             if (result) {
                 logger.info("Estado de proyecto ID {} cambiado a {}",
                         proyect.getIdProyect(), proyect.getStatus());
@@ -322,25 +315,28 @@ public class ProyectDAO implements IProyectDAO {
     }
 
     public int addProyectAndGetId(Proyect proyect) throws SQLException {
+        if (proyect == null) {
+            throw new IllegalArgumentException("El proyecto no debe ser nulo");
+        }
         String sql = "INSERT INTO proyecto (titulo, descripcion, fecha_inicial, fecha_terminal, estado) " +
                 "VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            stmt.setString(1, proyect.getTitle());
-            stmt.setString(2, proyect.getDescription());
-            stmt.setTimestamp(3, proyect.getDateStart());
-            stmt.setTimestamp(4, proyect.getDateEnd());
-            stmt.setString(5, String.valueOf(proyect.getStatus()));
+            statement.setString(1, proyect.getTitle());
+            statement.setString(2, proyect.getDescription());
+            statement.setTimestamp(3, proyect.getDateStart());
+            statement.setTimestamp(4, proyect.getDateEnd());
+            statement.setString(5, String.valueOf(proyect.getStatus()));
 
-            int affectedRows = stmt.executeUpdate();
+            int affectedRows = statement.executeUpdate();
 
             if (affectedRows == 0) {
                 throw new SQLException("Creating project failed, no rows affected.");
             }
 
-            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     return generatedKeys.getInt(1);
                 } else {
@@ -354,13 +350,13 @@ public class ProyectDAO implements IProyectDAO {
         String sql = "UPDATE proyecto SET id_representante = ?, id_organizacion = ? WHERE id_proyecto = ?";
 
         try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement statement = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, representativeId);
-            stmt.setInt(2, organizationId);
-            stmt.setInt(3, projectId);
+            statement.setInt(1, representativeId);
+            statement.setInt(2, organizationId);
+            statement.setInt(3, projectId);
 
-            int affectedRows = stmt.executeUpdate();
+            int affectedRows = statement.executeUpdate();
             return affectedRows > 0;
         }
     }
@@ -369,17 +365,17 @@ public class ProyectDAO implements IProyectDAO {
         String sql = "UPDATE proyecto SET id_representante = ?, id_usuario = ? WHERE id_proyecto = ?";
 
         try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement statement = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, representativeId);
+            statement.setInt(1, representativeId);
             if (organizationId != null) {
-                stmt.setInt(2, organizationId);
+                statement.setInt(2, organizationId);
             } else {
-                stmt.setNull(2, Types.INTEGER);
+                statement.setNull(2, Types.INTEGER);
             }
-            stmt.setInt(3, projectId);
+            statement.setInt(3, projectId);
 
-            int affectedRows = stmt.executeUpdate();
+            int affectedRows = statement.executeUpdate();
             return affectedRows > 0;
         }
     }

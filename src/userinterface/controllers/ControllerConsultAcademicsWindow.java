@@ -14,6 +14,7 @@ import userinterface.windows.ConsultAcademicsWindow;
 import userinterface.windows.UpdateAcademicWindow;
 
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class ControllerConsultAcademicsWindow {
     private final ConsultAcademicsWindow view;
@@ -24,9 +25,9 @@ public class ControllerConsultAcademicsWindow {
     private boolean hasSearchResults = false;
 
     public ControllerConsultAcademicsWindow(ConsultAcademicsWindow view, Stage stage) {
-        this.view = view;
+        this.view = Objects.requireNonNull(view, "La vista no puede ser nula");
         this.academicDAO = new AcademicDAO();
-        this.currentStage = stage;
+        this.currentStage = Objects.requireNonNull(stage, "El stage no puede ser nulo");
         this.validators = new Validators();
         this.allAcademics = FXCollections.observableArrayList();
 
@@ -67,7 +68,7 @@ public class ControllerConsultAcademicsWindow {
 
         try {
             Academic academic = academicDAO.getAcademicByStaffNumber(staffNumber);
-            if (academic.getIdUser() != -1) {
+            if (academic != null && academic.getIdUser() != -1) {
                 ObservableList<Academic> searchResult = FXCollections.observableArrayList();
                 searchResult.add(academic);
                 view.setAcademicData(searchResult);
@@ -94,8 +95,10 @@ public class ControllerConsultAcademicsWindow {
     }
 
     private void handleManageAcademic(ActionEvent event) {
-        Academic academic = (Academic) event.getSource();
-        openUpdateAcademicWindow(academic);
+        Object source = event.getSource();
+        if (source instanceof Academic) {
+            openUpdateAcademicWindow((Academic) source);
+        }
     }
 
     private void openUpdateAcademicWindow(Academic academic) {

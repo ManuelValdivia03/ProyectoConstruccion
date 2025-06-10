@@ -3,308 +3,228 @@ package logic.daos;
 import dataaccess.ConnectionDataBase;
 import logic.logicclasses.LinkedOrganization;
 import logic.interfaces.ILinkedOrganizationDAO;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import static dataaccess.ConnectionDataBase.getConnection;
-
 public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
-    private static final Logger logger = LogManager.getLogger(LinkedOrganizationDAO.class);
+    private static final LinkedOrganization EMPTY_ORGANIZATION = new LinkedOrganization(-1, "", "", "", 'I');
 
     public boolean addLinkedOrganization(LinkedOrganization linkedOrganization) throws SQLException {
         if (linkedOrganization == null) {
-            logger.warn("Intento de agregar organización vinculada nula");
-            return false;
+            throw new IllegalArgumentException("La organización vinculada no debe ser nula");
         }
-
-        logger.debug("Agregando nueva organización vinculada: {}", linkedOrganization.getNameLinkedOrganization());
 
         String sql = "INSERT INTO organizacion_vinculada (nombre_empresa, telefono, correo_empresarial, estado) VALUES (?, ?, ?, ?)";
 
-        try (Connection connection = getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            ps.setString(1, linkedOrganization.getNameLinkedOrganization());
-            ps.setString(2, linkedOrganization.getCellPhoneLinkedOrganization());
-            ps.setString(3, linkedOrganization.getEmailLinkedOrganization());
-            ps.setString(4, String.valueOf(linkedOrganization.getStatus()));
+            preparedStatement.setString(1, linkedOrganization.getNameLinkedOrganization());
+            preparedStatement.setString(2, linkedOrganization.getCellPhoneLinkedOrganization());
+            preparedStatement.setString(3, linkedOrganization.getEmailLinkedOrganization());
+            preparedStatement.setString(4, String.valueOf(linkedOrganization.getStatus()));
 
-            int affectedRows = ps.executeUpdate();
+            int affectedRows = preparedStatement.executeUpdate();
 
             if (affectedRows > 0) {
-                try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         int generatedId = generatedKeys.getInt(1);
                         linkedOrganization.setIdLinkedOrganization(generatedId);
-                        logger.info("Organización vinculada agregada exitosamente - ID: {}, Nombre: {}",
-                                generatedId, linkedOrganization.getNameLinkedOrganization());
                         return true;
                     }
                 }
             }
-            logger.warn("No se pudo agregar la organización vinculada: {}", linkedOrganization.getNameLinkedOrganization());
             return false;
-        } catch (SQLException e) {
-            logger.error("Error al agregar organización vinculada: {}", linkedOrganization.getNameLinkedOrganization(), e);
-            throw e;
         }
     }
 
     public boolean deleteLinkedOrganization(LinkedOrganization linkedOrganization) throws SQLException {
         if (linkedOrganization == null) {
-            logger.warn("Intento de eliminar organización vinculada nula");
-            return false;
+            throw new IllegalArgumentException("La organización vinculada no debe ser nula");
         }
-
-        logger.debug("Eliminando organización vinculada ID: {}", linkedOrganization.getIdLinkedOrganization());
 
         String sql = "DELETE FROM organizacion_vinculada WHERE id_empresa = ?";
 
-        try (Connection connection = getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setInt(1, linkedOrganization.getIdLinkedOrganization());
-            boolean result = ps.executeUpdate() > 0;
-            if (result) {
-                logger.info("Organización vinculada eliminada exitosamente - ID: {}", linkedOrganization.getIdLinkedOrganization());
-            } else {
-                logger.warn("No se encontró organización vinculada con ID: {} para eliminar", linkedOrganization.getIdLinkedOrganization());
-            }
-            return result;
-        } catch (SQLException e) {
-            logger.error("Error al eliminar organización vinculada ID: {}", linkedOrganization.getIdLinkedOrganization(), e);
-            throw e;
+            preparedStatement.setInt(1, linkedOrganization.getIdLinkedOrganization());
+            return preparedStatement.executeUpdate() > 0;
         }
     }
 
     public boolean updateLinkedOrganization(LinkedOrganization linkedOrganization) throws SQLException {
         if (linkedOrganization == null) {
-            logger.warn("Intento de actualizar organización vinculada nula");
-            return false;
+            throw new IllegalArgumentException("La organización vinculada no debe ser nula");
         }
-
-        logger.debug("Actualizando organización vinculada ID: {}", linkedOrganization.getIdLinkedOrganization());
 
         String sql = "UPDATE organizacion_vinculada SET nombre_empresa = ?, telefono = ?, correo_empresarial = ?, estado = ? WHERE id_empresa = ?";
 
-        try (Connection connection = getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setString(1, linkedOrganization.getNameLinkedOrganization());
-            ps.setString(2, linkedOrganization.getCellPhoneLinkedOrganization());
-            ps.setString(3, linkedOrganization.getEmailLinkedOrganization());
-            ps.setString(4, String.valueOf(linkedOrganization.getStatus()));
-            ps.setInt(5, linkedOrganization.getIdLinkedOrganization());
+            preparedStatement.setString(1, linkedOrganization.getNameLinkedOrganization());
+            preparedStatement.setString(2, linkedOrganization.getCellPhoneLinkedOrganization());
+            preparedStatement.setString(3, linkedOrganization.getEmailLinkedOrganization());
+            preparedStatement.setString(4, String.valueOf(linkedOrganization.getStatus()));
+            preparedStatement.setInt(5, linkedOrganization.getIdLinkedOrganization());
 
-            boolean result = ps.executeUpdate() > 0;
-            if (result) {
-                logger.info("Organización vinculada actualizada exitosamente - ID: {}", linkedOrganization.getIdLinkedOrganization());
-            } else {
-                logger.warn("No se encontró organización vinculada con ID: {} para actualizar", linkedOrganization.getIdLinkedOrganization());
-            }
-            return result;
-        } catch (SQLException e) {
-            logger.error("Error al actualizar organización vinculada ID: {}", linkedOrganization.getIdLinkedOrganization(), e);
-            throw e;
+            return preparedStatement.executeUpdate() > 0;
         }
     }
 
     public List<LinkedOrganization> getAllLinkedOrganizations() throws SQLException {
-        logger.info("Obteniendo todas las organizaciones vinculadas");
-
         String sql = "SELECT id_empresa, nombre_empresa, telefono, correo_empresarial, estado FROM organizacion_vinculada";
         List<LinkedOrganization> organizations = new ArrayList<>();
 
-        try (Connection connection = getConnection();
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+        try (Connection connection = ConnectionDataBase.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
 
-            while (rs.next()) {
-                LinkedOrganization org = new LinkedOrganization(
-                        rs.getInt("id_empresa"),
-                        rs.getString("nombre_empresa"),
-                        rs.getString("telefono"),
-                        rs.getString("correo_empresarial"),
-                        rs.getString("estado").charAt(0)
-                );
-                organizations.add(org);
+            while (resultSet.next()) {
+                organizations.add(new LinkedOrganization(
+                        resultSet.getInt("id_empresa"),
+                        resultSet.getString("nombre_empresa"),
+                        resultSet.getString("telefono"),
+                        resultSet.getString("correo_empresarial"),
+                        resultSet.getString("estado").charAt(0)
+                ));
             }
-            logger.debug("Se encontraron {} organizaciones vinculadas", organizations.size());
-        } catch (SQLException e) {
-            logger.error("Error al obtener todas las organizaciones vinculadas", e);
-            throw e;
         }
         return organizations;
     }
 
     public LinkedOrganization getLinkedOrganizationByTitle(String title) throws SQLException {
         if (title == null || title.isEmpty()) {
-            logger.warn("Intento de buscar organización vinculada con título nulo o vacío");
-            return null;
+            throw new IllegalArgumentException("El nombre de la organización no debe ser nulo o vacío");
         }
-
-        logger.debug("Buscando organización vinculada por título: {}", title);
 
         String sql = "SELECT id_empresa, nombre_empresa, telefono, correo_empresarial, estado FROM organizacion_vinculada WHERE nombre_empresa = ?";
 
-        try (Connection connection = getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setString(1, title);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    logger.debug("Organización vinculada encontrada con título: {}", title);
+            preparedStatement.setString(1, title);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
                     return new LinkedOrganization(
-                            rs.getInt("id_empresa"),
-                            rs.getString("nombre_empresa"),
-                            rs.getString("telefono"),
-                            rs.getString("correo_empresarial"),
-                            rs.getString("estado").charAt(0)
+                            resultSet.getInt("id_empresa"),
+                            resultSet.getString("nombre_empresa"),
+                            resultSet.getString("telefono"),
+                            resultSet.getString("correo_empresarial"),
+                            resultSet.getString("estado").charAt(0)
                     );
                 }
             }
-        } catch (SQLException e) {
-            logger.error("Error al buscar organización vinculada por título: {}", title, e);
-            throw e;
         }
-        logger.info("No se encontró organización vinculada con título: {}", title);
-        return null;
+        return EMPTY_ORGANIZATION;
     }
 
     public LinkedOrganization getLinkedOrganizationByID(int id) throws SQLException {
         if (id <= 0) {
-            logger.warn("Intento de buscar organización vinculada con ID inválido: {}", id);
-            return null;
+            return EMPTY_ORGANIZATION;
         }
-
-        logger.debug("Buscando organización vinculada por ID: {}", id);
 
         String sql = "SELECT id_empresa, nombre_empresa, telefono, correo_empresarial, estado FROM organizacion_vinculada WHERE id_empresa = ?";
 
-        try (Connection connection = getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setInt(1, id);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    logger.debug("Organización vinculada encontrada con ID: {}", id);
+            preparedStatement.setInt(1, id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
                     return new LinkedOrganization(
-                            rs.getInt("id_empresa"),
-                            rs.getString("nombre_empresa"),
-                            rs.getString("telefono"),
-                            rs.getString("correo_empresarial"),
-                            rs.getString("estado").charAt(0)
+                            resultSet.getInt("id_empresa"),
+                            resultSet.getString("nombre_empresa"),
+                            resultSet.getString("telefono"),
+                            resultSet.getString("correo_empresarial"),
+                            resultSet.getString("estado").charAt(0)
                     );
                 }
             }
-        } catch (SQLException e) {
-            logger.error("Error al buscar organización vinculada por ID: {}", id, e);
-            throw e;
         }
-        logger.info("No se encontró organización vinculada con ID: {}", id);
-        return null;
+        return EMPTY_ORGANIZATION;
     }
 
     public boolean linkedOrganizationExists(String title) throws SQLException {
         if (title == null || title.isEmpty()) {
-            logger.warn("Intento de verificar existencia con título nulo o vacío");
-            return false;
+            throw new IllegalArgumentException("El nombre de la organización no debe ser nulo o vacío");
         }
-
-        logger.debug("Verificando existencia de organización vinculada con título: {}", title);
 
         String sql = "SELECT 1 FROM organizacion_vinculada WHERE nombre_empresa = ?";
 
-        try (Connection connection = getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setString(1, title);
-            try (ResultSet rs = ps.executeQuery()) {
-                boolean exists = rs.next();
-                logger.debug("¿Organización vinculada '{}' existe?: {}", title, exists);
-                return exists;
+            preparedStatement.setString(1, title);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return resultSet.next();
             }
-        } catch (SQLException e) {
-            logger.error("Error al verificar existencia de organización vinculada: {}", title, e);
-            throw e;
         }
     }
 
     public int countLinkedOrganizations() throws SQLException {
-        logger.debug("Contando organizaciones vinculadas");
-
         String sql = "SELECT COUNT(*) FROM organizacion_vinculada";
 
-        try (Connection connection = getConnection();
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+        try (Connection connection = ConnectionDataBase.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
 
-            int count = rs.next() ? rs.getInt(1) : 0;
-            logger.info("Total de organizaciones vinculadas: {}", count);
-            return count;
-        } catch (SQLException e) {
-            logger.error("Error al contar organizaciones vinculadas", e);
-            throw e;
+            return resultSet.next() ? resultSet.getInt(1) : 0;
         }
     }
 
     public boolean phoneNumberExists(String phone) throws SQLException {
         if (phone == null || phone.isEmpty()) {
-            logger.warn("Intento de verificar teléfono nulo o vacío");
-            return false;
+            throw new IllegalArgumentException("El teléfono no debe ser nulo o vacío");
         }
 
         String sql = "SELECT 1 FROM organizacion_vinculada WHERE telefono = ?";
 
-        try (Connection connection = getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setString(1, phone);
-            try (ResultSet rs = ps.executeQuery()) {
-                return rs.next();
+            preparedStatement.setString(1, phone);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return resultSet.next();
             }
-        } catch (SQLException e) {
-            logger.error("Error al verificar existencia de teléfono: {}", phone, e);
-            throw e;
         }
     }
 
     public boolean emailExists(String email) throws SQLException {
         if (email == null || email.isEmpty()) {
-            logger.warn("Intento de verificar email nulo o vacío");
-            return false;
+            throw new IllegalArgumentException("El correo electrónico no debe ser nulo o vacío");
         }
 
         String sql = "SELECT 1 FROM organizacion_vinculada WHERE correo_empresarial = ?";
 
-        try (Connection connection = getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setString(1, email);
-            try (ResultSet rs = ps.executeQuery()) {
-                return rs.next();
+            preparedStatement.setString(1, email);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return resultSet.next();
             }
-        } catch (SQLException e) {
-            logger.error("Error al verificar existencia de email: {}", email, e);
-            throw e;
         }
     }
 
     public int getRepresentativeId(int organizationId) throws SQLException {
         String sql = "SELECT id_representante FROM organizacionvinculada WHERE id_organizacion = ?";
 
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            stmt.setInt(1, organizationId);
+            statement.setInt(1, organizationId);
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt("id_representante");
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("id_representante");
                 }
                 return -1;
             }

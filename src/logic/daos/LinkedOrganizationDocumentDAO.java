@@ -3,16 +3,18 @@ package logic.daos;
 import dataaccess.ConnectionDataBase;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class LinkedOrganizationDocumentDAO {
     private static final Logger logger = LogManager.getLogger(LinkedOrganizationDocumentDAO.class);
+    private static final byte[] EMPTY_DOCUMENT = new byte[0];
 
     public boolean insertDocument(int organizationId, String fileName, String fileType, byte[] fileBytes) throws SQLException {
         if (organizationId <= 0 || fileName == null || fileType == null || fileBytes == null) {
-            logger.warn("Intento de insertar documento con parámetros inválidos");
-            return false;
+            throw new IllegalArgumentException("Parámetros inválidos para insertar documento");
         }
 
         logger.debug("Insertando documento para organización ID: {} - Nombre archivo: {}", organizationId, fileName);
@@ -20,14 +22,14 @@ public class LinkedOrganizationDocumentDAO {
         String sql = "INSERT INTO documentos_organizacion (id_empresa, nombre_archivo, tipo_archivo, archivo) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setInt(1, organizationId);
-            ps.setString(2, fileName);
-            ps.setString(3, fileType);
-            ps.setBytes(4, fileBytes);
+            preparedStatement.setInt(1, organizationId);
+            preparedStatement.setString(2, fileName);
+            preparedStatement.setString(3, fileType);
+            preparedStatement.setBytes(4, fileBytes);
 
-            int affectedRows = ps.executeUpdate();
+            int affectedRows = preparedStatement.executeUpdate();
             boolean success = affectedRows > 0;
 
             if (success) {
@@ -45,8 +47,7 @@ public class LinkedOrganizationDocumentDAO {
 
     public byte[] getDocumentByOrganizationId(int organizationId) throws SQLException {
         if (organizationId <= 0) {
-            logger.warn("Intento de obtener documento con ID de organización inválido: {}", organizationId);
-            return null;
+            return EMPTY_DOCUMENT;
         }
 
         logger.debug("Obteniendo documento para organización ID: {}", organizationId);
@@ -54,13 +55,13 @@ public class LinkedOrganizationDocumentDAO {
         String sql = "SELECT archivo FROM documentos_organizacion WHERE id_empresa = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setInt(1, organizationId);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
+            preparedStatement.setInt(1, organizationId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
                     logger.debug("Documento encontrado para organización ID: {}", organizationId);
-                    return rs.getBytes("archivo");
+                    return resultSet.getBytes("archivo");
                 }
             }
         } catch (SQLException e) {
@@ -69,13 +70,12 @@ public class LinkedOrganizationDocumentDAO {
         }
 
         logger.info("No se encontró documento para organización ID: {}", organizationId);
-        return null;
+        return EMPTY_DOCUMENT;
     }
 
     public boolean deleteDocument(int organizationId) throws SQLException {
         if (organizationId <= 0) {
-            logger.warn("Intento de eliminar documento con ID de organización inválido: {}", organizationId);
-            return false;
+            throw new IllegalArgumentException("ID de organización inválido para eliminar documento");
         }
 
         logger.debug("Eliminando documento para organización ID: {}", organizationId);
@@ -83,10 +83,10 @@ public class LinkedOrganizationDocumentDAO {
         String sql = "DELETE FROM documentos_organizacion WHERE id_empresa = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setInt(1, organizationId);
-            int affectedRows = ps.executeUpdate();
+            preparedStatement.setInt(1, organizationId);
+            int affectedRows = preparedStatement.executeUpdate();
             boolean success = affectedRows > 0;
 
             if (success) {
@@ -104,7 +104,6 @@ public class LinkedOrganizationDocumentDAO {
 
     public boolean documentExists(int organizationId) throws SQLException {
         if (organizationId <= 0) {
-            logger.warn("Intento de verificar existencia de documento con ID de organización inválido: {}", organizationId);
             return false;
         }
 
@@ -113,11 +112,11 @@ public class LinkedOrganizationDocumentDAO {
         String sql = "SELECT 1 FROM documentos_organizacion WHERE id_empresa = ? LIMIT 1";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setInt(1, organizationId);
-            try (ResultSet rs = ps.executeQuery()) {
-                boolean exists = rs.next();
+            preparedStatement.setInt(1, organizationId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                boolean exists = resultSet.next();
                 logger.debug("¿Documento existe para organización ID {}?: {}", organizationId, exists);
                 return exists;
             }
@@ -129,7 +128,6 @@ public class LinkedOrganizationDocumentDAO {
 
     public String getDocumentInfo(int organizationId) throws SQLException {
         if (organizationId <= 0) {
-            logger.warn("Intento de obtener información de documento con ID de organización inválido: {}", organizationId);
             return null;
         }
 
@@ -138,15 +136,15 @@ public class LinkedOrganizationDocumentDAO {
         String sql = "SELECT nombre_archivo, tipo_archivo, fecha_subida FROM documentos_organizacion WHERE id_empresa = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setInt(1, organizationId);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
+            preparedStatement.setInt(1, organizationId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
                     String info = String.format("Nombre: %s, Tipo: %s, Fecha: %s",
-                            rs.getString("nombre_archivo"),
-                            rs.getString("tipo_archivo"),
-                            rs.getTimestamp("fecha_subida"));
+                            resultSet.getString("nombre_archivo"),
+                            resultSet.getString("tipo_archivo"),
+                            resultSet.getTimestamp("fecha_subida"));
                     logger.debug("Información de documento encontrada para organización ID: {} - {}", organizationId, info);
                     return info;
                 }
@@ -161,15 +159,19 @@ public class LinkedOrganizationDocumentDAO {
     }
 
     public String getDocumentType(int organizationId) throws SQLException {
+        if (organizationId <= 0) {
+            throw new IllegalArgumentException("ID de organización inválido para obtener tipo de documento");
+        }
+
         String sql = "SELECT tipo_archivo FROM documentos_organizacion WHERE id_empresa = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setInt(1, organizationId);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getString("tipo_archivo");
+            preparedStatement.setInt(1, organizationId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getString("tipo_archivo");
                 }
             }
         }

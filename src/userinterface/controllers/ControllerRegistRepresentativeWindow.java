@@ -5,7 +5,10 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import logic.daos.LinkedOrganizationDAO;
 import logic.daos.RepresentativeDAO;
@@ -13,7 +16,6 @@ import logic.logicclasses.LinkedOrganization;
 import logic.logicclasses.Representative;
 import userinterface.utilities.Validators;
 import userinterface.windows.RegistRepresentativeWindow;
-
 import java.sql.SQLException;
 import java.util.List;
 
@@ -61,7 +63,6 @@ public class ControllerRegistRepresentativeWindow implements EventHandler<Action
         createdRepresentative = new Representative(0, name, email, phone, null);
 
         try {
-            // Se registra sin organización (Id_empresa null)
             boolean success = representativeDAO.addRepresentativeWithoutOrganization(createdRepresentative);
             if (success) {
                 showSuccessAndOpenOrganizationSelector();

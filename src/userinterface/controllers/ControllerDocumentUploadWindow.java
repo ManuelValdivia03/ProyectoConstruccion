@@ -13,25 +13,34 @@ import userinterface.windows.DocumentUploadWindow;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Optional;
+import java.util.Objects;
 
 public class ControllerDocumentUploadWindow implements EventHandler<ActionEvent> {
     private static final Logger logger = LogManager.getLogger(ControllerDocumentUploadWindow.class);
+    private static final String ERROR_TEXT_STYLE = "-fx-text-fill: #cc0000;";
+    private static final String CONFIRMATION_TITLE = "Confirmar cancelación";
+    private static final String CONFIRMATION_HEADER = "¿Está seguro que desea cancelar?";
+    private static final String CONFIRMATION_CONTENT = "El registro de la organización será eliminado si no sube el documento.";
 
     private final DocumentUploadWindow view;
     private final Stage stage;
     private final LinkedOrganizationDocumentDAO documentDAO;
-    private final Runnable onSuccess;
-    private final Runnable onCancel;
+    private final Runnable onSuccessCallback;
+    private final Runnable onCancelCallback;
     private boolean documentUploaded = false;
 
     public ControllerDocumentUploadWindow(DocumentUploadWindow view, Stage stage,
-                                          Runnable onSuccess, Runnable onCancel) {
-        this.view = view;
-        this.stage = stage;
+                                          Runnable onSuccessCallback, Runnable onCancelCallback) {
+        this.view = Objects.requireNonNull(view, "DocumentUploadWindow view cannot be null");
+        this.stage = Objects.requireNonNull(stage, "Stage cannot be null");
         this.documentDAO = new LinkedOrganizationDocumentDAO();
-        this.onSuccess = onSuccess;
-        this.onCancel = onCancel;
+        this.onSuccessCallback = Objects.requireNonNull(onSuccessCallback, "Success callback cannot be null");
+        this.onCancelCallback = Objects.requireNonNull(onCancelCallback, "Cancel callback cannot be null");
 
+        initializeController();
+    }
+
+    private void initializeController() {
         setupEventHandlers();
         setupWindowCloseHandler();
     }
@@ -42,9 +51,9 @@ public class ControllerDocumentUploadWindow implements EventHandler<ActionEvent>
     }
 
     private void setupWindowCloseHandler() {
-        stage.setOnCloseRequest(e -> {
+        stage.setOnCloseRequest(event -> {
             if (!documentUploaded) {
-                e.consume();
+                event.consume();
                 confirmCancel();
             }
         });
@@ -61,34 +70,43 @@ public class ControllerDocumentUploadWindow implements EventHandler<ActionEvent>
 
     private void handleUploadDocument() {
         try {
-            if (view.getFileType() == null) {
-                showError("Seleccione el tipo de documento");
-                return;
-            }
+            validateDocumentSelection();
 
-            byte[] fileBytes = view.getFileBytes();
-            if (fileBytes == null) {
-                showError("Seleccione un archivo");
-                return;
-            }
-
-            if (documentDAO.insertDocument(
+            boolean uploadSuccessful = documentDAO.insertDocument(
                     view.getOrganizationId(),
                     view.getFileName(),
                     view.getFileType(),
-                    fileBytes)) {
+                    view.getFileBytes());
 
-                documentUploaded = true;
-                closeWindow();
-                onSuccess.run();
-            } else {
-                showError("Error al subir el documento");
-            }
+            handleUploadResult(uploadSuccessful);
 
         } catch (IOException | SQLException e) {
-            showError("Error: " + e.getMessage());
-            logger.error("Error al subir documento", e);
+            handleUploadError(e);
         }
+    }
+
+    private void validateDocumentSelection() throws IOException {
+        if (view.getFileType() == null) {
+            throw new IllegalStateException("Document type not selected");
+        }
+        if (view.getFileBytes() == null) {
+            throw new IllegalStateException("No file selected");
+        }
+    }
+
+    private void handleUploadResult(boolean uploadSuccessful) {
+        if (uploadSuccessful) {
+            documentUploaded = true;
+            closeWindow();
+            onSuccessCallback.run();
+        } else {
+            showError("Error al subir el documento");
+        }
+    }
+
+    private void handleUploadError(Exception e) {
+        logger.error("Error uploading document", e);
+        showError("Error: " + e.getMessage());
     }
 
     private void handleCancel() {
@@ -96,27 +114,30 @@ public class ControllerDocumentUploadWindow implements EventHandler<ActionEvent>
     }
 
     private void confirmCancel() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmar cancelación");
-        alert.setHeaderText("¿Está seguro que desea cancelar?");
-        alert.setContentText("El registro de la organización será eliminado si no sube el documento.");
+        Alert confirmationDialog = createConfirmationDialog();
+        Optional<ButtonType> result = confirmationDialog.showAndWait();
 
-        Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             documentUploaded = false;
             closeWindow();
-            onCancel.run(); // Notificar cancelación
+            onCancelCallback.run();
         }
     }
 
+    private Alert createConfirmationDialog() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(CONFIRMATION_TITLE);
+        alert.setHeaderText(CONFIRMATION_HEADER);
+        alert.setContentText(CONFIRMATION_CONTENT);
+        return alert;
+    }
+
     private void closeWindow() {
-        if (stage != null) {
-            stage.close();
-        }
+        stage.close();
     }
 
     private void showError(String message) {
         view.getResultLabel().setText(message);
-        view.getResultLabel().setStyle("-fx-text-fill: #cc0000;");
+        view.getResultLabel().setStyle(ERROR_TEXT_STYLE);
     }
 }

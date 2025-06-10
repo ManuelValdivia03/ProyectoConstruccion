@@ -5,26 +5,36 @@ import javafx.event.EventHandler;
 import logic.daos.StudentDAO;
 import logic.logicclasses.Student;
 import userinterface.windows.AssignGradeWindow;
-
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class ControllerAssignGradeWindow implements EventHandler<ActionEvent> {
+    private static final String SUCCESS_STYLE = "-fx-text-fill: #009900;";
+    private static final String ERROR_STYLE = "-fx-text-fill: #cc0000;";
+    private static final int MIN_GRADE = 0;
+    private static final int MAX_GRADE = 10;
+
     private final AssignGradeWindow view;
     private final StudentDAO studentDAO;
     private final Student student;
     private final Runnable refreshCallback;
 
     public ControllerAssignGradeWindow(AssignGradeWindow view, Student student, Runnable callback) {
-        this.view = view;
+        this.view = Objects.requireNonNull(view, "Vista no puede ser nula");
         this.studentDAO = new StudentDAO();
-        this.student = student;
+        this.student = Objects.requireNonNull(student, "Estudiante no puede ser nulo");
         this.refreshCallback = callback;
+
+        initializeView();
+    }
+
+    private void initializeView() {
         setupEventHandlers();
     }
 
     private void setupEventHandlers() {
         view.getConfirmButton().setOnAction(this);
-        view.getCancelButton().setOnAction(event -> closeWindow());
+        view.getCancelButton().setOnAction(this::handleCancel);
     }
 
     @Override
@@ -38,18 +48,11 @@ public class ControllerAssignGradeWindow implements EventHandler<ActionEvent> {
         try {
             String gradeText = view.getGradeField().getText().trim();
 
-            if (!validateGrade(gradeText)) {
-                return;
+            if (isValidGrade(gradeText)) {
+                int grade = Integer.parseInt(gradeText);
+                updateStudentGrade(grade);
+                handleSuccess();
             }
-
-            int grade = Integer.parseInt(gradeText);
-            updateStudentGrade(grade);
-
-            showSuccess();
-            if (refreshCallback != null) {
-                refreshCallback.run();
-            }
-
         } catch (NumberFormatException e) {
             showError("La calificación debe ser un número entero");
         } catch (SQLException e) {
@@ -57,7 +60,7 @@ public class ControllerAssignGradeWindow implements EventHandler<ActionEvent> {
         }
     }
 
-    private boolean validateGrade(String gradeText) {
+    private boolean isValidGrade(String gradeText) {
         if (gradeText.isEmpty()) {
             showError("La calificación no puede estar vacía");
             return false;
@@ -65,32 +68,45 @@ public class ControllerAssignGradeWindow implements EventHandler<ActionEvent> {
 
         try {
             int grade = Integer.parseInt(gradeText);
-            if (grade < 0 || grade > 10) {
-                showError("La calificación debe estar entre 0 y 10");
+            if (grade < MIN_GRADE || grade > MAX_GRADE) {
+                showError(String.format("La calificación debe estar entre %d y %d", MIN_GRADE, MAX_GRADE));
                 return false;
             }
             return true;
         } catch (NumberFormatException e) {
-            showError("La calificación debe ser un número válido");
+            showError("Formato de calificación inválido");
             return false;
         }
     }
 
     private void updateStudentGrade(int grade) throws SQLException {
-        if (!studentDAO.updateStudentGrade(student.getIdUser(), grade)) {
+        boolean success = studentDAO.updateStudentGrade(student.getIdUser(), grade);
+        if (!success) {
             throw new SQLException("No se pudo actualizar la calificación");
         }
         student.setGrade(grade);
     }
 
-    private void showSuccess() {
-        view.getMessageLabel().setText("Calificación actualizada correctamente");
-        view.getMessageLabel().setStyle("-fx-text-fill: #009900;");
+    private void handleSuccess() {
+        showSuccess("Calificación actualizada correctamente");
+        if (refreshCallback != null) {
+            refreshCallback.run();
+        }
+        closeWindow();
+    }
+
+    private void handleCancel(ActionEvent event) {
+        closeWindow();
+    }
+
+    private void showSuccess(String message) {
+        view.getMessageLabel().setText(message);
+        view.getMessageLabel().setStyle(SUCCESS_STYLE);
     }
 
     private void showError(String message) {
         view.getMessageLabel().setText(message);
-        view.getMessageLabel().setStyle("-fx-text-fill: #cc0000;");
+        view.getMessageLabel().setStyle(ERROR_STYLE);
     }
 
     private void closeWindow() {

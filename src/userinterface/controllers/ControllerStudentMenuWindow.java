@@ -1,42 +1,99 @@
 package userinterface.controllers;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import logic.logicclasses.Student;
-import userinterface.windows.*;
+import userinterface.windows.EditProfileStudentWindow;
+import userinterface.windows.StudentMenuWindow;
 
-public class ControllerStudentMenuWindow implements EventHandler<ActionEvent> {
+public class ControllerStudentMenuWindow {
+    private static final int WINDOW_WIDTH = 1024;
+    private static final int WINDOW_HEIGHT = 768;
+    private static final int PROFILE_WINDOW_WIDTH = 600;
+    private static final int PROFILE_WINDOW_HEIGHT = 400;
+
     private final StudentMenuWindow view;
-    private final Stage stage;
-    private final Runnable onLogout;
+    private final Stage primaryStage;
+    private final Runnable logoutHandler;
     private final Student student;
 
-    public ControllerStudentMenuWindow(Stage stage, Student student, Runnable onLogout) {
-        this.stage = stage;
-        this.onLogout = onLogout;
+    public ControllerStudentMenuWindow(Stage primaryStage, Student student, Runnable logoutHandler) {
+        this.primaryStage = primaryStage;
         this.student = student;
+        this.logoutHandler = logoutHandler;
         this.view = new StudentMenuWindow(student);
 
+        initializeView();
         setupEventHandlers();
-        initializeStage();
+    }
+
+    private void initializeView() {
+        Scene scene = new Scene(view.getView(), WINDOW_WIDTH, WINDOW_HEIGHT);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Sistema de Estudiantes - Universidad");
+        primaryStage.show();
     }
 
     private void setupEventHandlers() {
-        view.getLogoutButton().setOnAction(e -> {
-            onLogout.run();
-            stage.close();
-        });
+        view.getLogoutButton().setOnAction(this::handleLogout);
+        view.getProfileButton().setOnAction(this::handleProfileButton);
+        view.getRequestProjectButton().setOnAction(this::handleProjectRequest);
+        view.getViewAssignedProjectButton().setOnAction(this::handleAssignedProject);
+        view.getViewScheduleButton().setOnAction(this::handleSchedule);
+        view.getRegisterSelfEvaluationButton().setOnAction(this::handleSelfEvaluation);
+        view.getRegisterMonthlyReportButton().setOnAction(this::handleMonthlyReport);
+        view.getViewEvaluationsButton().setOnAction(this::handleEvaluations);
+    }
 
-        view.getProfileButton().setOnAction(e -> showAccountUpdateWindow());
+    private void handleLogout(ActionEvent event) {
+        logoutHandler.run();
+        primaryStage.close();
+    }
 
-        view.getRequestProjectButton().setOnAction(e -> showProjectRequestWindow());
-        view.getViewAssignedProjectButton().setOnAction(e -> showAssignedProjectWindow());
-        view.getViewScheduleButton().setOnAction(e -> showScheduleWindow());
-        view.getRegisterSelfEvaluationButton().setOnAction(e -> showSelfEvaluationWindow());
-        view.getRegisterMonthlyReportButton().setOnAction(e -> showMonthlyReportWindow());
-        view.getViewEvaluationsButton().setOnAction(e -> showEvaluationsWindow());
+    private void handleProfileButton(ActionEvent event) {
+        showAccountUpdateWindow();
+    }
+
+    private void handleProjectRequest(ActionEvent event) {
+        showProjectRequestWindow();
+    }
+
+    private void handleAssignedProject(ActionEvent event) {
+        showAssignedProjectWindow();
+    }
+
+    private void handleSchedule(ActionEvent event) {
+        showScheduleWindow();
+    }
+
+    private void handleSelfEvaluation(ActionEvent event) {
+        showSelfEvaluationWindow();
+    }
+
+    private void handleMonthlyReport(ActionEvent event) {
+        showMonthlyReportWindow();
+    }
+
+    private void handleEvaluations(ActionEvent event) {
+        showEvaluationsWindow();
+    }
+
+    private void showAccountUpdateWindow() {
+        EditProfileStudentWindow editProfileView = new EditProfileStudentWindow();
+        Stage profileStage = new Stage();
+
+        new ControllerEditProfileStudentWindow(
+                editProfileView,
+                student,
+                profileStage,
+                () -> {}
+        );
+
+        Scene profileScene = new Scene(editProfileView.getView(), PROFILE_WINDOW_WIDTH, PROFILE_WINDOW_HEIGHT);
+        profileStage.setScene(profileScene);
+        profileStage.setTitle("Actualizar Cuenta");
+        profileStage.show();
     }
 
     private void showProjectRequestWindow() {
@@ -55,32 +112,5 @@ public class ControllerStudentMenuWindow implements EventHandler<ActionEvent> {
     }
 
     private void showEvaluationsWindow() {
-    }
-
-    private void showAccountUpdateWindow() {
-        EditProfileStudentWindow editProfileStudent = new EditProfileStudentWindow();
-        Stage accountStage = new Stage();
-        new ControllerEditProfileStudentWindow(
-                editProfileStudent,
-                student,
-                accountStage,
-                () -> {
-                }
-        );
-
-        accountStage.setScene(new Scene(editProfileStudent.getView(), 600, 400));
-        accountStage.setTitle("Actualizar Cuenta");
-        accountStage.show();
-    }
-
-    private void initializeStage() {
-        stage.setScene(new Scene(view.getView(), 1024, 768));
-        stage.setTitle("Sistema de Estudiantes - Universidad");
-        stage.show();
-    }
-
-    @Override
-    public void handle(ActionEvent event) {
-        // Manejo de eventos específicos
     }
 }

@@ -6,7 +6,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -22,24 +26,33 @@ import userinterface.utilities.Validators;
 import userinterface.windows.CreateAcademicWindow;
 
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent> {
+    private static final String ERROR_STYLE = "-fx-border-color: #ff0000; -fx-border-width: 1px;";
+    private static final String ERROR_TEXT_STYLE = "-fx-text-fill: #cc0000;";
+    private static final String SUCCESS_DIALOG_STYLE = "-fx-background-color: #f8f8f8; -fx-border-color: #4CAF50; -fx-border-width: 2px;";
+    private static final String SUCCESS_MESSAGE_STYLE = "-fx-font-size: 14px; -fx-font-weight: bold;";
+    private static final String SUCCESS_ICON_PATH = "/images/exito.png";
+
     private final CreateAcademicWindow view;
     private final AcademicDAO academicDAO;
     private final UserDAO userDAO;
     private final AccountDAO accountDAO;
+    private final Validators validators;
 
     public ControllerCreateAcademicWindow(CreateAcademicWindow view) {
-        this.view = view;
+        this.view = Objects.requireNonNull(view, "CreateAcademicWindow no puede ser nulo");
         this.academicDAO = new AcademicDAO();
         this.userDAO = new UserDAO();
         this.accountDAO = new AccountDAO();
+        this.validators = new Validators();
         setupEventHandlers();
     }
 
     private void setupEventHandlers() {
         view.getAddButton().setOnAction(this);
-        view.getCancelButton().setOnAction(event -> handleCancel());
+        view.getCancelButton().setOnAction(this::handleCancel);
     }
 
     @Override
@@ -57,32 +70,23 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
                 return;
             }
 
-            String name = view.getNameField().getText().trim();
-            String phone = view.getPhoneField().getText().trim();
-            String staffNumber = view.getStaffNumberField().getText().trim();
-            String email = view.getEmailField().getText().trim();
-            String passwordPlain = view.getPassword();
-            String passwordHashed = PasswordUtils.hashPassword(passwordPlain);
-            AcademicType type = AcademicType.valueOf(view.getTypeComboBox().getValue());
-            if(!verifyDataUniqueness(phone, staffNumber, email)){
+            AcademicData academicData = collectAcademicData();
+            if (!verifyDataUniqueness(academicData.phone(), academicData.staffNumber(), academicData.email())) {
                 return;
             }
 
-            User user = createAndSaveUser(name, phone);
-            Academic academic = createAndSaveAcademic(user, staffNumber, type);
-            createAndSaveAccount(user, email, passwordHashed);
+            User user = createAndSaveUser(academicData.name(), academicData.phone());
+            createAndSaveAcademic(user, academicData.staffNumber(), academicData.type());
+            createAndSaveAccount(user, academicData.email(), PasswordUtils.hashPassword(academicData.password()));
 
             showSuccessAndReset();
 
         } catch (RepeatedCellPhoneException e) {
-            showError("El número de teléfono ya está registrado");
-            highlightField(view.getPhoneField());
+            showFieldError("El número de teléfono ya está registrado", view.getPhoneField());
         } catch (RepeatedStaffNumberException e) {
-            showError("El número de personal ya está registrado");
-            highlightField(view.getStaffNumberField());
+            showFieldError("El número de personal ya está registrado", view.getStaffNumberField());
         } catch (RepeatedEmailException e) {
-            showError("El email ya está registrado");
-            highlightField(view.getEmailField());
+            showFieldError("El email ya está registrado", view.getEmailField());
         } catch (SQLException e) {
             showError("Error de base de datos: " + e.getMessage());
         } catch (IllegalArgumentException e) {
@@ -90,7 +94,18 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
         }
     }
 
-    private void handleCancel() {
+    private AcademicData collectAcademicData() {
+        return new AcademicData(
+                view.getNameField().getText().trim(),
+                view.getPhoneField().getText().trim(),
+                view.getStaffNumberField().getText().trim(),
+                view.getEmailField().getText().trim(),
+                view.getPassword(),
+                AcademicType.valueOf(view.getTypeComboBox().getValue())
+        );
+    }
+
+    private void handleCancel(ActionEvent event) {
         clearFields();
         view.getView().getScene().getWindow().hide();
     }
@@ -98,38 +113,34 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
     private boolean validateAllFields() {
         boolean isValid = true;
         resetFieldStyles();
-        Validators validators = new Validators();
 
-        if (view.getNameField().getText().trim().isEmpty()) {
-            showError("Nombre completo es obligatorio");
-            highlightField(view.getNameField());
-            isValid = false;
-        }
+        isValid &= validateField(view.getNameField().getText().trim().isEmpty(),
+                "Nombre completo es obligatorio", view.getNameField());
 
-        if (!validators.validateCellPhone(view.getPhoneField().getText())) {
-            showError("Teléfono debe tener 10 dígitos");
-            highlightField(view.getPhoneField());
-            isValid = false;
-        }
+        isValid &= validateField(!validators.validateCellPhone(view.getPhoneField().getText()),
+                "Teléfono debe tener 10 dígitos", view.getPhoneField());
 
-        if (!validators.validateStaffNumber(view.getStaffNumberField().getText())) {
-            showError("Número de personal debe tener 5 dígitos");
-            highlightField(view.getStaffNumberField());
-            isValid = false;
-        }
+        isValid &= validateField(!validators.validateStaffNumber(view.getStaffNumberField().getText()),
+                "Número de personal debe tener 5 dígitos", view.getStaffNumberField());
 
-        if (!validators.validateEmail(view.getEmailField().getText())) {
-            showError("Formato de email inválido");
-            highlightField(view.getEmailField());
-            isValid = false;
-        }
+        isValid &= validateField(!validators.validateEmail(view.getEmailField().getText()),
+                "Formato de email inválido", view.getEmailField());
 
-        if (!validators.validatePassword(view.getPassword())) {
-            showError("Contraseña debe tener al menos 8 caracteres");
-            isValid = false;
-        }
+        isValid &= validateField(!validators.validatePassword(view.getPassword()),
+                "Contraseña debe tener al menos 8 caracteres", null);
 
         return isValid;
+    }
+
+    private boolean validateField(boolean condition, String errorMessage, TextField field) {
+        if (condition) {
+            showError(errorMessage);
+            if (field != null) {
+                highlightField(field);
+            }
+            return false;
+        }
+        return true;
     }
 
     private boolean verifyDataUniqueness(String phone, String staffNumber, String email)
@@ -154,7 +165,7 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
         return user;
     }
 
-    private Academic createAndSaveAcademic(User user, String staffNumber, AcademicType type) throws SQLException {
+    private void createAndSaveAcademic(User user, String staffNumber, AcademicType type) throws SQLException {
         Academic academic = new Academic(
                 user.getIdUser(),
                 user.getFullName(),
@@ -168,7 +179,6 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
             userDAO.deleteUser(user.getIdUser());
             throw new SQLException("No se pudo registrar el académico");
         }
-        return academic;
     }
 
     private void createAndSaveAccount(User user, String email, String password) throws SQLException {
@@ -189,16 +199,20 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
     private void showCustomSuccessDialog() {
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Operación exitosa");
+        dialog.getDialogPane().getButtonTypes().add(new ButtonType("Aceptar", ButtonBar.ButtonData.OK_DONE));
+        dialog.getDialogPane().setContent(createSuccessContent());
+        dialog.getDialogPane().setStyle(SUCCESS_DIALOG_STYLE);
+        dialog.showAndWait().ifPresent(response -> clearFields());
+    }
 
-        ButtonType okButton = new ButtonType("Aceptar", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().add(okButton);
-
+    private VBox createSuccessContent() {
         VBox content = new VBox(10);
         content.setAlignment(Pos.CENTER);
         content.setPadding(new Insets(20));
 
         try {
-            ImageView icon = new ImageView(new Image(getClass().getResourceAsStream("/images/exito.png")));
+            ImageView icon = new ImageView(new Image(Objects.requireNonNull(
+                    getClass().getResourceAsStream(SUCCESS_ICON_PATH))));
             icon.setFitHeight(50);
             icon.setFitWidth(50);
             content.getChildren().add(icon);
@@ -206,21 +220,11 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
             System.err.println("No se pudo cargar el icono: " + e.getMessage());
         }
 
-        Label message = new Label("¡Academico registrado correctamente!");
-        message.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
+        Label message = new Label("¡Académico registrado correctamente!");
+        message.setStyle(SUCCESS_MESSAGE_STYLE);
         content.getChildren().add(message);
 
-        dialog.getDialogPane().setContent(content);
-
-        dialog.getDialogPane().setStyle(
-                "-fx-background-color: #f8f8f8;" +
-                        "-fx-border-color: #4CAF50;" +
-                        "-fx-border-width: 2px;"
-        );
-
-        dialog.showAndWait().ifPresent(response -> {
-            clearFields();
-        });
+        return content;
     }
 
     private void resetFieldStyles() {
@@ -231,13 +235,18 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
     }
 
     private void highlightField(TextField field) {
-        field.setStyle("-fx-border-color: #ff0000; -fx-border-width: 1px;");
+        field.setStyle(ERROR_STYLE);
+    }
+
+    private void showFieldError(String message, TextField field) {
+        showError(message);
+        highlightField(field);
     }
 
     private void showError(String message) {
         Platform.runLater(() -> {
             view.getResultLabel().setText(message);
-            view.getResultLabel().setStyle("-fx-text-fill: #cc0000;");
+            view.getResultLabel().setStyle(ERROR_TEXT_STYLE);
         });
     }
 
@@ -254,4 +263,13 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
         view.getTypeComboBox().setValue("Evaluador");
         clearError();
     }
+
+    private record AcademicData(
+            String name,
+            String phone,
+            String staffNumber,
+            String email,
+            String password,
+            AcademicType type
+    ) {}
 }

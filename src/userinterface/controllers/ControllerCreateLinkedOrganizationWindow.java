@@ -20,16 +20,26 @@ import logic.logicclasses.LinkedOrganization;
 import userinterface.utilities.Validators;
 import userinterface.windows.CreateLinkedOrganizationWindow;
 import userinterface.windows.DocumentUploadWindow;
+
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class ControllerCreateLinkedOrganizationWindow implements EventHandler<ActionEvent> {
+    private static final String ERROR_STYLE = "-fx-border-color: #ff0000; -fx-border-width: 1px;";
+    private static final String ERROR_TEXT_STYLE = "-fx-text-fill: #cc0000;";
+    private static final String SUCCESS_DIALOG_STYLE = "-fx-background-color: #f8f8f8; -fx-border-color: #4CAF50; -fx-border-width: 2px;";
+    private static final String SUCCESS_MESSAGE_STYLE = "-fx-font-size: 14px; -fx-font-weight: bold;";
+    private static final String SUCCESS_ICON_PATH = "/images/exito.png";
+    private static final int DOCUMENT_WINDOW_WIDTH = 500;
+    private static final int DOCUMENT_WINDOW_HEIGHT = 350;
+
     private final CreateLinkedOrganizationWindow view;
     private final LinkedOrganizationDAO linkedOrganizationDAO;
     private final Validators validators;
     private LinkedOrganization organization;
 
     public ControllerCreateLinkedOrganizationWindow(CreateLinkedOrganizationWindow view) {
-        this.view = view;
+        this.view = Objects.requireNonNull(view, "CreateLinkedOrganizationWindow no puede ser nulo");
         this.linkedOrganizationDAO = new LinkedOrganizationDAO();
         this.validators = new Validators();
         setupEventHandlers();
@@ -37,7 +47,7 @@ public class ControllerCreateLinkedOrganizationWindow implements EventHandler<Ac
 
     private void setupEventHandlers() {
         view.getAddButton().setOnAction(this);
-        view.getCancelButton().setOnAction(event -> handleCancel());
+        view.getCancelButton().setOnAction(this::handleCancel);
     }
 
     @Override
@@ -56,14 +66,10 @@ public class ControllerCreateLinkedOrganizationWindow implements EventHandler<Ac
                 return;
             }
 
-            String name = view.getNameField().getText().trim();
-            String phone = view.getPhoneField().getText().trim();
-            String email = view.getEmailField().getText().trim();
+            OrganizationData data = collectOrganizationData();
+            verifyDataUniqueness(data.name(), data.phone(), data.email());
 
-            verifyDataUniqueness(name, phone, email);
-
-            organization = createOrganization(name, phone, email);
-
+            organization = createOrganization(data);
             if (linkedOrganizationDAO.addLinkedOrganization(organization)) {
                 showSuccessAndReset();
             } else {
@@ -71,41 +77,48 @@ public class ControllerCreateLinkedOrganizationWindow implements EventHandler<Ac
             }
 
         } catch (RepeatedNameLinkedOrganizationException e) {
-            showError(e.getMessage());
-            highlightField(view.getNameField());
+            showFieldError(e.getMessage(), view.getNameField());
         } catch (RepeatedCellPhoneException e) {
-            showError(e.getMessage());
-            highlightField(view.getPhoneField());
+            showFieldError(e.getMessage(), view.getPhoneField());
         } catch (RepeatedEmailException e) {
-            showError(e.getMessage());
-            highlightField(view.getEmailField());
+            showFieldError(e.getMessage(), view.getEmailField());
         } catch (SQLException e) {
             showError("Error de base de datos: " + e.getMessage());
         }
     }
 
+    private OrganizationData collectOrganizationData() {
+        return new OrganizationData(
+                view.getNameField().getText().trim(),
+                view.getPhoneField().getText().trim(),
+                view.getEmailField().getText().trim()
+        );
+    }
+
     private boolean validateAllFields() {
         boolean isValid = true;
 
-        if (view.getNameField().getText().isEmpty()) {
-            showError("Nombre de la organización es obligatorio");
-            highlightField(view.getNameField());
-            isValid = false;
-        }
+        isValid &= validateField(view.getNameField().getText().isEmpty(),
+                "Nombre de la organización es obligatorio", view.getNameField());
 
-        if (!validators.validateCellPhone(view.getPhoneField().getText())) {
-            showError("Teléfono debe tener 10 dígitos");
-            highlightField(view.getPhoneField());
-            isValid = false;
-        }
+        isValid &= validateField(!validators.validateCellPhone(view.getPhoneField().getText()),
+                "Teléfono debe tener 10 dígitos", view.getPhoneField());
 
-        if (!validators.validateEmail(view.getEmailField().getText())) {
-            showError("Formato de email inválido");
-            highlightField(view.getEmailField());
-            isValid = false;
-        }
+        isValid &= validateField(!validators.validateEmail(view.getEmailField().getText()),
+                "Formato de email inválido", view.getEmailField());
 
         return isValid;
+    }
+
+    private boolean validateField(boolean condition, String errorMessage, TextField field) {
+        if (condition) {
+            showError(errorMessage);
+            if (field != null) {
+                highlightField(field);
+            }
+            return false;
+        }
+        return true;
     }
 
     private void verifyDataUniqueness(String name, String phone, String email)
@@ -125,35 +138,37 @@ public class ControllerCreateLinkedOrganizationWindow implements EventHandler<Ac
         }
     }
 
-    private LinkedOrganization createOrganization(String name, String phone, String email) {
+    private LinkedOrganization createOrganization(OrganizationData data) {
         LinkedOrganization organization = new LinkedOrganization();
-        organization.setNameLinkedOrganization(name);
-        organization.setCellPhoneLinkedOrganization(phone);
-        organization.setEmailLinkedOrganization(email);
+        organization.setNameLinkedOrganization(data.name());
+        organization.setCellPhoneLinkedOrganization(data.phone());
+        organization.setEmailLinkedOrganization(data.email());
         organization.setStatus('A');
         return organization;
     }
 
     private void showSuccessAndReset() {
-        Platform.runLater(() -> {
-            openDocumentUploadWindow(organization.getIdLinkedOrganization());
-        });
+        Platform.runLater(() -> openDocumentUploadWindow(organization.getIdLinkedOrganization()));
     }
 
     private void showCustomSuccessDialog() {
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Operación exitosa");
         dialog.setHeaderText(null);
+        dialog.getDialogPane().getButtonTypes().add(new ButtonType("Aceptar", ButtonBar.ButtonData.OK_DONE));
+        dialog.getDialogPane().setContent(createSuccessContent());
+        dialog.getDialogPane().setStyle(SUCCESS_DIALOG_STYLE);
+        dialog.showAndWait();
+    }
 
-        ButtonType okButton = new ButtonType("Aceptar", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().add(okButton);
-
+    private VBox createSuccessContent() {
         VBox content = new VBox(10);
         content.setAlignment(Pos.CENTER);
         content.setPadding(new Insets(20));
 
         try {
-            ImageView icon = new ImageView(new Image(getClass().getResourceAsStream("/images/exito.png")));
+            ImageView icon = new ImageView(new Image(Objects.requireNonNull(
+                    getClass().getResourceAsStream(SUCCESS_ICON_PATH))));
             icon.setFitHeight(50);
             icon.setFitWidth(50);
             content.getChildren().add(icon);
@@ -162,20 +177,13 @@ public class ControllerCreateLinkedOrganizationWindow implements EventHandler<Ac
         }
 
         Label message = new Label("¡Organización registrada correctamente!");
-        message.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
+        message.setStyle(SUCCESS_MESSAGE_STYLE);
         content.getChildren().add(message);
 
-        dialog.getDialogPane().setContent(content);
-        dialog.getDialogPane().setStyle(
-                "-fx-background-color: #f8f8f8;" +
-                        "-fx-border-color: #4CAF50;" +
-                        "-fx-border-width: 2px;"
-        );
-
-        dialog.showAndWait();
+        return content;
     }
 
-    private void handleCancel() {
+    private void handleCancel(ActionEvent event) {
         clearFields();
         view.getView().getScene().getWindow().hide();
     }
@@ -194,13 +202,18 @@ public class ControllerCreateLinkedOrganizationWindow implements EventHandler<Ac
     }
 
     private void highlightField(TextField field) {
-        field.setStyle("-fx-border-color: #ff0000; -fx-border-width: 1px;");
+        field.setStyle(ERROR_STYLE);
+    }
+
+    private void showFieldError(String message, TextField field) {
+        showError(message);
+        highlightField(field);
     }
 
     private void showError(String message) {
         Platform.runLater(() -> {
             view.getResultLabel().setText(message);
-            view.getResultLabel().setStyle("-fx-text-fill: #cc0000;");
+            view.getResultLabel().setStyle(ERROR_TEXT_STYLE);
         });
     }
 
@@ -223,7 +236,7 @@ public class ControllerCreateLinkedOrganizationWindow implements EventHandler<Ac
                     this::handleUploadCancel
             );
 
-            uploadStage.setScene(new Scene(uploadWindow.getView(), 500, 350));
+            uploadStage.setScene(new Scene(uploadWindow.getView(), DOCUMENT_WINDOW_WIDTH, DOCUMENT_WINDOW_HEIGHT));
             uploadStage.showAndWait();
 
         } catch (Exception e) {
@@ -258,4 +271,6 @@ public class ControllerCreateLinkedOrganizationWindow implements EventHandler<Ac
             alert.showAndWait();
         });
     }
+
+    private record OrganizationData(String name, String phone, String email) {}
 }

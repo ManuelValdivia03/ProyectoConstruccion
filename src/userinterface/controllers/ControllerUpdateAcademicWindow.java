@@ -1,7 +1,6 @@
 package userinterface.controllers;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import logic.daos.AccountDAO;
@@ -17,8 +16,16 @@ import userinterface.utilities.Validators;
 import userinterface.windows.UpdateAcademicWindow;
 
 import java.sql.SQLException;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
-public class ControllerUpdateAcademicWindow implements EventHandler<ActionEvent> {
+public class ControllerUpdateAcademicWindow {
+    private static final int SUCCESS_MESSAGE_DELAY_MS = 2000;
+    private static final String ERROR_STYLE = "-fx-border-color: #ff0000; -fx-border-width: 1px;";
+    private static final String SUCCESS_COLOR = "-fx-text-fill: #009900;";
+    private static final String ERROR_COLOR = "-fx-text-fill: #cc0000;";
+
     private final UpdateAcademicWindow view;
     private final AcademicDAO academicDAO;
     private final UserDAO userDAO;
@@ -27,6 +34,7 @@ public class ControllerUpdateAcademicWindow implements EventHandler<ActionEvent>
     private final String originalEmail;
     private final Stage currentStage;
     private final Runnable refreshCallback;
+    private final Validators validators;
 
     public ControllerUpdateAcademicWindow(UpdateAcademicWindow view, Academic academic,
                                           String email, Stage stage, Runnable callback) {
@@ -38,24 +46,22 @@ public class ControllerUpdateAcademicWindow implements EventHandler<ActionEvent>
         this.originalEmail = email;
         this.currentStage = stage;
         this.refreshCallback = callback;
+        this.validators = new Validators();
 
-        view.loadAcademicData(academic, email);
+        initializeView();
         setupEventHandlers();
     }
 
+    private void initializeView() {
+        view.loadAcademicData(originalAcademic, originalEmail);
+    }
+
     private void setupEventHandlers() {
-        view.getUpdateButton().setOnAction(this);
+        view.getUpdateButton().setOnAction(this::handleUpdateAcademic);
         view.getCancelButton().setOnAction(event -> currentStage.close());
     }
 
-    @Override
-    public void handle(ActionEvent event) {
-        if (event.getSource() == view.getUpdateButton()) {
-            handleUpdateAcademic();
-        }
-    }
-
-    private void handleUpdateAcademic() {
+    private void handleUpdateAcademic(ActionEvent event) {
         try {
             clearError();
 
@@ -71,19 +77,13 @@ public class ControllerUpdateAcademicWindow implements EventHandler<ActionEvent>
             char status = view.getStatusComboBox().getValue().charAt(0);
 
             verifyDataUniqueness(phone, email);
-
-            updateUser(name, phone, status);
-            updateAcademic(type);
-            updateAccount(email, password);
-
+            updateAcademicData(name, phone, email, password, type, status);
             showSuccessAndClose();
 
         } catch (RepeatedCellPhoneException e) {
-            showError("El número de teléfono ya está registrado");
-            highlightField(view.getPhoneField());
+            showError("El número de teléfono ya está registrado", view.getPhoneField());
         } catch (RepeatedEmailException e) {
-            showError("El email ya está registrado");
-            highlightField(view.getEmailField());
+            showError("El email ya está registrado", view.getEmailField());
         } catch (SQLException e) {
             showError("Error de base de datos: " + e.getMessage());
         } catch (IllegalArgumentException e) {
@@ -91,42 +91,42 @@ public class ControllerUpdateAcademicWindow implements EventHandler<ActionEvent>
         }
     }
 
+    private void updateAcademicData(String name, String phone, String email,
+                                    String password, AcademicType type, char status) throws SQLException {
+        updateUser(name, phone, status);
+        updateAcademic(type);
+        updateAccount(email, password);
+    }
+
     private boolean validateAllFields() {
         boolean isValid = true;
         resetFieldStyles();
-        Validators validators = new Validators();
 
-        if (view.getNameField().getText().trim().isEmpty()) {
-            showError("Nombre completo es obligatorio");
-            highlightField(view.getNameField());
-            isValid = false;
-        }
+        isValid &= validateField(view.getNameField(),
+                !view.getNameField().getText().trim().isEmpty(),
+                "Nombre completo es obligatorio");
 
-        if (!validators.validateCellPhone(view.getPhoneField().getText())) {
-            showError("Teléfono debe tener 10 dígitos");
-            highlightField(view.getPhoneField());
-            isValid = false;
-        }
+        isValid &= validateField(view.getPhoneField(),
+                validators.validateCellPhone(view.getPhoneField().getText()),
+                "Teléfono debe tener 10 dígitos");
 
-        if (view.getStaffNumberField().getText().trim().isEmpty()) {
-            showError("Número de personal es obligatorio");
-            highlightField(view.getStaffNumberField());
-            isValid = false;
-        }
+        isValid &= validateField(view.getStaffNumberField(),
+                validators.validateStaffNumber(view.getStaffNumberField().getText()),
+                "Número de personal debe tener 5 dígitos");
 
-        if (!validators.validateStaffNumber(view.getStaffNumberField().getText())) {
-            showError("Número de personal debe tener 5 dígitos");
-            highlightField(view.getStaffNumberField());
-            isValid = false;
-        }
-
-        if (!validators.validateEmail(view.getEmailField().getText())) {
-            showError("Formato de email inválido");
-            highlightField(view.getEmailField());
-            isValid = false;
-        }
+        isValid &= validateField(view.getEmailField(),
+                validators.validateEmail(view.getEmailField().getText()),
+                "Formato de email inválido");
 
         return isValid;
+    }
+
+    private boolean validateField(TextField field, boolean isValid, String errorMessage) {
+        if (!isValid) {
+            showError(errorMessage, field);
+            return false;
+        }
+        return true;
     }
 
     private void verifyDataUniqueness(String phone, String email)
@@ -145,12 +145,11 @@ public class ControllerUpdateAcademicWindow implements EventHandler<ActionEvent>
     }
 
     private void updateUser(String name, String phone, char status) throws SQLException {
-        originalAcademic.setStatus(status);
         User user = new User(
                 originalAcademic.getIdUser(),
                 name,
                 phone,
-                originalAcademic.getStatus()
+                status
         );
 
         if (!userDAO.updateUser(user)) {
@@ -187,12 +186,11 @@ public class ControllerUpdateAcademicWindow implements EventHandler<ActionEvent>
 
     private void showSuccessAndClose() {
         view.getResultLabel().setText("Académico actualizado correctamente");
-        view.getResultLabel().setStyle("-fx-text-fill: #009900;");
-
+        view.getResultLabel().setStyle(SUCCESS_COLOR);
         view.getUpdateButton().setDisable(true);
 
-        new java.util.Timer().schedule(
-                new java.util.TimerTask() {
+        new Timer().schedule(
+                new TimerTask() {
                     @Override
                     public void run() {
                         javafx.application.Platform.runLater(() -> {
@@ -203,7 +201,7 @@ public class ControllerUpdateAcademicWindow implements EventHandler<ActionEvent>
                         });
                     }
                 },
-                2000
+                SUCCESS_MESSAGE_DELAY_MS
         );
     }
 
@@ -213,13 +211,18 @@ public class ControllerUpdateAcademicWindow implements EventHandler<ActionEvent>
         view.getEmailField().setStyle("");
     }
 
-    private void highlightField(TextField field) {
-        field.setStyle("-fx-border-color: #ff0000; -fx-border-width: 1px;");
+    private void showError(String message, TextField field) {
+        showError(message);
+        highlightField(field);
     }
 
     private void showError(String message) {
         view.getResultLabel().setText(message);
-        view.getResultLabel().setStyle("-fx-text-fill: #cc0000;");
+        view.getResultLabel().setStyle(ERROR_COLOR);
+    }
+
+    private void highlightField(TextField field) {
+        field.setStyle(ERROR_STYLE);
     }
 
     private void clearError() {

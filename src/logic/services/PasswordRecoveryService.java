@@ -8,7 +8,6 @@ import logic.logicclasses.Account;
 import logic.logicclasses.Academic;
 import logic.logicclasses.Coordinator;
 import logic.logicclasses.Student;
-import logic.logicclasses.User;
 import dataaccess.PasswordUtils;
 import logic.exceptions.UserNotFoundException;
 import java.sql.SQLException;
@@ -28,7 +27,6 @@ public class PasswordRecoveryService {
     }
 
     public boolean validateUser(String email, String identifier) throws UserNotFoundException, SQLException {
-        // Verificar si el email existe
         if (!accountDAO.accountExists(email)) {
             throw new UserNotFoundException("No se encontró una cuenta con ese correo electrónico");
         }
@@ -42,8 +40,8 @@ public class PasswordRecoveryService {
                 throw new UserNotFoundException("Número de personal no coincide");
             }
         }
-        else if (academicDAO.existsForUser(userId)) {
-            Academic acad = academicDAO.getFullAcademic(userId);
+        else if (academicDAO.existsAcademic(userId)) {
+            Academic acad = academicDAO.getAcademicById(userId);
             if (!acad.getStaffNumber().equals(identifier)) {
                 throw new UserNotFoundException("Número de personal no coincide");
             }

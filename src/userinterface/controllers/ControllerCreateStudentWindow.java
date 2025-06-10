@@ -6,11 +6,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ButtonBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -26,18 +26,29 @@ import logic.logicclasses.User;
 import userinterface.utilities.Validators;
 import userinterface.windows.CreateStudentWindow;
 import java.sql.SQLException;
+import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> {
+    private static final Logger LOGGER = Logger.getLogger(ControllerCreateStudentWindow.class.getName());
+    private static final String ERROR_STYLE = "-fx-border-color: #ff0000; -fx-border-width: 1px;";
+    private static final String SUCCESS_DIALOG_STYLE = "-fx-background-color: #f8f8f8; -fx-border-color: #4CAF50; -fx-border-width: 2px;";
+    private static final String ERROR_TEXT_STYLE = "-fx-text-fill: #cc0000;";
+    private static final String MESSAGE_STYLE = "-fx-font-size: 14px; -fx-font-weight: bold;";
+
     private final CreateStudentWindow view;
     private final StudentDAO studentDAO;
     private final UserDAO userDAO;
     private final AccountDAO accountDAO;
+    private final Validators validators;
 
     public ControllerCreateStudentWindow(CreateStudentWindow view) {
-        this.view = view;
+        this.view = Objects.requireNonNull(view, "CreateStudentWindow view cannot be null");
         this.studentDAO = new StudentDAO();
         this.userDAO = new UserDAO();
         this.accountDAO = new AccountDAO();
+        this.validators = new Validators();
         setupEventHandlers();
     }
 
@@ -61,63 +72,59 @@ public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> 
                 return;
             }
 
-            String name = view.getNameField().getText().trim();
-            String phone = view.getPhoneField().getText().trim();
-            String enrollment = view.getEnrollmentField().getText().trim();
-            String email = view.getEmailField().getText().trim();
-            String passwordPlain = view.getPassword();
-            String passwordHashed = PasswordUtils.hashPassword(passwordPlain);
+            StudentRegistrationData data = collectRegistrationData();
 
-            if (!verifyDataUniqueness(phone, enrollment, email)) {
+            if (!verifyDataUniqueness(data.phone(), data.enrollment(), data.email())) {
                 return;
             }
 
-            User user = createAndSaveUser(name, phone);
-            Student student = createAndSaveStudent(user, enrollment);
-            createAndSaveAccount(user, email, passwordHashed);
-
+            registerNewStudent(data);
             showSuccessAndReset();
 
         } catch (RepeatedCellPhoneException e) {
-            showError("El número de teléfono ya está registrado");
-            highlightField(view.getPhoneField());
+            showFieldError("El número de teléfono ya está registrado", view.getPhoneField());
         } catch (RepeatedEnrollmentException e) {
-            showError("La matrícula ya está registrada");
-            highlightField(view.getEnrollmentField());
+            showFieldError("La matrícula ya está registrada", view.getEnrollmentField());
         } catch (RepeatedEmailException e) {
-            showError("El email ya está registrado");
-            highlightField(view.getEmailField());
+            showFieldError("El email ya está registrado", view.getEmailField());
         } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Database error during student registration", e);
             showError("Error de base de datos: " + e.getMessage());
         }
+    }
+
+    private StudentRegistrationData collectRegistrationData() {
+        String name = view.getNameField().getText().trim();
+        String phone = view.getPhoneField().getText().trim();
+        String enrollment = view.getEnrollmentField().getText().trim();
+        String email = view.getEmailField().getText().trim();
+        String passwordPlain = view.getPassword();
+        String passwordHashed = PasswordUtils.hashPassword(passwordPlain);
+
+        return new StudentRegistrationData(name, phone, enrollment, email, passwordHashed);
     }
 
     private boolean validateAllFields() {
         boolean isValid = true;
         resetFieldStyles();
-        Validators validators = new Validators();
 
         if (view.getNameField().getText().isEmpty()) {
-            showError("Nombre completo es obligatorio");
-            highlightField(view.getNameField());
+            showFieldError("Nombre completo es obligatorio", view.getNameField());
             isValid = false;
         }
 
         if (!validators.validateCellPhone(view.getPhoneField().getText())) {
-            showError("Teléfono debe tener 10 dígitos");
-            highlightField(view.getPhoneField());
+            showFieldError("Teléfono debe tener 10 dígitos", view.getPhoneField());
             isValid = false;
         }
 
         if (!validators.validateEnrollment(view.getEnrollmentField().getText())) {
-            showError("Matrícula debe comenzar con S y tener 9 dígitos");
-            highlightField(view.getEnrollmentField());
+            showFieldError("Matrícula debe comenzar con S y tener 9 dígitos", view.getEnrollmentField());
             isValid = false;
         }
 
         if (!validators.validateEmail(view.getEmailField().getText())) {
-            showError("Formato de email inválido");
-            highlightField(view.getEmailField());
+            showFieldError("Formato de email inválido", view.getEmailField());
             isValid = false;
         }
 
@@ -132,15 +139,21 @@ public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> 
     private boolean verifyDataUniqueness(String phone, String enrollment, String email)
             throws SQLException, RepeatedCellPhoneException, RepeatedEnrollmentException, RepeatedEmailException {
         if (userDAO.cellPhoneExists(phone)) {
-            throw new RepeatedCellPhoneException("El número de teléfono ya está registrado");
+            throw new RepeatedCellPhoneException();
         }
         if (studentDAO.enrollmentExists(enrollment)) {
-            throw new RepeatedEnrollmentException("La matrícula ya está registrada");
+            throw new RepeatedEnrollmentException();
         }
         if (accountDAO.accountExists(email)) {
-            throw new RepeatedEmailException("El email ya está registrado");
+            throw new RepeatedEmailException();
         }
         return true;
+    }
+
+    private void registerNewStudent(StudentRegistrationData data) throws SQLException {
+        User user = createAndSaveUser(data.name(), data.phone());
+        createAndSaveStudent(user, data.enrollment());
+        createAndSaveAccount(user, data.email(), data.passwordHashed());
     }
 
     private User createAndSaveUser(String name, String phone) throws SQLException {
@@ -151,13 +164,12 @@ public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> 
         return user;
     }
 
-    private Student createAndSaveStudent(User user, String enrollment) throws SQLException {
-        Student student = new Student(user.getIdUser(), user.getFullName(), user.getCellPhone(), 'A', enrollment,0);
+    private void createAndSaveStudent(User user, String enrollment) throws SQLException {
+        Student student = new Student(user.getIdUser(), user.getFullName(), user.getCellPhone(), 'A', enrollment, 0);
         if (!studentDAO.addStudent(student)) {
             userDAO.deleteUser(user.getIdUser());
             throw new SQLException("No se pudo registrar el estudiante");
         }
-        return student;
     }
 
     private void createAndSaveAccount(User user, String email, String password) throws SQLException {
@@ -179,38 +191,35 @@ public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> 
     private void showCustomSuccessDialog() {
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Operación exitosa");
+        dialog.getDialogPane().getButtonTypes().add(new ButtonType("Aceptar", ButtonBar.ButtonData.OK_DONE));
 
-        ButtonType okButton = new ButtonType("Aceptar", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().add(okButton);
+        VBox content = createSuccessDialogContent();
+        dialog.getDialogPane().setContent(content);
+        dialog.getDialogPane().setStyle(SUCCESS_DIALOG_STYLE);
 
+        dialog.showAndWait();
+    }
+
+    private VBox createSuccessDialogContent() {
         VBox content = new VBox(10);
         content.setAlignment(Pos.CENTER);
         content.setPadding(new Insets(20));
 
         try {
-            ImageView icon = new ImageView(new Image(getClass().getResourceAsStream("/images/exito.png")));
+            ImageView icon = new ImageView(new Image(Objects.requireNonNull(
+                    getClass().getResourceAsStream("/images/exito.png"))));
             icon.setFitHeight(50);
             icon.setFitWidth(50);
             content.getChildren().add(icon);
         } catch (Exception e) {
-            System.err.println("No se pudo cargar el icono: " + e.getMessage());
+            LOGGER.log(Level.WARNING, "Could not load success icon", e);
         }
 
         Label message = new Label("¡Estudiante registrado correctamente!");
-        message.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
+        message.setStyle(MESSAGE_STYLE);
         content.getChildren().add(message);
 
-        dialog.getDialogPane().setContent(content);
-
-        dialog.getDialogPane().setStyle(
-                "-fx-background-color: #f8f8f8;" +
-                        "-fx-border-color: #4CAF50;" +
-                        "-fx-border-width: 2px;"
-        );
-
-        dialog.showAndWait().ifPresent(response -> {
-            clearFields();
-        });
+        return content;
     }
 
     private void handleCancel() {
@@ -234,18 +243,31 @@ public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> 
         view.getEmailField().setStyle("");
     }
 
+    private void showFieldError(String message, TextField field) {
+        showError(message);
+        highlightField(field);
+    }
+
     private void highlightField(TextField field) {
-        field.setStyle("-fx-border-color: #ff0000; -fx-border-width: 1px;");
+        field.setStyle(ERROR_STYLE);
     }
 
     private void showError(String message) {
         Platform.runLater(() -> {
             view.getResultLabel().setText(message);
-            view.getResultLabel().setStyle("-fx-text-fill: #cc0000;");
+            view.getResultLabel().setStyle(ERROR_TEXT_STYLE);
         });
     }
 
     private void clearError() {
         view.getResultLabel().setText("");
     }
+
+    private record StudentRegistrationData(
+            String name,
+            String phone,
+            String enrollment,
+            String email,
+            String passwordHashed
+    ) {}
 }

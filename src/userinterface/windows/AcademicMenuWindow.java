@@ -3,7 +3,11 @@ package userinterface.windows;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -19,7 +23,6 @@ public class AcademicMenuWindow {
     private Button logoutButton;
     private Button registerStudentButton;
     private Button consultStudentsButton;
-    private Button manageStudentButton;
     private Button registerFinalGradeButton;
     private Button consultPresentationEvaluationsButton;
     private Button registerPartialEvaluationButton;
@@ -210,10 +213,6 @@ public class AcademicMenuWindow {
 
     public Button getConsultStudentsButton() {
         return consultStudentsButton;
-    }
-
-    public Button getManageStudentButton() {
-        return manageStudentButton;
     }
 
     public Button getRegisterFinalGradeButton() {

@@ -16,6 +16,7 @@ import userinterface.windows.LinkOrganizationWindow;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Objects;
 
 public class ControllerConsultRepresentativesWindow {
     private final ConsultRepresentativesWindow view;
@@ -26,10 +27,10 @@ public class ControllerConsultRepresentativesWindow {
     private boolean hasSearchResults = false;
 
     public ControllerConsultRepresentativesWindow(ConsultRepresentativesWindow view, Stage stage) {
-        this.view = view;
+        this.view = Objects.requireNonNull(view, "La vista no puede ser nula");
         this.representativeDAO = new RepresentativeDAO();
         this.organizationDAO = new LinkedOrganizationDAO();
-        this.currentStage = stage;
+        this.currentStage = Objects.requireNonNull(stage, "El stage no puede ser nulo");
         this.allRepresentatives = FXCollections.observableArrayList();
 
         TableColumn<Representative, Void> assignCol = view.createAssignButtonColumn(this::handleAssignOrganization);
@@ -96,11 +97,12 @@ public class ControllerConsultRepresentativesWindow {
     }
 
     private void handleAssignOrganization(ActionEvent event) {
-        if (!(event.getSource() instanceof javafx.scene.control.Button)) {
+        Object source = event.getSource();
+        if (!(source instanceof javafx.scene.control.Button)) {
             return;
         }
 
-        javafx.scene.control.Button button = (javafx.scene.control.Button) event.getSource();
+        javafx.scene.control.Button button = (javafx.scene.control.Button) source;
         Representative rep = (Representative) button.getUserData();
 
         if (rep == null) {
@@ -108,11 +110,12 @@ public class ControllerConsultRepresentativesWindow {
         }
 
         LinkOrganizationWindow linkWindow = new LinkOrganizationWindow(linkEvent -> {
-            if (!(linkEvent.getSource() instanceof javafx.scene.control.Button)) {
+            Object linkSource = linkEvent.getSource();
+            if (!(linkSource instanceof javafx.scene.control.Button)) {
                 return;
             }
 
-            javafx.scene.control.Button linkButton = (javafx.scene.control.Button) linkEvent.getSource();
+            javafx.scene.control.Button linkButton = (javafx.scene.control.Button) linkSource;
             LinkedOrganization org = (LinkedOrganization) linkButton.getUserData();
 
             if (org == null) {

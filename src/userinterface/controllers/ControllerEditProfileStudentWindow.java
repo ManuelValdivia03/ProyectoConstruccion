@@ -8,24 +8,35 @@ import logic.logicclasses.Student;
 import logic.logicclasses.Account;
 import userinterface.utilities.Validators;
 import userinterface.windows.EditProfileStudentWindow;
-
 import java.sql.SQLException;
+import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ControllerEditProfileStudentWindow implements EventHandler<ActionEvent> {
+    private static final Logger LOGGER = Logger.getLogger(ControllerEditProfileStudentWindow.class.getName());
+    private static final String SUCCESS_STYLE = "-fx-text-fill: #009900;";
+    private static final String ERROR_STYLE = "-fx-text-fill: #cc0000;";
+    private static final int SUCCESS_MESSAGE_DELAY_MS = 2000;
+
     private final EditProfileStudentWindow view;
     private final AccountDAO accountDAO;
     private final Student originalStudent;
     private final Stage currentStage;
     private final Runnable refreshCallback;
-    private String originalEmail;
+    private final Validators validators;
+    private final String originalEmail;
 
     public ControllerEditProfileStudentWindow(EditProfileStudentWindow view, Student student,
                                               Stage stage, Runnable callback) {
-        this.view = view;
+        this.view = Objects.requireNonNull(view, "EditProfileStudentWindow view cannot be null");
         this.accountDAO = new AccountDAO();
-        this.originalStudent = student;
-        this.currentStage = stage;
-        this.refreshCallback = callback;
+        this.originalStudent = Objects.requireNonNull(student, "Student cannot be null");
+        this.currentStage = Objects.requireNonNull(stage, "Stage cannot be null");
+        this.refreshCallback = Objects.requireNonNull(callback, "Refresh callback cannot be null");
+        this.validators = new Validators();
 
         try {
             this.originalEmail = accountDAO.getAccountByUserId(student.getIdUser()).getEmail();
@@ -33,6 +44,7 @@ public class ControllerEditProfileStudentWindow implements EventHandler<ActionEv
             view.loadStudentData(student, originalEmail, status);
             setupEventHandlers();
         } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error loading student data", e);
             throw new RuntimeException("Error al cargar datos del estudiante", e);
         }
     }
@@ -61,30 +73,26 @@ public class ControllerEditProfileStudentWindow implements EventHandler<ActionEv
             String password = view.getPassword();
             String confirmPassword = view.getConfirmPassword();
 
-            if (!password.equals(confirmPassword)) {
-                showError("Las contraseñas no coinciden");
+            if (!validatePasswordsMatch(password, confirmPassword)) {
                 return;
             }
 
-            if (!email.equals(originalEmail)) {
-                if (accountDAO.accountExists(email)) {
-                    showError("El email ya está registrado");
-                    return;
-                }
+            if (!email.equals(originalEmail) && accountDAO.accountExists(email)) {
+                showError("El email ya está registrado");
+                return;
             }
 
             updateAccount(email, password);
-
             showSuccessAndClose();
 
         } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Database error during account update", e);
             showError("Error de base de datos: " + e.getMessage());
         }
     }
 
     private boolean validateAllFields() {
         boolean isValid = true;
-        Validators validators = new Validators();
 
         if (!validators.validateEmail(view.getEmailField().getText())) {
             showError("Formato de email inválido");
@@ -92,12 +100,20 @@ public class ControllerEditProfileStudentWindow implements EventHandler<ActionEv
         }
 
         String password = view.getPassword();
-        if (!password.isEmpty() && password.length() < 8) {
+        if (!password.isEmpty() && !validators.validatePassword(password)) {
             showError("La contraseña debe tener al menos 8 caracteres");
             isValid = false;
         }
 
         return isValid;
+    }
+
+    private boolean validatePasswordsMatch(String password, String confirmPassword) {
+        if (!password.equals(confirmPassword)) {
+            showError("Las contraseñas no coinciden");
+            return false;
+        }
+        return true;
     }
 
     private void updateAccount(String email, String password) throws SQLException {
@@ -114,27 +130,23 @@ public class ControllerEditProfileStudentWindow implements EventHandler<ActionEv
 
     private void showSuccessAndClose() {
         view.getResultLabel().setText("Cuenta actualizada correctamente");
-        view.getResultLabel().setStyle("-fx-text-fill: #009900;");
+        view.getResultLabel().setStyle(SUCCESS_STYLE);
 
-        new java.util.Timer().schedule(
-                new java.util.TimerTask() {
-                    @Override
-                    public void run() {
-                        javafx.application.Platform.runLater(() -> {
-                            currentStage.close();
-                            if (refreshCallback != null) {
-                                refreshCallback.run();
-                            }
-                        });
-                    }
-                },
-                2000
-        );
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                javafx.application.Platform.runLater(() -> {
+                    currentStage.close();
+                    refreshCallback.run();
+                });
+            }
+        }, SUCCESS_MESSAGE_DELAY_MS);
     }
 
     private void showError(String message) {
         view.getResultLabel().setText(message);
-        view.getResultLabel().setStyle("-fx-text-fill: #cc0000;");
+        view.getResultLabel().setStyle(ERROR_STYLE);
     }
 
     private void clearError() {

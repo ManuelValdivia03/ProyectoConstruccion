@@ -12,10 +12,12 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class StudentDAO implements IStudentDAO {
     private static final Logger logger = LogManager.getLogger(StudentDAO.class);
+    private static final Student EMPTY_STUDENT = new Student(-1, null, null, 'I', null, 0);
     private final UserDAO userDAO;
 
     public StudentDAO() {
@@ -33,13 +35,13 @@ public class StudentDAO implements IStudentDAO {
         String sql = "INSERT INTO estudiante (id_usuario, matricula, calificacion) VALUES (?, ?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setInt(1, student.getIdUser());
-            ps.setString(2, student.getEnrollment());
-            ps.setInt(3, student.getGrade());
+            preparedStatement.setInt(1, student.getIdUser());
+            preparedStatement.setString(2, student.getEnrollment());
+            preparedStatement.setInt(3, student.getGrade());
 
-            boolean result = ps.executeUpdate() > 0;
+            boolean result = preparedStatement.executeUpdate() > 0;
             if (result) {
                 logger.info("Estudiante agregado exitosamente - ID: {}, Matrícula: {}, Calificación: {}",
                         student.getIdUser(), student.getEnrollment(), student.getGrade());
@@ -54,11 +56,9 @@ public class StudentDAO implements IStudentDAO {
     }
 
     public Student getStudentByEnrollment(String enrollment) throws SQLException {
-        Student studentVoid = new Student(-1, null, null, 'I', null, 0);
-
         if (enrollment == null || enrollment.isEmpty()) {
             logger.warn("Intento de buscar estudiante con matrícula nula o vacía");
-            return studentVoid;
+            return EMPTY_STUDENT;
         }
 
         logger.debug("Buscando estudiante por matrícula: {}", enrollment);
@@ -68,29 +68,29 @@ public class StudentDAO implements IStudentDAO {
                 "WHERE e.matricula = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setString(1, enrollment);
+            preparedStatement.setString(1, enrollment);
 
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
                     logger.debug("Estudiante encontrado con matrícula: {}", enrollment);
                     Student student = new Student();
-                    student.setIdUser(rs.getInt("id_usuario"));
-                    student.setFullName(rs.getString("nombre_completo"));
-                    student.setCellphone(rs.getString("telefono"));
+                    student.setIdUser(resultSet.getInt("id_usuario"));
+                    student.setFullName(resultSet.getString("nombre_completo"));
+                    student.setCellphone(resultSet.getString("telefono"));
 
                     // Manejo seguro del estado
-                    String estado = rs.getString("estado");
+                    String estado = resultSet.getString("estado");
                     student.setStatus(estado != null && !estado.isEmpty() ? estado.charAt(0) : 'I');
 
-                    student.setEnrollment(rs.getString("matricula"));
-                    student.setGrade(rs.getInt("calificacion"));
+                    student.setEnrollment(resultSet.getString("matricula"));
+                    student.setGrade(resultSet.getInt("calificacion"));
                     return student;
                 }
 
                 logger.info("No se encontró estudiante con matrícula: {}", enrollment);
-                return studentVoid;
+                return EMPTY_STUDENT;
             }
         } catch (SQLException e) {
             logger.error("Error al buscar estudiante por matrícula: {}", enrollment, e);
@@ -105,17 +105,17 @@ public class StudentDAO implements IStudentDAO {
         List<Student> students = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
 
-            while (rs.next()) {
+            while (resultSet.next()) {
                 Student student = new Student();
-                student.setIdUser(rs.getInt("id_usuario"));
-                student.setFullName(rs.getString("nombre_completo"));
-                student.setCellphone(rs.getString("telefono"));
-                student.setStatus(rs.getString("estado").charAt(0));
-                student.setEnrollment(rs.getString("matricula"));
-                student.setGrade(rs.getInt("calificacion"));
+                student.setIdUser(resultSet.getInt("id_usuario"));
+                student.setFullName(resultSet.getString("nombre_completo"));
+                student.setCellphone(resultSet.getString("telefono"));
+                student.setStatus(resultSet.getString("estado").charAt(0));
+                student.setEnrollment(resultSet.getString("matricula"));
+                student.setGrade(resultSet.getInt("calificacion"));
                 students.add(student);
             }
             logger.debug("Se encontraron {} estudiantes", students.size());
@@ -133,19 +133,19 @@ public class StudentDAO implements IStudentDAO {
         List<Student> students = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setString(1, String.valueOf(status));
+            preparedStatement.setString(1, String.valueOf(status));
 
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
                     Student student = new Student();
-                    student.setIdUser(rs.getInt("id_usuario"));
-                    student.setFullName(rs.getString("nombre_completo"));
-                    student.setCellphone(rs.getString("telefono"));
-                    student.setStatus(rs.getString("estado").charAt(0));
-                    student.setEnrollment(rs.getString("matricula"));
-                    student.setGrade(rs.getInt("calificacion"));
+                    student.setIdUser(resultSet.getInt("id_usuario"));
+                    student.setFullName(resultSet.getString("nombre_completo"));
+                    student.setCellphone(resultSet.getString("telefono"));
+                    student.setStatus(resultSet.getString("estado").charAt(0));
+                    student.setEnrollment(resultSet.getString("matricula"));
+                    student.setGrade(resultSet.getInt("calificacion"));
                     students.add(student);
                 }
                 logger.debug("Se encontraron {} estudiantes con estado: {}", students.size(), status);
@@ -160,7 +160,7 @@ public class StudentDAO implements IStudentDAO {
     public Student getStudentById(int id) throws SQLException {
         if (id <= 0) {
             logger.warn("Intento de buscar estudiante con ID inválido: {}", id);
-            return null;
+            return EMPTY_STUDENT;
         }
 
         logger.debug("Buscando estudiante por ID: {}", id);
@@ -168,19 +168,19 @@ public class StudentDAO implements IStudentDAO {
         String sql = "SELECT u.*, e.matricula, e.calificacion FROM usuario u JOIN estudiante e ON u.id_usuario = e.id_usuario WHERE u.id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setInt(1, id);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
+            preparedStatement.setInt(1, id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
                     logger.debug("Estudiante encontrado con ID: {}", id);
                     Student student = new Student();
-                    student.setIdUser(rs.getInt("id_usuario"));
-                    student.setFullName(rs.getString("nombre_completo"));
-                    student.setCellphone(rs.getString("telefono"));
-                    student.setStatus(rs.getString("estado").charAt(0));
-                    student.setEnrollment(rs.getString("matricula"));
-                    student.setGrade(rs.getInt("calificacion"));
+                    student.setIdUser(resultSet.getInt("id_usuario"));
+                    student.setFullName(resultSet.getString("nombre_completo"));
+                    student.setCellphone(resultSet.getString("telefono"));
+                    student.setStatus(resultSet.getString("estado").charAt(0));
+                    student.setEnrollment(resultSet.getString("matricula"));
+                    student.setGrade(resultSet.getInt("calificacion"));
                     return student;
                 }
             }
@@ -189,7 +189,7 @@ public class StudentDAO implements IStudentDAO {
             throw e;
         }
         logger.info("No se encontró estudiante con ID: {}", id);
-        return null;
+        return EMPTY_STUDENT;
     }
 
     public boolean updateStudent(Student student) throws SQLException {
@@ -208,13 +208,13 @@ public class StudentDAO implements IStudentDAO {
         String sql = "UPDATE estudiante SET matricula = ?, calificacion = ? WHERE id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setString(1, student.getEnrollment());
-            ps.setInt(2, student.getGrade());
-            ps.setInt(3, student.getIdUser());
+            preparedStatement.setString(1, student.getEnrollment());
+            preparedStatement.setInt(2, student.getGrade());
+            preparedStatement.setInt(3, student.getIdUser());
 
-            boolean result = ps.executeUpdate() > 0;
+            boolean result = preparedStatement.executeUpdate() > 0;
             if (result) {
                 logger.info("Estudiante actualizado exitosamente - ID: {}, Calificación: {}",
                         student.getIdUser(), student.getGrade());
@@ -239,12 +239,12 @@ public class StudentDAO implements IStudentDAO {
         String sql = "UPDATE estudiante SET calificacion = ? WHERE id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setInt(1, grade);
-            ps.setInt(2, studentId);
+            preparedStatement.setInt(1, grade);
+            preparedStatement.setInt(2, studentId);
 
-            boolean result = ps.executeUpdate() > 0;
+            boolean result = preparedStatement.executeUpdate() > 0;
             if (result) {
                 logger.info("Calificación actualizada exitosamente - ID: {}, Nueva calificación: {}",
                         studentId, grade);
@@ -269,10 +269,10 @@ public class StudentDAO implements IStudentDAO {
         String sql = "DELETE FROM estudiante WHERE id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setInt(1, id);
-            ps.executeUpdate();
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             logger.error("Error al eliminar estudiante de la tabla estudiante ID: {}", id, e);
             throw e;
@@ -290,7 +290,7 @@ public class StudentDAO implements IStudentDAO {
     public List<Student> getStudentsByGroup(int nrc) throws SQLException {
         if (nrc <= 0) {
             logger.warn("Intento de buscar estudiantes con NRC inválido: {}", nrc);
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
 
         logger.debug("Buscando estudiantes por grupo NRC: {}", nrc);
@@ -300,18 +300,18 @@ public class StudentDAO implements IStudentDAO {
         List<Student> students = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setInt(1, nrc);
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
+            preparedStatement.setInt(1, nrc);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
                     Student student = new Student();
-                    student.setIdUser(rs.getInt("id_usuario"));
-                    student.setFullName(rs.getString("nombre_completo"));
-                    student.setCellphone(rs.getString("telefono"));
-                    student.setStatus(rs.getString("estado").charAt(0));
-                    student.setEnrollment(rs.getString("matricula"));
-                    student.setGrade(rs.getInt("calificacion"));
+                    student.setIdUser(resultSet.getInt("id_usuario"));
+                    student.setFullName(resultSet.getString("nombre_completo"));
+                    student.setCellphone(resultSet.getString("telefono"));
+                    student.setStatus(resultSet.getString("estado").charAt(0));
+                    student.setEnrollment(resultSet.getString("matricula"));
+                    student.setGrade(resultSet.getInt("calificacion"));
                     students.add(student);
                 }
             }
@@ -335,12 +335,12 @@ public class StudentDAO implements IStudentDAO {
         String sql = "INSERT INTO grupo_estudiante (nrc, id_usuario) VALUES (?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setInt(1, nrcGrupo);
-            ps.setInt(2, studentId);
+            preparedStatement.setInt(1, nrcGrupo);
+            preparedStatement.setInt(2, studentId);
 
-            boolean result = ps.executeUpdate() > 0;
+            boolean result = preparedStatement.executeUpdate() > 0;
             if (result) {
                 logger.info("Estudiante ID: {} asignado exitosamente al grupo NRC: {}", studentId, nrcGrupo);
             } else {
@@ -367,11 +367,11 @@ public class StudentDAO implements IStudentDAO {
         String sql = "SELECT 1 FROM estudiante WHERE id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setInt(1, id);
-            try (ResultSet rs = ps.executeQuery()) {
-                boolean exists = rs.next();
+            preparedStatement.setInt(1, id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                boolean exists = resultSet.next();
                 logger.debug("¿Estudiante ID {} existe?: {}", id, exists);
                 return exists;
             }
@@ -392,11 +392,11 @@ public class StudentDAO implements IStudentDAO {
         String sql = "SELECT 1 FROM estudiante WHERE matricula = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setString(1, enrollment);
-            try (ResultSet rs = ps.executeQuery()) {
-                boolean exists = rs.next();
+            preparedStatement.setString(1, enrollment);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                boolean exists = resultSet.next();
                 logger.debug("¿Matrícula '{}' existe?: {}", enrollment, exists);
                 if (exists) {
                     throw new RepeatedEnrollmentException("La matrícula ya está registrada");
@@ -415,10 +415,10 @@ public class StudentDAO implements IStudentDAO {
         String sql = "SELECT COUNT(*) FROM estudiante";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
 
-            int count = rs.next() ? rs.getInt(1) : 0;
+            int count = resultSet.next() ? resultSet.getInt(1) : 0;
             logger.info("Total de estudiantes: {}", count);
             return count;
         } catch (SQLException e) {
@@ -430,34 +430,38 @@ public class StudentDAO implements IStudentDAO {
     public boolean existsForUser(int userId) throws SQLException {
         String sql = "SELECT 1 FROM estudiante WHERE id_usuario = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
-        PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, userId);
-            return stmt.executeQuery().next();
+        PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, userId);
+            return statement.executeQuery().next();
         }
     }
 
     public Student getFullStudent(int userId) throws SQLException {
+        if (userId <= 0) {
+            return EMPTY_STUDENT;
+        }
+
         String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.estado, " +
                 "e.matricula, e.calificacion FROM usuario u " +
                 "JOIN estudiante e ON u.id_usuario = e.id_usuario " +
                 "WHERE u.id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-        PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, userId);
-            ResultSet rs = stmt.executeQuery();
+        PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
 
-            if (rs.next()) {
+            if (resultSet.next()) {
                 return new Student(
-                        rs.getInt("id_usuario"),
-                        rs.getString("nombre_completo"),
-                        rs.getString("telefono"),
-                        rs.getString("estado").charAt(0),
-                        rs.getString("matricula"),
-                        rs.getInt("calificacion")
+                        resultSet.getInt("id_usuario"),
+                        resultSet.getString("nombre_completo"),
+                        resultSet.getString("telefono"),
+                        resultSet.getString("estado").charAt(0),
+                        resultSet.getString("matricula"),
+                        resultSet.getInt("calificacion")
                 );
             }
         }
-        return null;
+        return EMPTY_STUDENT;
     }
 }

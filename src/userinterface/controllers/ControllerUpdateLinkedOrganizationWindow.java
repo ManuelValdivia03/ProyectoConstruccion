@@ -1,7 +1,6 @@
 package userinterface.controllers;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import logic.daos.LinkedOrganizationDAO;
@@ -14,7 +13,10 @@ import userinterface.windows.UpdateLinkedOrganizationWindow;
 import java.sql.SQLException;
 import java.util.function.Consumer;
 
-public class ControllerUpdateLinkedOrganizationWindow implements EventHandler<ActionEvent> {
+public class ControllerUpdateLinkedOrganizationWindow {
+    private static final String ERROR_BORDER_STYLE = "-fx-border-color: #ff0000;";
+    private static final String DEFAULT_BORDER_STYLE = "";
+
     private final UpdateLinkedOrganizationWindow view;
     private final LinkedOrganization originalOrg;
     private final Stage currentStage;
@@ -33,100 +35,118 @@ public class ControllerUpdateLinkedOrganizationWindow implements EventHandler<Ac
         this.organizationDAO = new LinkedOrganizationDAO();
         this.validators = new Validators();
 
-        view.setOrganizationData(org);
+        initializeView();
         setupEventHandlers();
     }
 
+    private void initializeView() {
+        view.setOrganizationData(originalOrg);
+    }
+
     private void setupEventHandlers() {
-        view.getUpdateButton().setOnAction(this);
+        view.getUpdateButton().setOnAction(this::handleUpdateOrganization);
         view.getCancelButton().setOnAction(event -> currentStage.close());
     }
 
-    @Override
-    public void handle(ActionEvent event) {
-        if (event.getSource() == view.getUpdateButton()) {
-            handleUpdateOrganization();
-        }
-    }
-
-    private void handleUpdateOrganization() {
+    private void handleUpdateOrganization(ActionEvent event) {
         try {
             if (!validateFields()) {
                 return;
             }
 
-            LinkedOrganization updatedOrg = view.getUpdatedOrganization(originalOrg.getIdLinkedOrganization());
-
-            // Verificar unicidad de teléfono y email (excluyendo el registro actual)
+            LinkedOrganization updatedOrg = createUpdatedOrganization();
             verifyDataUniqueness(updatedOrg);
+            updateOrganization(updatedOrg);
 
-            if (organizationDAO.updateLinkedOrganization(updatedOrg)) {
-                showAlert(Alert.AlertType.INFORMATION, "Éxito",
-                        "Organización actualizada correctamente");
-                refreshCallback.accept(null);
-                currentStage.close();
-            } else {
-                showAlert(Alert.AlertType.ERROR, "Error",
-                        "No se pudo actualizar la organización");
-            }
         } catch (RepeatedCellPhoneException e) {
-            view.getResultLabel().setText("El teléfono ya está registrado en otra organización");
-            view.getPhoneField().setStyle("-fx-border-color: #ff0000;");
+            showFieldError("El teléfono ya está registrado en otra organización", view.getPhoneField());
         } catch (RepeatedEmailException e) {
-            view.getResultLabel().setText("El email ya está registrado en otra organización");
-            view.getEmailField().setStyle("-fx-border-color: #ff0000;");
+            showFieldError("El email ya está registrado en otra organización", view.getEmailField());
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Error de base de datos",
                     "Ocurrió un error al actualizar: " + e.getMessage());
         }
     }
 
+    private LinkedOrganization createUpdatedOrganization() {
+        return view.getUpdatedOrganization(originalOrg.getIdLinkedOrganization());
+    }
+
+    private void updateOrganization(LinkedOrganization updatedOrg) throws SQLException {
+        if (organizationDAO.updateLinkedOrganization(updatedOrg)) {
+            showSuccessAndClose();
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Error", "No se pudo actualizar la organización");
+        }
+    }
+
+    private void showSuccessAndClose() {
+        showAlert(Alert.AlertType.INFORMATION, "Éxito", "Organización actualizada correctamente");
+        refreshCallback.accept(null);
+        currentStage.close();
+    }
+
     private boolean validateFields() {
         boolean isValid = true;
         resetFieldStyles();
-        view.getResultLabel().setText("");
+        clearErrorMessage();
 
-        if (view.getNameField().getText().isEmpty()) {
-            view.getResultLabel().setText("Nombre es obligatorio");
-            view.getNameField().setStyle("-fx-border-color: #ff0000;");
-            isValid = false;
-        }
+        isValid &= validateField(view.getNameField(),
+                !view.getNameField().getText().isEmpty(),
+                "Nombre es obligatorio");
 
-        if (!validators.validateCellPhone(view.getPhoneField().getText())) {
-            view.getResultLabel().setText("Teléfono debe tener 10 dígitos");
-            view.getPhoneField().setStyle("-fx-border-color: #ff0000;");
-            isValid = false;
-        }
+        isValid &= validateField(view.getPhoneField(),
+                validators.validateCellPhone(view.getPhoneField().getText()),
+                "Teléfono debe tener 10 dígitos");
 
-        if (!validators.validateEmail(view.getEmailField().getText())) {
-            view.getResultLabel().setText("Formato de email inválido");
-            view.getEmailField().setStyle("-fx-border-color: #ff0000;");
-            isValid = false;
-        }
+        isValid &= validateField(view.getEmailField(),
+                validators.validateEmail(view.getEmailField().getText()),
+                "Formato de email inválido");
 
         return isValid;
+    }
+
+    private boolean validateField(javafx.scene.control.TextField field, boolean isValid, String errorMessage) {
+        if (!isValid) {
+            showFieldError(errorMessage, field);
+            return false;
+        }
+        return true;
     }
 
     private void verifyDataUniqueness(LinkedOrganization org)
             throws SQLException, RepeatedCellPhoneException, RepeatedEmailException {
 
-        // Verificar si el teléfono ya existe en otra organización
-        if (organizationDAO.phoneNumberExists(org.getCellPhoneLinkedOrganization()) &&
-                !org.getCellPhoneLinkedOrganization().equals(originalOrg.getCellPhoneLinkedOrganization())) {
+        if (isPhoneNumberChanged(org) && organizationDAO.phoneNumberExists(org.getCellPhoneLinkedOrganization())) {
             throw new RepeatedCellPhoneException("Teléfono duplicado");
         }
 
-        // Verificar si el email ya existe en otra organización
-        if (organizationDAO.emailExists(org.getEmailLinkedOrganization()) &&
-                !org.getEmailLinkedOrganization().equals(originalOrg.getEmailLinkedOrganization())) {
+        if (isEmailChanged(org) && organizationDAO.emailExists(org.getEmailLinkedOrganization())) {
             throw new RepeatedEmailException("Email duplicado");
         }
     }
 
+    private boolean isPhoneNumberChanged(LinkedOrganization org) {
+        return !org.getCellPhoneLinkedOrganization().equals(originalOrg.getCellPhoneLinkedOrganization());
+    }
+
+    private boolean isEmailChanged(LinkedOrganization org) {
+        return !org.getEmailLinkedOrganization().equals(originalOrg.getEmailLinkedOrganization());
+    }
+
     private void resetFieldStyles() {
-        view.getNameField().setStyle("");
-        view.getPhoneField().setStyle("");
-        view.getEmailField().setStyle("");
+        view.getNameField().setStyle(DEFAULT_BORDER_STYLE);
+        view.getPhoneField().setStyle(DEFAULT_BORDER_STYLE);
+        view.getEmailField().setStyle(DEFAULT_BORDER_STYLE);
+    }
+
+    private void showFieldError(String message, javafx.scene.control.TextField field) {
+        view.getResultLabel().setText(message);
+        field.setStyle(ERROR_BORDER_STYLE);
+    }
+
+    private void clearErrorMessage() {
+        view.getResultLabel().setText("");
     }
 
     private void showAlert(Alert.AlertType type, String title, String message) {

@@ -3,10 +3,18 @@ package userinterface.windows;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -28,7 +36,7 @@ public class CoordinatorMenuWindow {
     private Button registerOrganizationButton;
     private Button consultOrganizationButton;
     private Button registerRepresentativeButton;
-    private Button consultRepresentativesButton; // <-- Nuevo botón
+    private Button consultRepresentativesButton;
     private Button generateStadisticsButton;
 
     private final String BLUE_DARK_COLOR = "#0A1F3F";
@@ -162,14 +170,14 @@ public class CoordinatorMenuWindow {
         registerOrganizationButton = createStyledButton("Registrar Organización");
         consultOrganizationButton = createStyledButton("Consultar Organizaciones");
         registerRepresentativeButton = createStyledButton("Registrar Representante");
-        consultRepresentativesButton = createStyledButton("Consultar Representantes"); // <-- Nuevo botón
+        consultRepresentativesButton = createStyledButton("Consultar Representantes");
 
         content.getChildren().addAll(
                 createSectionTitle("Organizaciones Vinculadas"),
                 registerOrganizationButton,
                 consultOrganizationButton,
                 registerRepresentativeButton,
-                consultRepresentativesButton // <-- Agregado al layout
+                consultRepresentativesButton
         );
 
         return content;
@@ -275,7 +283,7 @@ public class CoordinatorMenuWindow {
         return registerRepresentativeButton;
     }
 
-    public Button getConsultRepresentativesButton() { // <-- Getter para el nuevo botón
+    public Button getConsultRepresentativesButton() {
         return consultRepresentativesButton;
     }
 

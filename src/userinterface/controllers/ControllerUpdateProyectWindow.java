@@ -2,34 +2,36 @@ package userinterface.controllers;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ButtonBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
 import logic.daos.ProyectDAO;
 import logic.exceptions.RepeatedProyectException;
 import logic.logicclasses.Proyect;
 import userinterface.utilities.Validators;
 import userinterface.windows.UpdateProyectWindow;
-
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Arrays;
 
-public class ControllerUpdateProyectWindow implements EventHandler<ActionEvent> {
+public class ControllerUpdateProyectWindow {
+    private static final String ERROR_BORDER_STYLE = "-fx-border-color: #ff0000; -fx-border-width: 1px;";
+    private static final String DEFAULT_BORDER_STYLE = "";
+    private static final String ERROR_TEXT_STYLE = "-fx-text-fill: #cc0000;";
+    private static final DateTimeFormatter[] DATE_FORMATTERS = {
+            DateTimeFormatter.ofPattern("yyyy-MM-dd"),
+            DateTimeFormatter.ofPattern("dd/MM/yyyy"),
+            DateTimeFormatter.ofPattern("MM/dd/yyyy")
+    };
+
     private final UpdateProyectWindow view;
     private final ProyectDAO proyectDAO;
     private final Validators validators;
-    private Proyect currentProyect;
+    private final Proyect currentProyect;
 
     public ControllerUpdateProyectWindow(UpdateProyectWindow updateProyectWindow, Proyect proyect) {
         this.view = updateProyectWindow;
@@ -46,26 +48,19 @@ public class ControllerUpdateProyectWindow implements EventHandler<ActionEvent> 
         view.getTitleTextField().setText(currentProyect.getTitle());
         view.getDescriptionTextField().setText(currentProyect.getDescription());
 
-        String startDate = currentProyect.getDateStart().toLocalDateTime().toLocalDate().toString();
-        String endDate = currentProyect.getDateEnd().toLocalDateTime().toLocalDate().toString();
+        LocalDate startDate = currentProyect.getDateStart().toLocalDateTime().toLocalDate();
+        LocalDate endDate = currentProyect.getDateEnd().toLocalDateTime().toLocalDate();
 
-        view.getDateStartTextField().setText(startDate);
-        view.getDateEndTextField().setText(endDate);
+        view.getDateStartTextField().setText(startDate.toString());
+        view.getDateEndTextField().setText(endDate.toString());
     }
 
     private void setupEventHandlers() {
-        view.getUpdateButton().setOnAction(this);
-        view.getCancelButton().setOnAction(event -> handleCancel());
+        view.getUpdateButton().setOnAction(this::handleUpdateProyect);
+        view.getCancelButton().setOnAction(this::handleCancel);
     }
 
-    @Override
-    public void handle(ActionEvent event) {
-        if (event.getSource() == view.getUpdateButton()) {
-            handleUpdateProyect();
-        }
-    }
-
-    private void handleUpdateProyect() {
+    private void handleUpdateProyect(ActionEvent event) {
         try {
             clearError();
             resetFieldStyles();
@@ -74,36 +69,17 @@ public class ControllerUpdateProyectWindow implements EventHandler<ActionEvent> 
                 return;
             }
 
-            String title = view.getTitleTextField().getText().trim();
-            String description = view.getDescriptionTextField().getText().trim();
-            Timestamp dateStart = parseDateOnly(view.getDateStartTextField().getText().trim());
-            Timestamp dateEnd = parseDateOnly(view.getDateEndTextField().getText().trim());
+            Proyect updatedProyect = createUpdatedProyect();
+            validateProyectTitleUniqueness(updatedProyect);
 
-            if (!validateDates(dateStart, dateEnd)) {
-                return;
-            }
-
-            if (!title.equals(currentProyect.getTitle())){
-                if (proyectDAO.proyectExists(title)) {
-                    throw new RepeatedProyectException("Ya existe un proyecto con ese título");
-                }
-            }
-
-            currentProyect.setTitle(title);
-            currentProyect.setDescription(description);
-            currentProyect.setDateStart(dateStart);
-            currentProyect.setDateEnd(dateEnd);
-            currentProyect.setStatus(view.getStatusComboBox().getValue().charAt(0));
-
-            if (proyectDAO.updateProyect(currentProyect)) {
+            if (proyectDAO.updateProyect(updatedProyect)) {
                 showSuccessAndClose();
             } else {
                 showError("No se pudo actualizar el proyecto");
             }
 
         } catch (RepeatedProyectException e) {
-            showError(e.getMessage());
-            highlightField(view.getTitleTextField());
+            showFieldError(e.getMessage(), view.getTitleTextField());
         } catch (DateTimeParseException e) {
             showError("Formato de fecha inválido. Use YYYY-MM-DD o DD/MM/YYYY");
         } catch (SQLException e) {
@@ -113,41 +89,75 @@ public class ControllerUpdateProyectWindow implements EventHandler<ActionEvent> 
         }
     }
 
+    private Proyect createUpdatedProyect() throws DateTimeParseException {
+        Proyect updatedProyect = new Proyect(
+                currentProyect.getIdProyect(),
+                view.getTitleTextField().getText().trim(),
+                view.getDescriptionTextField().getText().trim(),
+                parseDateOnly(view.getDateStartTextField().getText().trim()),
+                parseDateOnly(view.getDateEndTextField().getText().trim()),
+                view.getStatusComboBox().getValue().charAt(0)
+        );
+        return updatedProyect;
+    }
+
+    private void validateProyectTitleUniqueness(Proyect updatedProyect) throws SQLException {
+        if (!updatedProyect.getTitle().equals(currentProyect.getTitle())) {
+            if (proyectDAO.proyectExists(updatedProyect.getTitle())) {
+                throw new RepeatedProyectException("Ya existe un proyecto con ese título");
+            }
+        }
+    }
+
     private boolean validateAllFields() {
         boolean isValid = true;
 
-        if (view.getTitleTextField().getText().isEmpty()) {
-            showError("El título es obligatorio");
-            highlightField(view.getTitleTextField());
-            isValid = false;
-        }
+        isValid &= validateField(view.getTitleTextField(),
+                !view.getTitleTextField().getText().isEmpty(),
+                "El título es obligatorio");
 
-        if (view.getDescriptionTextField().getText().isEmpty()) {
-            showError("La descripción es obligatoria");
-            highlightField(view.getDescriptionTextField());
-            isValid = false;
-        }
+        isValid &= validateField(view.getDescriptionTextField(),
+                !view.getDescriptionTextField().getText().isEmpty(),
+                "La descripción es obligatoria");
 
-        try {
-            parseDateOnly(view.getDateStartTextField().getText());
-        } catch (DateTimeParseException e) {
-            showError("Fecha de inicio inválida. Formatos válidos: YYYY-MM-DD, DD/MM/YYYY");
-            highlightField(view.getDateStartTextField());
-            isValid = false;
-        }
+        isValid &= validateDateField(view.getDateStartTextField(),
+                "Fecha de inicio inválida. Formatos válidos: YYYY-MM-DD, DD/MM/YYYY");
 
-        try {
-            parseDateOnly(view.getDateEndTextField().getText());
-        } catch (DateTimeParseException e) {
-            showError("Fecha de fin inválida. Formatos válidos: YYYY-MM-DD, DD/MM/YYYY");
-            highlightField(view.getDateEndTextField());
-            isValid = false;
+        isValid &= validateDateField(view.getDateEndTextField(),
+                "Fecha de fin inválida. Formatos válidos: YYYY-MM-DD, DD/MM/YYYY");
+
+        if (isValid) {
+            try {
+                Timestamp startDate = parseDateOnly(view.getDateStartTextField().getText());
+                Timestamp endDate = parseDateOnly(view.getDateEndTextField().getText());
+                isValid = validateDateOrder(startDate, endDate);
+            } catch (DateTimeParseException e) {
+                isValid = false;
+            }
         }
 
         return isValid;
     }
 
-    private boolean validateDates(Timestamp start, Timestamp end) {
+    private boolean validateField(TextField field, boolean isValid, String errorMessage) {
+        if (!isValid) {
+            showFieldError(errorMessage, field);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateDateField(TextField field, String errorMessage) {
+        try {
+            parseDateOnly(field.getText());
+            return true;
+        } catch (DateTimeParseException e) {
+            showFieldError(errorMessage, field);
+            return false;
+        }
+    }
+
+    private boolean validateDateOrder(Timestamp start, Timestamp end) {
         if (start.after(end)) {
             showError("La fecha de inicio debe ser anterior a la fecha de fin");
             highlightField(view.getDateStartTextField());
@@ -167,85 +177,72 @@ public class ControllerUpdateProyectWindow implements EventHandler<ActionEvent> 
             dateString = dateString.split(" ")[0];
         }
 
-        DateTimeFormatter[] supportedFormats = {
-                DateTimeFormatter.ofPattern("yyyy-MM-dd"),
-                DateTimeFormatter.ofPattern("dd/MM/yyyy"),
-                DateTimeFormatter.ofPattern("MM/dd/yyyy")
-        };
-
-        for (DateTimeFormatter formatter : supportedFormats) {
-            try {
-                LocalDate date = LocalDate.parse(dateString, formatter);
-                return Timestamp.valueOf(date.atStartOfDay());
-            } catch (DateTimeParseException ignored) {
-                continue;
-            }
-        }
-
-        throw new DateTimeParseException("Formato no válido. Use YYYY-MM-DD o DD/MM/YYYY", dateString, 0);
+        String finalDateString = dateString;
+        return Arrays.stream(DATE_FORMATTERS)
+                .filter(formatter -> {
+                    try {
+                        LocalDate.parse(finalDateString, formatter);
+                        return true;
+                    } catch (DateTimeParseException e) {
+                        return false;
+                    }
+                })
+                .findFirst()
+                .map(formatter -> Timestamp.valueOf(LocalDate.parse(finalDateString, formatter).atStartOfDay()))
+                .orElseThrow(() -> new DateTimeParseException(
+                        "Formato no válido. Use YYYY-MM-DD o DD/MM/YYYY", finalDateString, 0));
     }
 
     private void showSuccessAndClose() {
         Platform.runLater(() -> {
             showCustomSuccessDialog();
-            handleCancel();
+            handleCancel(null);
         });
     }
 
     private void showCustomSuccessDialog() {
-        Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setTitle("Operación exitosa");
-
-        ButtonType okButton = new ButtonType("Aceptar", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().add(okButton);
-
-        VBox content = new VBox(10);
-        content.setAlignment(Pos.CENTER);
-        content.setPadding(new Insets(20));
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Operación exitosa");
+        alert.setHeaderText(null);
+        alert.setContentText("¡Proyecto actualizado correctamente!");
 
         try {
             ImageView icon = new ImageView(new Image(getClass().getResourceAsStream("/images/exito.png")));
             icon.setFitHeight(50);
             icon.setFitWidth(50);
-            content.getChildren().add(icon);
+            alert.setGraphic(icon);
         } catch (Exception e) {
             System.err.println("No se pudo cargar el icono: " + e.getMessage());
         }
 
-        Label message = new Label("¡Proyecto actualizado correctamente!");
-        message.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
-        content.getChildren().add(message);
-
-        dialog.getDialogPane().setContent(content);
-        dialog.getDialogPane().setStyle(
-                "-fx-background-color: #f8f8f8;" +
-                        "-fx-border-color: #4CAF50;" +
-                        "-fx-border-width: 2px;"
-        );
-
-        dialog.showAndWait();
+        alert.showAndWait();
     }
 
-    private void handleCancel() {
+    private void handleCancel(ActionEvent event) {
         view.getView().getScene().getWindow().hide();
     }
 
     private void resetFieldStyles() {
-        view.getTitleTextField().setStyle("");
-        view.getDescriptionTextField().setStyle("");
-        view.getDateStartTextField().setStyle("");
-        view.getDateEndTextField().setStyle("");
+        view.getTitleTextField().setStyle(DEFAULT_BORDER_STYLE);
+        view.getDescriptionTextField().setStyle(DEFAULT_BORDER_STYLE);
+        view.getDateStartTextField().setStyle(DEFAULT_BORDER_STYLE);
+        view.getDateEndTextField().setStyle(DEFAULT_BORDER_STYLE);
     }
 
-    private void highlightField(TextField field) {
-        field.setStyle("-fx-border-color: #ff0000; -fx-border-width: 1px;");
+    private void showFieldError(String message, TextField field) {
+        showError(message);
+        highlightField(field);
     }
 
     private void showError(String message) {
         Platform.runLater(() -> {
             view.getResultLabel().setText(message);
-            view.getResultLabel().setStyle("-fx-text-fill: #cc0000;");
+            view.getResultLabel().setStyle(ERROR_TEXT_STYLE);
         });
+    }
+
+    private void highlightField(TextField field) {
+        field.setStyle(ERROR_BORDER_STYLE);
     }
 
     private void clearError() {

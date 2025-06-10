@@ -7,15 +7,17 @@ import logic.logicclasses.Presentation;
 import logic.logicclasses.Student;
 import logic.enums.PresentationType;
 import logic.interfaces.IEvaluationDAO;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class EvaluationDAO implements IEvaluationDAO {
-    private static final Logger logger = LogManager.getLogger(EvaluationDAO.class);
+    private static final Evaluation EMPTY_EVALUATION = new Evaluation();
     private final AcademicDAO academicDAO;
     private final PresentationDAO presentationDAO;
 
@@ -27,56 +29,40 @@ public class EvaluationDAO implements IEvaluationDAO {
     @Override
     public boolean addEvaluation(Evaluation evaluation) throws SQLException {
         if (evaluation == null || evaluation.getAcademic() == null || evaluation.getPresentation() == null) {
-            logger.warn("Intento de agregar evaluación con datos nulos");
-            throw new SQLException("Evaluation, Academic y Presentation no pueden ser nulos");
+            throw new IllegalArgumentException("Evaluacion, Academico y Presentacion no pueden ser nulos");
         }
-
-        logger.debug("Agregando nueva evaluación para presentación ID: {} por académico ID: {}",
-                evaluation.getPresentation().getIdPresentation(), evaluation.getAcademic().getIdUser());
 
         String sql = "INSERT INTO evaluacion (calificacion, comentarios, fecha, id_academicoevaluador, id_presentacion) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            ps.setInt(1, evaluation.getCalification());
-            ps.setString(2, evaluation.getDescription());
-            ps.setTimestamp(3, evaluation.getEvaluationDate());
-            ps.setInt(4, evaluation.getAcademic().getIdUser());
-            ps.setInt(5, evaluation.getPresentation().getIdPresentation());
+            preparedStatement.setInt(1, evaluation.getCalification());
+            preparedStatement.setString(2, evaluation.getDescription());
+            preparedStatement.setTimestamp(3, evaluation.getEvaluationDate());
+            preparedStatement.setInt(4, evaluation.getAcademic().getIdUser());
+            preparedStatement.setInt(5, evaluation.getPresentation().getIdPresentation());
 
-            int affectedRows = ps.executeUpdate();
+            int affectedRows = preparedStatement.executeUpdate();
 
-            if (affectedRows == 0) {
-                logger.warn("No se pudo agregar la evaluación, ninguna fila afectada");
-                return false;
-            }
-
-            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    int generatedId = generatedKeys.getInt(1);
-                    evaluation.setIdEvaluation(generatedId);
-                    logger.info("Evaluación agregada exitosamente con ID: {}", generatedId);
-                    return true;
-                } else {
-                    logger.error("No se pudo obtener el ID generado para la evaluación");
-                    throw new SQLException("No se pudo obtener el ID generado");
+            if (affectedRows > 0) {
+                try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        int generatedId = generatedKeys.getInt(1);
+                        evaluation.setIdEvaluation(generatedId);
+                        return true;
+                    }
                 }
             }
-        } catch (SQLException e) {
-            logger.error("Error al agregar evaluación", e);
-            throw e;
+            return false;
         }
     }
 
     @Override
     public Evaluation getEvaluationById(int idEvaluation) throws SQLException {
         if (idEvaluation <= 0) {
-            logger.warn("Intento de buscar evaluación con ID inválido: {}", idEvaluation);
-            return null;
+            return EMPTY_EVALUATION;
         }
-
-        logger.debug("Buscando evaluación por ID: {}", idEvaluation);
 
         String sql = "SELECT e.*, a.numero_personal, p.id_presentacion, p.fecha as p_fecha, p.tipo, p.id_estudiante " +
                 "FROM evaluacion e " +
@@ -85,49 +71,41 @@ public class EvaluationDAO implements IEvaluationDAO {
                 "WHERE e.id_evaluacion = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setInt(1, idEvaluation);
+            preparedStatement.setInt(1, idEvaluation);
 
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    logger.debug("Evaluación encontrada con ID: {}", idEvaluation);
-
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
                     Academic academic = new Academic();
-                    academic.setIdUser(rs.getInt("id_academicoevaluador"));
-                    academic.setStaffNumber(rs.getString("numero_personal"));
+                    academic.setIdUser(resultSet.getInt("id_academicoevaluador"));
+                    academic.setStaffNumber(resultSet.getString("numero_personal"));
 
                     Student student = new Student();
-                    student.setIdUser(rs.getInt("id_estudiante"));
+                    student.setIdUser(resultSet.getInt("id_estudiante"));
 
                     Presentation presentation = new Presentation();
-                    presentation.setIdPresentation(rs.getInt("id_presentacion"));
-                    presentation.setPresentationDate(rs.getTimestamp("p_fecha"));
-                    presentation.setPresentationType(PresentationType.valueOf(rs.getString("tipo")));
+                    presentation.setIdPresentation(resultSet.getInt("id_presentacion"));
+                    presentation.setPresentationDate(resultSet.getTimestamp("p_fecha"));
+                    presentation.setPresentationType(PresentationType.valueOf(resultSet.getString("tipo")));
                     presentation.setStudent(student);
 
                     return new Evaluation(
-                            rs.getInt("id_evaluacion"),
-                            rs.getInt("calificacion"),
-                            rs.getString("comentarios"),
-                            rs.getTimestamp("fecha"),
+                            resultSet.getInt("id_evaluacion"),
+                            resultSet.getInt("calificacion"),
+                            resultSet.getString("comentarios"),
+                            resultSet.getTimestamp("fecha"),
                             academic,
                             presentation
                     );
                 }
             }
-        } catch (SQLException e) {
-            logger.error("Error al obtener evaluación con ID: {}", idEvaluation, e);
-            throw e;
         }
-        logger.info("No se encontró evaluación con ID: {}", idEvaluation);
-        return null;
+        return EMPTY_EVALUATION;
     }
 
     @Override
     public List<Evaluation> getAllEvaluations() throws SQLException {
-        logger.info("Obteniendo todas las evaluaciones");
-
         String sql = "SELECT e.*, a.numero_personal, p.fecha, p.tipo, p.id_estudiante " +
                 "FROM evaluacion e " +
                 "JOIN academico a ON e.id_academicoevaluador = a.id_usuario " +
@@ -136,43 +114,42 @@ public class EvaluationDAO implements IEvaluationDAO {
         List<Evaluation> evaluations = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
 
-            while (rs.next()) {
+            while (resultSet.next()) {
                 Evaluation evaluation = new Evaluation();
-                evaluation.setIdEvaluation(rs.getInt("id_evaluacion"));
-                evaluation.setCalification(rs.getInt("calificacion"));
-                evaluation.setDescription(rs.getString("comentarios"));
-                evaluation.setEvaluationDate(rs.getTimestamp("fecha"));
+                evaluation.setIdEvaluation(resultSet.getInt("id_evaluacion"));
+                evaluation.setCalification(resultSet.getInt("calificacion"));
+                evaluation.setDescription(resultSet.getString("comentarios"));
+                evaluation.setEvaluationDate(resultSet.getTimestamp("fecha"));
 
                 Academic academic = new Academic();
-                academic.setIdUser(rs.getInt("id_academicoevaluador"));
-                academic.setStaffNumber(rs.getString("numero_personal"));
+                academic.setIdUser(resultSet.getInt("id_academicoevaluador"));
+                academic.setStaffNumber(resultSet.getString("numero_personal"));
                 evaluation.setAcademic(academic);
 
                 Presentation presentation = new Presentation();
-                presentation.setIdPresentation(rs.getInt("id_presentacion"));
-                presentation.setPresentationDate(rs.getTimestamp("fecha"));
-                presentation.setPresentationType(PresentationType.valueOf(rs.getString("tipo")));
+                presentation.setIdPresentation(resultSet.getInt("id_presentacion"));
+                presentation.setPresentationDate(resultSet.getTimestamp("fecha"));
+                presentation.setPresentationType(PresentationType.valueOf(resultSet.getString("tipo")));
 
                 Student student = new Student();
-                student.setIdUser(rs.getInt("id_estudiante"));
+                student.setIdUser(resultSet.getInt("id_estudiante"));
                 presentation.setStudent(student);
 
+                evaluation.setPresentation(presentation);
                 evaluations.add(evaluation);
             }
-            logger.debug("Se encontraron {} evaluaciones", evaluations.size());
-        } catch (SQLException e) {
-            logger.error("Error al obtener todas las evaluaciones", e);
-            throw e;
         }
         return evaluations;
     }
 
     @Override
     public List<Evaluation> getEvaluationsByAcademic(int academicId) throws SQLException {
-        logger.debug("Buscando evaluaciones por académico ID: {}", academicId);
+        if (academicId <= 0) {
+            return Collections.emptyList();
+        }
 
         String sql = "SELECT e.*, a.numero_personal, p.fecha, p.tipo, p.id_estudiante " +
                 "FROM evaluacion e " +
@@ -183,46 +160,45 @@ public class EvaluationDAO implements IEvaluationDAO {
         List<Evaluation> evaluations = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setInt(1, academicId);
+            preparedStatement.setInt(1, academicId);
 
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
                     Evaluation evaluation = new Evaluation();
-                    evaluation.setIdEvaluation(rs.getInt("id_evaluacion"));
-                    evaluation.setCalification(rs.getInt("calificacion"));
-                    evaluation.setDescription(rs.getString("comentarios"));
-                    evaluation.setEvaluationDate(rs.getTimestamp("fecha"));
+                    evaluation.setIdEvaluation(resultSet.getInt("id_evaluacion"));
+                    evaluation.setCalification(resultSet.getInt("calificacion"));
+                    evaluation.setDescription(resultSet.getString("comentarios"));
+                    evaluation.setEvaluationDate(resultSet.getTimestamp("fecha"));
 
                     Academic academic = new Academic();
-                    academic.setIdUser(rs.getInt("id_academicoevaluador"));
-                    academic.setStaffNumber(rs.getString("numero_personal"));
+                    academic.setIdUser(resultSet.getInt("id_academicoevaluador"));
+                    academic.setStaffNumber(resultSet.getString("numero_personal"));
                     evaluation.setAcademic(academic);
 
                     Presentation presentation = new Presentation();
-                    presentation.setIdPresentation(rs.getInt("id_presentacion"));
-                    presentation.setPresentationDate(rs.getTimestamp("fecha"));
-                    presentation.setPresentationType(PresentationType.valueOf(rs.getString("tipo")));
+                    presentation.setIdPresentation(resultSet.getInt("id_presentacion"));
+                    presentation.setPresentationDate(resultSet.getTimestamp("fecha"));
+                    presentation.setPresentationType(PresentationType.valueOf(resultSet.getString("tipo")));
 
                     Student student = new Student();
-                    student.setIdUser(rs.getInt("id_estudiante"));
+                    student.setIdUser(resultSet.getInt("id_estudiante"));
                     presentation.setStudent(student);
 
+                    evaluation.setPresentation(presentation);
                     evaluations.add(evaluation);
                 }
             }
-            logger.debug("Se encontraron {} evaluaciones para académico ID: {}", evaluations.size(), academicId);
-        } catch (SQLException e) {
-            logger.error("Error al obtener evaluaciones por académico ID: {}", academicId, e);
-            throw e;
         }
         return evaluations;
     }
 
     @Override
     public List<Evaluation> getEvaluationsByPresentation(int presentationId) throws SQLException {
-        logger.debug("Buscando evaluaciones por presentación ID: {}", presentationId);
+        if (presentationId <= 0) {
+            return Collections.emptyList();
+        }
 
         String sql = "SELECT e.*, a.numero_personal, p.fecha, p.tipo, p.id_estudiante " +
                 "FROM evaluacion e " +
@@ -233,40 +209,36 @@ public class EvaluationDAO implements IEvaluationDAO {
         List<Evaluation> evaluations = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setInt(1, presentationId);
+            preparedStatement.setInt(1, presentationId);
 
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
                     Evaluation evaluation = new Evaluation();
-                    evaluation.setIdEvaluation(rs.getInt("id_evaluacion"));
-                    evaluation.setCalification(rs.getInt("calificacion"));
-                    evaluation.setDescription(rs.getString("comentarios"));
-                    evaluation.setEvaluationDate(rs.getTimestamp("fecha"));
+                    evaluation.setIdEvaluation(resultSet.getInt("id_evaluacion"));
+                    evaluation.setCalification(resultSet.getInt("calificacion"));
+                    evaluation.setDescription(resultSet.getString("comentarios"));
+                    evaluation.setEvaluationDate(resultSet.getTimestamp("fecha"));
 
                     Academic academic = new Academic();
-                    academic.setIdUser(rs.getInt("id_academicoevaluador"));
-                    academic.setStaffNumber(rs.getString("numero_personal"));
+                    academic.setIdUser(resultSet.getInt("id_academicoevaluador"));
+                    academic.setStaffNumber(resultSet.getString("numero_personal"));
                     evaluation.setAcademic(academic);
 
                     Presentation presentation = new Presentation();
-                    presentation.setIdPresentation(rs.getInt("id_presentacion"));
-                    presentation.setPresentationDate(rs.getTimestamp("fecha"));
-                    presentation.setPresentationType(PresentationType.valueOf(rs.getString("tipo")));
+                    presentation.setIdPresentation(resultSet.getInt("id_presentacion"));
+                    presentation.setPresentationDate(resultSet.getTimestamp("fecha"));
+                    presentation.setPresentationType(PresentationType.valueOf(resultSet.getString("tipo")));
 
                     Student student = new Student();
-                    student.setIdUser(rs.getInt("id_estudiante"));
+                    student.setIdUser(resultSet.getInt("id_estudiante"));
                     presentation.setStudent(student);
 
                     evaluation.setPresentation(presentation);
                     evaluations.add(evaluation);
                 }
             }
-            logger.debug("Se encontraron {} evaluaciones para presentación ID: {}", evaluations.size(), presentationId);
-        } catch (SQLException e) {
-            logger.error("Error al obtener evaluaciones por presentación ID: {}", presentationId, e);
-            throw e;
         }
         return evaluations;
     }
@@ -275,108 +247,69 @@ public class EvaluationDAO implements IEvaluationDAO {
     public boolean updateEvaluation(Evaluation evaluation) throws SQLException {
         if (evaluation == null || evaluation.getIdEvaluation() <= 0 ||
                 evaluation.getAcademic() == null || evaluation.getPresentation() == null) {
-            logger.warn("Intento de actualizar evaluación con datos inválidos");
-            return false;
+            throw new IllegalArgumentException("Datos de evaluación inválidos");
         }
-
-        logger.debug("Actualizando evaluación ID: {}", evaluation.getIdEvaluation());
 
         String sql = "UPDATE evaluacion SET calificacion = ?, comentarios = ?, fecha = ?, " +
                 "id_academicoevaluador = ?, id_presentacion = ? WHERE id_evaluacion = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setInt(1, evaluation.getCalification());
-            ps.setString(2, evaluation.getDescription());
-            ps.setTimestamp(3, evaluation.getEvaluationDate());
-            ps.setInt(4, evaluation.getAcademic().getIdUser());
-            ps.setInt(5, evaluation.getPresentation().getIdPresentation());
-            ps.setInt(6, evaluation.getIdEvaluation());
+            preparedStatement.setInt(1, evaluation.getCalification());
+            preparedStatement.setString(2, evaluation.getDescription());
+            preparedStatement.setTimestamp(3, evaluation.getEvaluationDate());
+            preparedStatement.setInt(4, evaluation.getAcademic().getIdUser());
+            preparedStatement.setInt(5, evaluation.getPresentation().getIdPresentation());
+            preparedStatement.setInt(6, evaluation.getIdEvaluation());
 
-            boolean result = ps.executeUpdate() > 0;
-            if (result) {
-                logger.info("Evaluación ID {} actualizada exitosamente", evaluation.getIdEvaluation());
-            } else {
-                logger.warn("No se pudo actualizar la evaluación ID {}", evaluation.getIdEvaluation());
-            }
-            return result;
-        } catch (SQLException e) {
-            logger.error("Error al actualizar evaluación ID {}", evaluation.getIdEvaluation(), e);
-            throw e;
+            return preparedStatement.executeUpdate() > 0;
         }
     }
 
     @Override
     public boolean deleteEvaluation(int idEvaluation) throws SQLException {
         if (idEvaluation <= 0) {
-            logger.warn("Intento de eliminar evaluación con ID inválido: {}", idEvaluation);
             return false;
         }
-
-        logger.debug("Eliminando evaluación ID: {}", idEvaluation);
 
         String sql = "DELETE FROM evaluacion WHERE id_evaluacion = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setInt(1, idEvaluation);
-            boolean result = ps.executeUpdate() > 0;
-            if (result) {
-                logger.info("Evaluación ID {} eliminada exitosamente", idEvaluation);
-            } else {
-                logger.warn("No se encontró evaluación ID {} para eliminar", idEvaluation);
-            }
-            return result;
-        } catch (SQLException e) {
-            logger.error("Error al eliminar evaluación ID {}", idEvaluation, e);
-            throw e;
+            preparedStatement.setInt(1, idEvaluation);
+            return preparedStatement.executeUpdate() > 0;
         }
     }
 
     @Override
     public boolean evaluationExists(int idEvaluation) throws SQLException {
         if (idEvaluation <= 0) {
-            logger.warn("Intento de verificar existencia de evaluación con ID inválido: {}", idEvaluation);
             return false;
         }
-
-        logger.debug("Verificando existencia de evaluación ID: {}", idEvaluation);
 
         String sql = "SELECT 1 FROM evaluacion WHERE id_evaluacion = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setInt(1, idEvaluation);
-            try (ResultSet rs = ps.executeQuery()) {
-                boolean exists = rs.next();
-                logger.debug("¿Evaluación ID {} existe?: {}", idEvaluation, exists);
-                return exists;
+            preparedStatement.setInt(1, idEvaluation);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                return rs.next();
             }
-        } catch (SQLException e) {
-            logger.error("Error al verificar existencia de evaluación ID {}", idEvaluation, e);
-            throw e;
         }
     }
 
     @Override
     public int countEvaluations() throws SQLException {
-        logger.debug("Contando evaluaciones");
-
         String sql = "SELECT COUNT(*) FROM evaluacion";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
 
-            int count = rs.next() ? rs.getInt(1) : 0;
-            logger.info("Total de evaluaciones: {}", count);
-            return count;
-        } catch (SQLException e) {
-            logger.error("Error al contar evaluaciones", e);
-            throw e;
+            return resultSet.next() ? resultSet.getInt(1) : 0;
         }
     }
 }

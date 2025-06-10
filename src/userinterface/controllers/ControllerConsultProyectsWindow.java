@@ -13,6 +13,7 @@ import userinterface.windows.ConsultProyectsWindow;
 import userinterface.windows.UpdateProyectWindow;
 
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class ControllerConsultProyectsWindow implements EventHandler<ActionEvent> {
     private final ConsultProyectsWindow view;
@@ -20,7 +21,7 @@ public class ControllerConsultProyectsWindow implements EventHandler<ActionEvent
     private ObservableList<Proyect> projectsList;
 
     public ControllerConsultProyectsWindow(ConsultProyectsWindow consultProyectsWindow) {
-        this.view = consultProyectsWindow;
+        this.view = Objects.requireNonNull(consultProyectsWindow, "La vista no puede ser nula");
         this.proyectDAO = new ProyectDAO();
         this.projectsList = FXCollections.observableArrayList();
 
@@ -67,10 +68,12 @@ public class ControllerConsultProyectsWindow implements EventHandler<ActionEvent
         try {
             Proyect foundProyect = proyectDAO.getProyectByTitle(searchTerm);
             if (foundProyect != null) {
-                projectsList.clear();
-                projectsList.add(foundProyect);
+                projectsList.setAll(foundProyect);
                 view.setProjectsList(projectsList);
+                view.getResultLabel().setText("");
             } else {
+                projectsList.clear();
+                view.setProjectsList(projectsList);
                 showError("No se encontró ningún proyecto con ese título");
             }
         } catch (SQLException e) {
@@ -82,8 +85,11 @@ public class ControllerConsultProyectsWindow implements EventHandler<ActionEvent
         view.getView().getScene().getWindow().hide();
     }
 
-
     public void handleEdit(Proyect proyect) {
+        if (proyect == null) {
+            showError("Proyecto inválido para editar.");
+            return;
+        }
         UpdateProyectWindow updateProyectWindow = new UpdateProyectWindow();
         new ControllerUpdateProyectWindow(updateProyectWindow, proyect);
 

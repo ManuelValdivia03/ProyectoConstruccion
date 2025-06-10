@@ -13,14 +13,12 @@ public class ControllerRecoveryPasswordWindow {
     private final PasswordRecoveryService recoveryService;
     private final Stage stage;
 
-    // Campos de la primera pantalla
     private final TextField emailField = new TextField();
     private final TextField identifierField = new TextField();
     private final Label identifierLabel = new Label("Matrícula o Número de Personal:");
     private final Button nextButton = new Button("Siguiente");
     private final Label messageLabel = new Label();
 
-    // Campos de la segunda pantalla (contraseña)
     private final PasswordField newPasswordField = new PasswordField();
     private final PasswordField confirmPasswordField = new PasswordField();
     private final Button submitButton = new Button("Actualizar Contraseña");

@@ -4,7 +4,8 @@ public enum ActivityStatus {
     Pendiente("Pendiente"),
     Completada("Completada"),
     En_progreso("En progreso"),
-    Cancelada("Cancelada");
+    Cancelada("Cancelada"),
+    NONE("None");
 
     private final String dbValue;
 

@@ -33,7 +33,6 @@ public class RegistProyectWindow {
         dateEndPicker = new DatePicker();
         dateEndPicker.setPromptText("Seleccione fecha");
 
-        // Set default format and initial values
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         dateStartPicker.setConverter(new javafx.util.StringConverter<LocalDate>() {
             @Override

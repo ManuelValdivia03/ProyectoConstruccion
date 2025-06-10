@@ -7,25 +7,24 @@ import logic.enums.ActivityStatus;
 import logic.interfaces.IActivityCronogramDAO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityCronogramDAO implements IActivityCronogramDAO {
     private static final Logger logger = LogManager.getLogger(ActivityCronogramDAO.class);
+    private static final ActivityCronogram EMPTY_CRONOGRAM = new ActivityCronogram();
 
     public boolean addCronogram(ActivityCronogram cronogram) throws SQLException {
         if (cronogram == null) {
-            logger.warn("Intento de agregar un cronograma nulo");
-            return false;
+            throw new IllegalArgumentException("El cronograma no debe ser nulo");
         }
-
-        logger.debug("Agregando nuevo cronograma con fechas: inicio={}, fin={}",
-                cronogram.getDateStart(), cronogram.getDateEnd());
-
         String sql = "INSERT INTO cronograma_actividades (fecha_inicial, fecha_terminal) VALUES (?, ?)";
-
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -33,36 +32,23 @@ public class ActivityCronogramDAO implements IActivityCronogramDAO {
             statement.setDate(2, new java.sql.Date(cronogram.getDateEnd().getTime()));
 
             int affectedRows = statement.executeUpdate();
-
             if (affectedRows > 0) {
                 try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
-                        int generatedId = generatedKeys.getInt(1);
-                        cronogram.setIdCronogram(generatedId);
-                        logger.info("Cronograma agregado exitosamente con ID: {}", generatedId);
+                        cronogram.setIdCronogram(generatedKeys.getInt(1));
                     }
                 }
                 return true;
             }
-            logger.warn("No se pudo agregar el cronograma, ninguna fila afectada");
             return false;
-        } catch (SQLException e) {
-            logger.error("Error al agregar cronograma", e);
-            throw e;
         }
     }
 
     public boolean updateCronogram(ActivityCronogram cronogram) throws SQLException {
         if (cronogram == null) {
-            logger.warn("Intento de actualizar un cronograma nulo");
-            return false;
+            throw new IllegalArgumentException("El cronograma no debe ser nulo");
         }
-
-        logger.debug("Actualizando cronograma ID {} con fechas: inicio={}, fin={}",
-                cronogram.getIdCronogram(), cronogram.getDateStart(), cronogram.getDateEnd());
-
         String sql = "UPDATE cronograma_actividades SET fecha_inicial = ?, fecha_terminal = ? WHERE id_cronograma = ?";
-
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
@@ -70,78 +56,43 @@ public class ActivityCronogramDAO implements IActivityCronogramDAO {
             statement.setDate(2, new java.sql.Date(cronogram.getDateEnd().getTime()));
             statement.setInt(3, cronogram.getIdCronogram());
 
-            boolean result = statement.executeUpdate() > 0;
-            if (result) {
-                logger.info("Cronograma ID {} actualizado exitosamente", cronogram.getIdCronogram());
-            } else {
-                logger.warn("No se encontró cronograma ID {} para actualizar", cronogram.getIdCronogram());
-            }
-            return result;
-        } catch (SQLException e) {
-            logger.error("Error al actualizar cronograma ID {}", cronogram.getIdCronogram(), e);
-            throw e;
+            return statement.executeUpdate() > 0;
         }
     }
 
     public boolean deleteCronogram(int idCronogram) throws SQLException {
-        logger.debug("Eliminando cronograma ID: {}", idCronogram);
-
         String sql = "DELETE FROM cronograma_actividades WHERE id_cronograma = ?";
-
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, idCronogram);
-            boolean result = statement.executeUpdate() > 0;
-            if (result) {
-                logger.info("Cronograma ID {} eliminado exitosamente", idCronogram);
-            } else {
-                logger.warn("No se encontró cronograma ID {} para eliminar", idCronogram);
-            }
-            return result;
-        } catch (SQLException e) {
-            logger.error("Error al eliminar cronograma ID {}", idCronogram, e);
-            throw e;
+            return statement.executeUpdate() > 0;
         }
     }
 
     public ActivityCronogram getCronogramById(int idCronogram) throws SQLException {
-        logger.debug("Obteniendo cronograma por ID: {}", idCronogram);
-
         String sql = "SELECT * FROM cronograma_actividades WHERE id_cronograma = ?";
-        ActivityCronogram cronogram = null;
-
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, idCronogram);
-
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    cronogram = new ActivityCronogram();
+                    ActivityCronogram cronogram = new ActivityCronogram();
                     cronogram.setIdCronogram(resultSet.getInt("id_cronograma"));
                     cronogram.setDateStart(new Timestamp(resultSet.getDate("fecha_inicial").getTime()));
                     cronogram.setDateEnd(new Timestamp(resultSet.getDate("fecha_terminal").getTime()));
                     cronogram.setActivities(getActivitiesByCronogram(idCronogram));
-
-                    logger.debug("Cronograma ID {} encontrado", idCronogram);
-                } else {
-                    logger.info("No se encontró cronograma con ID: {}", idCronogram);
+                    return cronogram;
                 }
             }
-        } catch (SQLException e) {
-            logger.error("Error al obtener cronograma ID {}", idCronogram, e);
-            throw e;
         }
-        return cronogram;
+        return EMPTY_CRONOGRAM;
     }
 
     public List<ActivityCronogram> getAllCronograms() throws SQLException {
-        logger.info("Obteniendo todos los cronogramas");
-
         String sql = "SELECT * FROM cronograma_actividades";
         List<ActivityCronogram> cronograms = new ArrayList<>();
-
         try (Connection connection = ConnectionDataBase.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
@@ -155,96 +106,53 @@ public class ActivityCronogramDAO implements IActivityCronogramDAO {
                 cronogram.setActivities(getActivitiesByCronogram(id));
                 cronograms.add(cronogram);
             }
-            logger.debug("Se encontraron {} cronogramas", cronograms.size());
-        } catch (SQLException e) {
-            logger.error("Error al obtener todos los cronogramas", e);
-            throw e;
         }
         return cronograms;
     }
 
     public boolean addActivityToCronogram(int idCronogram, int idActivity) throws SQLException {
-        logger.debug("Agregando actividad ID {} al cronograma ID {}", idActivity, idCronogram);
-
         String sql = "INSERT INTO cronograma_actividad (id_cronograma, id_actividad) VALUES (?, ?)";
-
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, idCronogram);
             statement.setInt(2, idActivity);
-
-            boolean result = statement.executeUpdate() > 0;
-            if (result) {
-                logger.info("Actividad ID {} agregada al cronograma ID {}", idActivity, idCronogram);
-            } else {
-                logger.warn("No se pudo agregar actividad ID {} al cronograma ID {}", idActivity, idCronogram);
-            }
-            return result;
-        } catch (SQLException e) {
-            logger.error("Error al agregar actividad ID {} al cronograma ID {}", idActivity, idCronogram, e);
-            throw e;
+            return statement.executeUpdate() > 0;
         }
     }
 
     public boolean removeActivityFromCronogram(int idCronogram, int idActivity) throws SQLException {
-        logger.debug("Eliminando actividad ID {} del cronograma ID {}", idActivity, idCronogram);
-
         String sql = "DELETE FROM cronograma_actividad WHERE id_cronograma = ? AND id_actividad = ?";
-
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, idCronogram);
             statement.setInt(2, idActivity);
-
-            boolean result = statement.executeUpdate() > 0;
-            if (result) {
-                logger.info("Actividad ID {} eliminada del cronograma ID {}", idActivity, idCronogram);
-            } else {
-                logger.warn("No se encontró actividad ID {} en el cronograma ID {}", idActivity, idCronogram);
-            }
-            return result;
-        } catch (SQLException e) {
-            logger.error("Error al eliminar actividad ID {} del cronograma ID {}", idActivity, idCronogram, e);
-            throw e;
+            return statement.executeUpdate() > 0;
         }
     }
 
     public boolean cronogramExists(int idCronogram) throws SQLException {
-        logger.debug("Verificando existencia de cronograma ID: {}", idCronogram);
-
         String sql = "SELECT 1 FROM cronograma_actividades WHERE id_cronograma = ?";
-
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, idCronogram);
-
             try (ResultSet resultSet = statement.executeQuery()) {
-                boolean exists = resultSet.next();
-                logger.debug("¿Cronograma ID {} existe?: {}", idCronogram, exists);
-                return exists;
+                return resultSet.next();
             }
-        } catch (SQLException e) {
-            logger.error("Error al verificar existencia de cronograma ID {}", idCronogram, e);
-            throw e;
         }
     }
 
     private List<Activity> getActivitiesByCronogram(int idCronogram) throws SQLException {
-        logger.debug("Obteniendo actividades para cronograma ID: {}", idCronogram);
-
         String sql = "SELECT a.* FROM actividad a " +
                 "JOIN cronograma_actividad ca ON a.id_actividad = ca.id_actividad " +
                 "WHERE ca.id_cronograma = ?";
         List<Activity> activities = new ArrayList<>();
-
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, idCronogram);
-
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     activities.add(new Activity(
@@ -257,10 +165,6 @@ public class ActivityCronogramDAO implements IActivityCronogramDAO {
                     ));
                 }
             }
-            logger.debug("Se encontraron {} actividades para cronograma ID {}", activities.size(), idCronogram);
-        } catch (SQLException e) {
-            logger.error("Error al obtener actividades para cronograma ID {}", idCronogram, e);
-            throw e;
         }
         return activities;
     }

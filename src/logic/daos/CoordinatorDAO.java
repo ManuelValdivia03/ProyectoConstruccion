@@ -3,11 +3,16 @@ package logic.daos;
 import dataaccess.ConnectionDataBase;
 import logic.logicclasses.Coordinator;
 import logic.interfaces.ICoordinatorDAO;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CoordinatorDAO implements ICoordinatorDAO {
+    private static final Coordinator EMPTY_COORDINATOR = new Coordinator(-1, "", "", "", 'I');
     private final UserDAO userDAO;
 
     public CoordinatorDAO() {
@@ -15,6 +20,9 @@ public class CoordinatorDAO implements ICoordinatorDAO {
     }
 
     public boolean addCoordinator(Coordinator coordinator) throws SQLException {
+        if (coordinator == null) {
+            throw new IllegalArgumentException("El coordinador no debe ser nulo");
+        }
         boolean userAdded = userDAO.addUser(coordinator);
         if (!userAdded) {
             return false;
@@ -32,6 +40,9 @@ public class CoordinatorDAO implements ICoordinatorDAO {
     }
 
     public boolean deleteCoordinator(Coordinator coordinator) throws SQLException {
+        if (coordinator == null) {
+            throw new IllegalArgumentException("El coordinador no debe ser nulo");
+        }
         String sql = "DELETE FROM coordinador WHERE id_usuario = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -51,7 +62,7 @@ public class CoordinatorDAO implements ICoordinatorDAO {
             coordinator.getStaffNumber() == null || coordinator.getStaffNumber().isEmpty() ||
             coordinator.getFullName() == null || coordinator.getFullName().isEmpty() ||
             coordinator.getCellPhone() == null || coordinator.getCellPhone().isEmpty()) {
-            throw new SQLException();
+            throw new IllegalArgumentException("Los datos del coordinador no deben ser nulos o vacíos");
         }
 
         boolean userUpdated = userDAO.updateUser(coordinator);
@@ -97,6 +108,9 @@ public class CoordinatorDAO implements ICoordinatorDAO {
     }
 
     public Coordinator getCoordinatorByStaffNumber(String staffNumber) throws SQLException {
+        if (staffNumber == null || staffNumber.isEmpty()) {
+            throw new IllegalArgumentException("Numero de personal no debe ser nulo o vacío");
+        }
         String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.estado, " +
                 "c.numero_personal " +
                 "FROM coordinador c " +
@@ -119,10 +133,13 @@ public class CoordinatorDAO implements ICoordinatorDAO {
                 }
             }
         }
-        return null;
+        return EMPTY_COORDINATOR;
     }
 
     public boolean coordinatorExists(String staffNumber) throws SQLException {
+        if (staffNumber == null || staffNumber.isEmpty()) {
+            throw new IllegalArgumentException("Numero de personal no debe ser nulo o vacío");
+        }
         String sql = "SELECT 1 FROM coordinador WHERE numero_personal = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -140,17 +157,14 @@ public class CoordinatorDAO implements ICoordinatorDAO {
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
 
-            if (resultSet.next()) {
-                return resultSet.getInt(1);
-            }
-            return 0;
+            return resultSet.next() ? resultSet.getInt(1) : 0;
         }
     }
 
     public boolean existsForUser(int userId) throws SQLException {
         String sql = "SELECT 1 FROM coordinador WHERE id_usuario = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
-        PreparedStatement stmt = connection.prepareStatement(sql)) {
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, userId);
             return stmt.executeQuery().next();
         }
@@ -163,20 +177,20 @@ public class CoordinatorDAO implements ICoordinatorDAO {
                 "WHERE u.id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-        PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, userId);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                return new Coordinator(
-                        rs.getInt("id_usuario"),
-                        rs.getString("nombre_completo"),
-                        rs.getString("telefono"),
-                        rs.getString("numero_personal"),
-                        rs.getString("estado").charAt(0)
-                );
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, userId);
+            try (ResultSet rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    return new Coordinator(
+                            rs.getInt("id_usuario"),
+                            rs.getString("nombre_completo"),
+                            rs.getString("telefono"),
+                            rs.getString("numero_personal"),
+                            rs.getString("estado").charAt(0)
+                    );
+                }
             }
         }
-        return null;
+        return EMPTY_COORDINATOR;
     }
 }

@@ -4,7 +4,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -23,14 +27,12 @@ public class ConsultLinkedOrganizationsWindow {
         organizationTable.setStyle("-fx-font-size: 14px;");
         organizationTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        // Columnas de la tabla
         TableColumn<LinkedOrganization, String> nameCol = createStyledColumn("Nombre", "nameLinkedOrganization");
         TableColumn<LinkedOrganization, String> phoneCol = createStyledColumn("Teléfono", "cellPhoneLinkedOrganization");
         TableColumn<LinkedOrganization, String> emailCol = createStyledColumn("Email", "emailLinkedOrganization");
 
         organizationTable.getColumns().addAll(nameCol, phoneCol, emailCol);
 
-        // Barra de búsqueda
         searchField = new TextField();
         searchField.setPromptText("Buscar por nombre...");
         searchField.setStyle("-fx-font-size: 14px; -fx-padding: 5px;");
@@ -44,7 +46,6 @@ public class ConsultLinkedOrganizationsWindow {
         HBox searchBox = new HBox(5, searchField, searchButton, clearButton);
         searchBox.setPadding(new Insets(0, 0, 10, 0));
 
-        // Botones inferiores
         backButton = new Button("Regresar");
         backButton.setStyle("-fx-background-color: #ff4a4a; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 16;");
 

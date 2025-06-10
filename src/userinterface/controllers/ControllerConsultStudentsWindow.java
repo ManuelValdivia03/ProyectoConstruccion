@@ -14,6 +14,7 @@ import userinterface.windows.AssignGradeWindow;
 import userinterface.windows.ConsultStudentsWindow;
 import userinterface.windows.UpdateStudentWindow;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class ControllerConsultStudentsWindow {
     private final ConsultStudentsWindow view;
@@ -24,9 +25,9 @@ public class ControllerConsultStudentsWindow {
     private boolean hasSearchResults = false;
 
     public ControllerConsultStudentsWindow(ConsultStudentsWindow view, Stage stage) {
-        this.view = view;
+        this.view = Objects.requireNonNull(view, "La vista no puede ser nula");
         this.studentDAO = new StudentDAO();
-        this.currentStage = stage;
+        this.currentStage = Objects.requireNonNull(stage, "El stage no puede ser nulo");
         this.validators = new Validators();
         this.allStudents = FXCollections.observableArrayList();
 
@@ -68,13 +69,14 @@ public class ControllerConsultStudentsWindow {
         try {
             Student student = studentDAO.getStudentByEnrollment(enrollment);
 
-            if (student.getIdUser() != -1) {
+            if (student != null && student.getIdUser() != -1) {
                 ObservableList<Student> searchResult = FXCollections.observableArrayList();
                 searchResult.add(student);
                 view.setStudentData(searchResult);
                 hasSearchResults = true;
             } else {
-                view.setStudentData(FXCollections.observableArrayList()); // Limpiar tabla
+                view.setStudentData(FXCollections.observableArrayList());
+                hasSearchResults = false;
                 showAlert(Alert.AlertType.INFORMATION, "Búsqueda",
                         "No se encontró ningún estudiante con la matrícula: " + enrollment);
             }
@@ -94,13 +96,17 @@ public class ControllerConsultStudentsWindow {
     }
 
     private void handleManageStudent(ActionEvent event) {
-        Student student = (Student) event.getSource();
-        openUpdateStudentWindow(student);
+        Object source = event.getSource();
+        if (source instanceof Student) {
+            openUpdateStudentWindow((Student) source);
+        }
     }
 
     private void handleAssignGrade(ActionEvent event) {
-        Student student = (Student) event.getSource();
-        openAssignGradeWindow(student);
+        Object source = event.getSource();
+        if (source instanceof Student) {
+            openAssignGradeWindow((Student) source);
+        }
     }
 
     private void openUpdateStudentWindow(Student student) {

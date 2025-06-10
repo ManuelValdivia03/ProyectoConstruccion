@@ -7,13 +7,18 @@ import logic.logicclasses.User;
 import logic.interfaces.IUserDAO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class UserDAO implements IUserDAO {
     private static final Logger logger = LogManager.getLogger(UserDAO.class);
+    private static final User EMPTY_USER = new User(-1, "", "", 'I');
 
     public boolean addUser(User user) throws SQLException, IllegalArgumentException, RepeatedCellPhoneException {
         if (user == null) {
@@ -90,7 +95,7 @@ public class UserDAO implements IUserDAO {
     public User getUserById(int id) throws SQLException {
         if (id <= 0) {
             logger.warn("Intento de buscar usuario con ID inválido: {}", id);
-            return null;
+            return EMPTY_USER;
         }
 
         logger.debug("Buscando usuario por ID: {}", id);
@@ -118,6 +123,7 @@ public class UserDAO implements IUserDAO {
 
         if (user == null) {
             logger.info("No se encontró usuario con ID: {}", id);
+            return EMPTY_USER;
         }
         return user;
     }
@@ -181,7 +187,7 @@ public class UserDAO implements IUserDAO {
     public List<User> searchUsersByName(String name) throws SQLException {
         if (name == null || name.trim().isEmpty()) {
             logger.warn("Intento de buscar usuarios con nombre vacío o nulo");
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
 
         logger.debug("Buscando usuarios por nombre: {}", name);

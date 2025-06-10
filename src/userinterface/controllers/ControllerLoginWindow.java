@@ -4,15 +4,23 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import logic.exceptions.InvalidCredentialsException;
 import logic.logicclasses.Academic;
 import logic.logicclasses.Coordinator;
 import logic.logicclasses.Student;
+import logic.logicclasses.User;
 import logic.services.LoginService;
 import logic.services.PasswordRecoveryService;
-import logic.logicclasses.User;
 import userinterface.windows.LoginWindow;
+import java.sql.SQLException;
+import java.util.Objects;
 
 public class ControllerLoginWindow implements EventHandler<ActionEvent> {
+    private static final String SUCCESS_COLOR = "-fx-text-fill: #27ae60;";
+    private static final String ERROR_COLOR = "-fx-text-fill: #e74c3c;";
+    private static final int WINDOW_WIDTH = 600;
+    private static final int WINDOW_HEIGHT = 400;
+
     private final LoginWindow view;
     private final LoginService loginService;
     private final PasswordRecoveryService recoveryService;
@@ -21,23 +29,30 @@ public class ControllerLoginWindow implements EventHandler<ActionEvent> {
     public ControllerLoginWindow(Stage primaryStage, LoginWindow view,
                                  LoginService loginService,
                                  PasswordRecoveryService recoveryService) {
-        this.primaryStage = primaryStage;
-        this.view = view;
-        this.loginService = loginService;
-        this.recoveryService = recoveryService;
+        this.primaryStage = Objects.requireNonNull(primaryStage, "Primary stage no puede ser nulo");
+        this.view = Objects.requireNonNull(view, "La vista de inicio de sesión no puede ser nula");
+        this.loginService = Objects.requireNonNull(loginService, "El servicio de inicio de sesión no puede ser nulo");
+        this.recoveryService = Objects.requireNonNull(recoveryService, "El servicio de recuperación de contraseña no puede ser nulo");
 
         setupEventHandlers();
+        configureStage();
+    }
+
+    private void configureStage() {
+        primaryStage.setScene(new Scene(view.getView(), WINDOW_WIDTH, WINDOW_HEIGHT));
+        primaryStage.setTitle("Inicio de Sesión");
     }
 
     private void setupEventHandlers() {
         view.getLoginButton().setOnAction(this);
         view.getExitButton().setOnAction(e -> primaryStage.close());
+        view.getRecoveryPasswordLink().setOnAction(this::handlePasswordRecovery);
+    }
 
-        view.getRecoveryPasswordLink().setOnAction(e -> {
-            Stage recoveryStage = new Stage();
-            recoveryStage.setTitle("Recuperar Contraseña");
-            new ControllerRecoveryPasswordWindow(recoveryStage, recoveryService);
-        });
+    private void handlePasswordRecovery(ActionEvent event) {
+        Stage recoveryStage = new Stage();
+        recoveryStage.setTitle("Recuperar Contraseña");
+        new ControllerRecoveryPasswordWindow(recoveryStage, recoveryService);
     }
 
     @Override
@@ -45,48 +60,53 @@ public class ControllerLoginWindow implements EventHandler<ActionEvent> {
         String email = view.getEmailField().getText().trim();
         String password = view.getPasswordField().getPassword();
 
-        if (email.isEmpty() || password.isEmpty()) {
-            view.getMessageLabel().setText("Por favor complete todos los campos");
+        if (!areFieldsValid(email, password)) {
             return;
         }
 
-        User user = loginService.login(email, password);
-
-        if (user != null) {
-            view.getMessageLabel().setText("¡Ingreso exitoso!");
-            view.getMessageLabel().setStyle("-fx-text-fill: #27ae60;");
-
-            if (user instanceof Coordinator) {
-                primaryStage.close();
-
-                Stage coordinatorStage = new Stage();
-                new ControllerCoordinatorMenuWindow(coordinatorStage, (Coordinator) user, () -> {
-                    coordinatorStage.close();
-                    view.clearFields();
-                    launchNewLoginWindow();
-                });
-            } else if (user instanceof Student) {
-                primaryStage.close();
-                Stage studentStage = new Stage();
-
-                new ControllerStudentMenuWindow(studentStage, (Student) user, () -> {
-                    studentStage.close();
-                    view.clearFields();
-                    launchNewLoginWindow();
-                });
-            } else if (user instanceof Academic) {
-                primaryStage.close();
-                Stage academicStage = new Stage();
-                new ControllerAcademicMenuWindow(academicStage, (Academic) user, () -> {
-                    academicStage.close();
-                    view.clearFields();
-                    launchNewLoginWindow();
-                });
-            }
-        } else {
-            view.getMessageLabel().setText("Credenciales inválidas");
-            view.getMessageLabel().setStyle("-fx-text-fill: #e74c3c;");
+        try {
+            User user = loginService.login(email, password);
+            handleSuccessfulLogin(user);
+        } catch (InvalidCredentialsException e) {
+            showMessage("Credenciales inválidas", ERROR_COLOR);
+        } catch (SQLException e) {
+            showMessage("Error al conectar con la base de datos", ERROR_COLOR);
         }
+    }
+
+    private boolean areFieldsValid(String email, String password) {
+        if (email.isEmpty() || password.isEmpty()) {
+            showMessage("Por favor complete todos los campos", ERROR_COLOR);
+            return false;
+        }
+        return true;
+    }
+
+    private void handleSuccessfulLogin(User user) {
+        showMessage("¡Ingreso exitoso!", SUCCESS_COLOR);
+
+        primaryStage.close();
+        Stage userStage = new Stage();
+
+        if (user instanceof Coordinator) {
+            new ControllerCoordinatorMenuWindow(userStage, (Coordinator) user, createLogoutHandler());
+        } else if (user instanceof Student) {
+            new ControllerStudentMenuWindow(userStage, (Student) user, createLogoutHandler());
+        } else if (user instanceof Academic) {
+            new ControllerAcademicMenuWindow(userStage, (Academic) user, createLogoutHandler());
+        }
+    }
+
+    private Runnable createLogoutHandler() {
+        return () -> {
+            view.clearFields();
+            launchNewLoginWindow();
+        };
+    }
+
+    private void showMessage(String message, String style) {
+        view.getMessageLabel().setText(message);
+        view.getMessageLabel().setStyle(style);
     }
 
     private void launchNewLoginWindow() {
@@ -95,11 +115,9 @@ public class ControllerLoginWindow implements EventHandler<ActionEvent> {
         new ControllerLoginWindow(
                 newLoginStage,
                 newLoginView,
-                this.loginService,
-                this.recoveryService
+                loginService,
+                recoveryService
         );
-        newLoginStage.setScene(new Scene(newLoginView.getView(), 600, 400));
-        newLoginStage.setTitle("Inicio de Sesión");
         newLoginStage.show();
     }
 }
