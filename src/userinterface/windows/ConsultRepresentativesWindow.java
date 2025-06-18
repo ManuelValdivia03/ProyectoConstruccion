@@ -79,28 +79,37 @@ public class ConsultRepresentativesWindow {
         return column;
     }
 
-    public TableColumn<Representative, Void> createAssignButtonColumn(EventHandler<ActionEvent> assignAction) {
-        TableColumn<Representative, Void> assignCol = new TableColumn<>("Acción");
-        assignCol.setCellFactory(param -> new TableCell<>() {
+
+    public TableColumn<Representative, Void> createAssignButtonColumn(EventHandler<ActionEvent> handler) {
+        TableColumn<Representative, Void> col = new TableColumn<>("Acción");
+        col.setPrefWidth(100);
+        
+        col.setCellFactory(param -> new TableCell<>() {
             private final Button btn = new Button("Asignar");
+            
             {
-                btn.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
+                btn.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
                 btn.setOnAction(event -> {
                     Representative rep = getTableView().getItems().get(getIndex());
                     if (rep != null) {
                         btn.setUserData(rep);
-                        assignAction.handle(new ActionEvent(btn, null));
+                        handler.handle(event);
                     }
                 });
             }
+
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                Representative rep = empty ? null : getTableView().getItems().get(getIndex());
-                setGraphic((!empty && rep != null && rep.getLinkedOrganization() == null) ? btn : null);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(btn);
+                }
             }
         });
-        return assignCol;
+        
+        return col;
     }
 
     public VBox getView() {

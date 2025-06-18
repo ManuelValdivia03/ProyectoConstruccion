@@ -1,256 +1,46 @@
-2025-06-10 04:22:59 [JavaFX Application Thread] ERROR dataaccess.PasswordUtils - Error al verificar contraseña
-java.lang.IllegalArgumentException: Invalid salt version
-	at org.mindrot.jbcrypt.BCrypt.hashpw(BCrypt.java:659) ~[jbcrypt-0.4.jar:?]
-	at org.mindrot.jbcrypt.BCrypt.checkpw(BCrypt.java:764) ~[jbcrypt-0.4.jar:?]
-	at dataaccess.PasswordUtils.checkPassword(PasswordUtils.java:26) ~[ProyectoPrincipiosConstruccion/:?]
-	at logic.daos.AccountDAO.verifyCredentials(AccountDAO.java:159) ~[ProyectoPrincipiosConstruccion/:?]
-	at logic.services.LoginService.login(LoginService.java:37) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerLoginWindow.handle(ControllerLoginWindow.java:62) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerLoginWindow.handle(ControllerLoginWindow.java:18) ~[ProyectoPrincipiosConstruccion/:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49) ~[javafx.base.jar:?]
-	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
-	at javafx.graphics/javafx.scene.Node.fireEvent(Node.java:9005) ~[javafx.graphics.jar:?]
-	at javafx.controls/javafx.scene.control.Button.fire(Button.java:203) ~[javafx.controls.jar:?]
-	at javafx.controls/com.sun.javafx.scene.control.behavior.ButtonBehavior.mouseReleased(ButtonBehavior.java:207) ~[javafx.controls.jar:?]
-	at javafx.controls/com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274) ~[javafx.controls.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:247) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54) ~[javafx.base.jar:?]
-	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
-	at javafx.graphics/javafx.scene.Scene$MouseHandler.process(Scene.java:4005) ~[javafx.graphics.jar:?]
-	at javafx.graphics/javafx.scene.Scene.processMouseEvent(Scene.java:1934) ~[javafx.graphics.jar:?]
-	at javafx.graphics/javafx.scene.Scene$ScenePeerListener.mouseEvent(Scene.java:2763) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:352) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:254) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:424) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.handleMouseEvent(GlassViewEventHandler.java:386) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.View.handleMouseEvent(View.java:560) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.View.notifyMouse(View.java:946) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$0(WinApplication.java:168) ~[javafx.graphics.jar:?]
-	at java.base/java.lang.Thread.run(Thread.java:1570) [?:?]
-2025-06-10 04:22:59 [JavaFX Application Thread] WARN  logic.services.LoginService - Credenciales inválidas para: juan@uv.mx
-2025-06-10 04:25:15 [JavaFX Application Thread] ERROR dataaccess.PasswordUtils - Error al verificar contraseña
-java.lang.IllegalArgumentException: Invalid salt version
-	at org.mindrot.jbcrypt.BCrypt.hashpw(BCrypt.java:659) ~[jbcrypt-0.4.jar:?]
-	at org.mindrot.jbcrypt.BCrypt.checkpw(BCrypt.java:764) ~[jbcrypt-0.4.jar:?]
-	at dataaccess.PasswordUtils.checkPassword(PasswordUtils.java:26) ~[ProyectoPrincipiosConstruccion/:?]
-	at logic.daos.AccountDAO.verifyCredentials(AccountDAO.java:159) ~[ProyectoPrincipiosConstruccion/:?]
-	at logic.services.LoginService.login(LoginService.java:37) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerLoginWindow.handle(ControllerLoginWindow.java:62) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerLoginWindow.handle(ControllerLoginWindow.java:18) ~[ProyectoPrincipiosConstruccion/:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49) ~[javafx.base.jar:?]
-	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
-	at javafx.graphics/javafx.scene.Node.fireEvent(Node.java:9005) ~[javafx.graphics.jar:?]
-	at javafx.controls/javafx.scene.control.Button.fire(Button.java:203) ~[javafx.controls.jar:?]
-	at javafx.controls/com.sun.javafx.scene.control.behavior.ButtonBehavior.mouseReleased(ButtonBehavior.java:207) ~[javafx.controls.jar:?]
-	at javafx.controls/com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274) ~[javafx.controls.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:247) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54) ~[javafx.base.jar:?]
-	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
-	at javafx.graphics/javafx.scene.Scene$MouseHandler.process(Scene.java:4005) ~[javafx.graphics.jar:?]
-	at javafx.graphics/javafx.scene.Scene.processMouseEvent(Scene.java:1934) ~[javafx.graphics.jar:?]
-	at javafx.graphics/javafx.scene.Scene$ScenePeerListener.mouseEvent(Scene.java:2763) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:352) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:254) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:424) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.handleMouseEvent(GlassViewEventHandler.java:386) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.View.handleMouseEvent(View.java:560) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.View.notifyMouse(View.java:946) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$0(WinApplication.java:168) ~[javafx.graphics.jar:?]
-	at java.base/java.lang.Thread.run(Thread.java:1570) [?:?]
-2025-06-10 04:25:15 [JavaFX Application Thread] WARN  logic.services.LoginService - Credenciales inválidas para: juan@uv.mx
-2025-06-10 04:25:15 [JavaFX Application Thread] ERROR dataaccess.PasswordUtils - Error al verificar contraseña
-java.lang.IllegalArgumentException: Invalid salt version
-	at org.mindrot.jbcrypt.BCrypt.hashpw(BCrypt.java:659) ~[jbcrypt-0.4.jar:?]
-	at org.mindrot.jbcrypt.BCrypt.checkpw(BCrypt.java:764) ~[jbcrypt-0.4.jar:?]
-	at dataaccess.PasswordUtils.checkPassword(PasswordUtils.java:26) ~[ProyectoPrincipiosConstruccion/:?]
-	at logic.daos.AccountDAO.verifyCredentials(AccountDAO.java:159) ~[ProyectoPrincipiosConstruccion/:?]
-	at logic.services.LoginService.login(LoginService.java:37) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerLoginWindow.handle(ControllerLoginWindow.java:62) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerLoginWindow.handle(ControllerLoginWindow.java:18) ~[ProyectoPrincipiosConstruccion/:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49) ~[javafx.base.jar:?]
-	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
-	at javafx.graphics/javafx.scene.Node.fireEvent(Node.java:9005) ~[javafx.graphics.jar:?]
-	at javafx.controls/javafx.scene.control.Button.fire(Button.java:203) ~[javafx.controls.jar:?]
-	at javafx.controls/com.sun.javafx.scene.control.behavior.ButtonBehavior.mouseReleased(ButtonBehavior.java:207) ~[javafx.controls.jar:?]
-	at javafx.controls/com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274) ~[javafx.controls.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:247) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54) ~[javafx.base.jar:?]
-	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
-	at javafx.graphics/javafx.scene.Scene$MouseHandler.process(Scene.java:4005) ~[javafx.graphics.jar:?]
-	at javafx.graphics/javafx.scene.Scene.processMouseEvent(Scene.java:1934) ~[javafx.graphics.jar:?]
-	at javafx.graphics/javafx.scene.Scene$ScenePeerListener.mouseEvent(Scene.java:2763) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:352) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:254) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:424) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.handleMouseEvent(GlassViewEventHandler.java:386) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.View.handleMouseEvent(View.java:560) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.View.notifyMouse(View.java:946) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$0(WinApplication.java:168) ~[javafx.graphics.jar:?]
-	at java.base/java.lang.Thread.run(Thread.java:1570) [?:?]
-2025-06-10 04:25:15 [JavaFX Application Thread] WARN  logic.services.LoginService - Credenciales inválidas para: juan@uv.mx
-2025-06-10 04:25:41 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Generando hash para contraseña
-2025-06-10 04:25:45 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-06-10 04:25:45 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-06-10 04:26:14 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Buscando estudiantes por grupo NRC: 12232
-2025-06-10 04:26:14 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Se encontraron 0 estudiantes en el grupo NRC: 12232
-2025-06-10 04:28:13 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-06-10 04:28:13 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-06-10 04:28:16 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Buscando estudiantes por grupo NRC: 12232
-2025-06-10 04:28:16 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Se encontraron 0 estudiantes en el grupo NRC: 12232
-2025-06-10 04:31:03 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-06-10 04:31:03 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-06-10 04:31:05 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Buscando estudiantes por grupo NRC: 12232
-2025-06-10 04:31:05 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Se encontraron 0 estudiantes en el grupo NRC: 12232
-2025-06-10 04:31:43 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Verificando existencia de teléfono celular: 2286765432
-2025-06-10 04:31:43 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - ¿Teléfono celular '2286765432' existe?: false
-2025-06-10 04:31:43 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Validando teléfono celular: 2286765432
-2025-06-10 04:31:43 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Verificando existencia de teléfono celular: 2286765432
-2025-06-10 04:31:43 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - ¿Teléfono celular '2286765432' existe?: false
-2025-06-10 04:31:43 [JavaFX Application Thread] INFO  logic.daos.UserDAO - Usuario agregado exitosamente - ID: 10, Nombre: Juan Lopez, Teléfono: 2286765432
-2025-06-10 04:31:43 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Generando hash para contraseña
-2025-06-10 04:31:43 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Verificando existencia de usuario con ID: 10
-2025-06-10 04:31:43 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - ¿Usuario ID 10 existe?: true
-2025-06-10 04:31:49 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Buscando estudiantes por grupo NRC: 12232
-2025-06-10 04:31:49 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Se encontraron 0 estudiantes en el grupo NRC: 12232
-2025-06-10 04:31:53 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Buscando estudiantes por grupo NRC: 12232
-2025-06-10 04:31:53 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Se encontraron 0 estudiantes en el grupo NRC: 12232
-2025-06-10 04:31:58 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Buscando estudiantes por grupo NRC: 12232
-2025-06-10 04:31:58 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Se encontraron 0 estudiantes en el grupo NRC: 12232
-2025-06-10 04:33:28 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-06-10 04:33:28 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-06-10 04:33:31 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Buscando estudiantes por grupo NRC: 12232
-2025-06-10 04:33:31 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Se encontraron 0 estudiantes en el grupo NRC: 12232
-2025-06-10 04:37:26 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-06-10 04:37:26 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-06-10 04:37:28 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Buscando estudiantes por grupo NRC: 12232
-2025-06-10 04:37:28 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Se encontraron 0 estudiantes en el grupo NRC: 12232
-2025-06-10 04:38:14 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-06-10 04:38:15 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-06-10 04:38:19 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Buscando estudiantes por grupo NRC: 12232
-2025-06-10 04:38:19 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Se encontraron 0 estudiantes en el grupo NRC: 12232
-2025-06-10 04:42:02 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-06-10 04:42:02 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-06-10 04:42:04 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Buscando estudiantes por grupo NRC: 12232
-2025-06-10 04:42:04 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Se encontraron 0 estudiantes en el grupo NRC: 12232
-2025-06-10 04:44:25 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-06-10 04:44:25 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-06-10 04:44:28 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Buscando estudiantes por grupo NRC: 12232
-2025-06-10 04:44:28 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Se encontraron 0 estudiantes en el grupo NRC: 12232
-2025-06-10 04:47:38 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-06-10 04:47:38 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-06-10 04:47:40 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Buscando estudiantes por grupo NRC: 12232
-2025-06-10 04:47:40 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Se encontraron 0 estudiantes en el grupo NRC: 12232
-2025-06-10 05:29:25 [JavaFX Application Thread] WARN  logic.services.LoginService - Credenciales inválidas para: angelL@uv.mx
-2025-06-10 05:29:49 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-06-10 05:29:49 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como académico
-2025-06-10 05:30:35 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Generando hash para contraseña
-2025-06-10 05:30:36 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Verificando existencia de teléfono celular: 2284452726
-2025-06-10 05:30:36 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - ¿Teléfono celular '2284452726' existe?: false
-2025-06-10 05:30:36 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Verificando existencia de matrícula: s23014054
-2025-06-10 05:30:36 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - ¿Matrícula 's23014054' existe?: false
-2025-06-10 05:30:36 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Validando teléfono celular: 2284452726
-2025-06-10 05:30:36 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Verificando existencia de teléfono celular: 2284452726
-2025-06-10 05:30:36 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - ¿Teléfono celular '2284452726' existe?: false
-2025-06-10 05:30:36 [JavaFX Application Thread] INFO  logic.daos.UserDAO - Usuario agregado exitosamente - ID: 11, Nombre: Manuel Alessandro Valdivia Garcia, Teléfono: 2284452726
-2025-06-10 05:30:36 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Agregando nuevo estudiante con matrícula: s23014054
-2025-06-10 05:30:36 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Asignando estudiante ID: 11 al grupo NRC: 12232
-2025-06-10 05:30:36 [JavaFX Application Thread] INFO  logic.daos.StudentDAO - Estudiante ID: 11 asignado exitosamente al grupo NRC: 12232
-2025-06-10 05:30:36 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Verificando existencia de usuario con ID: 11
-2025-06-10 05:30:36 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - ¿Usuario ID 11 existe?: true
-2025-06-10 05:30:51 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-06-10 05:30:51 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-06-10 05:30:53 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Buscando estudiantes por grupo NRC: 12232
-2025-06-10 05:30:53 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Se encontraron 1 estudiantes en el grupo NRC: 12232
-2025-06-10 05:42:23 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-06-10 05:42:23 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como académico
-2025-06-10 05:42:26 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Buscando estudiantes por grupo NRC: 12232
-2025-06-10 05:42:26 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Se encontraron 1 estudiantes en el grupo NRC: 12232
-2025-06-10 05:42:26 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Buscando estudiantes activos por grupo NRC: 12232
-2025-06-10 05:42:26 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Se encontraron 1 estudiantes activos en el grupo NRC: 12232
-2025-06-10 05:58:54 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-06-10 05:58:54 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como estudiante
-2025-06-10 06:00:32 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-06-10 06:00:32 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como estudiante
-2025-06-10 06:00:47 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-06-10 06:00:47 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-06-10 06:01:31 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Verificando existencia de proyecto con título: El arte en la Ingenieria de Software
-2025-06-10 06:01:31 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - ¿Proyecto 'El arte en la Ingenieria de Software' existe?: false
-2025-06-10 06:02:36 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Insertando documento para organización ID: 1 - Nombre archivo: ProyectoFinalAplicacionesEscritorio.pdf
-2025-06-10 06:02:37 [JavaFX Application Thread] INFO  logic.daos.LinkedOrganizationDocumentDAO - Documento insertado exitosamente para organización ID: 1 - Archivo: ProyectoFinalAplicacionesEscritorio.pdf
-2025-06-10 06:03:29 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Verificando existencia de proyecto con título: El arte
-2025-06-10 06:03:29 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - ¿Proyecto 'El arte' existe?: false
-2025-06-10 06:03:36 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
-2025-06-10 06:03:36 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 2 proyectos con estado: A
-2025-06-10 06:03:39 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
-2025-06-10 06:03:39 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 2 proyectos con estado: A
-2025-06-10 06:04:14 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-06-10 06:04:14 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como estudiante
+2025-06-17 18:15:33 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-17 18:15:33 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-06-17 18:16:01 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-17 18:16:01 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como académico
+2025-06-17 18:18:20 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-17 18:18:20 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-06-17 18:18:49 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Verificando existencia de proyecto con título: El arte de la guerra
+2025-06-17 18:18:49 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - ¿Proyecto 'El arte de la guerra' existe?: false
+2025-06-17 18:56:50 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-17 18:56:50 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-06-17 18:57:09 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Verificando existencia de proyecto con título: Hola
+2025-06-17 18:57:09 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - ¿Proyecto 'Hola' existe?: false
+2025-06-17 18:57:19 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
+2025-06-17 18:57:19 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 6 proyectos con estado: A
+2025-06-17 18:57:24 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
+2025-06-17 18:57:24 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 6 proyectos con estado: A
+2025-06-17 18:58:20 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-17 18:58:20 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-06-17 18:58:33 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Verificando existencia de proyecto con título: hola3
+2025-06-17 18:58:33 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - ¿Proyecto 'hola3' existe?: false
+2025-06-17 18:59:41 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-17 18:59:41 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-06-17 18:59:56 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Verificando existencia de proyecto con título: Hola4
+2025-06-17 18:59:56 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - ¿Proyecto 'Hola4' existe?: false
+2025-06-17 19:01:42 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-17 19:01:42 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-06-17 19:01:57 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Verificando existencia de proyecto con título: Hoal5
+2025-06-17 19:01:57 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - ¿Proyecto 'Hoal5' existe?: false
+2025-06-17 19:09:24 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-17 19:09:24 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-06-17 19:09:36 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Verificando existencia de proyecto con título: Hola5
+2025-06-17 19:09:36 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - ¿Proyecto 'Hola5' existe?: false
+2025-06-17 19:38:20 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-17 19:38:20 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-06-17 19:39:16 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Verificando existencia de proyecto con título: Hola6
+2025-06-17 19:39:16 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - ¿Proyecto 'Hola6' existe?: false
+2025-06-17 19:41:10 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-17 19:41:10 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-06-17 19:41:33 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Verificando existencia de proyecto con título: hola
+2025-06-17 19:41:33 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - ¿Proyecto 'hola' existe?: true
+2025-06-17 19:41:36 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Verificando existencia de proyecto con título: hola8
+2025-06-17 19:41:36 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - ¿Proyecto 'hola8' existe?: false
+2025-06-17 19:41:44 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
+2025-06-17 19:41:44 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 12 proyectos con estado: A
+2025-06-17 19:41:54 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
+2025-06-17 19:41:54 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 12 proyectos con estado: A

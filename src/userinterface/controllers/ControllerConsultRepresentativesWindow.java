@@ -33,8 +33,12 @@ public class ControllerConsultRepresentativesWindow {
         this.currentStage = Objects.requireNonNull(stage, "El stage no puede ser nulo");
         this.allRepresentatives = FXCollections.observableArrayList();
 
-        TableColumn<Representative, Void> assignCol = view.createAssignButtonColumn(this::handleAssignOrganization);
-        view.getRepresentativeTable().getColumns().add(assignCol);
+        boolean assignColExists = view.getRepresentativeTable().getColumns().stream()
+            .anyMatch(col -> "Acción".equals(col.getText()));
+        if (!assignColExists) {
+            TableColumn<Representative, Void> assignCol = view.createAssignButtonColumn(this::handleAssignOrganization);
+            view.getRepresentativeTable().getColumns().add(assignCol);
+        }
 
         setupEventHandlers();
         loadRepresentativeData();

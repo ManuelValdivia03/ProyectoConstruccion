@@ -20,6 +20,9 @@ import logic.logicclasses.Representative;
 import userinterface.utilities.Validators;
 import userinterface.windows.ConsultRepresentativesWindow;
 import userinterface.windows.RegistProyectWindow;
+import userinterface.windows.AssignRepresentativesToProjectWindow;
+import userinterface.controllers.ControllerAssignRepresentativesToProject;
+
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -154,67 +157,21 @@ public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> 
         Platform.runLater(() -> {
             showSuccessDialog(SUCCESS_TITLE,
                     "¡Proyecto registrado correctamente!\nAhora seleccione un representante para asignar al proyecto.");
-            openRepresentativesSelectionWindow();
+            openAssignRepresentativesWindow();
         });
     }
 
-    private void openRepresentativesSelectionWindow() {
-        ConsultRepresentativesWindow repsWindow = new ConsultRepresentativesWindow();
-        Stage repsStage = new Stage();
+    private void openAssignRepresentativesWindow() {
+        AssignRepresentativesToProjectWindow assignWindow = new AssignRepresentativesToProjectWindow();
+        Stage assignStage = new Stage();
 
-        new ControllerConsultRepresentativesWindow(repsWindow, repsStage) {
-            public TableColumn<Representative, Void> createAssignButtonColumn() {
-                TableColumn<Representative, Void> assignCol = new TableColumn<>("Asignar");
-                assignCol.setCellFactory(param -> new TableCell<>() {
-                    private final Button assignButton = new Button("Asignar");
+        new ControllerAssignRepresentativesToProject(assignWindow, assignStage, createdProjectId);
 
-                    {
-                        assignButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
-                        assignButton.setOnAction(event -> {
-                            Representative rep = getTableView().getItems().get(getIndex());
-                            if (rep != null) {
-                                assignProjectToRepresentative(rep);
-                            }
-                        });
-                    }
-
-                    @Override
-                    protected void updateItem(Void item, boolean empty) {
-                        super.updateItem(item, empty);
-                        setGraphic(empty ? null : assignButton);
-                    }
-                });
-                return assignCol;
-            }
-        };
-
-        Scene scene = new Scene(repsWindow.getView(), 800, 600);
-        repsStage.setScene(scene);
-        repsStage.setTitle("Asignar Representante al Proyecto");
-        repsStage.show();
-    }
-
-    private void assignProjectToRepresentative(Representative rep) {
-        try {
-            boolean success = proyectDAO.linkProjectToRepresentative(
-                    createdProjectId,
-                    rep.getIdRepresentative(),
-                    rep.getLinkedOrganization() != null ? rep.getLinkedOrganization().getIdLinkedOrganization() : null
-            );
-
-            if (success) {
-                Platform.runLater(() -> {
-                    showSuccessDialog(FINAL_SUCCESS_TITLE,
-                            "¡Proyecto registrado y representante asignado exitosamente!");
-                    currentStage.close();
-                });
-            } else {
-                showError("No se pudo asignar el representante al proyecto");
-            }
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Error assigning representative to project", e);
-            showError("Error al asignar representante: " + e.getMessage());
-        }
+        Scene scene = new Scene(assignWindow.getView(), 800, 600);
+        assignStage.setScene(scene);
+        assignStage.setTitle("Asignar Representante al Proyecto");
+        assignStage.show();
+        assignStage.setOnHidden(e -> currentStage.close());
     }
 
     private void showSuccessDialog(String title, String message) {

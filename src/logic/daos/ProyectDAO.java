@@ -347,37 +347,20 @@ public class ProyectDAO implements IProyectDAO {
         }
     }
 
-    public boolean linkProjectToRepresentative(int projectId, int representativeId, int organizationId) throws SQLException {
-        String sql = "UPDATE proyecto SET id_representante = ?, id_organizacion = ? WHERE id_proyecto = ?";
-
-        try (Connection conn = getConnection();
-             PreparedStatement statement = conn.prepareStatement(sql)) {
-
-            statement.setInt(1, representativeId);
-            statement.setInt(2, organizationId);
-            statement.setInt(3, projectId);
-
-            int affectedRows = statement.executeUpdate();
-            return affectedRows > 0;
+    public boolean linkProjectToRepresentative(int projectId, int representativeId) throws SQLException {
+        if (projectId <= 0 || representativeId <= 0) {
+            return false;
         }
-    }
 
-    public boolean linkProjectToRepresentative(int projectId, int representativeId, Integer organizationId) throws SQLException {
-        String sql = "UPDATE proyecto SET id_representante = ?, id_usuario = ? WHERE id_proyecto = ?";
+        String sql = "UPDATE proyecto SET id_representante = ? WHERE id_proyecto = ?";
 
         try (Connection conn = getConnection();
              PreparedStatement statement = conn.prepareStatement(sql)) {
 
             statement.setInt(1, representativeId);
-            if (organizationId != null) {
-                statement.setInt(2, organizationId);
-            } else {
-                statement.setNull(2, Types.INTEGER);
-            }
-            statement.setInt(3, projectId);
+            statement.setInt(2, projectId);
 
-            int affectedRows = statement.executeUpdate();
-            return affectedRows > 0;
+            return statement.executeUpdate() > 0;
         }
     }
 
