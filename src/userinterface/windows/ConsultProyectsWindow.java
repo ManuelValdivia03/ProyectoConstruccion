@@ -15,12 +15,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
-import logic.logicclasses.Proyect;
+import logic.logicclasses.Project;
 import userinterface.controllers.ControllerConsultProyectsWindow;
 
 public class ConsultProyectsWindow {
     private final VBox view;
-    private final TableView<Proyect> projectsTable;
+    private final TableView<Project> projectsTable;
     private final TextField searchField;
     private final Button searchButton;
     private final Button refreshButton;
@@ -63,11 +63,11 @@ public class ConsultProyectsWindow {
     }
 
     private void setupTable() {
-        TableColumn<Proyect, Integer> idColumn = new TableColumn<>("ID");
+        TableColumn<Project, Integer> idColumn = new TableColumn<>("ID");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("idProyect"));
         idColumn.setPrefWidth(60);
 
-        TableColumn<Proyect, String> titleColumn = new TableColumn<>("Título");
+        TableColumn<Project, String> titleColumn = new TableColumn<>("Título");
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         titleColumn.setCellFactory(tc -> new TableCell<>() {
             @Override
@@ -88,29 +88,38 @@ public class ConsultProyectsWindow {
         titleColumn.setPrefWidth(150);
         titleColumn.setMinWidth(150);
 
-        TableColumn<Proyect, String> descColumn = new TableColumn<>("Descripción");
+        TableColumn<Project, String> descColumn = new TableColumn<>("Descripción");
         descColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         descColumn.setPrefWidth(200);
 
-        TableColumn<Proyect, String> startColumn = new TableColumn<>("Inicio");
+        TableColumn<Project, String> startColumn = new TableColumn<>("Inicio");
         startColumn.setCellValueFactory(new PropertyValueFactory<>("dateStart"));
         startColumn.setPrefWidth(100);
 
-        TableColumn<Proyect, String> endColumn = new TableColumn<>("Fin");
+        TableColumn<Project, String> endColumn = new TableColumn<>("Fin");
         endColumn.setCellValueFactory(new PropertyValueFactory<>("dateEnd"));
         endColumn.setPrefWidth(100);
 
-        TableColumn<Proyect, String> statusColumn = new TableColumn<>("Estado");
+        TableColumn<Project, Integer> maxStudentsColumn = new TableColumn<>("Cupo Máximo");
+        maxStudentsColumn.setCellValueFactory(new PropertyValueFactory<>("maxStudents"));
+        maxStudentsColumn.setPrefWidth(100);
+
+        TableColumn<Project, Integer> currentStudentsColumn = new TableColumn<>("Estudiantes Actuales");
+        currentStudentsColumn.setCellValueFactory(new PropertyValueFactory<>("currentStudents"));
+        currentStudentsColumn.setPrefWidth(120);
+
+        TableColumn<Project, String> statusColumn = new TableColumn<>("Estado");
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         statusColumn.setPrefWidth(80);
 
-        TableColumn<Proyect, Void> actionsColumn = new TableColumn<>("Acciones");
+        TableColumn<Project, Void> actionsColumn = new TableColumn<>("Acciones");
         actionsColumn.setPrefWidth(100);
         actionsColumn.setCellFactory(createEditButtonCellFactory());
 
         projectsTable.getColumns().addAll(
                 idColumn, titleColumn, descColumn,
-                startColumn, endColumn, statusColumn, actionsColumn
+                startColumn, endColumn, maxStudentsColumn,
+                currentStudentsColumn, statusColumn, actionsColumn
         );
 
         projectsTable.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
@@ -118,21 +127,21 @@ public class ConsultProyectsWindow {
         projectsTable.setMinHeight(300);
     }
 
-    private Callback<TableColumn<Proyect, Void>, TableCell<Proyect, Void>> createEditButtonCellFactory() {
+    private Callback<TableColumn<Project, Void>, TableCell<Project, Void>> createEditButtonCellFactory() {
         return new Callback<>() {
             @Override
-            public TableCell<Proyect, Void> call(final TableColumn<Proyect, Void> param) {
+            public TableCell<Project, Void> call(final TableColumn<Project, Void> param) {
                 return new TableCell<>() {
                     private final Button editBtn = new Button("Editar");
 
                     {
                         editBtn.setStyle("-fx-background-color: #FFC107; -fx-text-fill: black;");
                         editBtn.setOnAction(event -> {
-                            Proyect proyect = getTableView().getItems().get(getIndex());
+                            Project project = getTableView().getItems().get(getIndex());
                             if (getTableView().getProperties().get("controller") != null) {
                                 ControllerConsultProyectsWindow controller =
                                         (ControllerConsultProyectsWindow) getTableView().getProperties().get("controller");
-                                controller.handleEdit(proyect);
+                                controller.handleEdit(project);
                             }
                         });
                     }
@@ -155,7 +164,7 @@ public class ConsultProyectsWindow {
         return view;
     }
 
-    public TableView<Proyect> getProjectsTable() {
+    public TableView<Project> getProjectsTable() {
         return projectsTable;
     }
 
@@ -179,7 +188,7 @@ public class ConsultProyectsWindow {
         return resultLabel;
     }
 
-    public void setProjectsList(ObservableList<Proyect> projects) {
+    public void setProjectsList(ObservableList<Project> projects) {
         projectsTable.setItems(projects);
     }
 }

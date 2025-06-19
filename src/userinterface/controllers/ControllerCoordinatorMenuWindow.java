@@ -6,19 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import logic.logicclasses.Coordinator;
-import userinterface.windows.CoordinatorMenuWindow;
-import userinterface.windows.CreateAcademicWindow;
-import userinterface.windows.CreateLinkedOrganizationWindow;
-import userinterface.windows.ConsultAcademicsWindow;
-import userinterface.windows.ConsultLinkedOrganizationsWindow;
-import userinterface.windows.ConsultProyectsWindow;
-import userinterface.windows.ConsultRepresentativesWindow;
-import userinterface.windows.RegistProyectWindow;
-import userinterface.windows.RegistRepresentativeWindow;
-import userinterface.windows.CreateGroupWindow;
-import userinterface.controllers.ControllerCreateGroupWindow;
-import userinterface.windows.ConsultGroupsWindow;
-import userinterface.controllers.ControllerConsultGroupsWindow;
+import userinterface.windows.*;
 
 public class ControllerCoordinatorMenuWindow implements EventHandler<ActionEvent> {
     private static final int MAIN_WINDOW_WIDTH = 1024;
@@ -48,10 +36,9 @@ public class ControllerCoordinatorMenuWindow implements EventHandler<ActionEvent
         view.getRegisterRepresentativeButton().setOnAction(e -> showRegisterRepresentativeWindow());
         view.getConsultRepresentativesButton().setOnAction(e -> showConsultRepresentativesWindow());
         view.getRegisterGroupButton().setOnAction(e -> showRegisterGroupWindow());
-        view.getConsultGroupsButton().setOnAction(e -> showConsultGroupsWindow()); // <--- Agregado
+        view.getConsultGroupsButton().setOnAction(e -> showConsultGroupsWindow());
+        view.getAssignProjectButton().setOnAction(e -> showAssignProjectWindow());
 
-        // Unimplemented actions with clear indication
-        view.getAssignProjectButton().setOnAction(this::handleUnimplementedAction);
         view.getReassignStudentButton().setOnAction(this::handleUnimplementedAction);
         view.getManageRequestsButton().setOnAction(this::handleUnimplementedAction);
         view.getRegisterCronogramButton().setOnAction(this::handleUnimplementedAction);
@@ -99,7 +86,7 @@ public class ControllerCoordinatorMenuWindow implements EventHandler<ActionEvent
     private void showConsultProjectsWindow() {
         ConsultProyectsWindow consultWindow = new ConsultProyectsWindow();
         new ControllerConsultProyectsWindow(consultWindow);
-        showWindow("Consulta de Proyectos", consultWindow.getView(), 800, 600);
+        showWindow("Consulta de Proyectos", consultWindow.getView(), 1000, 600);
     }
 
     private void showRegisterOrganizationWindow() {
@@ -140,6 +127,13 @@ public class ControllerCoordinatorMenuWindow implements EventHandler<ActionEvent
         Stage consultStage = new Stage();
         new ControllerConsultGroupsWindow(consultWindow, consultStage);
         showWindow("Consulta de Grupos", consultWindow.getView(), 600, 400, consultStage);
+    }
+
+    private void showAssignProjectWindow() {
+        CoordinatorProjectsWindow assignWindow = new CoordinatorProjectsWindow();
+        Stage assignStage = new Stage();
+        new ControllerCoordinatorProjectsWindow(assignWindow);
+        showWindow("Asignar Proyecto", assignWindow.getView(), 600, 400, assignStage);
     }
 
     private void showWindow(String title, javafx.scene.Parent view, int width, int height) {

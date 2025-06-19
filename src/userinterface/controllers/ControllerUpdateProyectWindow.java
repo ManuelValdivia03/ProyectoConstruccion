@@ -6,9 +6,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import logic.daos.ProyectDAO;
+import logic.daos.ProjectDAO;
 import logic.exceptions.RepeatedProyectException;
-import logic.logicclasses.Proyect;
+import logic.logicclasses.Project;
 import userinterface.utilities.Validators;
 import userinterface.windows.UpdateProyectWindow;
 import java.sql.SQLException;
@@ -29,27 +29,28 @@ public class ControllerUpdateProyectWindow {
     };
 
     private final UpdateProyectWindow view;
-    private final ProyectDAO proyectDAO;
+    private final ProjectDAO projectDAO;
     private final Validators validators;
-    private final Proyect currentProyect;
+    private final Project currentProject;
 
-    public ControllerUpdateProyectWindow(UpdateProyectWindow updateProyectWindow, Proyect proyect) {
+    public ControllerUpdateProyectWindow(UpdateProyectWindow updateProyectWindow, Project project) {
         this.view = updateProyectWindow;
-        this.proyectDAO = new ProyectDAO();
+        this.projectDAO = new ProjectDAO();
         this.validators = new Validators();
-        this.currentProyect = proyect;
+        this.currentProject = project;
 
         initializeFields();
         setupEventHandlers();
     }
 
     private void initializeFields() {
-        view.getIdLabel().setText(String.valueOf(currentProyect.getIdProyect()));
-        view.getTitleTextField().setText(currentProyect.getTitle());
-        view.getDescriptionTextField().setText(currentProyect.getDescription());
+        view.getIdLabel().setText(String.valueOf(currentProject.getIdProyect()));
+        view.getTitleTextField().setText(currentProject.getTitle());
+        view.getDescriptionTextField().setText(currentProject.getDescription());
+        view.getMaxStudentsTextField().setText(String.valueOf(currentProject.getCapacity()));
 
-        LocalDate startDate = currentProyect.getDateStart().toLocalDateTime().toLocalDate();
-        LocalDate endDate = currentProyect.getDateEnd().toLocalDateTime().toLocalDate();
+        LocalDate startDate = currentProject.getDateStart().toLocalDateTime().toLocalDate();
+        LocalDate endDate = currentProject.getDateEnd().toLocalDateTime().toLocalDate();
 
         view.getDateStartTextField().setText(startDate.toString());
         view.getDateEndTextField().setText(endDate.toString());
@@ -69,10 +70,10 @@ public class ControllerUpdateProyectWindow {
                 return;
             }
 
-            Proyect updatedProyect = createUpdatedProyect();
-            validateProyectTitleUniqueness(updatedProyect);
+            Project updatedProject = createUpdatedProyect();
+            validateProyectTitleUniqueness(updatedProject);
 
-            if (proyectDAO.updateProyect(updatedProyect)) {
+            if (projectDAO.updateProyect(updatedProject)) {
                 showSuccessAndClose();
             } else {
                 showError("No se pudo actualizar el proyecto");
@@ -89,21 +90,29 @@ public class ControllerUpdateProyectWindow {
         }
     }
 
-    private Proyect createUpdatedProyect() throws DateTimeParseException {
-        Proyect updatedProyect = new Proyect(
-                currentProyect.getIdProyect(),
+    private Project createUpdatedProyect() throws DateTimeParseException {
+        int maxStudents;
+        try {
+            maxStudents = Integer.parseInt(view.getMaxStudentsTextField().getText().trim());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("El cupo máximo debe ser un número válido");
+        }
+
+        return new Project(
+                currentProject.getIdProyect(),
                 view.getTitleTextField().getText().trim(),
                 view.getDescriptionTextField().getText().trim(),
                 parseDateOnly(view.getDateStartTextField().getText().trim()),
                 parseDateOnly(view.getDateEndTextField().getText().trim()),
-                view.getStatusComboBox().getValue().charAt(0)
+                view.getStatusComboBox().getValue().charAt(0),
+                maxStudents,
+                currentProject.getCurrentStudents()
         );
-        return updatedProyect;
     }
 
-    private void validateProyectTitleUniqueness(Proyect updatedProyect) throws SQLException {
-        if (!updatedProyect.getTitle().equals(currentProyect.getTitle())) {
-            if (proyectDAO.proyectExists(updatedProyect.getTitle())) {
+    private void validateProyectTitleUniqueness(Project updatedProject) throws SQLException {
+        if (!updatedProject.getTitle().equals(currentProject.getTitle())) {
+            if (projectDAO.proyectExists(updatedProject.getTitle())) {
                 throw new RepeatedProyectException("Ya existe un proyecto con ese título");
             }
         }
@@ -119,6 +128,22 @@ public class ControllerUpdateProyectWindow {
         isValid &= validateField(view.getDescriptionTextField(),
                 !view.getDescriptionTextField().getText().isEmpty(),
                 "La descripción es obligatoria");
+
+        try {
+            int maxStudents = Integer.parseInt(view.getMaxStudentsTextField().getText().trim());
+            if (maxStudents <= 0) {
+                showFieldError("El cupo máximo debe ser mayor a 0", view.getMaxStudentsTextField());
+                isValid = false;
+            }
+            if (maxStudents < currentProject.getCurrentStudents()) {
+                showFieldError("El cupo máximo no puede ser menor que el número actual de estudiantes", 
+                    view.getMaxStudentsTextField());
+                isValid = false;
+            }
+        } catch (NumberFormatException e) {
+            showFieldError("El cupo máximo debe ser un número válido", view.getMaxStudentsTextField());
+            isValid = false;
+        }
 
         isValid &= validateDateField(view.getDateStartTextField(),
                 "Fecha de inicio inválida. Formatos válidos: YYYY-MM-DD, DD/MM/YYYY");
@@ -227,6 +252,7 @@ public class ControllerUpdateProyectWindow {
         view.getDescriptionTextField().setStyle(DEFAULT_BORDER_STYLE);
         view.getDateStartTextField().setStyle(DEFAULT_BORDER_STYLE);
         view.getDateEndTextField().setStyle(DEFAULT_BORDER_STYLE);
+        view.getMaxStudentsTextField().setStyle(DEFAULT_BORDER_STYLE);
     }
 
     private void showFieldError(String message, TextField field) {

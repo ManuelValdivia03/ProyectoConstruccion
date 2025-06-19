@@ -5,8 +5,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import logic.logicclasses.Student;
 import userinterface.windows.EditProfileStudentWindow;
-import userinterface.windows.RequestProjectsWindow;
 import userinterface.windows.StudentMenuWindow;
+import userinterface.windows.StudentProjectRequestWindow;
 
 public class ControllerStudentMenuWindow {
     private static final int WINDOW_WIDTH = 1024;
@@ -98,13 +98,13 @@ public class ControllerStudentMenuWindow {
     }
 
     private void showProjectRequestWindow() {
-        RequestProjectsWindow requestWindow = new RequestProjectsWindow();
-        ControllerRequestProjectsWindow controller = new ControllerRequestProjectsWindow(requestWindow, student);
-
-        Stage stage = new Stage();
-        stage.setScene(new Scene(requestWindow.getView()));
-        stage.setTitle("Solicitar Proyectos");
-        stage.show();
+        StudentProjectRequestWindow projectRequestView = new StudentProjectRequestWindow();
+        Stage projectRequestStage = new Stage();
+        new ControllerStudentProjectRequestWindow(projectRequestView, student);
+        Scene projectRequestScene = new Scene(projectRequestView.getView(), WINDOW_WIDTH, WINDOW_HEIGHT);
+        projectRequestStage.setScene(projectRequestScene);
+        projectRequestStage.setTitle("Solicitar Proyecto");
+        projectRequestStage.show();
     }
 
     private void showAssignedProjectWindow() {

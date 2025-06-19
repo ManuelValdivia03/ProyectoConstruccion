@@ -15,6 +15,7 @@ public class RegistProyectWindow {
     private final VBox view;
     private final TextField titleTextField;
     private final TextField descriptionTextField;
+    private final TextField maxStudentsTextField;
     private final DatePicker dateStartPicker;
     private final DatePicker dateEndPicker;
     private final Button registerButton;
@@ -27,6 +28,7 @@ public class RegistProyectWindow {
 
         titleTextField = new TextField();
         descriptionTextField = new TextField();
+        maxStudentsTextField = new TextField();
 
         dateStartPicker = new DatePicker();
         dateStartPicker.setPromptText("Seleccione fecha");
@@ -90,10 +92,12 @@ public class RegistProyectWindow {
         grid.add(titleTextField, 1, 0);
         grid.add(new Label("Descripción:"), 0, 1);
         grid.add(descriptionTextField, 1, 1);
-        grid.add(new Label("Fecha de Inicio:"), 0, 2);
-        grid.add(dateStartPicker, 1, 2);
-        grid.add(new Label("Fecha de Fin:"), 0, 3);
-        grid.add(dateEndPicker, 1, 3);
+        grid.add(new Label("Cupo máximo:"), 0, 2);
+        grid.add(maxStudentsTextField, 1, 2);
+        grid.add(new Label("Fecha de Inicio:"), 0, 3);
+        grid.add(dateStartPicker, 1, 3);
+        grid.add(new Label("Fecha de Fin:"), 0, 4);
+        grid.add(dateEndPicker, 1, 4);
 
         view = new VBox(15);
         view.setPadding(new Insets(15));
@@ -111,6 +115,10 @@ public class RegistProyectWindow {
 
     public TextField getDescriptionTextField() {
         return descriptionTextField;
+    }
+
+    public TextField getMaxStudentsTextField() {
+        return maxStudentsTextField;
     }
 
     public DatePicker getDateStartPicker() {

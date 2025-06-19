@@ -3,11 +3,10 @@ package userinterface.controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.stage.Stage;
-import logic.daos.ProyectDAO;
+import logic.daos.ProjectDAO;
 import logic.daos.RepresentativeDAO;
 import logic.logicclasses.Representative;
 import userinterface.windows.AssignRepresentativesToProjectWindow;
@@ -19,7 +18,7 @@ import java.util.Objects;
 public class ControllerAssignRepresentativesToProject {
     private final AssignRepresentativesToProjectWindow view;
     private final RepresentativeDAO representativeDAO;
-    private final ProyectDAO proyectDAO;
+    private final ProjectDAO projectDAO;
     private final Stage currentStage;
     private final int projectId;
     private ObservableList<Representative> allRepresentatives;
@@ -27,7 +26,7 @@ public class ControllerAssignRepresentativesToProject {
     public ControllerAssignRepresentativesToProject(AssignRepresentativesToProjectWindow view, Stage stage, int projectId) {
         this.view = Objects.requireNonNull(view, "La vista no puede ser nula");
         this.representativeDAO = new RepresentativeDAO();
-        this.proyectDAO = new ProyectDAO();
+        this.projectDAO = new ProjectDAO();
         this.currentStage = Objects.requireNonNull(stage, "El stage no puede ser nulo");
         this.projectId = projectId;
         this.allRepresentatives = FXCollections.observableArrayList();
@@ -68,7 +67,7 @@ public class ControllerAssignRepresentativesToProject {
         }
 
         try {
-            boolean success = proyectDAO.linkProjectToRepresentative(projectId, rep.getIdRepresentative());
+            boolean success = projectDAO.linkProjectToRepresentative(projectId, rep.getIdRepresentative());
 
             if (success) {
                 showAlert(Alert.AlertType.INFORMATION, "Éxito",

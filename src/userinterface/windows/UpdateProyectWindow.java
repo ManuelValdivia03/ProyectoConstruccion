@@ -20,6 +20,7 @@ public class UpdateProyectWindow {
     private final Button cancelButton;
     private final Label resultLabel;
     private final Label idLabel;
+    private final TextField maxStudentsTextField;
 
     public UpdateProyectWindow() {
         Label titleLabel = new Label("Actualizar Proyecto");
@@ -37,6 +38,8 @@ public class UpdateProyectWindow {
         statusComboBox = new ComboBox<>();
         statusComboBox.getItems().addAll("Activo", "Inactivo");
         statusComboBox.setPromptText("Seleccionar Estado");
+
+        maxStudentsTextField = new TextField();
 
         updateButton = new Button("Actualizar Proyecto");
         updateButton.setStyle("-fx-background-color: #4a7bed; -fx-text-fill: white;");
@@ -62,8 +65,10 @@ public class UpdateProyectWindow {
         grid.add(dateStartTextField, 1, 3);
         grid.add(new Label("Fecha de Fin:"), 0, 4);
         grid.add(dateEndTextField, 1, 4);
-        grid.add(new Label("Estado:"), 0, 5);
-        grid.add(statusComboBox, 1, 5);
+        grid.add(new Label("Cupo máximo:"), 0, 5);
+        grid.add(maxStudentsTextField, 1, 5);
+        grid.add(new Label("Estado:"), 0, 6);
+        grid.add(statusComboBox, 1, 6);
 
         view = new VBox(15);
         view.setPadding(new Insets(15));
@@ -112,5 +117,9 @@ public class UpdateProyectWindow {
 
     public ComboBox<String> getStatusComboBox() {
         return statusComboBox;
+    }
+
+    public TextField getMaxStudentsTextField() {
+        return maxStudentsTextField;
     }
 }

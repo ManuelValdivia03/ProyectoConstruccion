@@ -1,46 +1,485 @@
-2025-06-17 18:15:33 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-06-17 18:15:33 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-06-17 18:16:01 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-06-17 18:16:01 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como académico
-2025-06-17 18:18:20 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-06-17 18:18:20 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-06-17 18:18:49 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Verificando existencia de proyecto con título: El arte de la guerra
-2025-06-17 18:18:49 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - ¿Proyecto 'El arte de la guerra' existe?: false
-2025-06-17 18:56:50 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-06-17 18:56:50 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-06-17 18:57:09 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Verificando existencia de proyecto con título: Hola
-2025-06-17 18:57:09 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - ¿Proyecto 'Hola' existe?: false
-2025-06-17 18:57:19 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
-2025-06-17 18:57:19 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 6 proyectos con estado: A
-2025-06-17 18:57:24 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
-2025-06-17 18:57:24 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 6 proyectos con estado: A
-2025-06-17 18:58:20 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-06-17 18:58:20 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-06-17 18:58:33 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Verificando existencia de proyecto con título: hola3
-2025-06-17 18:58:33 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - ¿Proyecto 'hola3' existe?: false
-2025-06-17 18:59:41 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-06-17 18:59:41 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-06-17 18:59:56 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Verificando existencia de proyecto con título: Hola4
-2025-06-17 18:59:56 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - ¿Proyecto 'Hola4' existe?: false
-2025-06-17 19:01:42 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-06-17 19:01:42 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-06-17 19:01:57 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Verificando existencia de proyecto con título: Hoal5
-2025-06-17 19:01:57 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - ¿Proyecto 'Hoal5' existe?: false
-2025-06-17 19:09:24 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-06-17 19:09:24 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-06-17 19:09:36 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Verificando existencia de proyecto con título: Hola5
-2025-06-17 19:09:36 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - ¿Proyecto 'Hola5' existe?: false
-2025-06-17 19:38:20 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-06-17 19:38:20 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-06-17 19:39:16 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Verificando existencia de proyecto con título: Hola6
-2025-06-17 19:39:16 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - ¿Proyecto 'Hola6' existe?: false
-2025-06-17 19:41:10 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-06-17 19:41:10 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-06-17 19:41:33 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Verificando existencia de proyecto con título: hola
-2025-06-17 19:41:33 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - ¿Proyecto 'hola' existe?: true
-2025-06-17 19:41:36 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Verificando existencia de proyecto con título: hola8
-2025-06-17 19:41:36 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - ¿Proyecto 'hola8' existe?: false
-2025-06-17 19:41:44 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
-2025-06-17 19:41:44 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 12 proyectos con estado: A
-2025-06-17 19:41:54 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
-2025-06-17 19:41:54 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 12 proyectos con estado: A
+2025-06-18 04:06:17 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-18 04:06:17 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-06-18 04:06:20 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
+2025-06-18 04:06:20 [JavaFX Application Thread] ERROR logic.daos.ProyectDAO - Error al buscar proyectos por estado: A
+java.sql.SQLSyntaxErrorException: Unknown column 'cupo_maximo' in 'field list'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:112) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:990) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1058) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at logic.daos.ProyectDAO.getProyectsByStatus(ProyectDAO.java:158) ~[ProyectoPrincipiosConstruccion/:?]
+	at userinterface.controllers.ControllerConsultProyectsWindow.loadAllProjects(ControllerConsultProyectsWindow.java:53) ~[ProyectoPrincipiosConstruccion/:?]
+	at userinterface.controllers.ControllerConsultProyectsWindow.<init>(ControllerConsultProyectsWindow.java:31) ~[ProyectoPrincipiosConstruccion/:?]
+	at userinterface.controllers.ControllerCoordinatorMenuWindow.showConsultProjectsWindow(ControllerCoordinatorMenuWindow.java:101) ~[ProyectoPrincipiosConstruccion/:?]
+	at userinterface.controllers.ControllerCoordinatorMenuWindow.lambda$setupEventHandlers$3(ControllerCoordinatorMenuWindow.java:45) ~[ProyectoPrincipiosConstruccion/:?]
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49) ~[javafx.base.jar:?]
+	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
+	at javafx.graphics/javafx.scene.Node.fireEvent(Node.java:9005) ~[javafx.graphics.jar:?]
+	at javafx.controls/javafx.scene.control.Button.fire(Button.java:203) ~[javafx.controls.jar:?]
+	at javafx.controls/com.sun.javafx.scene.control.behavior.ButtonBehavior.mouseReleased(ButtonBehavior.java:207) ~[javafx.controls.jar:?]
+	at javafx.controls/com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274) ~[javafx.controls.jar:?]
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:247) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54) ~[javafx.base.jar:?]
+	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
+	at javafx.graphics/javafx.scene.Scene$MouseHandler.process(Scene.java:4005) ~[javafx.graphics.jar:?]
+	at javafx.graphics/javafx.scene.Scene.processMouseEvent(Scene.java:1934) ~[javafx.graphics.jar:?]
+	at javafx.graphics/javafx.scene.Scene$ScenePeerListener.mouseEvent(Scene.java:2763) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:352) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:254) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:424) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.handleMouseEvent(GlassViewEventHandler.java:386) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.glass.ui.View.handleMouseEvent(View.java:560) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.glass.ui.View.notifyMouse(View.java:946) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$0(WinApplication.java:168) ~[javafx.graphics.jar:?]
+	at java.base/java.lang.Thread.run(Thread.java:1575) [?:?]
+2025-06-18 04:06:38 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
+2025-06-18 04:06:38 [JavaFX Application Thread] ERROR logic.daos.ProyectDAO - Error al buscar proyectos por estado: A
+java.sql.SQLSyntaxErrorException: Unknown column 'cupo_maximo' in 'field list'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:112) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:990) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1058) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at logic.daos.ProyectDAO.getProyectsByStatus(ProyectDAO.java:158) ~[ProyectoPrincipiosConstruccion/:?]
+	at userinterface.controllers.ControllerConsultProyectsWindow.loadAllProjects(ControllerConsultProyectsWindow.java:53) ~[ProyectoPrincipiosConstruccion/:?]
+	at userinterface.controllers.ControllerConsultProyectsWindow.<init>(ControllerConsultProyectsWindow.java:31) ~[ProyectoPrincipiosConstruccion/:?]
+	at userinterface.controllers.ControllerCoordinatorMenuWindow.showConsultProjectsWindow(ControllerCoordinatorMenuWindow.java:101) ~[ProyectoPrincipiosConstruccion/:?]
+	at userinterface.controllers.ControllerCoordinatorMenuWindow.lambda$setupEventHandlers$3(ControllerCoordinatorMenuWindow.java:45) ~[ProyectoPrincipiosConstruccion/:?]
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49) ~[javafx.base.jar:?]
+	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
+	at javafx.graphics/javafx.scene.Node.fireEvent(Node.java:9005) ~[javafx.graphics.jar:?]
+	at javafx.controls/javafx.scene.control.Button.fire(Button.java:203) ~[javafx.controls.jar:?]
+	at javafx.controls/com.sun.javafx.scene.control.behavior.ButtonBehavior.mouseReleased(ButtonBehavior.java:207) ~[javafx.controls.jar:?]
+	at javafx.controls/com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274) ~[javafx.controls.jar:?]
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:247) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54) ~[javafx.base.jar:?]
+	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
+	at javafx.graphics/javafx.scene.Scene$MouseHandler.process(Scene.java:4005) ~[javafx.graphics.jar:?]
+	at javafx.graphics/javafx.scene.Scene.processMouseEvent(Scene.java:1934) ~[javafx.graphics.jar:?]
+	at javafx.graphics/javafx.scene.Scene$ScenePeerListener.mouseEvent(Scene.java:2763) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:352) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:254) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:424) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.handleMouseEvent(GlassViewEventHandler.java:386) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.glass.ui.View.handleMouseEvent(View.java:560) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.glass.ui.View.notifyMouse(View.java:946) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$0(WinApplication.java:168) ~[javafx.graphics.jar:?]
+	at java.base/java.lang.Thread.run(Thread.java:1575) [?:?]
+2025-06-18 04:12:30 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-18 04:12:30 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-06-18 04:12:33 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
+2025-06-18 04:12:33 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 12 proyectos con estado: A
+2025-06-18 04:12:41 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
+2025-06-18 04:12:41 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 12 proyectos con estado: A
+2025-06-18 04:12:53 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
+2025-06-18 04:12:53 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 12 proyectos con estado: A
+2025-06-18 04:15:25 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-18 04:15:25 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-06-18 04:15:27 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
+2025-06-18 04:15:27 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 12 proyectos con estado: A
+2025-06-18 04:15:40 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Actualizando proyecto ID: 1
+2025-06-18 04:15:40 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Proyecto actualizado exitosamente - ID: 1
+2025-06-18 04:15:41 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
+2025-06-18 04:15:41 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 12 proyectos con estado: A
+2025-06-18 04:15:48 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
+2025-06-18 04:15:48 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 12 proyectos con estado: A
+2025-06-18 04:22:05 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-18 04:22:06 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-06-18 04:22:10 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
+2025-06-18 04:22:10 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 12 proyectos con estado: A
+2025-06-18 04:22:15 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Actualizando proyecto ID: 1
+2025-06-18 04:22:15 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Proyecto actualizado exitosamente - ID: 1
+2025-06-18 04:22:16 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
+2025-06-18 04:22:16 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 12 proyectos con estado: A
+2025-06-18 04:22:25 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Actualizando proyecto ID: 2
+2025-06-18 04:22:25 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Proyecto actualizado exitosamente - ID: 2
+2025-06-18 04:22:26 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Buscando proyectos con estado: A
+2025-06-18 04:22:26 [JavaFX Application Thread] INFO  logic.daos.ProyectDAO - Se encontraron 12 proyectos con estado: A
+2025-06-18 04:25:21 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-18 04:25:21 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-06-18 04:28:19 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Verificando existencia de proyecto con título: Hola
+2025-06-18 04:28:19 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - ¿Proyecto 'Hola' existe?: true
+2025-06-18 04:28:23 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Verificando existencia de proyecto con título: Hola12
+2025-06-18 04:28:23 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - ¿Proyecto 'Hola12' existe?: false
+2025-06-18 04:30:47 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-18 04:30:47 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-06-18 04:31:04 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - Verificando existencia de proyecto con título: Hola12
+2025-06-18 04:31:04 [JavaFX Application Thread] DEBUG logic.daos.ProyectDAO - ¿Proyecto 'Hola12' existe?: false
+2025-06-18 20:26:15 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-18 20:26:15 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-06-18 20:26:32 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-18 20:26:32 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como estudiante
+2025-06-18 20:28:48 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-18 20:28:48 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como estudiante
+2025-06-18 20:28:49 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Obteniendo proyectos disponibles
+2025-06-18 20:28:49 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Se encontraron 13 proyectos disponibles
+2025-06-18 20:29:03 [JavaFX Application Thread] INFO  logic.daos.ProjectRequestDAO - Solicitud creada: ProjectRequest{requestId=1, projectId=2, projectTitle='El arte', studentId=20, studentName='Manuel Vadivia', requestDate=2025-06-18 20:29:03.909, status=Pendiente}
+2025-06-18 20:29:03 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Obteniendo proyectos disponibles
+2025-06-18 20:29:03 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Se encontraron 13 proyectos disponibles
+2025-06-18 20:29:06 [JavaFX Application Thread] INFO  logic.daos.ProjectRequestDAO - Solicitud creada: ProjectRequest{requestId=2, projectId=1, projectTitle='El arte en la Ingenieria de Software', studentId=20, studentName='Manuel Vadivia', requestDate=2025-06-18 20:29:06.242, status=Pendiente}
+2025-06-18 20:29:06 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Obteniendo proyectos disponibles
+2025-06-18 20:29:06 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Se encontraron 13 proyectos disponibles
+2025-06-18 20:29:10 [JavaFX Application Thread] INFO  logic.daos.ProjectRequestDAO - Solicitud creada: ProjectRequest{requestId=3, projectId=12, projectTitle='hola8', studentId=20, studentName='Manuel Vadivia', requestDate=2025-06-18 20:29:10.643, status=Pendiente}
+2025-06-18 20:29:10 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Obteniendo proyectos disponibles
+2025-06-18 20:29:10 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Se encontraron 13 proyectos disponibles
+2025-06-18 20:29:12 [JavaFX Application Thread] INFO  logic.daos.ProjectRequestDAO - Solicitud creada: ProjectRequest{requestId=4, projectId=13, projectTitle='Hola12', studentId=20, studentName='Manuel Vadivia', requestDate=2025-06-18 20:29:12.19, status=Pendiente}
+2025-06-18 20:29:12 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Obteniendo proyectos disponibles
+2025-06-18 20:29:12 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Se encontraron 13 proyectos disponibles
+2025-06-18 20:35:29 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-18 20:35:29 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como estudiante
+2025-06-18 20:35:30 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Obteniendo proyectos disponibles
+2025-06-18 20:35:30 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Se encontraron 13 proyectos disponibles
+2025-06-18 20:35:35 [JavaFX Application Thread] ERROR logic.daos.ProjectRequestDAO - Error al crear solicitud
+java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '2-20' for key 'solicitud_proyecto.id_proyecto'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:109) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:990) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1168) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1103) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1450) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:1086) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at logic.daos.ProjectRequestDAO.createRequest(ProjectRequestDAO.java:30) ~[ProyectoPrincipiosConstruccion/:?]
+	at userinterface.controllers.ControllerStudentProjectRequestWindow.handleRequest(ControllerStudentProjectRequestWindow.java:65) ~[ProyectoPrincipiosConstruccion/:?]
+	at userinterface.windows.StudentProjectRequestWindow$1.lambda$new$0(StudentProjectRequestWindow.java:123) ~[ProyectoPrincipiosConstruccion/:?]
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49) ~[javafx.base.jar:?]
+	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
+	at javafx.graphics/javafx.scene.Node.fireEvent(Node.java:9005) ~[javafx.graphics.jar:?]
+	at javafx.controls/javafx.scene.control.Button.fire(Button.java:203) ~[javafx.controls.jar:?]
+	at javafx.controls/com.sun.javafx.scene.control.behavior.ButtonBehavior.mouseReleased(ButtonBehavior.java:207) ~[javafx.controls.jar:?]
+	at javafx.controls/com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274) ~[javafx.controls.jar:?]
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:247) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54) ~[javafx.base.jar:?]
+	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
+	at javafx.graphics/javafx.scene.Scene$MouseHandler.process(Scene.java:4005) ~[javafx.graphics.jar:?]
+	at javafx.graphics/javafx.scene.Scene.processMouseEvent(Scene.java:1934) ~[javafx.graphics.jar:?]
+	at javafx.graphics/javafx.scene.Scene$ScenePeerListener.mouseEvent(Scene.java:2763) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:352) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:254) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:424) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.handleMouseEvent(GlassViewEventHandler.java:386) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.glass.ui.View.handleMouseEvent(View.java:560) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.glass.ui.View.notifyMouse(View.java:946) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$0(WinApplication.java:168) ~[javafx.graphics.jar:?]
+	at java.base/java.lang.Thread.run(Thread.java:1575) [?:?]
+2025-06-18 20:35:49 [JavaFX Application Thread] INFO  logic.daos.ProjectRequestDAO - Solicitud creada: ProjectRequest{requestId=6, projectId=11, projectTitle='Hola6', studentId=20, studentName='Manuel Vadivia', requestDate=2025-06-18 20:35:49.817, status=Pendiente}
+2025-06-18 20:35:49 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Obteniendo proyectos disponibles
+2025-06-18 20:35:49 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Se encontraron 13 proyectos disponibles
+2025-06-18 20:35:53 [JavaFX Application Thread] ERROR logic.daos.ProjectRequestDAO - Error al crear solicitud
+java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '12-20' for key 'solicitud_proyecto.id_proyecto'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:109) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:990) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1168) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1103) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1450) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:1086) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at logic.daos.ProjectRequestDAO.createRequest(ProjectRequestDAO.java:30) ~[ProyectoPrincipiosConstruccion/:?]
+	at userinterface.controllers.ControllerStudentProjectRequestWindow.handleRequest(ControllerStudentProjectRequestWindow.java:65) ~[ProyectoPrincipiosConstruccion/:?]
+	at userinterface.windows.StudentProjectRequestWindow$1.lambda$new$0(StudentProjectRequestWindow.java:123) ~[ProyectoPrincipiosConstruccion/:?]
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49) ~[javafx.base.jar:?]
+	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
+	at javafx.graphics/javafx.scene.Node.fireEvent(Node.java:9005) ~[javafx.graphics.jar:?]
+	at javafx.controls/javafx.scene.control.Button.fire(Button.java:203) ~[javafx.controls.jar:?]
+	at javafx.controls/com.sun.javafx.scene.control.behavior.ButtonBehavior.mouseReleased(ButtonBehavior.java:207) ~[javafx.controls.jar:?]
+	at javafx.controls/com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274) ~[javafx.controls.jar:?]
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:247) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54) ~[javafx.base.jar:?]
+	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
+	at javafx.graphics/javafx.scene.Scene$MouseHandler.process(Scene.java:4005) ~[javafx.graphics.jar:?]
+	at javafx.graphics/javafx.scene.Scene.processMouseEvent(Scene.java:1934) ~[javafx.graphics.jar:?]
+	at javafx.graphics/javafx.scene.Scene$ScenePeerListener.mouseEvent(Scene.java:2763) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:352) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:254) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:424) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.handleMouseEvent(GlassViewEventHandler.java:386) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.glass.ui.View.handleMouseEvent(View.java:560) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.glass.ui.View.notifyMouse(View.java:946) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$0(WinApplication.java:168) ~[javafx.graphics.jar:?]
+	at java.base/java.lang.Thread.run(Thread.java:1575) [?:?]
+2025-06-18 20:35:54 [JavaFX Application Thread] INFO  logic.daos.ProjectRequestDAO - Solicitud creada: ProjectRequest{requestId=8, projectId=10, projectTitle='Hola5', studentId=20, studentName='Manuel Vadivia', requestDate=2025-06-18 20:35:54.8, status=Pendiente}
+2025-06-18 20:35:54 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Obteniendo proyectos disponibles
+2025-06-18 20:35:54 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Se encontraron 13 proyectos disponibles
+2025-06-18 20:38:16 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-18 20:38:16 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como estudiante
+2025-06-18 20:38:18 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Obteniendo proyectos disponibles
+2025-06-18 20:38:18 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Se encontraron 13 proyectos disponibles
+2025-06-18 20:38:20 [JavaFX Application Thread] ERROR logic.daos.ProjectRequestDAO - Error al crear solicitud
+java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '12-20' for key 'solicitud_proyecto.id_proyecto'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:109) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:990) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1168) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1103) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1450) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:1086) ~[mysql-connector-j-9.2.0.jar:9.2.0]
+	at logic.daos.ProjectRequestDAO.createRequest(ProjectRequestDAO.java:30) ~[ProyectoPrincipiosConstruccion/:?]
+	at userinterface.controllers.ControllerStudentProjectRequestWindow.handleRequest(ControllerStudentProjectRequestWindow.java:67) ~[ProyectoPrincipiosConstruccion/:?]
+	at userinterface.windows.StudentProjectRequestWindow$1.lambda$new$0(StudentProjectRequestWindow.java:123) ~[ProyectoPrincipiosConstruccion/:?]
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49) ~[javafx.base.jar:?]
+	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
+	at javafx.graphics/javafx.scene.Node.fireEvent(Node.java:9005) ~[javafx.graphics.jar:?]
+	at javafx.controls/javafx.scene.control.Button.fire(Button.java:203) ~[javafx.controls.jar:?]
+	at javafx.controls/com.sun.javafx.scene.control.behavior.ButtonBehavior.mouseReleased(ButtonBehavior.java:207) ~[javafx.controls.jar:?]
+	at javafx.controls/com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274) ~[javafx.controls.jar:?]
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:247) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54) ~[javafx.base.jar:?]
+	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
+	at javafx.graphics/javafx.scene.Scene$MouseHandler.process(Scene.java:4005) ~[javafx.graphics.jar:?]
+	at javafx.graphics/javafx.scene.Scene.processMouseEvent(Scene.java:1934) ~[javafx.graphics.jar:?]
+	at javafx.graphics/javafx.scene.Scene$ScenePeerListener.mouseEvent(Scene.java:2763) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:352) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:254) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:424) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.handleMouseEvent(GlassViewEventHandler.java:386) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.glass.ui.View.handleMouseEvent(View.java:560) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.glass.ui.View.notifyMouse(View.java:946) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method) ~[javafx.graphics.jar:?]
+	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$0(WinApplication.java:168) ~[javafx.graphics.jar:?]
+	at java.base/java.lang.Thread.run(Thread.java:1575) [?:?]
+2025-06-18 20:43:31 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-18 20:43:31 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como estudiante
+2025-06-18 20:43:32 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Obteniendo proyectos disponibles
+2025-06-18 20:43:32 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Se encontraron 13 proyectos disponibles
+2025-06-18 20:43:43 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Obteniendo proyectos disponibles
+2025-06-18 20:43:43 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Se encontraron 13 proyectos disponibles
+2025-06-18 20:46:11 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-18 20:46:11 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como estudiante
+2025-06-18 20:46:12 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Obteniendo proyectos disponibles
+2025-06-18 20:46:12 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Se encontraron 13 proyectos disponibles
+2025-06-18 20:46:19 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Obteniendo proyectos disponibles
+2025-06-18 20:46:19 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Se encontraron 13 proyectos disponibles
+2025-06-18 20:49:08 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-18 20:49:08 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como estudiante
+2025-06-18 20:49:09 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Obteniendo proyectos disponibles
+2025-06-18 20:49:09 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Se encontraron 13 proyectos disponibles
+2025-06-18 20:50:45 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-18 20:50:45 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como estudiante
+2025-06-18 20:50:48 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Obteniendo proyectos disponibles
+2025-06-18 20:50:48 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Se encontraron 13 proyectos disponibles
+2025-06-18 20:53:50 [JavaFX Application Thread] INFO  logic.daos.ProjectRequestDAO - Solicitud creada: ProjectRequest{requestId=10, projectId=9, projectTitle='Hoal5', studentId=20, studentName='Manuel Vadivia', requestDate=2025-06-18 20:53:50.568, status=Pendiente}
+2025-06-18 20:53:50 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Obteniendo proyectos disponibles
+2025-06-18 20:53:50 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Se encontraron 13 proyectos disponibles
+2025-06-18 20:53:56 [JavaFX Application Thread] INFO  logic.daos.ProjectRequestDAO - Solicitud creada: ProjectRequest{requestId=11, projectId=8, projectTitle='Hola4', studentId=20, studentName='Manuel Vadivia', requestDate=2025-06-18 20:53:56.302, status=Pendiente}
+2025-06-18 20:53:56 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Obteniendo proyectos disponibles
+2025-06-18 20:53:56 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Se encontraron 13 proyectos disponibles
+2025-06-18 20:53:59 [JavaFX Application Thread] INFO  logic.daos.ProjectRequestDAO - Solicitud creada: ProjectRequest{requestId=12, projectId=7, projectTitle='hola3', studentId=20, studentName='Manuel Vadivia', requestDate=2025-06-18 20:53:59.441, status=Pendiente}
+2025-06-18 20:53:59 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Obteniendo proyectos disponibles
+2025-06-18 20:53:59 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Se encontraron 13 proyectos disponibles
+2025-06-18 20:54:00 [JavaFX Application Thread] INFO  logic.daos.ProjectRequestDAO - Solicitud creada: ProjectRequest{requestId=13, projectId=6, projectTitle='Hola', studentId=20, studentName='Manuel Vadivia', requestDate=2025-06-18 20:54:00.285, status=Pendiente}
+2025-06-18 20:54:00 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Obteniendo proyectos disponibles
+2025-06-18 20:54:00 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Se encontraron 13 proyectos disponibles
+2025-06-18 20:54:01 [JavaFX Application Thread] INFO  logic.daos.ProjectRequestDAO - Solicitud creada: ProjectRequest{requestId=14, projectId=5, projectTitle='El arte de la guerra', studentId=20, studentName='Manuel Vadivia', requestDate=2025-06-18 20:54:01.015, status=Pendiente}
+2025-06-18 20:54:01 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Obteniendo proyectos disponibles
+2025-06-18 20:54:01 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Se encontraron 13 proyectos disponibles
+2025-06-18 20:54:01 [JavaFX Application Thread] INFO  logic.daos.ProjectRequestDAO - Solicitud creada: ProjectRequest{requestId=15, projectId=4, projectTitle='Plataforma de asistencia para aprendizaje de personas con discapacidad auditiva', studentId=20, studentName='Manuel Vadivia', requestDate=2025-06-18 20:54:01.814, status=Pendiente}
+2025-06-18 20:54:01 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Obteniendo proyectos disponibles
+2025-06-18 20:54:01 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Se encontraron 13 proyectos disponibles
+2025-06-18 20:54:02 [JavaFX Application Thread] INFO  logic.daos.ProjectRequestDAO - Solicitud creada: ProjectRequest{requestId=16, projectId=3, projectTitle='Mantenimiento de la plataforma de varamiento de mamiferos marinos en costaas mexicanas', studentId=20, studentName='Manuel Vadivia', requestDate=2025-06-18 20:54:02.567, status=Pendiente}
+2025-06-18 20:54:02 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Obteniendo proyectos disponibles
+2025-06-18 20:54:02 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Se encontraron 13 proyectos disponibles
+2025-06-18 22:09:00 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-18 22:09:00 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-06-18 22:09:02 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Obteniendo todos los proyectos
+2025-06-18 22:09:02 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Se encontraron 13 proyectos
+2025-06-18 22:10:04 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-18 22:10:04 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-06-18 22:10:06 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Obteniendo todos los proyectos
+2025-06-18 22:10:06 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Se encontraron 13 proyectos
+2025-06-18 22:10:43 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-18 22:10:44 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-06-18 22:10:45 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Obteniendo todos los proyectos
+2025-06-18 22:10:45 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Se encontraron 13 proyectos
+2025-06-18 22:11:27 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-18 22:11:27 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-06-18 22:11:30 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Obteniendo todos los proyectos
+2025-06-18 22:11:30 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Se encontraron 13 proyectos
+2025-06-18 22:16:13 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-06-18 22:16:13 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-06-18 22:16:16 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Obteniendo todos los proyectos
+2025-06-18 22:16:16 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Se encontraron 13 proyectos
+2025-06-18 22:16:21 [JavaFX Application Thread] INFO  logic.daos.ProjectRequestDAO - Solicitud 2 actualizada a estado: RECHAZADA

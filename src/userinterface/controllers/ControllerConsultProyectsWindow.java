@@ -7,8 +7,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import logic.daos.ProyectDAO;
-import logic.logicclasses.Proyect;
+import logic.daos.ProjectDAO;
+import logic.logicclasses.Project;
 import userinterface.windows.ConsultProyectsWindow;
 import userinterface.windows.UpdateProyectWindow;
 
@@ -17,12 +17,12 @@ import java.util.Objects;
 
 public class ControllerConsultProyectsWindow implements EventHandler<ActionEvent> {
     private final ConsultProyectsWindow view;
-    private final ProyectDAO proyectDAO;
-    private ObservableList<Proyect> projectsList;
+    private final ProjectDAO projectDAO;
+    private ObservableList<Project> projectsList;
 
     public ControllerConsultProyectsWindow(ConsultProyectsWindow consultProyectsWindow) {
         this.view = Objects.requireNonNull(consultProyectsWindow, "La vista no puede ser nula");
-        this.proyectDAO = new ProyectDAO();
+        this.projectDAO = new ProjectDAO();
         this.projectsList = FXCollections.observableArrayList();
 
         view.getProjectsTable().getProperties().put("controller", this);
@@ -50,7 +50,7 @@ public class ControllerConsultProyectsWindow implements EventHandler<ActionEvent
 
     private void loadAllProjects() {
         try {
-            projectsList.setAll(proyectDAO.getProyectsByStatus('A'));
+            projectsList.setAll(projectDAO.getProyectsByStatus('A'));
             view.setProjectsList(projectsList);
             view.getResultLabel().setText("");
         } catch (SQLException e) {
@@ -66,9 +66,9 @@ public class ControllerConsultProyectsWindow implements EventHandler<ActionEvent
         }
 
         try {
-            Proyect foundProyect = proyectDAO.getProyectByTitle(searchTerm);
-            if (foundProyect != null) {
-                projectsList.setAll(foundProyect);
+            Project foundProject = projectDAO.getProyectByTitle(searchTerm);
+            if (foundProject != null) {
+                projectsList.setAll(foundProject);
                 view.setProjectsList(projectsList);
                 view.getResultLabel().setText("");
             } else {
@@ -85,13 +85,13 @@ public class ControllerConsultProyectsWindow implements EventHandler<ActionEvent
         view.getView().getScene().getWindow().hide();
     }
 
-    public void handleEdit(Proyect proyect) {
-        if (proyect == null) {
+    public void handleEdit(Project project) {
+        if (project == null) {
             showError("Proyecto inválido para editar.");
             return;
         }
         UpdateProyectWindow updateProyectWindow = new UpdateProyectWindow();
-        new ControllerUpdateProyectWindow(updateProyectWindow, proyect);
+        new ControllerUpdateProyectWindow(updateProyectWindow, project);
 
         Stage stage = new Stage();
         stage.setScene(new Scene(updateProyectWindow.getView()));

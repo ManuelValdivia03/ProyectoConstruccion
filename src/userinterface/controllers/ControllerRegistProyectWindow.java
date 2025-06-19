@@ -5,24 +5,17 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import logic.daos.LinkedOrganizationDAO;
-import logic.daos.ProyectDAO;
+import logic.daos.ProjectDAO;
 import logic.exceptions.RepeatedProyectException;
-import logic.logicclasses.Proyect;
-import logic.logicclasses.Representative;
+import logic.logicclasses.Project;
 import userinterface.utilities.Validators;
-import userinterface.windows.ConsultRepresentativesWindow;
 import userinterface.windows.RegistProyectWindow;
 import userinterface.windows.AssignRepresentativesToProjectWindow;
-import userinterface.controllers.ControllerAssignRepresentativesToProject;
-
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -39,7 +32,7 @@ public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> 
     private static final String ICON_PATH = "/images/exito.png";
 
     private final RegistProyectWindow view;
-    private final ProyectDAO proyectDAO;
+    private final ProjectDAO projectDAO;
     private final LinkedOrganizationDAO organizationDAO;
     private final Validators validators;
     private final Stage currentStage;
@@ -47,7 +40,7 @@ public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> 
 
     public ControllerRegistProyectWindow(RegistProyectWindow registProyectWindow, Stage stage) {
         this.view = Objects.requireNonNull(registProyectWindow, "RegistProyectWindow cannot be null");
-        this.proyectDAO = new ProyectDAO();
+        this.projectDAO = new ProjectDAO();
         this.organizationDAO = new LinkedOrganizationDAO();
         this.validators = new Validators();
         this.currentStage = Objects.requireNonNull(stage, "Stage cannot be null");
@@ -82,14 +75,14 @@ public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> 
                 return;
             }
 
-            if (proyectDAO.proyectExists(data.title())) {
+            if (projectDAO.proyectExists(data.title())) {
                 throw new RepeatedProyectException("Ya existe un proyecto con ese título");
             }
 
-            Proyect proyect = new Proyect(0, data.title(), data.description(),
-                    data.startDate(), data.endDate(), 'A');
+            Project project = new Project(0, data.title(), data.description(),
+                    data.startDate(), data.endDate(), 'A', data.maxStudents(), 0);
 
-            createdProjectId = proyectDAO.addProyectAndGetId(proyect);
+            createdProjectId = projectDAO.addProyectAndGetId(project);
             if (createdProjectId > 0) {
                 showSuccessAndOpenRepresentativeSelector();
             } else {
@@ -110,12 +103,14 @@ public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> 
     private ProjectRegistrationData collectProjectData() {
         String title = view.getTitleTextField().getText().trim();
         String description = view.getDescriptionTextField().getText().trim();
+        int maxStudents = Integer.parseInt(view.getMaxStudentsTextField().getText().trim());
         LocalDate startLocalDate = view.getDateStartPicker().getValue();
         LocalDate endLocalDate = view.getDateEndPicker().getValue();
 
         return new ProjectRegistrationData(
                 title,
                 description,
+                maxStudents,
                 Timestamp.valueOf(startLocalDate.atStartOfDay()),
                 endLocalDate != null ? Timestamp.valueOf(endLocalDate.atStartOfDay()) : null
         );
@@ -132,6 +127,22 @@ public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> 
         if (view.getDescriptionTextField().getText().isEmpty()) {
             showFieldError("La descripción es obligatoria", view.getDescriptionTextField());
             isValid = false;
+        }
+
+        if (view.getMaxStudentsTextField().getText().isEmpty()) {
+            showFieldError("El cupo máximo es obligatorio", view.getMaxStudentsTextField());
+            isValid = false;
+        } else {
+            try {
+                int maxStudents = Integer.parseInt(view.getMaxStudentsTextField().getText());
+                if (maxStudents <= 0) {
+                    showFieldError("El cupo máximo debe ser mayor a 0", view.getMaxStudentsTextField());
+                    isValid = false;
+                }
+            } catch (NumberFormatException e) {
+                showFieldError("El cupo máximo debe ser un número válido", view.getMaxStudentsTextField());
+                isValid = false;
+            }
         }
 
         if (view.getDateStartPicker().getValue() == null) {
@@ -201,6 +212,7 @@ public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> 
     private void clearFields() {
         view.getTitleTextField().clear();
         view.getDescriptionTextField().clear();
+        view.getMaxStudentsTextField().clear();
         view.getDateStartPicker().setValue(null);
         view.getDateEndPicker().setValue(null);
         clearError();
@@ -209,6 +221,7 @@ public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> 
     private void resetFieldStyles() {
         view.getTitleTextField().setStyle("");
         view.getDescriptionTextField().setStyle("");
+        view.getMaxStudentsTextField().setStyle("");
         view.getDateStartPicker().setStyle("");
         view.getDateEndPicker().setStyle("");
     }
@@ -236,6 +249,7 @@ public class ControllerRegistProyectWindow implements EventHandler<ActionEvent> 
     private record ProjectRegistrationData(
             String title,
             String description,
+            int maxStudents,
             Timestamp startDate,
             Timestamp endDate
     ) {}
