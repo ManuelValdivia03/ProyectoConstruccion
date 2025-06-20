@@ -13,11 +13,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Timestamp;
 
 public class ProjectRequestDAO implements IProjectRequestDAO {
     private static final Logger logger = LogManager.getLogger(ProjectRequestDAO.class);
+    private static final ProjectRequest EMPTY_REQUEST = new ProjectRequest(
+        -1, -1, -1, new Timestamp(0), RequestStatus.RECHAZADA, "", ""
+    );
 
     public boolean createRequest(ProjectRequest request) throws SQLException {
+        if (request == null) {
+            throw new IllegalArgumentException("La solicitud no puede ser nula");
+        }
+
         String sql = "INSERT INTO solicitud_proyecto (id_proyecto, id_estudiante) VALUES (?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
@@ -39,7 +47,6 @@ public class ProjectRequestDAO implements IProjectRequestDAO {
                 }
                 return false;
             } catch (SQLException e) {
-                // Verificar si es un error de duplicado (código 1062 en MySQL)
                 if (e.getErrorCode() == 1062) {
                     logger.warn("Intento de solicitud duplicada para proyecto {} y estudiante {}", 
                         request.getProjectId(), request.getStudentId());
@@ -86,11 +93,11 @@ public class ProjectRequestDAO implements IProjectRequestDAO {
 
     public boolean approveRequest(int requestId, ProjectStudentDAO projectStudentDAO) throws SQLException {
         ProjectRequest request = getRequestById(requestId);
-        if (request == null || !request.isPending()) {
+        if (request.getRequestId() == -1 || !request.isPending()) {
             return false;
         }
 
-        if (projectStudentDAO.assignStudentToProyect(request.getProjectId(), request.getStudentId())) {
+        if (projectStudentDAO.assignStudentToProject(request.getProjectId(), request.getStudentId())) {
             return updateRequestStatus(requestId, RequestStatus.APROBADA);
         }
         return false;
@@ -106,7 +113,7 @@ public class ProjectRequestDAO implements IProjectRequestDAO {
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
 
-            stmt.setString(1, status.name().toLowerCase());
+            stmt.setString(1, status.getDisplayName());
             stmt.setInt(2, requestId);
 
             int affectedRows = stmt.executeUpdate();
@@ -122,6 +129,10 @@ public class ProjectRequestDAO implements IProjectRequestDAO {
     }
 
     public ProjectRequest getRequestById(int requestId) throws SQLException {
+        if (requestId <= 0) {
+            return EMPTY_REQUEST;
+        }
+
         String sql = "SELECT sp.id_solicitud, sp.id_proyecto, p.titulo AS proyecto_titulo, " +
                 "sp.id_estudiante, e.matricula AS estudiante_matricula, " +
                 "sp.fecha_solicitud, sp.estado " +
@@ -152,10 +163,14 @@ public class ProjectRequestDAO implements IProjectRequestDAO {
             logger.error("Error al obtener solicitud por ID", e);
             throw e;
         }
-        return null;
+        return EMPTY_REQUEST;
     }
 
     public boolean hasExistingRequest(int projectId, int userId) throws SQLException {
+        if (projectId <= 0 || userId <= 0) {
+            return false;
+        }
+
         String query = "SELECT COUNT(*) FROM solicitud_proyecto WHERE id_proyecto = ? AND id_estudiante = ?";
         try (Connection conn = ConnectionDataBase.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -170,6 +185,10 @@ public class ProjectRequestDAO implements IProjectRequestDAO {
     }
 
     public List<ProjectRequest> getRequestsByProject(int projectId) throws SQLException {
+        if (projectId <= 0) {
+            return new ArrayList<>();
+        }
+
         String sql = "SELECT sp.id_solicitud, sp.id_proyecto, p.titulo AS proyecto_titulo, " +
                 "sp.id_estudiante, e.matricula AS estudiante_matricula, " +
                 "sp.fecha_solicitud, sp.estado " +
@@ -191,7 +210,7 @@ public class ProjectRequestDAO implements IProjectRequestDAO {
                             rs.getInt("id_proyecto"),
                             rs.getInt("id_estudiante"),
                             rs.getTimestamp("fecha_solicitud"),
-                            RequestStatus.valueOf(rs.getString("estado").toUpperCase()),
+                            RequestStatus.fromDisplayName(rs.getString("estado")),
                             rs.getString("proyecto_titulo"),
                             rs.getString("estudiante_matricula")
                     ));

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CoordinatorDAO implements ICoordinatorDAO {
-    private static final Coordinator EMPTY_COORDINATOR = new Coordinator(-1, "", "", "", 'I');
+    private static final Coordinator EMPTY_COORDINATOR = new Coordinator(-1, "", "", "", "",'I');
     private final UserDAO userDAO;
 
     public CoordinatorDAO() {
@@ -82,7 +82,7 @@ public class CoordinatorDAO implements ICoordinatorDAO {
     }
 
     public List<Coordinator> getAllCoordinators() throws SQLException {
-        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.estado, " +
+        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.extension_telefono, u.estado, " +
                 "c.numero_personal " +
                 "FROM coordinador c " +
                 "JOIN usuario u ON c.id_usuario = u.id_usuario";
@@ -98,6 +98,7 @@ public class CoordinatorDAO implements ICoordinatorDAO {
                         resultSet.getInt("id_usuario"),
                         resultSet.getString("nombre_completo"),
                         resultSet.getString("telefono"),
+                        resultSet.getString("extension_telefono"),
                         resultSet.getString("numero_personal"),
                         resultSet.getString("estado").charAt(0)
                 );
@@ -111,7 +112,7 @@ public class CoordinatorDAO implements ICoordinatorDAO {
         if (staffNumber == null || staffNumber.isEmpty()) {
             throw new IllegalArgumentException("Numero de personal no debe ser nulo o vacío");
         }
-        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.estado, " +
+        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.extension_telefono, u.estado, " +
                 "c.numero_personal " +
                 "FROM coordinador c " +
                 "JOIN usuario u ON c.id_usuario = u.id_usuario " +
@@ -127,6 +128,7 @@ public class CoordinatorDAO implements ICoordinatorDAO {
                             resultSet.getInt("id_usuario"),
                             resultSet.getString("nombre_completo"),
                             resultSet.getString("telefono"),
+                            resultSet.getString("extension_telefono"),
                             resultSet.getString("numero_personal"),
                             resultSet.getString("estado").charAt(0)
                     );
@@ -171,7 +173,7 @@ public class CoordinatorDAO implements ICoordinatorDAO {
     }
 
     public Coordinator getFullCoordinator(int userId) throws SQLException {
-        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.estado, " +
+        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.extension_telefono, u.estado, " +
                 "c.numero_personal FROM usuario u " +
                 "JOIN coordinador c ON u.id_usuario = c.id_usuario " +
                 "WHERE u.id_usuario = ?";
@@ -185,6 +187,7 @@ public class CoordinatorDAO implements ICoordinatorDAO {
                             rs.getInt("id_usuario"),
                             rs.getString("nombre_completo"),
                             rs.getString("telefono"),
+                            rs.getString("extension_telefono"),
                             rs.getString("numero_personal"),
                             rs.getString("estado").charAt(0)
                     );

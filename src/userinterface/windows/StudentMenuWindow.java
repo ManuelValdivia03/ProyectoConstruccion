@@ -29,7 +29,7 @@ public class StudentMenuWindow {
     private Button viewAssignedProjectButton;
     private Button viewScheduleButton;
     private Button registerSelfEvaluationButton;
-    private Button registerMonthlyReportButton;
+    private Button registReportButton;
     private Button viewEvaluationsButton;
 
     private final String BLUE_DARK_COLOR = "#0A1F3F";
@@ -146,12 +146,12 @@ public class StudentMenuWindow {
         content.setPadding(new Insets(20));
 
         viewScheduleButton = createStyledButton("Consultar Cronograma de Actividades");
-        registerMonthlyReportButton = createStyledButton("Registrar Reporte Mensual");
+        registReportButton = createStyledButton("Registrar Reportes");
 
         content.getChildren().addAll(
                 createSectionTitle("Actividades del Proyecto"),
                 viewScheduleButton,
-                registerMonthlyReportButton
+                registReportButton
         );
 
         return content;
@@ -227,8 +227,8 @@ public class StudentMenuWindow {
         return registerSelfEvaluationButton;
     }
 
-    public Button getRegisterMonthlyReportButton() {
-        return registerMonthlyReportButton;
+    public Button getRegistReportButton() {
+        return registReportButton;
     }
 
     public Button getViewEvaluationsButton() {

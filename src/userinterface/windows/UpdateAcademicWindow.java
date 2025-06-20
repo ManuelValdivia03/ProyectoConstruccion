@@ -16,6 +16,7 @@ public class UpdateAcademicWindow {
     private final VBox view;
     private final TextField nameField;
     private final TextField phoneField;
+    private final TextField phoneExtensionField;
     private final TextField staffNumberField;
     private final TextField emailField;
     private final PasswordToggleField passwordToggle;
@@ -31,6 +32,8 @@ public class UpdateAcademicWindow {
 
         nameField = new TextField();
         phoneField = new TextField();
+        phoneExtensionField = new TextField();
+        phoneExtensionField.setPromptText("Dejar vacío si no tiene");
         staffNumberField = new TextField();
         emailField = new TextField();
 
@@ -62,6 +65,8 @@ public class UpdateAcademicWindow {
         grid.add(nameField, 1, 0);
         grid.add(new Label("Teléfono:"), 0, 1);
         grid.add(phoneField, 1, 1);
+        grid.add(new Label("Ext.:"), 2, 1);
+        grid.add(phoneExtensionField, 3, 1);
         grid.add(new Label("Número de personal:"), 0, 2);
         grid.add(staffNumberField, 1, 2);
         grid.add(new Label("Tipo de académico:"), 0, 3);
@@ -85,6 +90,7 @@ public class UpdateAcademicWindow {
     public void loadAcademicData(Academic academic, String email) {
         nameField.setText(academic.getFullName());
         phoneField.setText(academic.getCellPhone());
+        phoneExtensionField.setText(academic.getPhoneExtension());
         staffNumberField.setText(academic.getStaffNumber());
         emailField.setText(email);
         typeComboBox.setValue(academic.getAcademicType().toString());
@@ -94,6 +100,7 @@ public class UpdateAcademicWindow {
     public VBox getView() { return view; }
     public TextField getNameField() { return nameField; }
     public TextField getPhoneField() { return phoneField; }
+    public TextField getPhoneExtensionField() { return phoneExtensionField; }
     public TextField getStaffNumberField() { return staffNumberField; }
     public TextField getEmailField() { return emailField; }
     public String getPassword() { return passwordToggle.getPassword(); }

@@ -4,12 +4,14 @@ public class User {
     private int idUser;
     private String fullName;
     private String cellphone;
+    private String phoneExtension;
     private char status;
 
-    public User(int idUser, String fullName, String cellphone, char status) {
+    public User(int idUser, String fullName, String cellphone, String phoneExtension, char status) {
         this.idUser = idUser;
         this.fullName = fullName;
         this.cellphone = cellphone;
+        this.phoneExtension = phoneExtension;
         this.status = status;
     }
 
@@ -17,6 +19,7 @@ public class User {
         idUser = 0;
         fullName = "";
         cellphone = "";
+        phoneExtension = "";
         status = 'A';
     }
 
@@ -42,6 +45,14 @@ public class User {
 
     public void setCellphone(String cellphone) {
         this.cellphone = cellphone;
+    }
+
+    public String getPhoneExtension() {
+        return phoneExtension;
+    }
+
+    public void setPhoneExtension(String phoneExtension) {
+        this.phoneExtension = phoneExtension;
     }
 
     public char getStatus() {

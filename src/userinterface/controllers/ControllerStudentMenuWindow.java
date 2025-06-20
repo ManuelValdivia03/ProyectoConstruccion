@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import logic.logicclasses.Student;
 import userinterface.windows.EditProfileStudentWindow;
+import userinterface.windows.RegistReportWindow;
 import userinterface.windows.StudentMenuWindow;
 import userinterface.windows.StudentProjectRequestWindow;
 
@@ -43,7 +44,7 @@ public class ControllerStudentMenuWindow {
         view.getViewAssignedProjectButton().setOnAction(this::handleAssignedProject);
         view.getViewScheduleButton().setOnAction(this::handleSchedule);
         view.getRegisterSelfEvaluationButton().setOnAction(this::handleSelfEvaluation);
-        view.getRegisterMonthlyReportButton().setOnAction(this::handleMonthlyReport);
+        view.getRegistReportButton().setOnAction(this::handleMonthlyReport);
         view.getViewEvaluationsButton().setOnAction(this::handleEvaluations);
     }
 
@@ -108,15 +109,28 @@ public class ControllerStudentMenuWindow {
     }
 
     private void showAssignedProjectWindow() {
+        ControllerConsultAssignedProjectWindow controller =
+                new ControllerConsultAssignedProjectWindow(primaryStage, student.getIdUser());
+        controller.show();
     }
 
     private void showScheduleWindow() {
+        ControllerConsultCronogamActivities controller =
+                new ControllerConsultCronogamActivities(primaryStage, student.getIdUser());
+        controller.show();
     }
 
     private void showSelfEvaluationWindow() {
     }
 
     private void showMonthlyReportWindow() {
+        RegistReportWindow reportView = new RegistReportWindow();
+        Stage reportStage = new Stage();
+        new ControllerRegistReportWindow(reportView, reportStage, student);
+        Scene reportScene = new Scene(reportView.getView(), 600, 600);
+        reportStage.setScene(reportScene);
+        reportStage.setTitle("Registrar Reporte Mensual");
+        reportStage.show();
     }
 
     private void showEvaluationsWindow() {

@@ -8,7 +8,6 @@ public class Validators {
         return email.matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
     }
 
-
     public boolean validateCellPhone(String cellPhone) {
         if (cellPhone == null) return false;
         return cellPhone.matches("^\\d{10}$");
@@ -16,7 +15,7 @@ public class Validators {
 
     public boolean validateStaffNumber(String staffNumber) {
         if (staffNumber == null) return false;
-        return staffNumber.matches("^\\d{5}$");
+        return staffNumber.matches("^\\d{1,5}$");
     }
 
     public boolean validateEnrollment(String enrollment) {
@@ -34,5 +33,10 @@ public class Validators {
         return date.matches("^\\d{4}-\\d{2}-\\d{2}$") ||
                 date.matches("^\\d{2}/\\d{2}/\\d{4}$") ||
                 date.matches("^\\d{2}-\\d{2}-\\d{4}$");
+    }
+
+    public boolean validatePhoneExtension(String extension) {
+        if (extension == null || extension.isEmpty()) return true;
+        return extension.matches("^\\d{1,5}$");
     }
 }

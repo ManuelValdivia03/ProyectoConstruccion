@@ -129,6 +129,12 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
         isValid &= validateField(!validators.validatePassword(view.getPassword()),
                 "Contraseña debe tener al menos 8 caracteres", null);
 
+        String extension = view.getPhoneExtensionField().getText().trim();
+        if (!extension.isEmpty() && !validators.validatePhoneExtension(extension)) {
+            isValid = false;
+            showFieldError("Extensión debe ser numérica y máximo 5 dígitos", view.getPhoneExtensionField());
+        }
+
         return isValid;
     }
 
@@ -158,7 +164,7 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
     }
 
     private User createAndSaveUser(String name, String phone) throws SQLException {
-        User user = new User(0, name, phone, 'A');
+        User user = new User(0, name, phone, view.getPhoneExtensionField().getText().trim(), 'A');
         if (!userDAO.addUser(user)) {
             throw new SQLException("No se pudo registrar el usuario");
         }
@@ -170,6 +176,7 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
                 user.getIdUser(),
                 user.getFullName(),
                 user.getCellPhone(),
+                user.getPhoneExtension(),
                 'A',
                 staffNumber,
                 type
@@ -261,6 +268,7 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
         view.getEmailField().clear();
         view.getPasswordToggle().clear();
         view.getTypeComboBox().setValue("Evaluador");
+        view.getPhoneExtensionField().clear();
         clearError();
     }
 

@@ -30,7 +30,6 @@ public class CoordinatorMenuWindow {
     private Button consultProjectButton;
     private Button assignProjectButton;
     private Button reassignStudentButton;
-    private Button manageRequestsButton;
     private Button registerCronogramButton;
     private Button enableEvaluationsButton;
     private Button registerOrganizationButton;
@@ -38,8 +37,8 @@ public class CoordinatorMenuWindow {
     private Button registerRepresentativeButton;
     private Button consultRepresentativesButton;
     private Button generateStadisticsButton;
-    private Button registerGroupButton; // <--- Agregado
-    private Button consultGroupsButton; // <--- Agregado
+    private Button registerGroupButton;
+    private Button consultGroupsButton;
 
     private final String BLUE_DARK_COLOR = "#0A1F3F";
     private final String GREEN_DARK_COLOR= "#1A5F4B";
@@ -148,11 +147,10 @@ public class CoordinatorMenuWindow {
         consultProjectButton = createStyledButton("Consultar Proyectos");
         assignProjectButton = createStyledButton("Asignar Proyecto");
         reassignStudentButton = createStyledButton("Reasignar Estudiante");
-        manageRequestsButton = createStyledButton("Gestionar Solicitudes");
         registerCronogramButton = createStyledButton("Registrar Cronograma");
         enableEvaluationsButton = createStyledButton("Habilitar Evaluaciones");
-        registerGroupButton = createStyledButton("Registrar Grupo"); // <--- Agregado
-        consultGroupsButton = createStyledButton("Consultar Grupos"); // <--- Agregado
+        registerGroupButton = createStyledButton("Registrar Grupo");
+        consultGroupsButton = createStyledButton("Consultar Grupos");
 
         content.getChildren().addAll(
                 createSectionTitle("Gestión de Proyectos"),
@@ -160,11 +158,10 @@ public class CoordinatorMenuWindow {
                 consultProjectButton,
                 assignProjectButton,
                 reassignStudentButton,
-                manageRequestsButton,
                 registerCronogramButton,
                 enableEvaluationsButton,
-                registerGroupButton, // <--- Agregado
-                consultGroupsButton // <--- Agregado
+                registerGroupButton,
+                consultGroupsButton
         );
         return content;
     }
@@ -263,10 +260,6 @@ public class CoordinatorMenuWindow {
 
     public Button getReassignStudentButton() {
         return reassignStudentButton;
-    }
-
-    public Button getManageRequestsButton() {
-        return manageRequestsButton;
     }
 
     public Button getRegisterCronogramButton() {

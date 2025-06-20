@@ -38,12 +38,10 @@ public class ControllerCoordinatorMenuWindow implements EventHandler<ActionEvent
         view.getRegisterGroupButton().setOnAction(e -> showRegisterGroupWindow());
         view.getConsultGroupsButton().setOnAction(e -> showConsultGroupsWindow());
         view.getAssignProjectButton().setOnAction(e -> showAssignProjectWindow());
-
-        view.getReassignStudentButton().setOnAction(this::handleUnimplementedAction);
-        view.getManageRequestsButton().setOnAction(this::handleUnimplementedAction);
-        view.getRegisterCronogramButton().setOnAction(this::handleUnimplementedAction);
+        view.getReassignStudentButton().setOnAction(e -> showReassignProjectWindow());
+        view.getRegisterCronogramButton().setOnAction(e -> showRegisterCronogramWindow());
         view.getEnableEvaluationsButton().setOnAction(this::handleUnimplementedAction);
-        view.getGenerateStadisticsButton().setOnAction(this::handleUnimplementedAction);
+        view.getGenerateStadisticsButton().setOnAction(e -> showStatisticsWindow());
     }
 
     private void handleLogout(ActionEvent event) {
@@ -66,14 +64,14 @@ public class ControllerCoordinatorMenuWindow implements EventHandler<ActionEvent
     private void showAcademicRegistrationWindow() {
         CreateAcademicWindow academicWindow = new CreateAcademicWindow();
         new ControllerCreateAcademicWindow(academicWindow);
-        showWindow("Registro de Académico", academicWindow.getView(), 500, 500);
+        showWindow("Registro de Académico", academicWindow.getView(), 800, 500);
     }
 
     private void showConsultAcademicsWindow() {
         ConsultAcademicsWindow consultWindow = new ConsultAcademicsWindow();
         Stage consultStage = new Stage();
         new ControllerConsultAcademicsWindow(consultWindow, consultStage);
-        showWindow("Consulta de Académicos", consultWindow.getView(), 800, 600, consultStage);
+        showWindow("Consulta de Académicos", consultWindow.getView(), 980, 600, consultStage);
     }
 
     private void showRegisterProjectWindow() {
@@ -92,14 +90,14 @@ public class ControllerCoordinatorMenuWindow implements EventHandler<ActionEvent
     private void showRegisterOrganizationWindow() {
         CreateLinkedOrganizationWindow registerWindow = new CreateLinkedOrganizationWindow();
         new ControllerCreateLinkedOrganizationWindow(registerWindow);
-        showWindow("Registrar Organización", registerWindow.getView(), 500, 400);
+        showWindow("Registrar Organización", registerWindow.getView(), 800, 400);
     }
 
     private void showConsultOrganizationWindow() {
         ConsultLinkedOrganizationsWindow consultWindow = new ConsultLinkedOrganizationsWindow();
         Stage consultStage = new Stage();
         new ControllerConsultLinkedOrganizationsWindow(consultWindow, consultStage);
-        showWindow("Consulta de Organizaciones", consultWindow.getView(), 800, 600, consultStage);
+        showWindow("Consulta de Organizaciones", consultWindow.getView(), 1200, 600, consultStage);
     }
 
     private void showRegisterRepresentativeWindow() {
@@ -134,6 +132,23 @@ public class ControllerCoordinatorMenuWindow implements EventHandler<ActionEvent
         Stage assignStage = new Stage();
         new ControllerCoordinatorProjectsWindow(assignWindow);
         showWindow("Asignar Proyecto", assignWindow.getView(), 600, 400, assignStage);
+    }
+
+    private void showReassignProjectWindow() {
+        Stage reassignStage = new Stage();
+        ControllerReassignProjectWindow controller = new ControllerReassignProjectWindow(reassignStage);
+        controller.show();
+    }
+
+    private void showRegisterCronogramWindow() {
+        Stage cronogramStage = new Stage();
+        ControllerRegistCronogramActivityWindow controller = new ControllerRegistCronogramActivityWindow(cronogramStage);
+        controller.show();
+    }
+
+    private void showStatisticsWindow() {
+        ControllerStatisticsWindow controller = new ControllerStatisticsWindow(primaryStage, null);
+        controller.show();
     }
 
     private void showWindow(String title, javafx.scene.Parent view, int width, int height) {

@@ -11,6 +11,8 @@ import java.sql.SQLException;
 public class LinkedOrganizationDocumentDAO {
     private static final Logger logger = LogManager.getLogger(LinkedOrganizationDocumentDAO.class);
     private static final byte[] EMPTY_DOCUMENT = new byte[0];
+    private static final String EMPTY_STRING = "";
+    private static final String NO_INFO = "No hay información disponible";
 
     public boolean insertDocument(int organizationId, String fileName, String fileType, byte[] fileBytes) throws SQLException {
         if (organizationId <= 0 || fileName == null || fileType == null || fileBytes == null) {
@@ -60,8 +62,9 @@ public class LinkedOrganizationDocumentDAO {
             preparedStatement.setInt(1, organizationId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
+                    byte[] document = resultSet.getBytes("archivo");
                     logger.debug("Documento encontrado para organización ID: {}", organizationId);
-                    return resultSet.getBytes("archivo");
+                    return document != null ? document : EMPTY_DOCUMENT;
                 }
             }
         } catch (SQLException e) {
@@ -128,7 +131,7 @@ public class LinkedOrganizationDocumentDAO {
 
     public String getDocumentInfo(int organizationId) throws SQLException {
         if (organizationId <= 0) {
-            return null;
+            return NO_INFO;
         }
 
         logger.debug("Obteniendo información de documento para organización ID: {}", organizationId);
@@ -155,12 +158,12 @@ public class LinkedOrganizationDocumentDAO {
         }
 
         logger.info("No se encontró información de documento para organización ID: {}", organizationId);
-        return null;
+        return NO_INFO;
     }
 
     public String getDocumentType(int organizationId) throws SQLException {
         if (organizationId <= 0) {
-            throw new IllegalArgumentException("ID de organización inválido para obtener tipo de documento");
+            return EMPTY_STRING;
         }
 
         String sql = "SELECT tipo_archivo FROM documentos_organizacion WHERE id_empresa = ?";
@@ -171,10 +174,11 @@ public class LinkedOrganizationDocumentDAO {
             preparedStatement.setInt(1, organizationId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    return resultSet.getString("tipo_archivo");
+                    String type = resultSet.getString("tipo_archivo");
+                    return type != null ? type : EMPTY_STRING;
                 }
             }
         }
-        throw new SQLException("No se encontró el tipo de archivo");
+        return EMPTY_STRING;
     }
 }

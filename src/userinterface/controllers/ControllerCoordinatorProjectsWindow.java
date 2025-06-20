@@ -6,26 +6,32 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import logic.daos.ProjectDAO;
-import logic.daos.ProjectRequestDAO;
-import logic.daos.ProjectStudentDAO;
+import logic.daos.*;
 import logic.logicclasses.Project;
 import logic.logicclasses.ProjectRequest;
+import logic.logicclasses.Student;
+import logic.services.PDFAssignmentGenerator;
 import userinterface.windows.CoordinatorProjectsWindow;
 import userinterface.windows.ProjectRequestsWindow;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class ControllerCoordinatorProjectsWindow implements EventHandler<ActionEvent> {
     private final CoordinatorProjectsWindow view;
     private final ProjectDAO projectDAO;
     private final ProjectRequestDAO requestDAO;
+    private final ProjectStudentDAO projectStudentDAO;
+    private final AssignmentDocumentDAO assignmentDocumentDAO;
     private final ObservableList<Project> projectsList;
+    private ProjectRequestsWindow requestsWindow;
 
     public ControllerCoordinatorProjectsWindow(CoordinatorProjectsWindow window) {
         this.view = window;
         this.projectDAO = new ProjectDAO();
         this.requestDAO = new ProjectRequestDAO();
+        this.projectStudentDAO = new ProjectStudentDAO();
+        this.assignmentDocumentDAO = new AssignmentDocumentDAO();
         this.projectsList = FXCollections.observableArrayList();
 
         view.getProjectsTable().getProperties().put("controller", this);
@@ -47,7 +53,7 @@ public class ControllerCoordinatorProjectsWindow implements EventHandler<ActionE
 
     public void showRequestsForProject(Project project) {
         try {
-            ProjectRequestsWindow requestsWindow = new ProjectRequestsWindow();
+            this.requestsWindow = new ProjectRequestsWindow();
             ObservableList<ProjectRequest> requests = FXCollections.observableArrayList(
                     requestDAO.getRequestsByProject(project.getIdProyect())
             );
@@ -66,26 +72,41 @@ public class ControllerCoordinatorProjectsWindow implements EventHandler<ActionE
     }
 
     private void handleApproveRequests(Project project, ObservableList<ProjectRequest> requests) {
-        ProjectStudentDAO projectStudentDAO = new ProjectStudentDAO();
+        ObservableList<ProjectRequest> selectedRequests = requestsWindow.getRequestsTable().getSelectionModel().getSelectedItems();
         try {
-            for (ProjectRequest request : requests) {
+            for (ProjectRequest request : selectedRequests) {
                 if (request.isPending() && project.getCapacity() > 0) {
                     requestDAO.approveRequest(request.getRequestId(), projectStudentDAO);
-                    projectDAO.incrementStudentCount(project.getIdProyect());
+
+                    StudentDAO studentDAO = new StudentDAO();
+                    PDFAssignmentGenerator pdfAssignmentGenerator = new PDFAssignmentGenerator();
+
+                    byte[] pdfContent = pdfAssignmentGenerator.generateAssignmentPDF(
+                            studentDAO.getStudentById(request.getStudentId()),
+                            project
+                    );
+
+                    assignmentDocumentDAO.saveAssignmentDocument(
+                            project.getIdProyect(),
+                            request.getStudentId(),
+                            pdfContent
+                    );
+
                 } else if (project.getCapacity() <= 0) {
                     requestDAO.rejectRequest(request.getRequestId());
                 }
             }
             loadProjects();
-            view.showMessage("Solicitudes procesadas correctamente", false);
-        } catch (SQLException e) {
+            view.showMessage("Solicitudes aprobadas y documentos generados correctamente", false);
+        } catch (SQLException | IOException e) {
             view.showMessage("Error al procesar solicitudes: " + e.getMessage(), true);
         }
     }
 
     private void handleRejectRequests(Project project, ObservableList<ProjectRequest> requests) {
+        ObservableList<ProjectRequest> selectedRequests = requestsWindow.getRequestsTable().getSelectionModel().getSelectedItems();
         try {
-            for (ProjectRequest request : requests) {
+            for (ProjectRequest request : selectedRequests) {
                 if (request.isPending()) {
                     requestDAO.rejectRequest(request.getRequestId());
                 }

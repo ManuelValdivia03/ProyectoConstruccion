@@ -34,6 +34,7 @@ public class ConsultAcademicsWindow {
         TableColumn<Academic, String> staffNumberCol = createStyledColumn("Núm. Personal", "staffNumber");
         TableColumn<Academic, String> nameCol = createStyledColumn("Nombre", "fullName");
         TableColumn<Academic, String> phoneCol = createStyledColumn("Teléfono", "cellPhone");
+        TableColumn<Academic, String> extCol = createStyledColumn("Ext.", "phoneExtension");
         TableColumn<Academic, String> typeCol = createStyledColumn("Tipo", "academicType");
 
         TableColumn<Academic, String> emailCol = new TableColumn<>("Correo");
@@ -48,7 +49,7 @@ public class ConsultAcademicsWindow {
             }
         });
 
-        academicTable.getColumns().addAll(staffNumberCol, nameCol, phoneCol, emailCol, typeCol);
+        academicTable.getColumns().addAll(staffNumberCol, nameCol, phoneCol, extCol, emailCol, typeCol);
 
         searchField = new TextField();
         searchField.setPromptText("Buscar por número de personal...");

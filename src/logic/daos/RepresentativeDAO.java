@@ -107,7 +107,8 @@ public class RepresentativeDAO implements IRepresentativeDAO {
     }
 
     public List<Representative> getAllRepresentatives() throws SQLException {
-        String sql = "SELECT r.*, o.nombre_empresa, o.telefono as org_telefono, o.correo_empresarial, o.estado " +
+        String sql = "SELECT r.*, o.nombre_empresa, o.telefono as org_telefono, " +
+                "o.extension_telefono, o.departamento, o.correo_empresarial, o.estado " +
                 "FROM representante r " +
                 "LEFT JOIN organizacion_vinculada o ON r.Id_empresa = o.id_empresa";
         List<Representative> representatives = new ArrayList<>();
@@ -125,7 +126,8 @@ public class RepresentativeDAO implements IRepresentativeDAO {
         if (id <= 0) {
             return EMPTY_REPRESENTATIVE;
         }
-        String sql = "SELECT r.*, o.nombre_empresa, o.telefono as org_telefono, o.correo_empresarial, o.estado " +
+        String sql = "SELECT r.*, o.nombre_empresa, o.telefono as org_telefono, " +
+                "o.extension_telefono, o.departamento, o.correo_empresarial, o.estado " +
                 "FROM representante r " +
                 "LEFT JOIN organizacion_vinculada o ON r.Id_empresa = o.id_empresa " +
                 "WHERE r.id_representante = ?";
@@ -145,7 +147,8 @@ public class RepresentativeDAO implements IRepresentativeDAO {
         if (email == null || email.isEmpty()) {
             return EMPTY_REPRESENTATIVE;
         }
-        String sql = "SELECT r.*, o.nombre_empresa, o.telefono as org_telefono, o.correo_empresarial, o.estado " +
+        String sql = "SELECT r.*, o.nombre_empresa, o.telefono as org_telefono, " +
+                "o.extension_telefono, o.departamento, o.correo_empresarial, o.estado " +
                 "FROM representante r " +
                 "LEFT JOIN organizacion_vinculada o ON r.Id_empresa = o.id_empresa " +
                 "WHERE r.correo_e = ?";
@@ -165,7 +168,8 @@ public class RepresentativeDAO implements IRepresentativeDAO {
         if (organizationId <= 0) {
             return Collections.emptyList();
         }
-        String sql = "SELECT r.*, o.nombre_empresa, o.telefono as org_telefono, o.correo_empresarial, o.estado " +
+        String sql = "SELECT r.*, o.nombre_empresa, o.telefono as org_telefono, " +
+                "o.extension_telefono, o.departamento, o.correo_empresarial, o.estado " +
                 "FROM representante r " +
                 "LEFT JOIN organizacion_vinculada o ON r.Id_empresa = o.id_empresa " +
                 "WHERE r.Id_empresa = ?";
@@ -213,8 +217,11 @@ public class RepresentativeDAO implements IRepresentativeDAO {
                     orgId,
                     resultSet.getString("nombre_empresa"),
                     resultSet.getString("org_telefono"),
+                    resultSet.getString("extension_telefono"),
+                    resultSet.getString("departamento"),
                     resultSet.getString("correo_empresarial"),
-                    resultSet.getString("estado") != null && !resultSet.getString("estado").isEmpty() ? resultSet.getString("estado").charAt(0) : ' '
+                    resultSet.getString("estado") != null && !resultSet.getString("estado").isEmpty() ? 
+                        resultSet.getString("estado").charAt(0) : ' '
             );
         }
         return new Representative(
@@ -234,7 +241,8 @@ public class RepresentativeDAO implements IRepresentativeDAO {
         if (name == null || name.isEmpty()) {
             return EMPTY_REPRESENTATIVE;
         }
-        String sql = "SELECT r.*, o.nombre_empresa, o.telefono as org_telefono, o.correo_empresarial, o.estado " +
+        String sql = "SELECT r.*, o.nombre_empresa, o.telefono as org_telefono, " +
+                "o.extension_telefono, o.departamento, o.correo_empresarial, o.estado " +
                 "FROM representante r " +
                 "LEFT JOIN organizacion_vinculada o ON r.Id_empresa = o.id_empresa " +
                 "WHERE r.nombre_completo = ?";
@@ -248,5 +256,24 @@ public class RepresentativeDAO implements IRepresentativeDAO {
             }
         }
         return EMPTY_REPRESENTATIVE;
+    }
+
+    public String getRepresentativeNameByProjectId(int projectId) throws SQLException {
+        if (projectId <= 0) {
+            return "";
+        }
+        String sql = "SELECT r.nombre_completo FROM representante r " +
+                     "JOIN proyecto p ON r.id_representante = p.id_representante " +
+                     "WHERE p.id_proyecto = ?";
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, projectId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getString("nombre_completo");
+                }
+            }
+        }
+        return "";
     }
 }

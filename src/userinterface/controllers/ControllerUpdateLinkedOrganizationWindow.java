@@ -99,6 +99,12 @@ public class ControllerUpdateLinkedOrganizationWindow {
                 validators.validateCellPhone(view.getPhoneField().getText()),
                 "Teléfono debe tener 10 dígitos");
 
+        String extension = view.getPhoneExtensionField().getText().trim();
+        if (!extension.isEmpty() && !validators.validatePhoneExtension(extension)) {
+            showFieldError("Extensión debe ser numérica y máximo 5 dígitos", view.getPhoneExtensionField());
+            isValid = false;
+        }
+
         isValid &= validateField(view.getEmailField(),
                 validators.validateEmail(view.getEmailField().getText()),
                 "Formato de email inválido");
@@ -137,6 +143,8 @@ public class ControllerUpdateLinkedOrganizationWindow {
     private void resetFieldStyles() {
         view.getNameField().setStyle(DEFAULT_BORDER_STYLE);
         view.getPhoneField().setStyle(DEFAULT_BORDER_STYLE);
+        view.getPhoneExtensionField().setStyle(DEFAULT_BORDER_STYLE);
+        view.getDepartmentField().setStyle(DEFAULT_BORDER_STYLE);
         view.getEmailField().setStyle(DEFAULT_BORDER_STYLE);
     }
 

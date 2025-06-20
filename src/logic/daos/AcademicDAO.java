@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class AcademicDAO implements IAcademicDAO {
-    private static final Academic EMPTY_ACADEMIC = new Academic(-1, "", "", 'I', "", AcademicType.NONE);
+    private static final Academic EMPTY_ACADEMIC = new Academic(-1, "", "", "",'I', "", AcademicType.NONE);
     private final UserDAO userDAO;
 
     public AcademicDAO() {
@@ -46,7 +46,7 @@ public class AcademicDAO implements IAcademicDAO {
 
     @Override
     public List<Academic> getAllAcademics() throws SQLException {
-        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.estado, " +
+        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.extension_telefono, u.estado, " +
                 "a.numero_personal, a.tipo FROM academico a " +
                 "JOIN usuario u ON a.id_usuario = u.id_usuario";
         List<Academic> academics = new ArrayList<>();
@@ -60,6 +60,7 @@ public class AcademicDAO implements IAcademicDAO {
                         resultSet.getInt("id_usuario"),
                         resultSet.getString("nombre_completo"),
                         resultSet.getString("telefono"),
+                        resultSet.getString("extension_telefono"),
                         resultSet.getString("estado").charAt(0),
                         resultSet.getString("numero_personal"),
                         AcademicType.valueOf(resultSet.getString("tipo"))
@@ -75,7 +76,7 @@ public class AcademicDAO implements IAcademicDAO {
             throw new IllegalArgumentException("Staff number must not be null or empty");
         }
 
-        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.estado, " +
+        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.extension_telefono, u.estado, " +
                 "a.numero_personal, a.tipo FROM academico a " +
                 "JOIN usuario u ON a.id_usuario = u.id_usuario " +
                 "WHERE a.numero_personal = ?";
@@ -90,6 +91,7 @@ public class AcademicDAO implements IAcademicDAO {
                             resultSet.getInt("id_usuario"),
                             resultSet.getString("nombre_completo"),
                             resultSet.getString("telefono"),
+                            resultSet.getString("extension_telefono"),
                             resultSet.getString("estado").charAt(0),
                             resultSet.getString("numero_personal"),
                             AcademicType.valueOf(resultSet.getString("tipo"))
@@ -148,7 +150,7 @@ public class AcademicDAO implements IAcademicDAO {
             return Collections.emptyList();
         }
 
-        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.estado, " +
+        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.extension_telefono, u.estado, " +
                 "a.numero_personal, a.tipo FROM academico a " +
                 "JOIN usuario u ON a.id_usuario = u.id_usuario " +
                 "WHERE a.tipo = ?";
@@ -164,6 +166,7 @@ public class AcademicDAO implements IAcademicDAO {
                             resultSet.getInt("id_usuario"),
                             resultSet.getString("nombre_completo"),
                             resultSet.getString("telefono"),
+                            resultSet.getString("extension_telefono"),
                             resultSet.getString("estado").charAt(0),
                             resultSet.getString("numero_personal"),
                             AcademicType.valueOf(resultSet.getString("tipo"))
@@ -176,7 +179,7 @@ public class AcademicDAO implements IAcademicDAO {
 
     @Override
     public Academic getAcademicById(int idUser) throws SQLException {
-        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.estado, " +
+        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.extension_telefono, u.estado, " +
                 "a.numero_personal, a.tipo FROM academico a " +
                 "JOIN usuario u ON a.id_usuario = u.id_usuario " +
                 "WHERE u.id_usuario = ?";
@@ -191,6 +194,7 @@ public class AcademicDAO implements IAcademicDAO {
                             resultSet.getInt("id_usuario"),
                             resultSet.getString("nombre_completo"),
                             resultSet.getString("telefono"),
+                            resultSet.getString("extension_telefono"),
                             resultSet.getString("estado").charAt(0),
                             resultSet.getString("numero_personal"),
                             AcademicType.valueOf(resultSet.getString("tipo"))
@@ -274,6 +278,7 @@ public class AcademicDAO implements IAcademicDAO {
                         resultSet.getInt("id_usuario"),
                         resultSet.getString("nombre_completo"),
                         resultSet.getString("telefono"),
+                        resultSet.getString("extension_telefono"),
                         resultSet.getString("estado").charAt(0),
                         resultSet.getString("numero_personal"),
                         AcademicType.valueOf(resultSet.getString("tipo_academico"))
@@ -298,6 +303,7 @@ public class AcademicDAO implements IAcademicDAO {
                             resultSet.getInt("id_usuario"),
                             resultSet.getString("nombre_completo"),
                             resultSet.getString("telefono"),
+                            resultSet.getString("extension_telefono"),
                             resultSet.getString("estado").charAt(0),
                             resultSet.getString("numero_personal"),
                             AcademicType.valueOf(resultSet.getString("tipo_academico"))

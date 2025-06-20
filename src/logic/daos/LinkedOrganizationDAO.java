@@ -12,22 +12,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
-    private static final LinkedOrganization EMPTY_ORGANIZATION = new LinkedOrganization(-1, "", "", "", 'I');
+    private static final LinkedOrganization EMPTY_ORGANIZATION = new LinkedOrganization(-1, "", "", "", "", "", 'I');
 
     public boolean addLinkedOrganization(LinkedOrganization linkedOrganization) throws SQLException {
         if (linkedOrganization == null) {
             throw new IllegalArgumentException("La organización vinculada no debe ser nula");
         }
 
-        String sql = "INSERT INTO organizacion_vinculada (nombre_empresa, telefono, correo_empresarial, estado) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO organizacion_vinculada (nombre_empresa, telefono, extension_telefono, departamento, " +
+                    "correo_empresarial, estado) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, linkedOrganization.getNameLinkedOrganization());
             preparedStatement.setString(2, linkedOrganization.getCellPhoneLinkedOrganization());
-            preparedStatement.setString(3, linkedOrganization.getEmailLinkedOrganization());
-            preparedStatement.setString(4, String.valueOf(linkedOrganization.getStatus()));
+            preparedStatement.setString(3, linkedOrganization.getPhoneExtension());
+            preparedStatement.setString(4, linkedOrganization.getDepartment());
+            preparedStatement.setString(5, linkedOrganization.getEmailLinkedOrganization());
+            preparedStatement.setString(6, String.valueOf(linkedOrganization.getStatus()));
 
             int affectedRows = preparedStatement.executeUpdate();
 
@@ -64,23 +67,27 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
             throw new IllegalArgumentException("La organización vinculada no debe ser nula");
         }
 
-        String sql = "UPDATE organizacion_vinculada SET nombre_empresa = ?, telefono = ?, correo_empresarial = ?, estado = ? WHERE id_empresa = ?";
+        String sql = "UPDATE organizacion_vinculada SET nombre_empresa = ?, telefono = ?, extension_telefono = ?, " +
+                    "departamento = ?, correo_empresarial = ?, estado = ? WHERE id_empresa = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, linkedOrganization.getNameLinkedOrganization());
             preparedStatement.setString(2, linkedOrganization.getCellPhoneLinkedOrganization());
-            preparedStatement.setString(3, linkedOrganization.getEmailLinkedOrganization());
-            preparedStatement.setString(4, String.valueOf(linkedOrganization.getStatus()));
-            preparedStatement.setInt(5, linkedOrganization.getIdLinkedOrganization());
+            preparedStatement.setString(3, linkedOrganization.getPhoneExtension());
+            preparedStatement.setString(4, linkedOrganization.getDepartment());
+            preparedStatement.setString(5, linkedOrganization.getEmailLinkedOrganization());
+            preparedStatement.setString(6, String.valueOf(linkedOrganization.getStatus()));
+            preparedStatement.setInt(7, linkedOrganization.getIdLinkedOrganization());
 
             return preparedStatement.executeUpdate() > 0;
         }
     }
 
     public List<LinkedOrganization> getAllLinkedOrganizations() throws SQLException {
-        String sql = "SELECT id_empresa, nombre_empresa, telefono, correo_empresarial, estado FROM organizacion_vinculada";
+        String sql = "SELECT id_empresa, nombre_empresa, telefono, extension_telefono, departamento, " +
+                    "correo_empresarial, estado FROM organizacion_vinculada";
         List<LinkedOrganization> organizations = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
@@ -89,11 +96,13 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
 
             while (resultSet.next()) {
                 organizations.add(new LinkedOrganization(
-                        resultSet.getInt("id_empresa"),
-                        resultSet.getString("nombre_empresa"),
-                        resultSet.getString("telefono"),
-                        resultSet.getString("correo_empresarial"),
-                        resultSet.getString("estado").charAt(0)
+                    resultSet.getInt("id_empresa"),
+                    resultSet.getString("nombre_empresa"),
+                    resultSet.getString("telefono"),
+                    resultSet.getString("extension_telefono"),
+                    resultSet.getString("departamento"),
+                    resultSet.getString("correo_empresarial"),
+                    resultSet.getString("estado").charAt(0)
                 ));
             }
         }
@@ -105,7 +114,8 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
             throw new IllegalArgumentException("El nombre de la organización no debe ser nulo o vacío");
         }
 
-        String sql = "SELECT id_empresa, nombre_empresa, telefono, correo_empresarial, estado FROM organizacion_vinculada WHERE nombre_empresa = ?";
+        String sql = "SELECT id_empresa, nombre_empresa, telefono, extension_telefono, departamento, " +
+                    "correo_empresarial, estado FROM organizacion_vinculada WHERE nombre_empresa = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -114,11 +124,13 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     return new LinkedOrganization(
-                            resultSet.getInt("id_empresa"),
-                            resultSet.getString("nombre_empresa"),
-                            resultSet.getString("telefono"),
-                            resultSet.getString("correo_empresarial"),
-                            resultSet.getString("estado").charAt(0)
+                        resultSet.getInt("id_empresa"),
+                        resultSet.getString("nombre_empresa"),
+                        resultSet.getString("telefono"),
+                        resultSet.getString("extension_telefono"),
+                        resultSet.getString("departamento"),
+                        resultSet.getString("correo_empresarial"),
+                        resultSet.getString("estado").charAt(0)
                     );
                 }
             }
@@ -131,7 +143,8 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
             return EMPTY_ORGANIZATION;
         }
 
-        String sql = "SELECT id_empresa, nombre_empresa, telefono, correo_empresarial, estado FROM organizacion_vinculada WHERE id_empresa = ?";
+        String sql = "SELECT id_empresa, nombre_empresa, telefono, extension_telefono, departamento, " +
+                    "correo_empresarial, estado FROM organizacion_vinculada WHERE id_empresa = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -140,11 +153,13 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     return new LinkedOrganization(
-                            resultSet.getInt("id_empresa"),
-                            resultSet.getString("nombre_empresa"),
-                            resultSet.getString("telefono"),
-                            resultSet.getString("correo_empresarial"),
-                            resultSet.getString("estado").charAt(0)
+                        resultSet.getInt("id_empresa"),
+                        resultSet.getString("nombre_empresa"),
+                        resultSet.getString("telefono"),
+                        resultSet.getString("extension_telefono"),
+                        resultSet.getString("departamento"),
+                        resultSet.getString("correo_empresarial"),
+                        resultSet.getString("estado").charAt(0)
                     );
                 }
             }

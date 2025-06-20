@@ -16,6 +16,7 @@ public class UpdateStudentWindow {
     private final VBox view;
     private final TextField nameField;
     private final TextField phoneField;
+    private final TextField phoneExtensionField;
     private final TextField enrollmentField;
     private final TextField emailField;
     private final PasswordToggleField passwordField;
@@ -30,6 +31,8 @@ public class UpdateStudentWindow {
 
         nameField = new TextField();
         phoneField = new TextField();
+        phoneExtensionField = new TextField();
+        phoneExtensionField.setPromptText("Dejar vacío si no tiene");
         enrollmentField = new TextField();
         enrollmentField.setEditable(false);
         emailField = new TextField();
@@ -56,6 +59,8 @@ public class UpdateStudentWindow {
         grid.add(nameField, 1, 0);
         grid.add(new Label("Teléfono:"), 0, 1);
         grid.add(phoneField, 1, 1);
+        grid.add(new Label("Ext.:"), 2, 1);
+        grid.add(phoneExtensionField, 3, 1);
         grid.add(new Label("Matrícula:"), 0, 2);
         grid.add(enrollmentField, 1, 2);
         grid.add(new Label("E-mail:"), 0, 3);
@@ -77,14 +82,15 @@ public class UpdateStudentWindow {
     public void loadStudentData(Student student, String email) {
         nameField.setText(student.getFullName());
         phoneField.setText(student.getCellPhone());
+        phoneExtensionField.setText(student.getPhoneExtension());
         enrollmentField.setText(student.getEnrollment());
         emailField.setText(email);
     }
 
-
     public VBox getView() { return view; }
     public TextField getNameField() { return nameField; }
     public TextField getPhoneField() { return phoneField; }
+    public TextField getPhoneExtensionField() { return phoneExtensionField; }
     public TextField getEnrollmentField() { return enrollmentField; }
     public TextField getEmailField() { return emailField; }
     public String getPassword() { return passwordField.getPassword(); }

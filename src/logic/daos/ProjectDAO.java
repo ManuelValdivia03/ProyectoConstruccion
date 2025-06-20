@@ -421,7 +421,7 @@ public class ProjectDAO implements IProjectDAO {
 
     public boolean incrementStudentCount(int projectId) throws SQLException {
         String sql = "UPDATE proyecto SET estudiantes_actuales = estudiantes_actuales + 1 " +
-                "WHERE id_proyecto = ? AND estudiantes_actuales < cupo_maximo";
+                "WHERE id_proyecto = ? AND estudiantes_actuales < cupo";
 
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

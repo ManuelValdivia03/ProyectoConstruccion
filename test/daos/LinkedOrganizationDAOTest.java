@@ -44,12 +44,10 @@ class LinkedOrganizationDAOTest {
             statement.execute("SET FOREIGN_KEY_CHECKS = 1");
         }
 
-            // Crear organizaciones de prueba
         testOrganizations = new ArrayList<>();
         testOrganizations.add(createTestOrganization("Empresa A", "5551234567", "contacto@empresaA.com", 'A'));
         testOrganizations.add(createTestOrganization("Empresa B", "5557654321", "contacto@empresaB.com", 'A'));
 
-        // Verificaciones iniciales
         assertEquals(2, linkedOrganizationDAO.countLinkedOrganizations());
     }
 

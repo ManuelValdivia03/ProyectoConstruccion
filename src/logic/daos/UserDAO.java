@@ -18,7 +18,7 @@ import java.util.List;
 
 public class UserDAO implements IUserDAO {
     private static final Logger logger = LogManager.getLogger(UserDAO.class);
-    private static final User EMPTY_USER = new User(-1, "", "", 'I');
+    private static final User EMPTY_USER = new User(-1, "", "", "",'I');
 
     public boolean addUser(User user) throws SQLException, IllegalArgumentException, RepeatedCellPhoneException {
         if (user == null) {
@@ -39,14 +39,15 @@ public class UserDAO implements IUserDAO {
             throw new RepeatedCellPhoneException();
         }
 
-        String query = "INSERT INTO usuario (nombre_completo, telefono, estado) VALUES (?, ?, ?)";
+        String query = "INSERT INTO usuario (nombre_completo, telefono, extension_telefono, estado) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = ConnectionDataBase.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setString(1, user.getFullName());
             stmt.setString(2, cleanPhone);
-            stmt.setString(3, String.valueOf(user.getStatus()));
+            stmt.setString(3, user.getPhoneExtension());
+            stmt.setString(4, String.valueOf(user.getStatus()));
 
             int rowsInserted = stmt.executeUpdate();
             if (rowsInserted == 1) {
@@ -81,6 +82,7 @@ public class UserDAO implements IUserDAO {
                 user.setIdUser(resultSet.getInt("id_usuario"));
                 user.setFullName(resultSet.getString("nombre_completo"));
                 user.setCellphone(resultSet.getString("telefono"));
+                user.setPhoneExtension(resultSet.getString("extension_telefono"));
                 user.setStatus(resultSet.getString("estado").charAt(0));
                 users.add(user);
             }
@@ -112,6 +114,7 @@ public class UserDAO implements IUserDAO {
                     user.setIdUser(resultSet.getInt("id_usuario"));
                     user.setFullName(resultSet.getString("nombre_completo"));
                     user.setCellphone(resultSet.getString("telefono"));
+                    user.setPhoneExtension(resultSet.getString("extension_telefono"));
                     user.setStatus(resultSet.getString("estado").charAt(0));
                     logger.debug("Usuario encontrado con ID: {}", id);
                 }
@@ -135,15 +138,16 @@ public class UserDAO implements IUserDAO {
         }
 
         logger.debug("Actualizando usuario ID: {}", user.getIdUser());
-        String sql = "UPDATE usuario SET nombre_completo = ?, telefono = ?, estado = ? WHERE id_usuario = ?";
+        String sql = "UPDATE usuario SET nombre_completo = ?, telefono = ?, extension_telefono = ?, estado = ? WHERE id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, user.getFullName());
             statement.setString(2, user.getCellPhone());
-            statement.setString(3, String.valueOf(user.getStatus()));
-            statement.setInt(4, user.getIdUser());
+            statement.setString(3, user.getPhoneExtension());
+            statement.setString(4, String.valueOf(user.getStatus()));
+            statement.setInt(5, user.getIdUser());
 
             boolean result = statement.executeUpdate() > 0;
             if (result) {
@@ -204,6 +208,7 @@ public class UserDAO implements IUserDAO {
                     user.setIdUser(resultSet.getInt("id_usuario"));
                     user.setFullName(resultSet.getString("nombre_completo"));
                     user.setCellphone(resultSet.getString("telefono"));
+                    user.setPhoneExtension(resultSet.getString("extension_telefono"));
                     user.setStatus(resultSet.getString("estado").charAt(0));
                     users.add(user);
                 }

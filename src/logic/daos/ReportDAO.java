@@ -22,12 +22,14 @@ public class ReportDAO implements IReportDAO {
         this.studentDAO = new StudentDAO();
     }
 
+    @Override
     public boolean addReport(Report report) throws SQLException {
         if (report == null || report.getReportDate() == null || report.getStudent() == null) {
             throw new IllegalArgumentException("Datos del reporte incompletos");
         }
 
-        String sql = "INSERT INTO reporte (tipo, horas, fecha_reporte, id_estudiante) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO reporte (tipo, horas, fecha_reporte, metodologia, descripcion, id_estudiante) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -35,15 +37,16 @@ public class ReportDAO implements IReportDAO {
             statement.setString(1, report.getReportType().toString());
             statement.setInt(2, report.getHoursReport());
             statement.setDate(3, new Date(report.getReportDate().getTime()));
-            statement.setInt(4, report.getStudent().getIdUser());
+            statement.setString(4, report.getMethodology());
+            statement.setString(5, report.getDescription());
+            statement.setInt(6, report.getStudent().getIdUser());
 
             int affectedRows = statement.executeUpdate();
 
             if (affectedRows > 0) {
                 try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
-                        int generatedId = generatedKeys.getInt(1);
-                        report.setIdReport(generatedId);
+                        report.setIdReport(generatedKeys.getInt(1));
                         return true;
                     }
                 }
@@ -52,6 +55,7 @@ public class ReportDAO implements IReportDAO {
         }
     }
 
+    @Override
     public Report getReportById(int idReport) throws SQLException {
         if (idReport <= 0) {
             return EMPTY_REPORT;
@@ -64,19 +68,14 @@ public class ReportDAO implements IReportDAO {
             statement.setInt(1, idReport);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    Report report = new Report();
-                    report.setIdReport(resultSet.getInt("id_reporte"));
-                    report.setReportDate(resultSet.getTimestamp("fecha_reporte"));
-                    report.setHoursReport(resultSet.getInt("horas"));
-                    report.setReportType(ReportType.valueOf(resultSet.getString("tipo")));
-                    report.setStudent(studentDAO.getStudentById(resultSet.getInt("id_estudiante")));
-                    return report;
+                    return mapResultSetToReport(resultSet);
                 }
             }
         }
         return EMPTY_REPORT;
     }
 
+    @Override
     public List<Report> getAllReports() throws SQLException {
         String sql = "SELECT * FROM reporte";
         List<Report> reports = new ArrayList<>();
@@ -86,18 +85,13 @@ public class ReportDAO implements IReportDAO {
              ResultSet resultSet = statement.executeQuery(sql)) {
 
             while (resultSet.next()) {
-                Report report = new Report();
-                report.setIdReport(resultSet.getInt("id_reporte"));
-                report.setReportDate(resultSet.getTimestamp("fecha_reporte"));
-                report.setHoursReport(resultSet.getInt("horas"));
-                report.setReportType(ReportType.valueOf(resultSet.getString("tipo")));
-                report.setStudent(studentDAO.getStudentById(resultSet.getInt("id_estudiante")));
-                reports.add(report);
+                reports.add(mapResultSetToReport(resultSet));
             }
         }
         return reports;
     }
 
+    @Override
     public List<Report> getReportsByStudent(int studentId) throws SQLException {
         if (studentId <= 0) {
             return Collections.emptyList();
@@ -112,40 +106,40 @@ public class ReportDAO implements IReportDAO {
             statement.setInt(1, studentId);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    Report report = new Report();
-                    report.setIdReport(resultSet.getInt("id_reporte"));
-                    report.setReportDate(resultSet.getTimestamp("fecha_reporte"));
-                    report.setHoursReport(resultSet.getInt("horas"));
-                    report.setReportType(ReportType.valueOf(resultSet.getString("tipo")));
-                    report.setStudent(studentDAO.getStudentById(studentId));
-                    reports.add(report);
+                    reports.add(mapResultSetToReport(resultSet));
                 }
             }
         }
         return reports;
     }
 
+    @Override
     public boolean updateReport(Report report) throws SQLException {
         if (report == null || report.getIdReport() <= 0 ||
                 report.getStudent() == null || report.getReportDate() == null) {
             throw new IllegalArgumentException("Datos del reporte incompletos");
         }
 
-        String sql = "UPDATE reporte SET tipo = ?, horas = ?, fecha_reporte = ?, id_estudiante = ? WHERE id_reporte = ?";
+        String sql = "UPDATE reporte SET tipo = ?, horas = ?, fecha_reporte = ?, " +
+                "metodologia = ?, descripcion = ?, id_estudiante = ? " +
+                "WHERE id_reporte = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, String.valueOf(report.getReportType()));
+            statement.setString(1, report.getReportType().toString());
             statement.setInt(2, report.getHoursReport());
             statement.setDate(3, new Date(report.getReportDate().getTime()));
-            statement.setInt(4, report.getStudent().getIdUser());
-            statement.setInt(5, report.getIdReport());
+            statement.setString(4, report.getMethodology());
+            statement.setString(5, report.getDescription());
+            statement.setInt(6, report.getStudent().getIdUser());
+            statement.setInt(7, report.getIdReport());
 
             return statement.executeUpdate() > 0;
         }
     }
 
+    @Override
     public boolean deleteReport(int idReport) throws SQLException {
         if (idReport <= 0) {
             return false;
@@ -161,6 +155,7 @@ public class ReportDAO implements IReportDAO {
         }
     }
 
+    @Override
     public boolean reportExists(int idReport) throws SQLException {
         if (idReport <= 0) {
             return false;
@@ -178,6 +173,7 @@ public class ReportDAO implements IReportDAO {
         }
     }
 
+    @Override
     public int countReports() throws SQLException {
         String sql = "SELECT COUNT(*) FROM reporte";
 
@@ -187,5 +183,17 @@ public class ReportDAO implements IReportDAO {
 
             return resultSet.next() ? resultSet.getInt(1) : 0;
         }
+    }
+
+    private Report mapResultSetToReport(ResultSet resultSet) throws SQLException {
+        Report report = new Report();
+        report.setIdReport(resultSet.getInt("id_reporte"));
+        report.setReportDate(resultSet.getTimestamp("fecha_reporte"));
+        report.setHoursReport(resultSet.getInt("horas"));
+        report.setReportType(ReportType.valueOf(resultSet.getString("tipo")));
+        report.setMethodology(resultSet.getString("metodologia"));
+        report.setDescription(resultSet.getString("descripcion"));
+        report.setStudent(studentDAO.getStudentById(resultSet.getInt("id_estudiante")));
+        return report;
     }
 }

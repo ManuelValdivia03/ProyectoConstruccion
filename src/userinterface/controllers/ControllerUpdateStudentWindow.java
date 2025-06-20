@@ -109,6 +109,12 @@ public class ControllerUpdateStudentWindow {
             isValid = false;
         }
 
+        String extension = view.getPhoneExtensionField().getText().trim();
+        if (!extension.isEmpty() && !validators.validatePhoneExtension(extension)) {
+            showFieldError("Extensión debe ser numérica y máximo 5 dígitos", view.getPhoneExtensionField());
+            isValid = false;
+        }
+
         return isValid;
     }
 
@@ -127,6 +133,7 @@ public class ControllerUpdateStudentWindow {
                 originalStudent.getIdUser(),
                 name,
                 phone,
+                view.getPhoneExtensionField().getText().trim(),
                 originalStudent.getStatus()
         );
         if (!userDAO.updateUser(user)) {
@@ -140,6 +147,7 @@ public class ControllerUpdateStudentWindow {
                 originalStudent.getIdUser(),
                 view.getNameField().getText().trim(),
                 view.getPhoneField().getText().trim(),
+                view.getPhoneExtensionField().getText().trim(),
                 status,
                 originalStudent.getEnrollment(),
                 originalStudent.getGrade()
@@ -186,6 +194,7 @@ public class ControllerUpdateStudentWindow {
         view.getNameField().setStyle(DEFAULT_BORDER_STYLE);
         view.getPhoneField().setStyle(DEFAULT_BORDER_STYLE);
         view.getEmailField().setStyle(DEFAULT_BORDER_STYLE);
+        view.getPhoneExtensionField().setStyle(DEFAULT_BORDER_STYLE);
     }
 
     private void showFieldError(String message, TextField field) {

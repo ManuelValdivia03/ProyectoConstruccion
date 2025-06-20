@@ -29,9 +29,19 @@ public class ConsultLinkedOrganizationsWindow {
 
         TableColumn<LinkedOrganization, String> nameCol = createStyledColumn("Nombre", "nameLinkedOrganization");
         TableColumn<LinkedOrganization, String> phoneCol = createStyledColumn("Teléfono", "cellPhoneLinkedOrganization");
+        TableColumn<LinkedOrganization, String> extCol = createStyledColumn("Ext.", "phoneExtension");
+        TableColumn<LinkedOrganization, String> deptCol = createStyledColumn("Departamento", "department");
         TableColumn<LinkedOrganization, String> emailCol = createStyledColumn("Email", "emailLinkedOrganization");
+        TableColumn<LinkedOrganization, String> statusCol = createStyledColumn("Estado", "status");
 
-        organizationTable.getColumns().addAll(nameCol, phoneCol, emailCol);
+        organizationTable.getColumns().addAll(nameCol, phoneCol, extCol, deptCol, emailCol, statusCol);
+
+        nameCol.setPrefWidth(200);
+        phoneCol.setPrefWidth(100);
+        extCol.setPrefWidth(60);
+        deptCol.setPrefWidth(150);
+        emailCol.setPrefWidth(200);
+        statusCol.setPrefWidth(80);
 
         searchField = new TextField();
         searchField.setPromptText("Buscar por nombre...");
@@ -85,6 +95,7 @@ public class ConsultLinkedOrganizationsWindow {
                 setGraphic(empty ? null : btn);
             }
         });
+        manageCol.setPrefWidth(100);
         return manageCol;
     }
 
@@ -108,6 +119,7 @@ public class ConsultLinkedOrganizationsWindow {
                 setGraphic(empty ? null : btn);
             }
         });
+        documentsCol.setPrefWidth(100);
         return documentsCol;
     }
 

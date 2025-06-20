@@ -14,6 +14,7 @@ public class CreateAcademicWindow {
     private final VBox view;
     private final TextField nameField;
     private final TextField phoneField;
+    private final TextField phoneExtensionField;
     private final TextField staffNumberField;
     private final TextField emailField;
     private final PasswordToggleField passwordToggle;
@@ -28,6 +29,8 @@ public class CreateAcademicWindow {
 
         nameField = new TextField();
         phoneField = new TextField();
+        phoneExtensionField = new TextField();
+        phoneExtensionField.setPromptText("Dejar vacío si no tiene");
         staffNumberField = new TextField();
         emailField = new TextField();
 
@@ -55,6 +58,8 @@ public class CreateAcademicWindow {
         grid.add(nameField, 1, 0);
         grid.add(new Label("Teléfono:"), 0, 1);
         grid.add(phoneField, 1, 1);
+        grid.add(new Label("Ext.:"), 2, 1);
+        grid.add(phoneExtensionField, 3, 1);
         grid.add(new Label("Número de personal:"), 0, 2);
         grid.add(staffNumberField, 1, 2);
         grid.add(new Label("Tipo de académico:"), 0, 3);
@@ -80,6 +85,10 @@ public class CreateAcademicWindow {
 
     public TextField getPhoneField() {
         return phoneField;
+    }
+
+    public TextField getPhoneExtensionField() {
+        return phoneExtensionField;
     }
 
     public TextField getStaffNumberField() {

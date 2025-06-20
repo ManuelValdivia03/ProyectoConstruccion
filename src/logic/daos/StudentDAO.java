@@ -17,7 +17,7 @@ import java.util.List;
 
 public class StudentDAO implements IStudentDAO {
     private static final Logger logger = LogManager.getLogger(StudentDAO.class);
-    private static final Student EMPTY_STUDENT = new Student(-1, null, null, 'I', null, 0);
+    private static final Student EMPTY_STUDENT = new Student(-1, "", "", "",'I', "", 0);
     private final UserDAO userDAO;
 
     public StudentDAO() {
@@ -457,7 +457,7 @@ public class StudentDAO implements IStudentDAO {
             return EMPTY_STUDENT;
         }
 
-        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.estado, " +
+        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.extension_telefon, u.estado, " +
                 "e.matricula, e.calificacion FROM usuario u " +
                 "JOIN estudiante e ON u.id_usuario = e.id_usuario " +
                 "WHERE u.id_usuario = ?";
@@ -472,6 +472,7 @@ public class StudentDAO implements IStudentDAO {
                         resultSet.getInt("id_usuario"),
                         resultSet.getString("nombre_completo"),
                         resultSet.getString("telefono"),
+                        resultSet.getString("extension_telefon"),
                         resultSet.getString("estado").charAt(0),
                         resultSet.getString("matricula"),
                         resultSet.getInt("calificacion")

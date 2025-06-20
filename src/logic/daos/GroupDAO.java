@@ -17,6 +17,7 @@ import java.util.List;
 
 public class GroupDAO implements IGroupDAO {
     private static final Group EMPTY_GROUP = new Group(-1, "", Collections.emptyList(), null);
+    private static final Academic EMPTY_ACADEMIC = new Academic(-1, "", "", "", 'I', "", AcademicType.EE);
     private final StudentDAO studentDAO;
 
     public GroupDAO() {
@@ -73,7 +74,7 @@ public class GroupDAO implements IGroupDAO {
     }
 
     public Academic getEeAcademicByGroup(int nrc) throws SQLException {
-        String sql = "SELECT a.id_usuario, a.numero_personal, a.tipo, u.nombre_completo, u.telefono, u.estado " +
+        String sql = "SELECT a.id_usuario, a.numero_personal, a.tipo, u.nombre_completo, u.telefono, u.extension_telefono, u.estado " +
                 "FROM academico a " +
                 "JOIN usuario u ON a.id_usuario = u.id_usuario " +
                 "JOIN grupo_academico ga ON a.id_usuario = ga.id_usuario " +
@@ -85,34 +86,19 @@ public class GroupDAO implements IGroupDAO {
             preparedStatement.setInt(1, nrc);
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 if (rs.next()) {
-                    int idUsuario = rs.getInt("id_usuario");
-                    String numeroPersonal = rs.getString("numero_personal").trim();
-                    String tipo = rs.getString("tipo").trim();
-                    String nombreCompleto = rs.getString("nombre_completo").trim();
-                    String telefono = rs.getString("telefono");
-                    if (telefono != null) {
-                        telefono = telefono.trim();
-                    }
-                    String estado = rs.getString("estado").trim();
-
-                    Academic academic = new Academic(
-                        idUsuario,
-                        nombreCompleto,
-                        telefono,
-                        estado.charAt(0),
-                        numeroPersonal,
+                    return new Academic(
+                        rs.getInt("id_usuario"),
+                        rs.getString("nombre_completo").trim(),
+                        rs.getString("telefono") != null ? rs.getString("telefono").trim() : "",
+                        rs.getString("extension_telefono") != null ? rs.getString("extension_telefono").trim() : "",
+                        rs.getString("estado").trim().charAt(0),
+                        rs.getString("numero_personal").trim(),
                         AcademicType.EE
                     );
-
-                    System.out.println("Academic creado: " + academic.getFullName());
-                    return academic;
                 }
-            } catch (Exception e) {
-                System.out.println("Error al crear Academic: " + e.getMessage());
-                e.printStackTrace();
             }
         }
-        return null;
+        return EMPTY_ACADEMIC;
     }
 
     public boolean isAcademicAssignedToGroup(int academicId) throws SQLException {
@@ -208,14 +194,11 @@ public class GroupDAO implements IGroupDAO {
             while (resultSet.next()) {
                 int nrc = resultSet.getInt("nrc");
                 String nombre = resultSet.getString("nombre");
-                Academic academic = null;
+                Academic academic = EMPTY_ACADEMIC;
                 
                 Object idUsuario = resultSet.getObject("id_usuario");
                 if (idUsuario != null) {
                     academic = getEeAcademicByGroup(nrc);
-                    if (academic == null) {
-                        System.out.println("No se pudo crear el académico para el NRC: " + nrc);
-                    }
                 }
 
                 List<Student> students = studentDAO.getStudentsByGroup(nrc);
@@ -243,7 +226,7 @@ public class GroupDAO implements IGroupDAO {
                             nrc,
                             resultSet.getString("nombre"),
                             studentDAO.getStudentsByGroup(nrc),
-                            null
+                            EMPTY_ACADEMIC
                     );
                 }
             }
@@ -269,7 +252,7 @@ public class GroupDAO implements IGroupDAO {
                             nrc,
                             resultSet.getString("nombre"),
                             studentDAO.getStudentsByGroup(nrc),
-                            null
+                            EMPTY_ACADEMIC
                     );
                 }
             }

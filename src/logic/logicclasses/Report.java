@@ -1,7 +1,6 @@
 package logic.logicclasses;
 
 import logic.enums.ReportType;
-
 import java.sql.Timestamp;
 
 public class Report {
@@ -9,13 +8,17 @@ public class Report {
     private Timestamp reportDate;
     private int hoursReport;
     private ReportType reportType;
+    private String methodology;
+    private String description;
     private Student student;
 
-    public Report(int idReport, Timestamp reportDate, int hoursReport, ReportType reportType, Student student) {
+    public Report(int idReport, Timestamp reportDate, int hoursReport, ReportType reportType, String methodology, String description,Student student) {
         this.idReport = idReport;
         this.reportDate = reportDate;
         this.hoursReport = hoursReport;
         this.reportType = reportType;
+        this.methodology = methodology;
+        this.description = description;
         this.student = student;
     }
 
@@ -24,6 +27,8 @@ public class Report {
         reportDate = null;
         hoursReport = 0;
         reportType = ReportType.NONE;
+        methodology = "";
+        description = "";
         student = null;
     }
 
@@ -57,6 +62,22 @@ public class Report {
 
     public void setReportType(ReportType reportType) {
         this.reportType = reportType;
+    }
+
+    public String getMethodology() {
+        return methodology;
+    }
+
+    public void setMethodology(String methodology) {
+        this.methodology = methodology;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Student getStudent() {

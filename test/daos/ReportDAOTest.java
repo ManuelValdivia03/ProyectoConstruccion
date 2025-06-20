@@ -31,6 +31,7 @@ class ReportDAOTest {
         userDAO = new UserDAO();
         testConnection = ConnectionDataBase.getConnection();
 
+        // Clear all test data
         try (var conn = ConnectionDataBase.getConnection();
              var statement = conn.createStatement()) {
             statement.execute("SET FOREIGN_KEY_CHECKS = 0");
@@ -54,12 +55,14 @@ class ReportDAOTest {
             statement.execute("SET FOREIGN_KEY_CHECKS = 1");
         }
 
+        // Create test user
         User user = new User();
         user.setFullName("Estudiante Prueba");
         user.setCellphone("5550000000");
         user.setStatus('A');
         userDAO.addUser(user);
 
+        // Create test student
         testStudent = new Student();
         testStudent.setIdUser(user.getIdUser());
         testStudent.setFullName(user.getFullName());
@@ -67,16 +70,35 @@ class ReportDAOTest {
         testStudent.setStatus(user.getStatus());
         studentDAO.addStudent(testStudent, 0);
 
+        // Create test reports
         testReports = new ArrayList<>();
-        testReports.add(createTestReport(Timestamp.valueOf(LocalDateTime.now()), 5, ReportType.Semanal, testStudent));
-        testReports.add(createTestReport(Timestamp.valueOf(LocalDateTime.now().minusDays(7)), 10, ReportType.Mensual, testStudent));
+        testReports.add(createTestReport(
+                Timestamp.valueOf(LocalDateTime.now()),
+                5,
+                ReportType.Semanal,
+                "Metodología 1",
+                "Descripción 1",
+                testStudent
+        ));
+        testReports.add(createTestReport(
+                Timestamp.valueOf(LocalDateTime.now().minusDays(7)),
+                10,
+                ReportType.Mensual,
+                "Metodología 2",
+                "Descripción 2",
+                testStudent
+        ));
     }
 
-    private static Report createTestReport(Timestamp date, int hours, ReportType type, Student student) throws SQLException {
+    private static Report createTestReport(Timestamp date, int hours, ReportType type,
+                                           String methodology, String description,
+                                           Student student) throws SQLException {
         Report report = new Report();
         report.setReportDate(date);
         report.setHoursReport(hours);
         report.setReportType(type);
+        report.setMethodology(methodology);
+        report.setDescription(description);
         report.setStudent(student);
         reportDAO.addReport(report);
         return report;
@@ -91,16 +113,30 @@ class ReportDAOTest {
 
     @BeforeEach
     void setUp() throws SQLException {
-        // Limpiar reportes
+        // Clear reports table
         try (Statement stmt = testConnection.createStatement()) {
             stmt.execute("DELETE FROM reporte");
             stmt.execute("ALTER TABLE reporte AUTO_INCREMENT = 1");
         }
 
-        // Recrear reportes de prueba
+        // Recreate test reports
         testReports = new ArrayList<>();
-        testReports.add(createTestReport(Timestamp.valueOf(LocalDateTime.now()), 5, ReportType.Semanal, testStudent));
-        testReports.add(createTestReport(Timestamp.valueOf(LocalDateTime.now().minusDays(7)), 10, ReportType.Mensual, testStudent));
+        testReports.add(createTestReport(
+                Timestamp.valueOf(LocalDateTime.now()),
+                5,
+                ReportType.Semanal,
+                "Metodología 1",
+                "Descripción 1",
+                testStudent
+        ));
+        testReports.add(createTestReport(
+                Timestamp.valueOf(LocalDateTime.now().minusDays(7)),
+                10,
+                ReportType.Mensual,
+                "Metodología 2",
+                "Descripción 2",
+                testStudent
+        ));
     }
 
     @Test
@@ -109,6 +145,8 @@ class ReportDAOTest {
         newReport.setReportDate(Timestamp.valueOf(LocalDateTime.now()));
         newReport.setHoursReport(8);
         newReport.setReportType(ReportType.Final);
+        newReport.setMethodology("Nueva metodología");
+        newReport.setDescription("Nueva descripción");
         newReport.setStudent(testStudent);
 
         int initialCount = reportDAO.countReports();
@@ -122,6 +160,8 @@ class ReportDAOTest {
         assertNotNull(addedReport);
         assertEquals(8, addedReport.getHoursReport());
         assertEquals(ReportType.Final, addedReport.getReportType());
+        assertEquals("Nueva metodología", addedReport.getMethodology());
+        assertEquals("Nueva descripción", addedReport.getDescription());
         assertEquals(testStudent.getIdUser(), addedReport.getStudent().getIdUser());
     }
 
@@ -131,9 +171,11 @@ class ReportDAOTest {
         invalidReport.setReportDate(null);
         invalidReport.setHoursReport(5);
         invalidReport.setReportType(ReportType.Semanal);
+        invalidReport.setMethodology("Metodología");
+        invalidReport.setDescription("Descripción");
         invalidReport.setStudent(testStudent);
 
-        assertThrows(SQLException.class, () -> reportDAO.addReport(invalidReport));
+        assertThrows(IllegalArgumentException.class, () -> reportDAO.addReport(invalidReport));
     }
 
     @Test
@@ -144,13 +186,15 @@ class ReportDAOTest {
         assertNotNull(foundReport);
         assertEquals(testReport.getHoursReport(), foundReport.getHoursReport());
         assertEquals(testReport.getReportType(), foundReport.getReportType());
+        assertEquals(testReport.getMethodology(), foundReport.getMethodology());
+        assertEquals(testReport.getDescription(), foundReport.getDescription());
         assertEquals(testReport.getStudent().getIdUser(), foundReport.getStudent().getIdUser());
     }
 
     @Test
     void testGetReportById_NotExists() throws SQLException {
         Report foundReport = reportDAO.getReportById(9999);
-        assertNull(foundReport);
+        assertEquals(0, foundReport.getIdReport()); // Should return empty report
     }
 
     @Test
@@ -186,6 +230,8 @@ class ReportDAOTest {
         Report reportToUpdate = testReports.get(0);
         reportToUpdate.setHoursReport(15);
         reportToUpdate.setReportType(ReportType.Mensual);
+        reportToUpdate.setMethodology("Metodología actualizada");
+        reportToUpdate.setDescription("Descripción actualizada");
         reportToUpdate.setReportDate(Timestamp.valueOf(LocalDateTime.now().minusDays(3)));
 
         boolean result = reportDAO.updateReport(reportToUpdate);
@@ -194,6 +240,8 @@ class ReportDAOTest {
         Report updatedReport = reportDAO.getReportById(reportToUpdate.getIdReport());
         assertEquals(15, updatedReport.getHoursReport());
         assertEquals(ReportType.Mensual, updatedReport.getReportType());
+        assertEquals("Metodología actualizada", updatedReport.getMethodology());
+        assertEquals("Descripción actualizada", updatedReport.getDescription());
     }
 
     @Test
@@ -203,6 +251,8 @@ class ReportDAOTest {
         nonExistentReport.setReportDate(Timestamp.valueOf(LocalDateTime.now()));
         nonExistentReport.setHoursReport(5);
         nonExistentReport.setReportType(ReportType.Semanal);
+        nonExistentReport.setMethodology("Metodología");
+        nonExistentReport.setDescription("Descripción");
         nonExistentReport.setStudent(testStudent);
 
         boolean result = reportDAO.updateReport(nonExistentReport);
@@ -251,6 +301,8 @@ class ReportDAOTest {
         extraReport.setReportDate(Timestamp.valueOf(LocalDateTime.now()));
         extraReport.setHoursReport(3);
         extraReport.setReportType(ReportType.Semanal);
+        extraReport.setMethodology("Extra");
+        extraReport.setDescription("Extra");
         extraReport.setStudent(testStudent);
         reportDAO.addReport(extraReport);
 

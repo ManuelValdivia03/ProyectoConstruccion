@@ -19,6 +19,8 @@ public class UpdateLinkedOrganizationWindow {
     private final Button updateButton;
     private final Button cancelButton;
     private final Label resultLabel;
+    private final TextField phoneExtensionField;
+    private final TextField departmentField;
 
     public UpdateLinkedOrganizationWindow() {
         Label titleLabel = new Label("Actualizar Organización Vinculada");
@@ -28,8 +30,14 @@ public class UpdateLinkedOrganizationWindow {
         phoneField = new TextField();
         emailField = new TextField();
 
+        phoneExtensionField = new TextField();
+        phoneExtensionField.setPromptText("Dejar vacío si no tiene");
+        
+        departmentField = new TextField();
+        departmentField.setPromptText("Departamento o área");
+
         statusComboBox = new ComboBox<>();
-        statusComboBox.getItems().addAll("A", "I"); // Activo/Inactivo
+        statusComboBox.getItems().addAll("A", "I");
         statusComboBox.setValue("A");
 
         updateButton = new Button("Actualizar");
@@ -50,10 +58,14 @@ public class UpdateLinkedOrganizationWindow {
         grid.add(nameField, 1, 0);
         grid.add(new Label("Teléfono:"), 0, 1);
         grid.add(phoneField, 1, 1);
-        grid.add(new Label("Email:"), 0, 2);
-        grid.add(emailField, 1, 2);
-        grid.add(new Label("Estado:"), 0, 3);
-        grid.add(statusComboBox, 1, 3);
+        grid.add(new Label("Ext.:"), 2, 1);
+        grid.add(phoneExtensionField, 3, 1);
+        grid.add(new Label("Departamento:"), 0, 2);
+        grid.add(departmentField, 1, 2, 3, 1);
+        grid.add(new Label("Email:"), 0, 3);
+        grid.add(emailField, 1, 3, 3, 1);
+        grid.add(new Label("Estado:"), 0, 4);
+        grid.add(statusComboBox, 1, 4);
 
         view = new VBox(15);
         view.setPadding(new Insets(20));
@@ -64,6 +76,8 @@ public class UpdateLinkedOrganizationWindow {
     public void setOrganizationData(LinkedOrganization org) {
         nameField.setText(org.getNameLinkedOrganization());
         phoneField.setText(org.getCellPhoneLinkedOrganization());
+        phoneExtensionField.setText(org.getPhoneExtension());
+        departmentField.setText(org.getDepartment());
         emailField.setText(org.getEmailLinkedOrganization());
         statusComboBox.setValue(String.valueOf(org.getStatus()));
     }
@@ -73,6 +87,8 @@ public class UpdateLinkedOrganizationWindow {
         org.setIdLinkedOrganization(id);
         org.setNameLinkedOrganization(nameField.getText().trim());
         org.setCellPhoneLinkedOrganization(phoneField.getText().trim());
+        org.setPhoneExtension(phoneExtensionField.getText().trim());
+        org.setDepartment(departmentField.getText().trim());
         org.setEmailLinkedOrganization(emailField.getText().trim());
         org.setStatus(statusComboBox.getValue().charAt(0));
         return org;
@@ -108,5 +124,13 @@ public class UpdateLinkedOrganizationWindow {
 
     public Label getResultLabel() {
         return resultLabel;
+    }
+
+    public TextField getPhoneExtensionField() {
+        return phoneExtensionField;
+    }
+
+    public TextField getDepartmentField() {
+        return departmentField;
     }
 }

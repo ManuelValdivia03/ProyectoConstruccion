@@ -118,6 +118,12 @@ public class ControllerUpdateAcademicWindow {
                 validators.validateEmail(view.getEmailField().getText()),
                 "Formato de email inválido");
 
+        String extension = view.getPhoneExtensionField().getText().trim();
+        if (!extension.isEmpty() && !validators.validatePhoneExtension(extension)) {
+            showError("Extensión debe ser numérica y máximo 5 dígitos", view.getPhoneExtensionField());
+            isValid = false;
+        }
+
         return isValid;
     }
 
@@ -149,6 +155,7 @@ public class ControllerUpdateAcademicWindow {
                 originalAcademic.getIdUser(),
                 name,
                 phone,
+                view.getPhoneExtensionField().getText().trim(),
                 status
         );
 
@@ -162,6 +169,7 @@ public class ControllerUpdateAcademicWindow {
                 originalAcademic.getIdUser(),
                 view.getNameField().getText().trim(),
                 view.getPhoneField().getText().trim(),
+                view.getPhoneExtensionField().getText().trim(),
                 originalAcademic.getStatus(),
                 originalAcademic.getStaffNumber(),
                 type
@@ -209,6 +217,7 @@ public class ControllerUpdateAcademicWindow {
         view.getNameField().setStyle("");
         view.getPhoneField().setStyle("");
         view.getEmailField().setStyle("");
+        view.getPhoneExtensionField().setStyle("");
     }
 
     private void showError(String message, TextField field) {

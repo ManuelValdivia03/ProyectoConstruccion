@@ -77,4 +77,11 @@ public class Activity {
     public void setEndDate(Timestamp endDate) {
         this.endDate = endDate;
     }
+
+    public String getSummary() {
+        return String.format("[%s] %s - %s",
+                activityStatus.getDbValue(),
+                nameActivity,
+                descriptionActivity);
+    }
 }

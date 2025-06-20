@@ -6,8 +6,8 @@ public class Academic extends User {
     private String staffNumber;
     private AcademicType type;
 
-    public Academic(int idUser,String fullName,String cellPhone,char status, String staffNumber,AcademicType type) {
-        super(idUser,fullName,cellPhone, status);
+    public Academic(int idUser,String fullName,String cellPhone,String phoneExtension,char status, String staffNumber,AcademicType type) {
+        super(idUser,fullName,cellPhone,phoneExtension,status);
         this.staffNumber = staffNumber;
         this.type = type;
     }

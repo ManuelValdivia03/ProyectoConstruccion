@@ -100,12 +100,13 @@ public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> 
     private StudentRegistrationData collectRegistrationData() {
         String name = view.getNameField().getText().trim();
         String phone = view.getPhoneField().getText().trim();
+        String extension = view.getPhoneExtensionField().getText().trim();
         String enrollment = view.getEnrollmentField().getText().trim();
         String email = view.getEmailField().getText().trim();
         String passwordPlain = view.getPassword();
         String passwordHashed = PasswordUtils.hashPassword(passwordPlain);
 
-        return new StudentRegistrationData(name, phone, enrollment, email, passwordHashed);
+        return new StudentRegistrationData(name, phone, extension, enrollment, email, passwordHashed);
     }
 
     private boolean validateAllFields() {
@@ -119,6 +120,12 @@ public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> 
 
         if (!validators.validateCellPhone(view.getPhoneField().getText())) {
             showFieldError("Teléfono debe tener 10 dígitos", view.getPhoneField());
+            isValid = false;
+        }
+
+        String extension = view.getPhoneExtensionField().getText().trim();
+        if (!extension.isEmpty() && !validators.validatePhoneExtension(extension)) {
+            showFieldError("Extensión debe ser numérica y máximo 5 dígitos", view.getPhoneExtensionField());
             isValid = false;
         }
 
@@ -161,7 +168,7 @@ public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> 
     }
 
     private User createAndSaveUser(String name, String phone) throws SQLException {
-        User user = new User(0, name, phone, 'A');
+        User user = new User(0, name, phone, view.getPhoneExtensionField().getText().trim(), 'A');
         if (!userDAO.addUser(user)) {
             throw new SQLException("No se pudo registrar el usuario");
         }
@@ -169,7 +176,7 @@ public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> 
     }
 
     private void createAndSaveStudent(User user, String enrollment) throws SQLException {
-        Student student = new Student(user.getIdUser(), user.getFullName(), user.getCellPhone(), 'A', enrollment, 0);
+        Student student = new Student(user.getIdUser(), user.getFullName(), user.getCellPhone(), user.getPhoneExtension() ,'A', enrollment, 0);
         if (!studentDAO.addStudent(student, academic.getIdUser())) {
             userDAO.deleteUser(user.getIdUser());
             throw new SQLException("No se pudo registrar el estudiante");
@@ -234,6 +241,7 @@ public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> 
     private void clearFields() {
         view.getNameField().clear();
         view.getPhoneField().clear();
+        view.getPhoneExtensionField().clear();
         view.getEnrollmentField().clear();
         view.getEmailField().clear();
         view.getPasswordField().clear();
@@ -243,6 +251,7 @@ public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> 
     private void resetFieldStyles() {
         view.getNameField().setStyle("");
         view.getPhoneField().setStyle("");
+        view.getPhoneExtensionField().setStyle("");
         view.getEnrollmentField().setStyle("");
         view.getEmailField().setStyle("");
     }
@@ -270,6 +279,7 @@ public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> 
     private record StudentRegistrationData(
             String name,
             String phone,
+            String phoneExtension,
             String enrollment,
             String email,
             String passwordHashed

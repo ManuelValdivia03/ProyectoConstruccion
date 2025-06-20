@@ -20,6 +20,8 @@ public class ProjectRequestsWindow {
         requestsTable = new TableView<>();
         setupTable();
 
+        requestsTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
         approveButton = new Button("Aprobar");
         approveButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
 

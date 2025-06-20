@@ -91,6 +91,8 @@ public class ControllerCreateLinkedOrganizationWindow implements EventHandler<Ac
         return new OrganizationData(
                 view.getNameField().getText().trim(),
                 view.getPhoneField().getText().trim(),
+                view.getPhoneExtensionField().getText().trim(),
+                view.getDepartmentField().getText().trim(),
                 view.getEmailField().getText().trim()
         );
     }
@@ -106,6 +108,12 @@ public class ControllerCreateLinkedOrganizationWindow implements EventHandler<Ac
 
         isValid &= validateField(!validators.validateEmail(view.getEmailField().getText()),
                 "Formato de email inválido", view.getEmailField());
+
+        String extension = view.getPhoneExtensionField().getText().trim();
+        if (!extension.isEmpty() && !validators.validatePhoneExtension(extension)) {
+            showFieldError("Extensión debe ser numérica y máximo 5 dígitos", view.getPhoneExtensionField());
+            isValid = false;
+        }
 
         return isValid;
     }
@@ -142,6 +150,8 @@ public class ControllerCreateLinkedOrganizationWindow implements EventHandler<Ac
         LinkedOrganization organization = new LinkedOrganization();
         organization.setNameLinkedOrganization(data.name());
         organization.setCellPhoneLinkedOrganization(data.phone());
+        organization.setPhoneExtension(data.phoneExtension());
+        organization.setDepartment(data.department());
         organization.setEmailLinkedOrganization(data.email());
         organization.setStatus('A');
         return organization;
@@ -192,6 +202,8 @@ public class ControllerCreateLinkedOrganizationWindow implements EventHandler<Ac
         view.getNameField().clear();
         view.getPhoneField().clear();
         view.getEmailField().clear();
+        view.getPhoneExtensionField().clear();
+        view.getDepartmentField().clear();
         clearError();
     }
 
@@ -199,6 +211,8 @@ public class ControllerCreateLinkedOrganizationWindow implements EventHandler<Ac
         view.getNameField().setStyle("");
         view.getPhoneField().setStyle("");
         view.getEmailField().setStyle("");
+        view.getPhoneExtensionField().setStyle("");
+        view.getDepartmentField().setStyle("");
     }
 
     private void highlightField(TextField field) {
@@ -272,5 +286,11 @@ public class ControllerCreateLinkedOrganizationWindow implements EventHandler<Ac
         });
     }
 
-    private record OrganizationData(String name, String phone, String email) {}
+    private record OrganizationData(
+            String name,
+            String phone,
+            String phoneExtension,
+            String department,
+            String email
+    ) {}
 }

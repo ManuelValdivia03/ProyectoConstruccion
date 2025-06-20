@@ -100,8 +100,8 @@ public class ConsultProyectsWindow {
         endColumn.setCellValueFactory(new PropertyValueFactory<>("dateEnd"));
         endColumn.setPrefWidth(100);
 
-        TableColumn<Project, Integer> maxStudentsColumn = new TableColumn<>("Cupo Máximo");
-        maxStudentsColumn.setCellValueFactory(new PropertyValueFactory<>("maxStudents"));
+        TableColumn<Project, Integer> maxStudentsColumn = new TableColumn<>("Cupo");
+        maxStudentsColumn.setCellValueFactory(new PropertyValueFactory<>("capacity"));
         maxStudentsColumn.setPrefWidth(100);
 
         TableColumn<Project, Integer> currentStudentsColumn = new TableColumn<>("Estudiantes Actuales");
