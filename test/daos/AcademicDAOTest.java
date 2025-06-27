@@ -65,6 +65,7 @@ class AcademicDAOTest {
                 user.getIdUser(),
                 user.getFullName(),
                 user.getCellPhone(),
+                user.getPhoneExtension(),
                 user.getStatus(),
                 staffNumber,
                 type
@@ -96,6 +97,7 @@ class AcademicDAOTest {
                 newUser.getIdUser(),
                 newUser.getFullName(),
                 newUser.getCellPhone(),
+                newUser.getPhoneExtension(),
                 newUser.getStatus(),
                 "444444",
                 AcademicType.Evaluador
@@ -117,6 +119,7 @@ class AcademicDAOTest {
                 -1,
                 "Nombre",
                 "5555555555",
+                "",
                 'A',
                 "11111",
                 AcademicType.Evaluador
@@ -181,7 +184,7 @@ class AcademicDAOTest {
 
     @Test
     void testUpdateAcademic_NotExists() throws SQLException {
-        Academic fake = new Academic(9999, "Fake", "5550000000", 'A', "99999", AcademicType.EE);
+        Academic fake = new Academic(9999, "Fake", "5550000000", "", 'A', "99999", AcademicType.EE);
         assertFalse(academicDAO.updateAcademic(fake));
     }
 
@@ -200,7 +203,7 @@ class AcademicDAOTest {
 
     @Test
     void testDeleteAcademic_NotExists() throws SQLException {
-        Academic fake = new Academic(9999, "Fake", "5550000000", 'A', "99999", AcademicType.EE);
+        Academic fake = new Academic(9999, "Fake", "5550000000", "" ,'A', "99999", AcademicType.EE);
         assertFalse(academicDAO.deleteAcademic(fake));
     }
 
@@ -289,7 +292,7 @@ class AcademicDAOTest {
 
     @Test
     void testChangeAcademicType_NotExists() throws SQLException {
-        Academic fake = new Academic(9999, "Fake", "5550000000", 'A', "99999", AcademicType.EE);
+        Academic fake = new Academic(9999, "Fake", "5550000000", "",'A', "99999", AcademicType.EE);
         assertFalse(academicDAO.changeAcademicType(fake));
     }
 
@@ -315,7 +318,6 @@ class AcademicDAOTest {
         assertThrows(SQLException.class, () -> academicDAO.getAllAcademicsFromView());
     }
 
-    // getAcademicsByStatusFromView (flujos correcto e incorrecto)
     @Test
     void testGetAcademicsByStatusFromView_Correct() throws SQLException {
         List<Academic> academics = academicDAO.getAcademicsByStatusFromView('A');

@@ -7,6 +7,7 @@ import logic.daos.LinkedOrganizationDAO;
 import logic.exceptions.RepeatedEmailException;
 import logic.exceptions.RepeatedCellPhoneException;
 import logic.logicclasses.LinkedOrganization;
+import logic.services.ExceptionManager;
 import userinterface.utilities.Validators;
 import userinterface.windows.UpdateLinkedOrganizationWindow;
 
@@ -63,8 +64,9 @@ public class ControllerUpdateLinkedOrganizationWindow {
         } catch (RepeatedEmailException e) {
             showFieldError("El email ya está registrado en otra organización", view.getEmailField());
         } catch (SQLException e) {
+            String message = ExceptionManager.handleException(e);
             showAlert(Alert.AlertType.ERROR, "Error de base de datos",
-                    "Ocurrió un error al actualizar: " + e.getMessage());
+                    "Ocurrió un error al actualizar: " + message);
         }
     }
 

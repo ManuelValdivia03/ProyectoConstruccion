@@ -1,0 +1,46 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="ProyectoPrincipiosConstruccion:jar">
+    <output-path>$PROJECT_DIR$/package</output-path>
+    <root id="archive" name="ProyectoPrincipiosConstruccion.jar">
+      <element id="module-output" name="ProyectoPrincipiosConstruccion" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../mysql-connector-j-9.2.0/mysql-connector-j-9.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/testfx-core-4.0.16-alpha.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/byte-buddy-agent-1.14.12.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/junit-platform-commons-1.8.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/log4j-api-2.24.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/testfx-junit5-4.0.16-alpha.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/google-oauth-client-1.34.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/junit-jupiter-engine-5.8.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/opentest4j-1.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/junit-jupiter-api-5.8.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/commons-logging-1.3.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/fontbox-3.0.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/byte-buddy-1.14.12.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/google-http-client-gson-1.43.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/log4j-core-2.24.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/javafx-sdk-24.0.1/javafx-sdk-24.0.1/lib/javafx-swt.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/javafx-sdk-24.0.1/javafx-sdk-24.0.1/lib/javafx.web.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/javafx-sdk-24.0.1/javafx-sdk-24.0.1/lib/javafx.base.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/javafx-sdk-24.0.1/javafx-sdk-24.0.1/lib/javafx.fxml.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/javafx-sdk-24.0.1/javafx-sdk-24.0.1/lib/javafx.media.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/javafx-sdk-24.0.1/javafx-sdk-24.0.1/lib/javafx.swing.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/javafx-sdk-24.0.1/javafx-sdk-24.0.1/lib/jdk.jsobject.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/javafx-sdk-24.0.1/javafx-sdk-24.0.1/lib/javafx.controls.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/javafx-sdk-24.0.1/javafx-sdk-24.0.1/lib/javafx.graphics.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/javafx-sdk-24.0.1/javafx-sdk-24.0.1/lib/jfx.incubator.input.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/javafx-sdk-24.0.1/javafx-sdk-24.0.1/lib/jfx.incubator.richtext.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/mockito-core-4.11.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/google-oauth-client-jetty-1.34.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/objenesis-3.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/openjfx-monocle-jdk-12.0.1+2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/jbcrypt-0.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/pdfbox-3.0.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/pdfbox-io-3.0.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/font-awesome-6.7.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/google-api-services-drive-v3-rev20220815-2.0.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/junit-platform-engine-1.8.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/google-api-client-2.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/mockito-junit-jupiter-4.11.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

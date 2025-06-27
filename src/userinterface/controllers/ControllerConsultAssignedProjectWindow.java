@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import logic.daos.*;
 import logic.logicclasses.Project;
 import logic.logicclasses.Student;
+import logic.services.ExceptionManager;
 import logic.services.PDFAssignmentGenerator;
 import userinterface.windows.ConsultAssignedProjectWindow;
 
@@ -57,7 +58,13 @@ public class ControllerConsultAssignedProjectWindow implements EventHandler<Acti
             if (projectId != null) {
                 assignedProject = projectDAO.getProyectById(projectId);
 
-                if (assignedProject != null) {
+                if (assignedProject == null
+                        || assignedProject.getIdProyect() == -1
+                        || assignedProject.getDateStart() == null
+                        || assignedProject.getDateEnd() == null) {
+                    view.showMessage("No tienes ningún proyecto asignado", true);
+                    view.getDownloadButton().setDisable(true);
+                } else {
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                     LocalDate startDate = assignedProject.getDateStart().toLocalDateTime().toLocalDate();
                     LocalDate endDate = assignedProject.getDateEnd().toLocalDateTime().toLocalDate();
@@ -68,15 +75,14 @@ public class ControllerConsultAssignedProjectWindow implements EventHandler<Acti
                             startDate.format(formatter),
                             endDate.format(formatter)
                     );
-                } else {
-                    view.showMessage("No se encontró información del proyecto asignado", true);
                 }
             } else {
                 view.showMessage("No tienes ningún proyecto asignado", true);
                 view.getDownloadButton().setDisable(true);
             }
         } catch (SQLException e) {
-            view.showMessage("Error al cargar el proyecto asignado: " + e.getMessage(), true);
+            String message = ExceptionManager.handleException(e);
+            view.showMessage("Error al cargar el proyecto asignado: " + message, true);
         }
     }
 
@@ -119,7 +125,8 @@ public class ControllerConsultAssignedProjectWindow implements EventHandler<Acti
                 generateAndSaveAssignment();
             }
         } catch (SQLException e) {
-            view.showMessage("Error al obtener el oficio: " + e.getMessage(), true);
+            String message = ExceptionManager.handleException(e);
+            view.showMessage("Error al obtener el oficio: " + message, true);
         }
     }
 
@@ -156,7 +163,8 @@ public class ControllerConsultAssignedProjectWindow implements EventHandler<Acti
                 }
             }
         } catch (SQLException | IOException e) {
-            view.showMessage("Error al generar el oficio: " + e.getMessage(), true);
+            String message = ExceptionManager.handleException(e);
+            view.showMessage("Error al generar el oficio: " + message, true);
         }
     }
 

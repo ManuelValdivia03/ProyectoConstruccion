@@ -12,13 +12,13 @@ import logic.exceptions.RepeatedEmailException;
 import logic.logicclasses.Academic;
 import logic.logicclasses.Account;
 import logic.logicclasses.User;
+import logic.services.ExceptionManager;
 import userinterface.utilities.Validators;
 import userinterface.windows.UpdateAcademicWindow;
-
 import java.sql.SQLException;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
+
 
 public class ControllerUpdateAcademicWindow {
     private static final int SUCCESS_MESSAGE_DELAY_MS = 2000;
@@ -85,7 +85,8 @@ public class ControllerUpdateAcademicWindow {
         } catch (RepeatedEmailException e) {
             showError("El email ya está registrado", view.getEmailField());
         } catch (SQLException e) {
-            showError("Error de base de datos: " + e.getMessage());
+            String message = ExceptionManager.handleException(e);
+            showError(message);
         } catch (IllegalArgumentException e) {
             showError("Tipo de académico inválido");
         }

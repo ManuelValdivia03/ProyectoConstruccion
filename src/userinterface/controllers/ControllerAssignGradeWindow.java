@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import logic.daos.StudentDAO;
 import logic.logicclasses.Student;
+import logic.services.ExceptionManager;
 import userinterface.windows.AssignGradeWindow;
 import java.sql.SQLException;
 import java.util.Objects;
@@ -55,8 +56,9 @@ public class ControllerAssignGradeWindow implements EventHandler<ActionEvent> {
             }
         } catch (NumberFormatException e) {
             showError("La calificación debe ser un número entero");
-        } catch (SQLException e) {
-            showError("Error al actualizar la calificación: " + e.getMessage());
+        } catch (Exception e) {
+            String message = ExceptionManager.handleException(e);
+            showError(message);
         }
     }
 

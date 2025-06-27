@@ -6,6 +6,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import logic.daos.LinkedOrganizationDocumentDAO;
+import logic.services.ExceptionManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import userinterface.windows.DocumentUploadWindow;
@@ -81,7 +82,8 @@ public class ControllerDocumentUploadWindow implements EventHandler<ActionEvent>
             handleUploadResult(uploadSuccessful);
 
         } catch (IOException | SQLException e) {
-            handleUploadError(e);
+            String message = ExceptionManager.handleException(e);
+            handleUploadError(new Exception(message, e));
         }
     }
 

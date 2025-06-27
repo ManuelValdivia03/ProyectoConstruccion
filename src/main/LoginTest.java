@@ -26,7 +26,7 @@ public class LoginTest extends Application {
         );
 
         LoginWindow loginWindow = new LoginWindow();
-        Scene scene = new Scene(loginWindow.getView(), 600, 500);
+        Scene scene = new Scene(loginWindow.getView(), 600, 600);
 
         ControllerLoginWindow loginController = new ControllerLoginWindow(
                 primaryStage,

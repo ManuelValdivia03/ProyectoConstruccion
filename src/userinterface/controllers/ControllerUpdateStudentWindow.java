@@ -13,6 +13,7 @@ import logic.exceptions.RepeatedEmailException;
 import logic.logicclasses.Student;
 import logic.logicclasses.Account;
 import logic.logicclasses.User;
+import logic.services.ExceptionManager;
 import userinterface.utilities.Validators;
 import userinterface.windows.UpdateStudentWindow;
 
@@ -87,7 +88,8 @@ public class ControllerUpdateStudentWindow {
         } catch (RepeatedEmailException e) {
             showFieldError("El email ya está registrado", view.getEmailField());
         } catch (SQLException e) {
-            showAlert(Alert.AlertType.ERROR, "Error de base de datos", "Error: " + e.getMessage());
+            String message = ExceptionManager.handleException(e);
+            showAlert(Alert.AlertType.ERROR, "Error de base de datos", "Error: " + message);
         }
     }
 

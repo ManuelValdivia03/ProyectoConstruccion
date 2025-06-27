@@ -17,6 +17,7 @@ import logic.exceptions.RepeatedNameLinkedOrganizationException;
 import logic.exceptions.RepeatedEmailException;
 import logic.exceptions.RepeatedCellPhoneException;
 import logic.logicclasses.LinkedOrganization;
+import logic.services.ExceptionManager;
 import userinterface.utilities.Validators;
 import userinterface.windows.CreateLinkedOrganizationWindow;
 import userinterface.windows.DocumentUploadWindow;
@@ -83,7 +84,8 @@ public class ControllerCreateLinkedOrganizationWindow implements EventHandler<Ac
         } catch (RepeatedEmailException e) {
             showFieldError(e.getMessage(), view.getEmailField());
         } catch (SQLException e) {
-            showError("Error de base de datos: " + e.getMessage());
+            String message = ExceptionManager.handleException(e);
+            showError(message);
         }
     }
 

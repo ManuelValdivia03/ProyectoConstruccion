@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 import logic.daos.AccountDAO;
 import logic.logicclasses.Student;
 import logic.logicclasses.Account;
+import logic.services.ExceptionManager;
 import userinterface.utilities.Validators;
 import userinterface.windows.EditProfileStudentWindow;
 import java.sql.SQLException;
@@ -86,8 +87,8 @@ public class ControllerEditProfileStudentWindow implements EventHandler<ActionEv
             showSuccessAndClose();
 
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Database error during account update", e);
-            showError("Error de base de datos: " + e.getMessage());
+            String message = ExceptionManager.handleException(e);
+            showError(message);
         }
     }
 

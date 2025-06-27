@@ -11,6 +11,7 @@ import logic.daos.GroupDAO;
 import logic.daos.StudentDAO;
 import logic.logicclasses.Academic;
 import logic.logicclasses.Student;
+import logic.services.ExceptionManager;
 import userinterface.utilities.Validators;
 import userinterface.windows.AssignGradeWindow;
 import userinterface.windows.ConsultStudentsWindow;
@@ -44,8 +45,9 @@ public class ControllerConsultStudentsWindow {
         try {
             loadStudentData();
         } catch (SQLException ex) {
+            String message = ExceptionManager.handleException(ex);
             showAlert(Alert.AlertType.ERROR, "Error de inicialización",
-                    "No se pudieron cargar los datos de estudiantes: " + ex.getMessage());
+                    "No se pudieron cargar los datos de estudiantes: " + message);
             currentStage.close();
         }
     }
@@ -57,8 +59,9 @@ public class ControllerConsultStudentsWindow {
             try {
                 clearSearch();
             } catch (SQLException ex) {
+                String message = ExceptionManager.handleException(ex);
                 showAlert(Alert.AlertType.ERROR, "Error",
-                        "No se pudieron recargar los datos: " + ex.getMessage());
+                        "No se pudieron recargar los datos: " + message);
             }
         });
         view.getBackButton().setOnAction(e -> currentStage.close());
@@ -97,8 +100,9 @@ public class ControllerConsultStudentsWindow {
                         "No se encontró ningún estudiante con la matrícula: " + enrollment);
             }
         } catch (SQLException e) {
+            String message = ExceptionManager.handleException(e);
             showAlert(Alert.AlertType.ERROR, "Error de búsqueda",
-                    "Ocurrió un error al buscar el estudiante: " + e.getMessage());
+                    "Ocurrió un error al buscar el estudiante: " + message);
         }
     }
 
@@ -138,8 +142,9 @@ public class ControllerConsultStudentsWindow {
                         try {
                             loadStudentData();
                         } catch (SQLException ex) {
+                            String message = ExceptionManager.handleException(ex);
                             showAlert(Alert.AlertType.ERROR, "Error",
-                                    "No se pudieron actualizar los datos: " + ex.getMessage());
+                                    "No se pudieron actualizar los datos: " + message);
                         }
                     }
             );
@@ -149,8 +154,9 @@ public class ControllerConsultStudentsWindow {
             updateStage.setTitle("Actualizar Estudiante");
             updateStage.show();
         } catch (Exception e) {
+            String message = ExceptionManager.handleException(e);
             showAlert(Alert.AlertType.ERROR, "Error",
-                    "No se pudo abrir la ventana de actualización: " + e.getMessage());
+                    "No se pudo abrir la ventana de actualización: " + message);
         }
     }
 
@@ -166,8 +172,9 @@ public class ControllerConsultStudentsWindow {
                         try {
                             loadStudentData();
                         } catch (SQLException ex) {
+                            String message = ExceptionManager.handleException(ex);
                             showAlert(Alert.AlertType.ERROR, "Error",
-                                    "No se pudieron actualizar los datos: " + ex.getMessage());
+                                    "No se pudieron actualizar los datos: " + message);
                         }
                     }
             );
@@ -177,8 +184,9 @@ public class ControllerConsultStudentsWindow {
             gradeStage.initModality(Modality.APPLICATION_MODAL);
             gradeStage.showAndWait();
         } catch (Exception e) {
+            String message = ExceptionManager.handleException(e);
             showAlert(Alert.AlertType.ERROR, "Error",
-                    "No se pudo abrir la ventana de calificación: " + e.getMessage());
+                    "No se pudo abrir la ventana de calificación: " + message);
         }
     }
 

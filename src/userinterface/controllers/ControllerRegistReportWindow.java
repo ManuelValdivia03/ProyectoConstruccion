@@ -12,6 +12,7 @@ import logic.daos.StudentDAO;
 import logic.enums.ReportType;
 import logic.logicclasses.Report;
 import logic.logicclasses.Student;
+import logic.services.ExceptionManager;
 import userinterface.utilities.Validators;
 import userinterface.windows.RegistReportWindow;
 
@@ -79,11 +80,11 @@ public class ControllerRegistReportWindow implements EventHandler<ActionEvent> {
             }
 
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Database error during report registration", e);
-            showError("Error de base de datos: " + e.getMessage());
+            String message = ExceptionManager.handleException(e);
+            showError(message);
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Unexpected error during report registration", e);
-            showError("Error inesperado: " + e.getMessage());
+            String message = ExceptionManager.handleException(e);
+            showError(message);
         }
     }
 

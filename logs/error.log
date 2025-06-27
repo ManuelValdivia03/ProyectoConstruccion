@@ -161,8 +161,8 @@ java.sql.SQLSyntaxErrorException: Unknown column 'cupo_maximo' in 'field list'
 	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:990) ~[mysql-connector-j-9.2.0.jar:9.2.0]
 	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1058) ~[mysql-connector-j-9.2.0.jar:9.2.0]
 	at logic.daos.ProjectDAO.getProyectsByStatus(ProyectDAO.java:158) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerConsultProyectsWindow.loadAllProjects(ControllerConsultProyectsWindow.java:53) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerConsultProyectsWindow.<init>(ControllerConsultProyectsWindow.java:31) ~[ProyectoPrincipiosConstruccion/:?]
+	at userinterface.controllers.ControllerConsultProjectsWindow.loadAllProjects(ControllerConsultProyectsWindow.java:53) ~[ProyectoPrincipiosConstruccion/:?]
+	at userinterface.controllers.ControllerConsultProjectsWindow.<init>(ControllerConsultProyectsWindow.java:31) ~[ProyectoPrincipiosConstruccion/:?]
 	at userinterface.controllers.ControllerCoordinatorMenuWindow.showConsultProjectsWindow(ControllerCoordinatorMenuWindow.java:101) ~[ProyectoPrincipiosConstruccion/:?]
 	at userinterface.controllers.ControllerCoordinatorMenuWindow.lambda$setupEventHandlers$3(ControllerCoordinatorMenuWindow.java:45) ~[ProyectoPrincipiosConstruccion/:?]
 	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86) ~[javafx.base.jar:?]
@@ -227,8 +227,8 @@ java.sql.SQLSyntaxErrorException: Unknown column 'cupo_maximo' in 'field list'
 	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:990) ~[mysql-connector-j-9.2.0.jar:9.2.0]
 	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1058) ~[mysql-connector-j-9.2.0.jar:9.2.0]
 	at logic.daos.ProjectDAO.getProyectsByStatus(ProyectDAO.java:158) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerConsultProyectsWindow.loadAllProjects(ControllerConsultProyectsWindow.java:53) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerConsultProyectsWindow.<init>(ControllerConsultProyectsWindow.java:31) ~[ProyectoPrincipiosConstruccion/:?]
+	at userinterface.controllers.ControllerConsultProjectsWindow.loadAllProjects(ControllerConsultProyectsWindow.java:53) ~[ProyectoPrincipiosConstruccion/:?]
+	at userinterface.controllers.ControllerConsultProjectsWindow.<init>(ControllerConsultProyectsWindow.java:31) ~[ProyectoPrincipiosConstruccion/:?]
 	at userinterface.controllers.ControllerCoordinatorMenuWindow.showConsultProjectsWindow(ControllerCoordinatorMenuWindow.java:101) ~[ProyectoPrincipiosConstruccion/:?]
 	at userinterface.controllers.ControllerCoordinatorMenuWindow.lambda$setupEventHandlers$3(ControllerCoordinatorMenuWindow.java:45) ~[ProyectoPrincipiosConstruccion/:?]
 	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86) ~[javafx.base.jar:?]
@@ -903,3 +903,11 @@ java.sql.SQLException: Data truncated for column 'estado' at row 1
 2025-06-19 06:19:45 [JavaFX Application Thread] ERROR logic.daos.ProjectStudentDAO - Error en asignación: El estudiante ya está en otro proyecto
 2025-06-19 06:19:50 [JavaFX Application Thread] ERROR logic.daos.ProjectStudentDAO - Error en asignación: El estudiante ya está en otro proyecto
 2025-06-19 06:20:04 [JavaFX Application Thread] ERROR logic.daos.ProjectStudentDAO - Error en asignación: El estudiante ya está en otro proyecto
+2025-06-23 18:13:24 [JavaFX Application Thread] ERROR logic.daos.ProjectStudentDAO - Error en asignación: El estudiante ya está en otro proyecto
+2025-06-23 18:15:06 [JavaFX Application Thread] ERROR logic.daos.ProjectStudentDAO - Error en asignación: El estudiante ya está en otro proyecto
+2025-06-23 20:13:19 [JavaFX Application Thread] ERROR logic.daos.ProjectStudentDAO - Error en asignación: No hay cupo disponible
+2025-06-26 20:05:34 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Error de conexión a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Código: 1045 - Estado: 28000 - Mensaje: Access denied for user 'admin_proyect'@'localhost' (using password: YES)
+2025-06-26 20:06:19 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Error de conexión a jdbc:mysql://localhost:3306/proyectoprincipiosconstruccio - Código: 1044 - Estado: 42000 - Mensaje: Access denied for user 'admin_proyecto'@'localhost' to database 'proyectoprincipiosconstruccio'
+2025-06-26 20:09:52 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 1045 - State: 28000 - Message: Access denied for user 'admin_proyect'@'localhost' (using password: YES)
+2025-06-26 20:12:02 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 1045 - State: 28000 - Message: Access denied for user 'admin_proyect'@'localhost' (using password: YES)
+2025-06-26 20:12:26 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccio - Code: 1044 - State: 42000 - Message: Access denied for user 'admin_proyecto'@'localhost' to database 'proyectoprincipiosconstruccio'

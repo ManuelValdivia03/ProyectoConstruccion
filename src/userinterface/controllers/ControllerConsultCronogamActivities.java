@@ -9,6 +9,7 @@ import logic.daos.ActivityTrackingDAO;
 import logic.enums.ActivityStatus;
 import logic.logicclasses.Activity;
 import logic.logicclasses.ActivityCronogram;
+import logic.services.ExceptionManager;
 import userinterface.windows.ConsultCronogamActivities;
 
 import java.sql.SQLException;
@@ -66,7 +67,8 @@ public class ControllerConsultCronogamActivities implements EventHandler<ActionE
             refreshActivitiesList();
 
         } catch (SQLException e) {
-            view.showMessage("Error al cargar actividades: " + e.getMessage(), true);
+            String message = ExceptionManager.handleException(e);
+            view.showMessage("Error al cargar actividades: " + message, true);
         }
     }
 
@@ -82,7 +84,8 @@ public class ControllerConsultCronogamActivities implements EventHandler<ActionE
             }
 
         } catch (SQLException e) {
-            view.showMessage("Error al cargar actividades: " + e.getMessage(), true);
+            String message = ExceptionManager.handleException(e);
+            view.showMessage("Error al cargar actividades: " + message, true);
         }
     }
 
@@ -104,7 +107,8 @@ public class ControllerConsultCronogamActivities implements EventHandler<ActionE
                 refreshActivitiesList();
             }
         } catch (Exception e) {
-            view.showMessage("Error: " + e.getMessage(), true);
+            String message = ExceptionManager.handleException(e);
+            view.showMessage("Error: " + message, true);
         }
     }
 

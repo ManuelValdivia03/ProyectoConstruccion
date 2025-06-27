@@ -17,6 +17,7 @@ import userinterface.windows.ConsultAcademicsWindow;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
+import logic.services.ExceptionManager;
 
 public class ControllerConsultGroupsWindow {
     private final ConsultGroupsWindow view;
@@ -46,7 +47,8 @@ public class ControllerConsultGroupsWindow {
             allGroups.setAll(groups);
             view.setGroupData(allGroups);
         } catch (SQLException e) {
-            showAlert(Alert.AlertType.ERROR, "Error", "No se pudieron cargar los grupos: " + e.getMessage());
+            String message = ExceptionManager.handleException(e);
+            showAlert(Alert.AlertType.ERROR, "Error", "No se pudieron cargar los grupos: " + message);
         }
     }
 
@@ -81,7 +83,8 @@ public class ControllerConsultGroupsWindow {
                     showAlert(Alert.AlertType.ERROR, "Error", "No se pudo asignar el académico al grupo.");
                 }
             } catch (SQLException e) {
-                showAlert(Alert.AlertType.ERROR, "Error", "Error al asignar el académico: " + e.getMessage());
+                String message = ExceptionManager.handleException(e);
+                showAlert(Alert.AlertType.ERROR, "Error", "Error al asignar el académico: " + message);
             }
         });
 
@@ -93,7 +96,8 @@ public class ControllerConsultGroupsWindow {
             List<Academic> academics = academicDAO.getAllAcademicsByType(AcademicType.EE);
             academicsWindow.setAcademicData(FXCollections.observableArrayList(academics));
         } catch (SQLException e) {
-            showAlert(Alert.AlertType.ERROR, "Error", "No se pudieron cargar los académicos EE: " + e.getMessage());
+            String message = ExceptionManager.handleException(e);
+            showAlert(Alert.AlertType.ERROR, "Error", "No se pudieron cargar los académicos EE: " + message);
             return;
         }
 

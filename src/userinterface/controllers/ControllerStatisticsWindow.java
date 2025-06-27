@@ -10,6 +10,7 @@ import logic.daos.StudentDAO;
 import logic.logicclasses.Project;
 import logic.logicclasses.Student;
 import userinterface.windows.StatisticsWindow;
+import logic.services.ExceptionManager;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -61,15 +62,15 @@ public class ControllerStatisticsWindow implements EventHandler<ActionEvent> {
         try {
             loadProjectStatistics();
 
-            loadStudentsPerProject();
-
-            loadProjectCapacityStats();
+//            loadStudentsPerProject();
+//
+//            loadProjectCapacityStats();
 
             view.showMessage("Datos actualizados correctamente", false);
 
         } catch (SQLException e) {
-            view.showMessage("Error al cargar estadísticas: " + e.getMessage(), true);
-            e.printStackTrace();
+            String message = ExceptionManager.handleException(e);
+            view.showMessage("Error al cargar estadísticas: " + message, true);
         }
     }
 

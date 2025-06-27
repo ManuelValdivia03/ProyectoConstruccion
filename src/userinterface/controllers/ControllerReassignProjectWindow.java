@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import logic.daos.*;
 import logic.logicclasses.Project;
 import logic.logicclasses.Student;
+import logic.services.ExceptionManager;
 import logic.services.PDFAssignmentGenerator;
 import userinterface.windows.ReassignProjectWindow;
 
@@ -60,7 +61,8 @@ public class ControllerReassignProjectWindow implements EventHandler<ActionEvent
             view.setProjectsList(projects);
 
         } catch (SQLException e) {
-            view.showMessage("Error al cargar datos: " + e.getMessage(), true);
+            String message = ExceptionManager.handleException(e);
+            view.showMessage("Error al cargar datos: " + message, true);
         }
     }
 
@@ -76,7 +78,8 @@ public class ControllerReassignProjectWindow implements EventHandler<ActionEvent
                 view.getCurrentProjectLabel().setText("Proyecto actual: Ninguno");
             }
         } catch (SQLException e) {
-            view.showMessage("Error al obtener proyecto actual: " + e.getMessage(), true);
+            String message = ExceptionManager.handleException(e);
+            view.showMessage("Error al obtener proyecto actual: " + message, true);
         }
     }
 
@@ -132,7 +135,8 @@ public class ControllerReassignProjectWindow implements EventHandler<ActionEvent
             }
 
         } catch (Exception e) {
-            view.showMessage("Error al reasignar: " + e.getMessage(), true);
+            String message = ExceptionManager.handleException(e);
+            view.showMessage("Error al reasignar: " + message, true);
         }
     }
 

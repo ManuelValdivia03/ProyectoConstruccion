@@ -22,6 +22,7 @@ import logic.exceptions.*;
 import logic.logicclasses.Academic;
 import logic.logicclasses.Account;
 import logic.logicclasses.User;
+import logic.services.ExceptionManager;
 import userinterface.utilities.Validators;
 import userinterface.windows.CreateAcademicWindow;
 
@@ -87,10 +88,9 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
             showFieldError("El número de personal ya está registrado", view.getStaffNumberField());
         } catch (RepeatedEmailException e) {
             showFieldError("El email ya está registrado", view.getEmailField());
-        } catch (SQLException e) {
-            showError("Error de base de datos: " + e.getMessage());
-        } catch (IllegalArgumentException e) {
-            showError("Tipo de académico inválido");
+        } catch (SQLException | IllegalArgumentException e) {
+            String message = ExceptionManager.handleException(e);
+            showError(message);
         }
     }
 

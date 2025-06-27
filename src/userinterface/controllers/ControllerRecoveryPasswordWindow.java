@@ -8,6 +8,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import logic.services.PasswordRecoveryService;
 import logic.exceptions.UserNotFoundException;
+import logic.services.ExceptionManager;
 
 public class ControllerRecoveryPasswordWindow {
     private final PasswordRecoveryService recoveryService;
@@ -79,7 +80,8 @@ public class ControllerRecoveryPasswordWindow {
         } catch (UserNotFoundException ex) {
             messageLabel.setText(ex.getMessage());
         } catch (Exception ex) {
-            messageLabel.setText("Error de conexión o inesperado.");
+            String message = ExceptionManager.handleException(ex);
+            messageLabel.setText(message);
         }
     }
 
@@ -135,8 +137,9 @@ public class ControllerRecoveryPasswordWindow {
             passwordMessageLabel.setText("Contraseña actualizada exitosamente.");
             submitButton.setDisable(true);
         } catch (Exception ex) {
+            String message = ExceptionManager.handleException(ex);
             passwordMessageLabel.setStyle("-fx-text-fill: #d32f2f;");
-            passwordMessageLabel.setText("Error al actualizar la contraseña.");
+            passwordMessageLabel.setText(message);
         }
     }
 }

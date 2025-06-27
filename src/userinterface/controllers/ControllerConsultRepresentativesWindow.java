@@ -11,6 +11,7 @@ import logic.daos.LinkedOrganizationDAO;
 import logic.daos.RepresentativeDAO;
 import logic.logicclasses.LinkedOrganization;
 import logic.logicclasses.Representative;
+import logic.services.ExceptionManager;
 import userinterface.windows.ConsultRepresentativesWindow;
 import userinterface.windows.LinkOrganizationWindow;
 
@@ -58,8 +59,9 @@ public class ControllerConsultRepresentativesWindow {
             view.getSearchField().clear();
             hasSearchResults = false;
         } catch (SQLException e) {
+            String message = ExceptionManager.handleException(e);
             showAlert(Alert.AlertType.ERROR, "Error",
-                    "No se pudieron cargar los representantes: " + e.getMessage());
+                    "No se pudieron cargar los representantes: " + message);
         }
     }
 
@@ -86,8 +88,9 @@ public class ControllerConsultRepresentativesWindow {
                         "No se encontró representante con el nombre: " + name);
             }
         } catch (SQLException e) {
+            String message = ExceptionManager.handleException(e);
             showAlert(Alert.AlertType.ERROR, "Error de búsqueda",
-                    "Ocurrió un error al buscar el representante: " + e.getMessage());
+                    "Ocurrió un error al buscar el representante: " + message);
         }
     }
 
@@ -138,7 +141,8 @@ public class ControllerConsultRepresentativesWindow {
                     showAlert(Alert.AlertType.ERROR, "Error", "No se pudo vincular el representante.");
                 }
             } catch (SQLException e) {
-                showAlert(Alert.AlertType.ERROR, "Error", "Error al vincular representante: " + e.getMessage());
+                String message = ExceptionManager.handleException(e);
+                showAlert(Alert.AlertType.ERROR, "Error", "Error al vincular representante: " + message);
             }
         });
 
@@ -147,7 +151,8 @@ public class ControllerConsultRepresentativesWindow {
             List<LinkedOrganization> orgs = organizationDAO.getAllLinkedOrganizations();
             linkWindow.setOrganizationData(FXCollections.observableArrayList(orgs));
         } catch (SQLException e) {
-            showAlert(Alert.AlertType.ERROR, "Error", "No se pudieron cargar las organizaciones.");
+            String message = ExceptionManager.handleException(e);
+            showAlert(Alert.AlertType.ERROR, "Error", "No se pudieron cargar las organizaciones: " + message);
         }
         linkWindow.getBackButton().setOnAction(e -> orgStage.close());
 

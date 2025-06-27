@@ -287,7 +287,7 @@ class GroupDAOTest {
     @Test
     void testDeleteGroup_WithStudents_ShouldThrowException() throws SQLException {
         UserDAO userDAO = new UserDAO();
-        User user = new User(0, "Rojo Azul", "1234455670", 'A');
+        User user = new User(0, "Rojo Azul", "1234455670", "", 'A');
         boolean userAdded = userDAO.addUser(user);
         assertTrue(userAdded, "El usuario debería haberse creado correctamente");
 

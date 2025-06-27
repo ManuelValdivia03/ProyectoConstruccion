@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import logic.daos.ProjectDAO;
 import logic.exceptions.RepeatedProyectException;
 import logic.logicclasses.Project;
+import logic.services.ExceptionManager;
 import userinterface.utilities.Validators;
 import userinterface.windows.UpdateProyectWindow;
 import java.sql.SQLException;
@@ -84,9 +85,11 @@ public class ControllerUpdateProyectWindow {
         } catch (DateTimeParseException e) {
             showError("Formato de fecha inválido. Use YYYY-MM-DD o DD/MM/YYYY");
         } catch (SQLException e) {
-            showError("Error de base de datos: " + e.getMessage());
+            String message = ExceptionManager.handleException(e);
+            showError(message);
         } catch (Exception e) {
-            showError("Error inesperado: " + e.getMessage());
+            String message = ExceptionManager.handleException(e);
+            showError(message);
         }
     }
 

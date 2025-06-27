@@ -75,15 +75,15 @@ public class ControllerCoordinatorMenuWindow implements EventHandler<ActionEvent
     }
 
     private void showRegisterProjectWindow() {
-        RegistProyectWindow registerWindow = new RegistProyectWindow();
+        RegistProjectWindow registerWindow = new RegistProjectWindow();
         Stage registerStage = new Stage();
-        new ControllerRegistProyectWindow(registerWindow, registerStage);
+        new ControllerRegistProjectWindow(registerWindow, registerStage);
         showWindow("Registrar proyecto", registerWindow.getView(), 500, 400, registerStage);
     }
 
     private void showConsultProjectsWindow() {
-        ConsultProyectsWindow consultWindow = new ConsultProyectsWindow();
-        new ControllerConsultProyectsWindow(consultWindow);
+        ConsultProjectsWindow consultWindow = new ConsultProjectsWindow();
+        new ControllerConsultProjectsWindow(consultWindow);
         showWindow("Consulta de Proyectos", consultWindow.getView(), 1000, 600);
     }
 

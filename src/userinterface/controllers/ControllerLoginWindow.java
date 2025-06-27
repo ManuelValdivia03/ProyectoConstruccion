@@ -4,22 +4,21 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import logic.exceptions.InvalidCredentialsException;
 import logic.logicclasses.Academic;
 import logic.logicclasses.Coordinator;
 import logic.logicclasses.Student;
 import logic.logicclasses.User;
+import logic.services.ExceptionManager;
 import logic.services.LoginService;
 import logic.services.PasswordRecoveryService;
 import userinterface.windows.LoginWindow;
-import java.sql.SQLException;
 import java.util.Objects;
 
 public class ControllerLoginWindow implements EventHandler<ActionEvent> {
     private static final String SUCCESS_COLOR = "-fx-text-fill: #27ae60;";
     private static final String ERROR_COLOR = "-fx-text-fill: #e74c3c;";
     private static final int WINDOW_WIDTH = 600;
-    private static final int WINDOW_HEIGHT = 400;
+    private static final int WINDOW_HEIGHT = 600;
 
     private final LoginWindow view;
     private final LoginService loginService;
@@ -61,10 +60,9 @@ public class ControllerLoginWindow implements EventHandler<ActionEvent> {
         try {
             User user = loginService.login(email, password);
             handleSuccessfulLogin(user);
-        } catch (InvalidCredentialsException e) {
-            showMessage("Credenciales inválidas", ERROR_COLOR);
-        } catch (SQLException e) {
-            showMessage("Error al conectar con la base de datos", ERROR_COLOR);
+        } catch (Exception e) {
+            String message = ExceptionManager.handleException(e);
+            showMessage(message, ERROR_COLOR);
         }
     }
 

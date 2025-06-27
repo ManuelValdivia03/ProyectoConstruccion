@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import logic.services.ExceptionManager;
 
 public class ControllerRegistCronogramActivityWindow {
     private static final Logger LOGGER = Logger.getLogger(ControllerRegistCronogramActivityWindow.class.getName());
@@ -66,7 +67,7 @@ public class ControllerRegistCronogramActivityWindow {
                 showError("Error al crear nuevo cronograma");
             }
         } catch (SQLException e) {
-            String errorMsg = "Error al inicializar cronograma: " + e.getMessage();
+            String errorMsg = ExceptionManager.handleException(e);
             LOGGER.log(Level.SEVERE, errorMsg, e);
             showError(errorMsg);
         }
@@ -88,7 +89,7 @@ public class ControllerRegistCronogramActivityWindow {
                 LOGGER.log(Level.WARNING, "No se pudieron cargar actividades - ID de cronograma inválido");
             }
         } catch (SQLException e) {
-            String errorMsg = "Error al cargar actividades: " + e.getMessage();
+            String errorMsg = ExceptionManager.handleException(e);
             LOGGER.log(Level.SEVERE, errorMsg, e);
             showError(errorMsg);
         }
@@ -195,7 +196,7 @@ public class ControllerRegistCronogramActivityWindow {
                 showError("No se pudo actualizar la actividad");
             }
         } catch (SQLException e) {
-            String errorMsg = "Error al actualizar: " + e.getMessage();
+            String errorMsg = ExceptionManager.handleException(e);
             LOGGER.log(Level.SEVERE, errorMsg, e);
             showError(errorMsg);
         }
@@ -261,7 +262,7 @@ public class ControllerRegistCronogramActivityWindow {
                 showError("Error al crear la actividad");
             }
         } catch (SQLException e) {
-            String errorMsg = "Error al crear: " + e.getMessage();
+            String errorMsg = ExceptionManager.handleException(e);
             LOGGER.log(Level.SEVERE, errorMsg, e);
             showError(errorMsg);
         }
@@ -286,7 +287,7 @@ public class ControllerRegistCronogramActivityWindow {
                         showError("No se pudo eliminar la actividad");
                     }
                 } catch (SQLException e) {
-                    String errorMsg = "Error al eliminar: " + e.getMessage();
+                    String errorMsg = ExceptionManager.handleException(e);
                     LOGGER.log(Level.SEVERE, errorMsg, e);
                     showError(errorMsg);
                 }

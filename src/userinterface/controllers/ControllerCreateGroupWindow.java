@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import logic.daos.GroupDAO;
 import logic.logicclasses.Group;
+import logic.services.ExceptionManager;
 import userinterface.windows.CreateGroupWindow;
 import java.sql.SQLException;
 import java.util.Objects;
@@ -90,8 +91,8 @@ public class ControllerCreateGroupWindow implements EventHandler<ActionEvent> {
                 showError("No se pudo registrar el grupo");
             }
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Database error during group registration", e);
-            showError("Error de base de datos: " + e.getMessage());
+            String message = ExceptionManager.handleException(e);
+            showError(message);
         }
     }
 

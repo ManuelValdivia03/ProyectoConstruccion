@@ -24,6 +24,7 @@ import logic.logicclasses.Academic;
 import logic.logicclasses.Account;
 import logic.logicclasses.Student;
 import logic.logicclasses.User;
+import logic.services.ExceptionManager;
 import userinterface.utilities.Validators;
 import userinterface.windows.CreateStudentWindow;
 import java.sql.SQLException;
@@ -92,8 +93,8 @@ public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> 
         } catch (RepeatedEmailException e) {
             showFieldError("El email ya está registrado", view.getEmailField());
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Database error during student registration", e);
-            showError("Error de base de datos: " + e.getMessage());
+            String message = ExceptionManager.handleException(e);
+            showError(message);
         }
     }
 

@@ -14,6 +14,7 @@ import logic.daos.LinkedOrganizationDAO;
 import logic.daos.RepresentativeDAO;
 import logic.logicclasses.LinkedOrganization;
 import logic.logicclasses.Representative;
+import logic.services.ExceptionManager;
 import userinterface.utilities.Validators;
 import userinterface.windows.RegistRepresentativeWindow;
 import java.sql.SQLException;
@@ -70,7 +71,8 @@ public class ControllerRegistRepresentativeWindow implements EventHandler<Action
                 showError("No se pudo registrar el representante");
             }
         } catch (SQLException e) {
-            showError("Error de base de datos: " + e.getMessage());
+            String message = ExceptionManager.handleException(e);
+            showError(message);
         }
     }
 
@@ -115,7 +117,8 @@ public class ControllerRegistRepresentativeWindow implements EventHandler<Action
             List<LinkedOrganization> orgs = organizationDAO.getAllLinkedOrganizations();
             linkWindow.setOrganizationData(FXCollections.observableArrayList(orgs));
         } catch (SQLException e) {
-            showError("No se pudieron cargar las organizaciones");
+            String message = ExceptionManager.handleException(e);
+            showError(message);
         }
 
         linkWindow.getBackButton().setOnAction(e -> orgStage.close());
@@ -146,7 +149,8 @@ public class ControllerRegistRepresentativeWindow implements EventHandler<Action
                 showError("No se pudo vincular el representante");
             }
         } catch (SQLException e) {
-            showError("Error al vincular representante: " + e.getMessage());
+            String message = ExceptionManager.handleException(e);
+            showError(message);
         }
     }
 

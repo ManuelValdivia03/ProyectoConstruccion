@@ -457,7 +457,7 @@ public class StudentDAO implements IStudentDAO {
             return EMPTY_STUDENT;
         }
 
-        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.extension_telefon, u.estado, " +
+        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.extension_telefono, u.estado, " +
                 "e.matricula, e.calificacion FROM usuario u " +
                 "JOIN estudiante e ON u.id_usuario = e.id_usuario " +
                 "WHERE u.id_usuario = ?";
@@ -472,7 +472,7 @@ public class StudentDAO implements IStudentDAO {
                         resultSet.getInt("id_usuario"),
                         resultSet.getString("nombre_completo"),
                         resultSet.getString("telefono"),
-                        resultSet.getString("extension_telefon"),
+                        resultSet.getString("extension_telefono"),
                         resultSet.getString("estado").charAt(0),
                         resultSet.getString("matricula"),
                         resultSet.getInt("calificacion")

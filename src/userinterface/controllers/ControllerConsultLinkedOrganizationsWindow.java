@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import logic.daos.LinkedOrganizationDAO;
 import logic.daos.LinkedOrganizationDocumentDAO;
 import logic.logicclasses.LinkedOrganization;
+import logic.services.ExceptionManager;
 import userinterface.windows.ConsultLinkedOrganizationsWindow;
 import userinterface.windows.UpdateLinkedOrganizationWindow;
 import java.io.File;
@@ -59,8 +60,9 @@ public class ControllerConsultLinkedOrganizationsWindow {
             view.getSearchField().clear();
             hasSearchResults = false;
         } catch (SQLException e) {
+            String message = ExceptionManager.handleException(e);
             showAlert(Alert.AlertType.ERROR, "Error",
-                    "No se pudieron cargar las organizaciones: " + e.getMessage());
+                    "No se pudieron cargar las organizaciones: " + message);
         }
     }
 
@@ -87,8 +89,9 @@ public class ControllerConsultLinkedOrganizationsWindow {
                         "No se encontró organización con el nombre: " + name);
             }
         } catch (SQLException e) {
+            String message = ExceptionManager.handleException(e);
             showAlert(Alert.AlertType.ERROR, "Error de búsqueda",
-                    "Ocurrió un error al buscar la organización: " + e.getMessage());
+                    "Ocurrió un error al buscar la organización: " + message);
         }
     }
 
@@ -164,8 +167,9 @@ public class ControllerConsultLinkedOrganizationsWindow {
                         stage.getIcons().add(icon);
                     }
                 } catch (Exception e) {
+                    String message = ExceptionManager.handleException(e);
                     showAlert(Alert.AlertType.ERROR, "Error",
-                            "No se pudo cargar el icono del documento: " + e.getMessage());
+                            "No se pudo cargar el icono del documento: " + message);
                 }
 
                 alert.showAndWait().ifPresent(buttonType -> {
@@ -178,8 +182,9 @@ public class ControllerConsultLinkedOrganizationsWindow {
                         "No hay documentos registrados para esta organización");
             }
         } catch (SQLException e) {
+            String message = ExceptionManager.handleException(e);
             showAlert(Alert.AlertType.ERROR, "Error",
-                    "No se pudieron recuperar los documentos: " + e.getMessage());
+                    "No se pudieron recuperar los documentos: " + message);
         }
     }
 
@@ -211,8 +216,9 @@ public class ControllerConsultLinkedOrganizationsWindow {
                 showAlert(Alert.AlertType.INFORMATION, "Éxito",
                         "Documento guardado como: " + file.getName());
             } catch (IOException e) {
+                String message = ExceptionManager.handleException(e);
                 showAlert(Alert.AlertType.ERROR, "Error",
-                        "No se pudo guardar el documento: " + e.getMessage());
+                        "No se pudo guardar el documento: " + message);
             }
         }
     }

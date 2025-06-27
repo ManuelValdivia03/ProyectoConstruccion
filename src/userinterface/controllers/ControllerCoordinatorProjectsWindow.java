@@ -9,8 +9,9 @@ import javafx.stage.Stage;
 import logic.daos.*;
 import logic.logicclasses.Project;
 import logic.logicclasses.ProjectRequest;
-import logic.logicclasses.Student;
+
 import logic.services.PDFAssignmentGenerator;
+import logic.services.ExceptionManager;
 import userinterface.windows.CoordinatorProjectsWindow;
 import userinterface.windows.ProjectRequestsWindow;
 
@@ -67,7 +68,8 @@ public class ControllerCoordinatorProjectsWindow implements EventHandler<ActionE
             stage.setTitle("Solicitudes - " + project.getTitle());
             stage.show();
         } catch (SQLException e) {
-            view.showMessage("Error al cargar solicitudes: " + e.getMessage(), true);
+            String message = ExceptionManager.handleException(e);
+            view.showMessage("Error al cargar solicitudes: " + message, true);
         }
     }
 
@@ -99,7 +101,8 @@ public class ControllerCoordinatorProjectsWindow implements EventHandler<ActionE
             loadProjects();
             view.showMessage("Solicitudes aprobadas y documentos generados correctamente", false);
         } catch (SQLException | IOException e) {
-            view.showMessage("Error al procesar solicitudes: " + e.getMessage(), true);
+            String message = ExceptionManager.handleException(e);
+            view.showMessage("Error al procesar solicitudes: " + message, true);
         }
     }
 
@@ -113,7 +116,8 @@ public class ControllerCoordinatorProjectsWindow implements EventHandler<ActionE
             }
             view.showMessage("Solicitudes rechazadas correctamente", false);
         } catch (SQLException e) {
-            view.showMessage("Error al rechazar solicitudes: " + e.getMessage(), true);
+            String message = ExceptionManager.handleException(e);
+            view.showMessage("Error al rechazar solicitudes: " + message, true);
         }
     }
 
@@ -123,7 +127,8 @@ public class ControllerCoordinatorProjectsWindow implements EventHandler<ActionE
             view.setProjectsList(projectsList);
             view.showMessage("", false);
         } catch (SQLException e) {
-            view.showMessage("Error al cargar proyectos: " + e.getMessage(), true);
+            String message = ExceptionManager.handleException(e);
+            view.showMessage("Error al cargar proyectos: " + message, true);
         }
     }
 }

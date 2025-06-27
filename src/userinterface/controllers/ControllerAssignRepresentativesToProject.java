@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import logic.daos.ProjectDAO;
 import logic.daos.RepresentativeDAO;
 import logic.logicclasses.Representative;
+import logic.services.ExceptionManager;
 import userinterface.windows.AssignRepresentativesToProjectWindow;
 
 import java.sql.SQLException;
@@ -48,8 +49,9 @@ public class ControllerAssignRepresentativesToProject {
             allRepresentatives.setAll(reps);
             view.setRepresentativeData(allRepresentatives);
         } catch (SQLException e) {
+            String message = ExceptionManager.handleException(e);
             showAlert(Alert.AlertType.ERROR, "Error",
-                    "No se pudieron cargar los representantes: " + e.getMessage());
+                    "No se pudieron cargar los representantes: " + message);
         }
     }
 
@@ -78,8 +80,9 @@ public class ControllerAssignRepresentativesToProject {
                         "No se pudo asignar el representante al proyecto.");
             }
         } catch (SQLException e) {
+            String message = ExceptionManager.handleException(e);
             showAlert(Alert.AlertType.ERROR, "Error",
-                    "Error al asignar representante: " + e.getMessage());
+                    "Error al asignar representante: " + message);
         }
     }
 

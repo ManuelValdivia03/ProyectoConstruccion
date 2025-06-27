@@ -9,7 +9,7 @@ import logic.daos.ActivityCronogramDAO;
 import logic.enums.ActivityStatus;
 import logic.logicclasses.Activity;
 import userinterface.windows.AddActivityWindow;
-
+import logic.services.ExceptionManager;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -104,8 +104,8 @@ public class ControllerAddActivityWindow implements EventHandler<ActionEvent> {
                 view.showMessage("Error al guardar la actividad", true);
             }
         } catch (Exception e) {
-            view.showMessage("Error: " + e.getMessage(), true);
-            e.printStackTrace();
+            String message = ExceptionManager.handleException(e);
+            view.showMessage(message, true);
         }
     }
 

@@ -10,10 +10,9 @@ import logic.enums.RequestStatus;
 import logic.logicclasses.Project;
 import logic.logicclasses.ProjectRequest;
 import logic.logicclasses.User;
+import logic.services.ExceptionManager;
 import userinterface.windows.StudentProjectRequestWindow;
-
 import java.sql.SQLException;
-import java.sql.Timestamp;
 
 public class ControllerStudentProjectRequestWindow implements EventHandler<ActionEvent> {
     private final StudentProjectRequestWindow view;
@@ -43,7 +42,8 @@ public class ControllerStudentProjectRequestWindow implements EventHandler<Actio
             view.setProjectsList(projectsList);
             view.getResultLabel().setText("");
         } catch (SQLException e) {
-            view.showError("Error al cargar proyectos: " + e.getMessage());
+            String message = ExceptionManager.handleException(e);
+            view.showError("Error al cargar proyectos: " + message);
         }
     }
 
@@ -63,7 +63,7 @@ public class ControllerStudentProjectRequestWindow implements EventHandler<Actio
                 return;
             }
             ProjectRequest request = new ProjectRequest(0, project.getIdProyect(),
-                    currentStudent.getIdUser(), new Timestamp(System.currentTimeMillis()),
+                    currentStudent.getIdUser(), new java.sql.Timestamp(System.currentTimeMillis()),
                     RequestStatus.PENDIENTE, project.getTitle(), currentStudent.getFullName());
             boolean success = requestDAO.createRequest(request);
             if (success) {
@@ -73,7 +73,8 @@ public class ControllerStudentProjectRequestWindow implements EventHandler<Actio
                 view.showError("No se pudo enviar la solicitud");
             }
         } catch (SQLException e) {
-            view.showError("Error inesperado al enviar la solicitud. Por favor, inténtelo más tarde.");
+            String message = ExceptionManager.handleException(e);
+            view.showError("Error inesperado al enviar la solicitud: " + message);
         }
     }
 

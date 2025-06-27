@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import logic.daos.AcademicDAO;
 import logic.daos.AccountDAO;
 import logic.logicclasses.Academic;
+import logic.services.ExceptionManager;
 import userinterface.utilities.Validators;
 import userinterface.windows.ConsultAcademicsWindow;
 import userinterface.windows.UpdateAcademicWindow;
@@ -52,8 +53,9 @@ public class ControllerConsultAcademicsWindow {
             view.getSearchField().clear();
             hasSearchResults = false;
         } catch (SQLException e) {
+            String message = ExceptionManager.handleException(e);
             showAlert(Alert.AlertType.ERROR, "Error",
-                    "No se pudieron cargar los académicos: " + e.getMessage());
+                    "No se pudieron cargar los académicos: " + message);
         }
     }
 
@@ -80,8 +82,9 @@ public class ControllerConsultAcademicsWindow {
                         "No se encontró ningún académico con el número: " + staffNumber);
             }
         } catch (SQLException e) {
+            String message = ExceptionManager.handleException(e);
             showAlert(Alert.AlertType.ERROR, "Error de búsqueda",
-                    "Ocurrió un error al buscar el académico: " + e.getMessage());
+                    "Ocurrió un error al buscar el académico: " + message);
         }
     }
 
@@ -122,8 +125,9 @@ public class ControllerConsultAcademicsWindow {
             updateStage.setTitle("Actualizar Académico");
             updateStage.show();
         } catch (SQLException e) {
+            String message = ExceptionManager.handleException(e);
             showAlert(Alert.AlertType.ERROR, "Error",
-                    "No se pudo abrir la ventana de actualización: " + e.getMessage());
+                    "No se pudo abrir la ventana de actualización: " + message);
         }
     }
 
