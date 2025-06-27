@@ -9,7 +9,7 @@ import logic.services.PasswordRecoveryService;
 import userinterface.controllers.ControllerLoginWindow;
 import userinterface.windows.LoginWindow;
 
-public class LoginTest extends Application {
+public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         AccountDAO accountDAO = new AccountDAO();

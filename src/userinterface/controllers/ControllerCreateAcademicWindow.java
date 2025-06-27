@@ -67,6 +67,10 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
         try {
             clearError();
 
+            if (!validateAcademicTypeSelected()) {
+                return;
+            }
+
             if (!validateAllFields()) {
                 return;
             }
@@ -147,6 +151,17 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
             return false;
         }
         return true;
+    }
+
+    private boolean validateAcademicTypeSelected() {
+        if (view.getTypeComboBox().getValue() == null) {
+            showError("Debe seleccionar un tipo de académico.");
+            view.getTypeComboBox().setStyle(ERROR_STYLE);
+            return false;
+        } else {
+            view.getTypeComboBox().setStyle("");
+            return true;
+        }
     }
 
     private boolean verifyDataUniqueness(String phone, String staffNumber, String email)
