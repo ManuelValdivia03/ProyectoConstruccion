@@ -32,5 +32,20 @@ public class Student extends User {
         this.grade = grade;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return getIdUser() == student.getIdUser() &&
+                java.util.Objects.equals(getFullName(), student.getFullName()) &&
+                java.util.Objects.equals(getCellPhone(), student.getCellPhone()) &&
+                java.util.Objects.equals(enrollment, student.enrollment);
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(getIdUser(), getFullName(), getCellPhone(), enrollment);
+    }
 }
 

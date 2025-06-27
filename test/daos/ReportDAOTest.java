@@ -57,6 +57,7 @@ class ReportDAOTest {
         User user = new User();
         user.setFullName("Estudiante Prueba");
         user.setCellphone("5550000000");
+        user.setCellphone("5550000000");
         user.setStatus('A');
         userDAO.addUser(user);
 

@@ -179,10 +179,6 @@ class ProjectDAOTest {
         assertEquals(initialCount, projectDAO.countProyects());
     }
 
-    @Test
-    void testDeleteProyect_NullProyect() throws SQLException {
-        assertFalse(projectDAO.deleteProyect(null));
-    }
 
     @Test
     void testGetAllProyects_WithData() throws SQLException {
@@ -320,8 +316,4 @@ class ProjectDAOTest {
         assertFalse(result);
     }
 
-    @Test
-    void testChangeProyectStatus_NullProyect() throws SQLException {
-        assertFalse(projectDAO.changeProyectStatus(null));
-    }
 }

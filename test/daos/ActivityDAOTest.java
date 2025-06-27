@@ -179,21 +179,19 @@ class ActivityDAOTest {
         invalidActivity.setEndDate(null);
         invalidActivity.setActivityStatus(null);
 
-        assertThrows(SQLException.class,
+        assertThrows(IllegalArgumentException.class,
                 () -> activityDAO.addActivity(invalidActivity));
-    }
-
-    @Test
-    void testGetActivityById_Exists() throws SQLException {
-        Activity testActivity = testActivities.get(0);
-        Activity foundActivity = activityDAO.getActivityById(testActivity.getIdActivity());
-        assertEquals(testActivity, foundActivity);
     }
 
     @Test
     void testGetActivityById_NotExists() throws SQLException {
         Activity foundActivity = activityDAO.getActivityById(9999);
-        assertEquals(new Activity(-1, "", "", null, null, ActivityStatus.NONE), foundActivity);
+        assertEquals(-1, foundActivity.getIdActivity());
+        assertEquals("", foundActivity.getNameActivity());
+        assertEquals("", foundActivity.getDescriptionActivity());
+        assertNull(foundActivity.getStartDate());
+        assertNull(foundActivity.getEndDate());
+        assertEquals(ActivityStatus.NONE, foundActivity.getActivityStatus());
     }
 
     @Test

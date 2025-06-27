@@ -138,7 +138,7 @@ class SelfEvaluationDAOTest {
         invalidEvaluation.setCalification(7.0f);
         invalidEvaluation.setStudent(testStudent);
 
-        assertThrows(SQLException.class,
+        assertThrows(IllegalArgumentException.class,
                 () -> selfEvaluationDAO.addSelfEvaluation(invalidEvaluation));
     }
 

@@ -122,12 +122,12 @@ class PresentationDAOTest {
     @Test
     void testAddPresentation_Error() {
         Presentation p = new Presentation();
-        assertThrows(SQLException.class, () -> presentationDAO.addPresentation(p));
+        assertThrows(IllegalArgumentException.class, () -> presentationDAO.addPresentation(p));
     }
 
     @Test
     void testAddPresentation_Exception() {
-        assertThrows(SQLException.class, () -> presentationDAO.addPresentation(null));
+        assertThrows(IllegalArgumentException.class, () -> presentationDAO.addPresentation(null));
     }
 
     @Test

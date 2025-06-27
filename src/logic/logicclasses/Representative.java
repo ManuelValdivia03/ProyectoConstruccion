@@ -63,4 +63,21 @@ public class Representative {
     public void setLinkedOrganization(LinkedOrganization linkedOrganization) {
         this.linkedOrganization = linkedOrganization;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Representative that = (Representative) o;
+        return idRepresentative == that.idRepresentative &&
+                java.util.Objects.equals(fullName, that.fullName) &&
+                java.util.Objects.equals(email, that.email) &&
+                java.util.Objects.equals(cellPhone, that.cellPhone) &&
+                java.util.Objects.equals(linkedOrganization, that.linkedOrganization);
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(idRepresentative, fullName, email, cellPhone, linkedOrganization);
+    }
 }

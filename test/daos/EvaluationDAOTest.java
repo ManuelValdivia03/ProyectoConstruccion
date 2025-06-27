@@ -214,7 +214,7 @@ class EvaluationDAOTest {
         invalidEvaluation.setCalification(0);
         invalidEvaluation.setDescription(null);
         invalidEvaluation.setEvaluationDate(null);
-        assertThrows(SQLException.class,
+        assertThrows(IllegalArgumentException.class,
                 () -> evaluationDAO.addEvaluation(invalidEvaluation));
     }
 

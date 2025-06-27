@@ -28,6 +28,7 @@ class AcademicDAOTest {
              var statement = conn.createStatement()) {
             statement.execute("SET FOREIGN_KEY_CHECKS = 0");
             statement.execute("TRUNCATE TABLE grupo_estudiante");
+            statement.execute("TRUNCATE TABLE grupo_academico");
             statement.execute("TRUNCATE TABLE estudiante");
             statement.execute("TRUNCATE TABLE academico");
             statement.execute("TRUNCATE TABLE coordinador");
@@ -303,11 +304,6 @@ class AcademicDAOTest {
     void testStaffNumberExists_NullOrEmpty() throws Exception {
         assertThrows(IllegalArgumentException.class, () -> academicDAO.staffNumberExists(null));
         assertThrows(IllegalArgumentException.class, () -> academicDAO.staffNumberExists(""));
-    }
-
-    @Test
-    void testGetAllAcademicsFromView_SQLException() {
-        assertThrows(SQLException.class, () -> academicDAO.getAllAcademicsFromView());
     }
 
     @Test

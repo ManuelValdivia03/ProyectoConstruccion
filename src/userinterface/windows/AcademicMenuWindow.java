@@ -27,6 +27,7 @@ public class AcademicMenuWindow {
     private Button consultPresentationEvaluationsButton;
     private Button registerPartialEvaluationButton;
     private Button consultPartialEvaluationsButton;
+    private Button consultGroupStudentReportsButton;
 
     private final String BLUE_DARK_COLOR = "#0A1F3F";
     private final String GREEN_DARK_COLOR = "#1A5F4B";
@@ -143,11 +144,13 @@ public class AcademicMenuWindow {
 
         registerFinalGradeButton = createStyledButton("Registrar Calificación Final");
         consultPresentationEvaluationsButton = createStyledButton("Consultar Evaluaciones de Presentaciones");
+        consultGroupStudentReportsButton = createStyledButton("Consultar Reportes de Estudiantes");
 
         content.getChildren().addAll(
                 createSectionTitle("Evaluaciones"),
                 registerFinalGradeButton,
-                consultPresentationEvaluationsButton
+                consultPresentationEvaluationsButton,
+                consultGroupStudentReportsButton
         );
 
         return content;
@@ -229,5 +232,9 @@ public class AcademicMenuWindow {
 
     public Button getConsultPartialEvaluationsButton() {
         return consultPartialEvaluationsButton;
+    }
+
+    public Button getConsultGroupStudentReportsButton() {
+        return consultGroupStudentReportsButton;
     }
 }

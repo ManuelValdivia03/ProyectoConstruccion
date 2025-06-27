@@ -51,4 +51,20 @@ public class SelfEvaluation {
     public void setStudent(Student student) {
         this.student = student;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SelfEvaluation that = (SelfEvaluation) o;
+        return idSelfEvaluation == that.idSelfEvaluation &&
+                Float.compare(that.calification, calification) == 0 &&
+                java.util.Objects.equals(feedBack, that.feedBack) &&
+                java.util.Objects.equals(student, that.student);
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(idSelfEvaluation, feedBack, calification, student);
+    }
 }

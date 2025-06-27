@@ -16,6 +16,7 @@ import userinterface.windows.ConsultStudentsWindow;
 import userinterface.windows.RegistEvaluationWindow;
 import userinterface.windows.ConsultRegisteredEvaluationsWindow;
 import userinterface.windows.ConsultGroupStudentEvaluationsWindow;
+import userinterface.windows.ConsultGroupStudentReportsWindow;
 import java.util.Objects;
 
 public class ControllerAcademicMenuWindow implements EventHandler<ActionEvent> {
@@ -67,6 +68,7 @@ public class ControllerAcademicMenuWindow implements EventHandler<ActionEvent> {
         view.getConsultStudentsButton().setOnAction(e -> showConsultStudentsWindow());
         view.getRegisterFinalGradeButton().setOnAction(e -> showRegisterFinalGradeWindow());
         view.getConsultPresentationEvaluationsButton().setOnAction(e -> showConsultGroupStudentEvaluationsWindow());
+        view.getConsultGroupStudentReportsButton().setOnAction(e -> showConsultGroupStudentReportsWindow());
     }
 
     private void configureEvaluatorButtons() {
@@ -186,6 +188,21 @@ public class ControllerAcademicMenuWindow implements EventHandler<ActionEvent> {
             new ControllerConsultGroupStudentEvaluationsWindow(consultWindow, consultStage, academic);
             consultStage.setScene(new Scene(consultWindow.getView(), 900, 500));
             consultStage.setTitle("Evaluaciones de Estudiantes del Grupo");
+            consultStage.show();
+        } catch (Exception e) {
+            String message = ExceptionManager.handleException(e);
+            showErrorDialog(message);
+        }
+    }
+
+    // Agrega este método para mostrar la ventana de reportes de estudiantes del grupo
+    private void showConsultGroupStudentReportsWindow() {
+        try {
+            Stage consultStage = new Stage();
+            ConsultGroupStudentReportsWindow consultWindow = new ConsultGroupStudentReportsWindow();
+            new ControllerConsultGroupStudentReportsWindow(consultWindow, consultStage, academic);
+            consultStage.setScene(new Scene(consultWindow.getView(), 900, 500));
+            consultStage.setTitle("Reportes de Estudiantes del Grupo");
             consultStage.show();
         } catch (Exception e) {
             String message = ExceptionManager.handleException(e);

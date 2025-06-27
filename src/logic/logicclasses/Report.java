@@ -87,4 +87,23 @@ public class Report {
     public void setStudent(Student student) {
         this.student = student;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Report report = (Report) o;
+        return idReport == report.idReport &&
+                hoursReport == report.hoursReport &&
+                java.util.Objects.equals(reportDate, report.reportDate) &&
+                reportType == report.reportType &&
+                java.util.Objects.equals(methodology, report.methodology) &&
+                java.util.Objects.equals(description, report.description) &&
+                java.util.Objects.equals(student, report.student);
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(idReport, reportDate, hoursReport, reportType, methodology, description, student);
+    }
 }

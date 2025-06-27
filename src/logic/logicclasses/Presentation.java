@@ -55,4 +55,20 @@ public class Presentation {
     public void setStudent(Student student) {
         this.student = student;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Presentation that = (Presentation) o;
+        return idPresentation == that.idPresentation &&
+                java.util.Objects.equals(PresentationDate, that.PresentationDate) &&
+                PresentationType == that.PresentationType &&
+                java.util.Objects.equals(student, that.student);
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(idPresentation, PresentationDate, PresentationType, student);
+    }
 }

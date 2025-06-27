@@ -118,7 +118,7 @@ class RepresentativeDAOTest {
         invalidRep.setEmail("test@test.com");
         invalidRep.setLinkedOrganization(testOrganization);
 
-        assertThrows(SQLException.class,
+        assertThrows(IllegalArgumentException.class,
                 () -> representativeDAO.addRepresentative(invalidRep));
     }
 
@@ -129,13 +129,13 @@ class RepresentativeDAOTest {
         invalidRep.setEmail("test@test.com");
         invalidRep.setLinkedOrganization(testOrganization);
 
-        assertThrows(SQLException.class,
+        assertThrows(IllegalArgumentException.class,
                 () -> representativeDAO.addRepresentative(invalidRep));
     }
 
     @Test
     void testAddRepresentative_Exception() {
-        assertThrows(SQLException.class, () -> representativeDAO.addRepresentative(null));
+        assertThrows(IllegalArgumentException.class, () -> representativeDAO.addRepresentative(null));
     }
 
     @Test
@@ -304,7 +304,7 @@ class RepresentativeDAOTest {
 
     @Test
     void testUpdateRepresentative_Exception() {
-        assertThrows(SQLException.class, () -> representativeDAO.updateRepresentative(null));
+        assertThrows(IllegalArgumentException.class, () -> representativeDAO.updateRepresentative(null));
     }
 
     @Test

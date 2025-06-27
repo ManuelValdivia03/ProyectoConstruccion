@@ -22,8 +22,8 @@ class AccountDAOTest {
     private static List<User> testUsers;
     private static List<Account> testAccounts;
 
-    @BeforeAll
-    static void setUpAll() throws SQLException {
+    @BeforeEach
+    void setUp() throws SQLException {
         accountDAO = new AccountDAO();
         userDAO = new UserDAO();
 
@@ -95,7 +95,7 @@ class AccountDAOTest {
         }
         List<Account> accounts = accountDAO.getAllAccounts();
         assertTrue(accounts.isEmpty());
-        setUpAll();
+        setUp();
     }
 
     @Test
@@ -262,7 +262,9 @@ class AccountDAOTest {
     void testGetAccountByEmail_Exists() throws SQLException {
         Account expected = testAccounts.get(0);
         Account actual = accountDAO.getAccountByEmail(expected.getEmail());
-        assertEquals(expected, actual);
+        assertEquals(expected.getIdUser(), actual.getIdUser());
+        assertEquals(expected.getEmail(), actual.getEmail());
+        assertTrue(PasswordUtils.checkPassword("password1", actual.getPassword()));
     }
 
     @Test

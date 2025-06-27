@@ -153,13 +153,23 @@ class CoordinatorDAOTest {
     void testGetCoordinatorByStaffNumber_Exists() throws SQLException {
         Coordinator testCoordinator = testCoordinators.get(0);
         Coordinator foundCoordinator = coordinatorDAO.getCoordinatorByStaffNumber(testCoordinator.getStaffNumber());
-        assertEquals(testCoordinator, foundCoordinator);
+        assertEquals(testCoordinator.getIdUser(), foundCoordinator.getIdUser());
+        assertEquals(testCoordinator.getFullName(), foundCoordinator.getFullName());
+        assertEquals(testCoordinator.getCellPhone(), foundCoordinator.getCellPhone());
+        assertEquals(testCoordinator.getPhoneExtension(), foundCoordinator.getPhoneExtension());
+        assertEquals(testCoordinator.getStaffNumber(), foundCoordinator.getStaffNumber());
+        assertEquals(testCoordinator.getStatus(), foundCoordinator.getStatus());
     }
 
     @Test
     void testGetCoordinatorByStaffNumber_NotExists() throws SQLException {
         Coordinator foundCoordinator = coordinatorDAO.getCoordinatorByStaffNumber("NOEXISTE");
-        assertEquals(new Coordinator(-1, "", "", "", "",'I'), foundCoordinator);
+        assertEquals(-1, foundCoordinator.getIdUser());
+        assertEquals("", foundCoordinator.getFullName());
+        assertEquals("", foundCoordinator.getCellPhone());
+        assertEquals("", foundCoordinator.getPhoneExtension());
+        assertEquals("", foundCoordinator.getStaffNumber());
+        assertEquals('I', foundCoordinator.getStatus());
     }
 
     @Test
