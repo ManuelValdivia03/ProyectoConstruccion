@@ -8,6 +8,8 @@ import userinterface.windows.EditProfileStudentWindow;
 import userinterface.windows.RegistReportWindow;
 import userinterface.windows.StudentMenuWindow;
 import userinterface.windows.StudentProjectRequestWindow;
+import userinterface.windows.ConsultStudentEvaluationsWindow;
+import userinterface.windows.RegistSelfEvaluationWindow;
 
 public class ControllerStudentMenuWindow {
     private static final int WINDOW_WIDTH = 1024;
@@ -121,6 +123,13 @@ public class ControllerStudentMenuWindow {
     }
 
     private void showSelfEvaluationWindow() {
+        RegistSelfEvaluationWindow selfEvalView = new RegistSelfEvaluationWindow();
+        Stage selfEvalStage = new Stage();
+        new ControllerRegistSelfEvaluationWindow(selfEvalView, selfEvalStage, student);
+        Scene selfEvalScene = new Scene(selfEvalView.getView(), 600, 500);
+        selfEvalStage.setScene(selfEvalScene);
+        selfEvalStage.setTitle("Registrar Autoevaluación");
+        selfEvalStage.show();
     }
 
     private void showMonthlyReportWindow() {
@@ -134,5 +143,12 @@ public class ControllerStudentMenuWindow {
     }
 
     private void showEvaluationsWindow() {
+        ConsultStudentEvaluationsWindow evaluationsView = new ConsultStudentEvaluationsWindow();
+        Stage evaluationsStage = new Stage();
+        new ControllerConsultStudentEvaluationsWindow(evaluationsView, evaluationsStage, student);
+        Scene evaluationsScene = new Scene(evaluationsView.getView(), WINDOW_WIDTH, WINDOW_HEIGHT);
+        evaluationsStage.setScene(evaluationsScene);
+        evaluationsStage.setTitle("Ver Evaluaciones");
+        evaluationsStage.show();
     }
 }

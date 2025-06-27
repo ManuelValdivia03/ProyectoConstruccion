@@ -121,6 +121,30 @@ public class SelfEvaluationDAO implements ISelfEvaluationDAO {
         return selfEvaluations;
     }
 
+    public SelfEvaluation getSelfEvaluationByStudent(int studentId) throws SQLException {
+        if (studentId <= 0) {
+            return null;
+        }
+
+        String sql = "SELECT * FROM autoevaluacion WHERE id_usuario = ? ORDER BY id_autoevaluacion DESC LIMIT 1";
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, studentId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    SelfEvaluation selfEvaluation = new SelfEvaluation();
+                    selfEvaluation.setIdSelfEvaluation(resultSet.getInt("id_autoevaluacion"));
+                    selfEvaluation.setFeedBack(resultSet.getString("comentarios"));
+                    selfEvaluation.setCalification(resultSet.getFloat("calificacion"));
+                    selfEvaluation.setStudent(studentDAO.getStudentById(studentId));
+                    return selfEvaluation;
+                }
+            }
+        }
+        return EMPTY_SELFEVALUATION;
+    }
+
     public boolean updateSelfEvaluation(SelfEvaluation selfEvaluation) throws SQLException {
         if (selfEvaluation == null ||
                 selfEvaluation.getIdSelfEvaluation() <= 0 ||

@@ -6,7 +6,21 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import logic.logicclasses.Coordinator;
-import userinterface.windows.*;
+import logic.daos.EvaluationRegistrationDAO;
+import logic.services.ExceptionManager;
+import userinterface.windows.CoordinatorMenuWindow;
+import userinterface.windows.CreateAcademicWindow;
+import userinterface.windows.CreateGroupWindow;
+import userinterface.windows.CreateLinkedOrganizationWindow;
+import userinterface.windows.ConsultAcademicsWindow;
+import userinterface.windows.ConsultGroupsWindow;
+import userinterface.windows.ConsultLinkedOrganizationsWindow;
+import userinterface.windows.ConsultProjectsWindow;
+import userinterface.windows.ConsultRepresentativesWindow;
+import userinterface.windows.RegistProjectWindow;
+import userinterface.windows.RegistRepresentativeWindow;
+import userinterface.windows.CoordinatorProjectsWindow;
+
 
 public class ControllerCoordinatorMenuWindow implements EventHandler<ActionEvent> {
     private static final int MAIN_WINDOW_WIDTH = 1024;
@@ -40,7 +54,7 @@ public class ControllerCoordinatorMenuWindow implements EventHandler<ActionEvent
         view.getAssignProjectButton().setOnAction(e -> showAssignProjectWindow());
         view.getReassignStudentButton().setOnAction(e -> showReassignProjectWindow());
         view.getRegisterCronogramButton().setOnAction(e -> showRegisterCronogramWindow());
-        view.getEnableEvaluationsButton().setOnAction(this::handleUnimplementedAction);
+        view.getEnableEvaluationsButton().setOnAction(e -> handleEnableEvaluations(e));
         view.getGenerateStadisticsButton().setOnAction(e -> showStatisticsWindow());
     }
 
@@ -149,6 +163,23 @@ public class ControllerCoordinatorMenuWindow implements EventHandler<ActionEvent
     private void showStatisticsWindow() {
         ControllerStatisticsWindow controller = new ControllerStatisticsWindow(primaryStage, null);
         controller.show();
+    }
+
+    private void handleEnableEvaluations(ActionEvent event) {
+        try {
+            EvaluationRegistrationDAO dao = new EvaluationRegistrationDAO();
+            boolean current = dao.isRegistrationEnabled();
+            boolean updated = dao.setRegistrationEnabled(!current);
+            if (updated) {
+                showAlert(Alert.AlertType.INFORMATION, "Exito",
+                        "Registro de evaluaciones " + (!current ? "activado" : "desactivado") + ".");
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Error", "El estado de registro no pudo ser actualizado.");
+            }
+        } catch (Exception e) {
+            String message = ExceptionManager.handleException(e);
+            showAlert(Alert.AlertType.ERROR, "Error", message);
+        }
     }
 
     private void showWindow(String title, javafx.scene.Parent view, int width, int height) {

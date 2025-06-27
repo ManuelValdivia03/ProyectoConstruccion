@@ -2,6 +2,8 @@ package logic.logicclasses;
 
 import logic.enums.AcademicType;
 
+import java.util.Objects;
+
 public class Academic extends User {
     private String staffNumber;
     private AcademicType type;
@@ -32,6 +34,22 @@ public class Academic extends User {
 
     public void setAcademicType(AcademicType type) {
         this.type = type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Academic academic = (Academic) o;
+        return Objects.equals(staffNumber, academic.staffNumber) &&
+                Objects.equals(getFullName(), academic.getFullName()) &&
+                Objects.equals(getCellPhone(), academic.getCellPhone()) &&
+                Objects.equals(type, academic.type);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(staffNumber, getFullName(), getCellPhone(), type);
     }
 
 }

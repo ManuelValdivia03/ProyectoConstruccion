@@ -243,6 +243,54 @@ public class EvaluationDAO implements IEvaluationDAO {
         return evaluations;
     }
 
+    public List<Evaluation> getEvaluationsByStudent(int studentId) throws SQLException {
+        if (studentId <= 0) {
+            return Collections.emptyList();
+        }
+
+        String sql = "SELECT e.*, a.numero_personal, p.fecha, p.tipo, p.id_estudiante " +
+                "FROM evaluacion e " +
+                "JOIN academico a ON e.id_academicoevaluador = a.id_usuario " +
+                "JOIN presentacion p ON e.id_presentacion = p.id_presentacion " +
+                "WHERE p.id_estudiante = ?";
+
+        List<Evaluation> evaluations = new ArrayList<>();
+
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, studentId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Evaluation evaluation = new Evaluation();
+                    evaluation.setIdEvaluation(resultSet.getInt("id_evaluacion"));
+                    evaluation.setCalification(resultSet.getInt("calificacion"));
+                    evaluation.setDescription(resultSet.getString("comentarios"));
+                    evaluation.setEvaluationDate(resultSet.getTimestamp("fecha"));
+
+                    Academic academic = new Academic();
+                    academic.setIdUser(resultSet.getInt("id_academicoevaluador"));
+                    academic.setStaffNumber(resultSet.getString("numero_personal"));
+                    evaluation.setAcademic(academic);
+
+                    Presentation presentation = new Presentation();
+                    presentation.setIdPresentation(resultSet.getInt("id_presentacion"));
+                    presentation.setPresentationDate(resultSet.getTimestamp("fecha"));
+                    presentation.setPresentationType(PresentationType.valueOf(resultSet.getString("tipo")));
+
+                    Student student = new Student();
+                    student.setIdUser(resultSet.getInt("id_estudiante"));
+                    presentation.setStudent(student);
+
+                    evaluation.setPresentation(presentation);
+                    evaluations.add(evaluation);
+                }
+            }
+        }
+        return evaluations;
+    }
+
     @Override
     public boolean updateEvaluation(Evaluation evaluation) throws SQLException {
         if (evaluation == null || evaluation.getIdEvaluation() <= 0 ||

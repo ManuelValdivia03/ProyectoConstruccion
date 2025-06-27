@@ -86,4 +86,23 @@ public class LinkedOrganization {
     public void setDepartment(String department) {
         this.department = department;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LinkedOrganization that = (LinkedOrganization) o;
+        return idLinkedOrganization == that.idLinkedOrganization &&
+                status == that.status &&
+                java.util.Objects.equals(nameLinkedOrganization, that.nameLinkedOrganization) &&
+                java.util.Objects.equals(cellPhoneLinkedOrganization, that.cellPhoneLinkedOrganization) &&
+                java.util.Objects.equals(phoneExtension, that.phoneExtension) &&
+                java.util.Objects.equals(department, that.department) &&
+                java.util.Objects.equals(emailLinkedOrganization, that.emailLinkedOrganization);
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(idLinkedOrganization, nameLinkedOrganization, cellPhoneLinkedOrganization, phoneExtension, department, emailLinkedOrganization, status);
+    }
 }

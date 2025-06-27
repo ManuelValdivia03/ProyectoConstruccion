@@ -9,11 +9,13 @@ import javafx.scene.control.Alert;
 import logic.enums.AcademicType;
 import logic.logicclasses.Academic;
 import logic.services.ExceptionManager;
+import logic.daos.EvaluationRegistrationDAO;
 import userinterface.windows.AcademicMenuWindow;
 import userinterface.windows.CreateStudentWindow;
 import userinterface.windows.ConsultStudentsWindow;
 import userinterface.windows.RegistEvaluationWindow;
 import userinterface.windows.ConsultRegisteredEvaluationsWindow;
+import userinterface.windows.ConsultGroupStudentEvaluationsWindow;
 import java.util.Objects;
 
 public class ControllerAcademicMenuWindow implements EventHandler<ActionEvent> {
@@ -64,12 +66,20 @@ public class ControllerAcademicMenuWindow implements EventHandler<ActionEvent> {
         view.getRegisterStudentButton().setOnAction(e -> showRegisterStudentWindow());
         view.getConsultStudentsButton().setOnAction(e -> showConsultStudentsWindow());
         view.getRegisterFinalGradeButton().setOnAction(e -> showRegisterFinalGradeWindow());
-        view.getConsultPresentationEvaluationsButton().setOnAction(e -> showNotImplementedMessage());
+        view.getConsultPresentationEvaluationsButton().setOnAction(e -> showConsultGroupStudentEvaluationsWindow());
     }
 
     private void configureEvaluatorButtons() {
         view.getRegisterPartialEvaluationButton().setOnAction(e -> showRegistEvaluationWindow());
         view.getConsultPartialEvaluationsButton().setOnAction(e -> showConsultRegisteredEvaluationsWindow());
+
+        try {
+            EvaluationRegistrationDAO dao = new EvaluationRegistrationDAO();
+            boolean enabled = dao.isRegistrationEnabled();
+            view.getRegisterPartialEvaluationButton().setDisable(!enabled);
+        } catch (Exception e) {
+            view.getRegisterPartialEvaluationButton().setDisable(true);
+        }
     }
 
     private void showRegisterStudentWindow() {
@@ -162,6 +172,20 @@ public class ControllerAcademicMenuWindow implements EventHandler<ActionEvent> {
             new ControllerConsultRegisteredEvaluationsWindow(consultWindow, consultStage, academic);
             consultStage.setScene(new javafx.scene.Scene(consultWindow.getView(), 900, 400));
             consultStage.setTitle("Evaluaciones Registradas");
+            consultStage.show();
+        } catch (Exception e) {
+            String message = ExceptionManager.handleException(e);
+            showErrorDialog(message);
+        }
+    }
+
+    private void showConsultGroupStudentEvaluationsWindow() {
+        try {
+            Stage consultStage = new Stage();
+            ConsultGroupStudentEvaluationsWindow consultWindow = new ConsultGroupStudentEvaluationsWindow();
+            new ControllerConsultGroupStudentEvaluationsWindow(consultWindow, consultStage, academic);
+            consultStage.setScene(new Scene(consultWindow.getView(), 900, 500));
+            consultStage.setTitle("Evaluaciones de Estudiantes del Grupo");
             consultStage.show();
         } catch (Exception e) {
             String message = ExceptionManager.handleException(e);

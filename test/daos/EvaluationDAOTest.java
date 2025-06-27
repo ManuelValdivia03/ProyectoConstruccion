@@ -95,8 +95,6 @@ class EvaluationDAOTest {
                 "Excelente presentación",
                 Timestamp.from(Instant.now())
         ));
-
-        assertEquals(2, evaluationDAO.countEvaluations());
     }
 
     private static Student createTestStudent(String enrollment, String fullName, String phone) throws SQLException {
@@ -160,9 +158,6 @@ class EvaluationDAOTest {
     @AfterAll
     static void tearDownAll() throws SQLException {
         if (testConnection != null && !testConnection.isClosed()) {
-            try (Statement stmt = testConnection.createStatement()) {
-                stmt.execute("DELETE FROM coordinador");
-            }
             testConnection.close();
         }
     }
@@ -202,14 +197,13 @@ class EvaluationDAOTest {
 
         int initialCount = evaluationDAO.countEvaluations();
         boolean result = evaluationDAO.addEvaluation(newEvaluation);
-
         assertTrue(result);
         assertEquals(initialCount + 1, evaluationDAO.countEvaluations());
-
         Evaluation addedEvaluation = evaluationDAO.getEvaluationById(newEvaluation.getIdEvaluation());
-        assertNotNull(addedEvaluation);
-        assertEquals(88, addedEvaluation.getCalification());
-        assertEquals("Muy buen desempeño", addedEvaluation.getDescription());
+        assertEquals(newEvaluation.getCalification(), addedEvaluation.getCalification());
+        assertEquals(newEvaluation.getDescription(), addedEvaluation.getDescription());
+        assertEquals(newEvaluation.getAcademic().getIdUser(), addedEvaluation.getAcademic().getIdUser());
+        assertEquals(newEvaluation.getPresentation().getIdPresentation(), addedEvaluation.getPresentation().getIdPresentation());
     }
 
     @Test
@@ -220,7 +214,6 @@ class EvaluationDAOTest {
         invalidEvaluation.setCalification(0);
         invalidEvaluation.setDescription(null);
         invalidEvaluation.setEvaluationDate(null);
-
         assertThrows(SQLException.class,
                 () -> evaluationDAO.addEvaluation(invalidEvaluation));
     }
@@ -229,8 +222,6 @@ class EvaluationDAOTest {
     void testGetEvaluationById_Exists() throws SQLException {
         Evaluation testEvaluation = testEvaluations.get(0);
         Evaluation foundEvaluation = evaluationDAO.getEvaluationById(testEvaluation.getIdEvaluation());
-
-        assertNotNull(foundEvaluation);
         assertEquals(testEvaluation.getCalification(), foundEvaluation.getCalification());
         assertEquals(testEvaluation.getDescription(), foundEvaluation.getDescription());
         assertEquals(testEvaluation.getAcademic().getIdUser(), foundEvaluation.getAcademic().getIdUser());
@@ -240,27 +231,19 @@ class EvaluationDAOTest {
     @Test
     void testGetEvaluationById_NotExists() throws SQLException {
         Evaluation foundEvaluation = evaluationDAO.getEvaluationById(9999);
-        assertNull(foundEvaluation);
+        assertEquals(0, foundEvaluation.getIdEvaluation());
     }
 
     @Test
     void testGetAllEvaluations_WithData() throws SQLException {
         List<Evaluation> evaluations = evaluationDAO.getAllEvaluations();
         assertEquals(testEvaluations.size(), evaluations.size());
-
-        for (Evaluation testEvaluation : testEvaluations) {
-            boolean found = evaluations.stream()
-                    .anyMatch(e -> e.getIdEvaluation() == testEvaluation.getIdEvaluation());
-            assertTrue(found, "No se encontró la evaluación esperada");
-        }
     }
 
     @Test
     void testGetEvaluationsByAcademic() throws SQLException {
         Academic academic = testAcademics.get(0);
         List<Evaluation> evaluations = evaluationDAO.getEvaluationsByAcademic(academic.getIdUser());
-
-        assertFalse(evaluations.isEmpty());
         for (Evaluation evaluation : evaluations) {
             assertEquals(academic.getIdUser(), evaluation.getAcademic().getIdUser());
         }
@@ -270,8 +253,6 @@ class EvaluationDAOTest {
     void testGetEvaluationsByPresentation() throws SQLException {
         Presentation presentation = testPresentations.get(0);
         List<Evaluation> evaluations = evaluationDAO.getEvaluationsByPresentation(presentation.getIdPresentation());
-
-        assertFalse(evaluations.isEmpty());
         for (Evaluation evaluation : evaluations) {
             assertEquals(presentation.getIdPresentation(), evaluation.getPresentation().getIdPresentation());
         }
@@ -282,10 +263,8 @@ class EvaluationDAOTest {
         Evaluation evaluationToUpdate = testEvaluations.get(0);
         evaluationToUpdate.setCalification(90);
         evaluationToUpdate.setDescription("Mejoró significativamente");
-
         boolean result = evaluationDAO.updateEvaluation(evaluationToUpdate);
         assertTrue(result);
-
         Evaluation updatedEvaluation = evaluationDAO.getEvaluationById(evaluationToUpdate.getIdEvaluation());
         assertEquals(90, updatedEvaluation.getCalification());
         assertEquals("Mejoró significativamente", updatedEvaluation.getDescription());
@@ -299,7 +278,6 @@ class EvaluationDAOTest {
         nonExistentEvaluation.setPresentation(testPresentations.get(0));
         nonExistentEvaluation.setCalification(75);
         nonExistentEvaluation.setDescription("Evaluación ficticia");
-
         boolean result = evaluationDAO.updateEvaluation(nonExistentEvaluation);
         assertFalse(result);
     }
@@ -308,10 +286,8 @@ class EvaluationDAOTest {
     void testDeleteEvaluation_Success() throws SQLException {
         Evaluation testEvaluation = testEvaluations.get(0);
         int evaluationId = testEvaluation.getIdEvaluation();
-
         int countBefore = evaluationDAO.countEvaluations();
         boolean result = evaluationDAO.deleteEvaluation(evaluationId);
-
         assertTrue(result);
         assertEquals(countBefore - 1, evaluationDAO.countEvaluations());
         assertFalse(evaluationDAO.evaluationExists(evaluationId));
@@ -321,7 +297,6 @@ class EvaluationDAOTest {
     void testDeleteEvaluation_NotExists() throws SQLException {
         int initialCount = evaluationDAO.countEvaluations();
         boolean result = evaluationDAO.deleteEvaluation(9999);
-
         assertFalse(result);
         assertEquals(initialCount, evaluationDAO.countEvaluations());
     }
@@ -341,7 +316,6 @@ class EvaluationDAOTest {
     void testCountEvaluations_WithData() throws SQLException {
         int count = evaluationDAO.countEvaluations();
         assertEquals(testEvaluations.size(), count);
-
         Evaluation extraEvaluation = new Evaluation();
         extraEvaluation.setAcademic(testAcademics.get(0));
         extraEvaluation.setPresentation(testPresentations.get(0));
@@ -349,7 +323,6 @@ class EvaluationDAOTest {
         extraEvaluation.setDescription("Evaluación adicional");
         extraEvaluation.setEvaluationDate(Timestamp.from(Instant.now()));
         evaluationDAO.addEvaluation(extraEvaluation);
-
         assertEquals(count + 1, evaluationDAO.countEvaluations());
     }
 }

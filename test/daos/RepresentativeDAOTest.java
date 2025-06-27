@@ -108,11 +108,7 @@ class RepresentativeDAOTest {
         assertTrue(newRep.getIdRepresentative() > 0);
 
         Representative addedRep = representativeDAO.getRepresentativeById(newRep.getIdRepresentative());
-        assertNotNull(addedRep);
-        assertEquals("Nuevo Representante", addedRep.getFullName());
-        assertEquals("nuevo@empresa.com", addedRep.getEmail());
-        assertEquals(testOrganization.getIdLinkedOrganization(),
-                addedRep.getLinkedOrganization().getIdLinkedOrganization());
+        assertEquals(newRep, addedRep);
     }
 
     @Test
@@ -146,42 +142,34 @@ class RepresentativeDAOTest {
     void testGetRepresentativeById_Exists() throws SQLException {
         Representative testRep = testRepresentatives.get(0);
         Representative foundRep = representativeDAO.getRepresentativeById(testRep.getIdRepresentative());
-
-        assertNotNull(foundRep);
-        assertEquals(testRep.getFullName(), foundRep.getFullName());
-        assertEquals(testRep.getEmail(), foundRep.getEmail());
-        assertEquals(testRep.getCellPhone(), foundRep.getCellPhone());
-        assertEquals(testRep.getLinkedOrganization().getIdLinkedOrganization(),
-                foundRep.getLinkedOrganization().getIdLinkedOrganization());
+        assertEquals(testRep, foundRep);
     }
 
     @Test
     void testGetRepresentativeById_NotExists() throws SQLException {
         Representative foundRep = representativeDAO.getRepresentativeById(9999);
-        assertNull(foundRep);
+        assertEquals(new Representative(-1, "", "", "", null), foundRep);
     }
 
     @Test
     void testGetRepresentativeById_Error() throws SQLException {
         Representative foundRep = representativeDAO.getRepresentativeById(9999);
-        assertNull(foundRep);
+        assertEquals(new Representative(-1, "", "", "", null), foundRep);
     }
 
     @Test
     void testGetRepresentativeById_Exception() throws SQLException {
         Representative foundRep = representativeDAO.getRepresentativeById(-1);
-        assertNull(foundRep);
+        assertEquals(new Representative(-1, "", "", "", null), foundRep);
     }
 
     @Test
     void testGetAllRepresentatives_WithData() throws SQLException {
         List<Representative> representatives = representativeDAO.getAllRepresentatives();
         assertEquals(testRepresentatives.size(), representatives.size());
-
         for (Representative testRep : testRepresentatives) {
-            boolean found = representatives.stream()
-                    .anyMatch(r -> r.getIdRepresentative() == testRep.getIdRepresentative());
-            assertTrue(found, "No se encontró el representante esperado");
+            boolean found = representatives.stream().anyMatch(r -> r.equals(testRep));
+            assertTrue(found);
         }
     }
 
@@ -189,11 +177,9 @@ class RepresentativeDAOTest {
     void testGetAllRepresentatives_Success() throws SQLException {
         List<Representative> representatives = representativeDAO.getAllRepresentatives();
         assertEquals(testRepresentatives.size(), representatives.size());
-
         for (Representative testRep : testRepresentatives) {
-            boolean found = representatives.stream()
-                    .anyMatch(r -> r.getIdRepresentative() == testRep.getIdRepresentative());
-            assertTrue(found, "No se encontró el representante esperado");
+            boolean found = representatives.stream().anyMatch(r -> r.equals(testRep));
+            assertTrue(found);
         }
     }
 
@@ -216,49 +202,41 @@ class RepresentativeDAOTest {
     void testGetRepresentativeByEmail_Exists() throws SQLException {
         Representative testRep = testRepresentatives.get(0);
         Representative foundRep = representativeDAO.getRepresentativeByEmail(testRep.getEmail());
-
-        assertNotNull(foundRep);
-        assertEquals(testRep.getIdRepresentative(), foundRep.getIdRepresentative());
-        assertEquals(testRep.getEmail(), foundRep.getEmail());
+        assertEquals(testRep, foundRep);
     }
 
     @Test
     void testGetRepresentativeByEmail_NotExists() throws SQLException {
         Representative foundRep = representativeDAO.getRepresentativeByEmail("noexiste@empresa.com");
-        assertNull(foundRep);
+        assertEquals(new Representative(-1, "", "", "", null), foundRep);
     }
 
     @Test
     void testGetRepresentativeByEmail_Success() throws SQLException {
         Representative testRep = testRepresentatives.get(0);
         Representative foundRep = representativeDAO.getRepresentativeByEmail(testRep.getEmail());
-
-        assertNotNull(foundRep);
-        assertEquals(testRep.getIdRepresentative(), foundRep.getIdRepresentative());
-        assertEquals(testRep.getEmail(), foundRep.getEmail());
+        assertEquals(testRep, foundRep);
     }
 
     @Test
     void testGetRepresentativeByEmail_Error() throws SQLException {
         Representative foundRep = representativeDAO.getRepresentativeByEmail("noexiste@empresa.com");
-        assertNull(foundRep);
+        assertEquals(new Representative(-1, "", "", "", null), foundRep);
     }
 
     @Test
     void testGetRepresentativeByEmail_Exception() throws SQLException {
         Representative foundRep = representativeDAO.getRepresentativeByEmail(null);
-        assertNull(foundRep);
+        assertEquals(new Representative(-1, "", "", "", null), foundRep);
     }
 
     @Test
     void testGetRepresentativesByOrganization_Exists() throws SQLException {
         List<Representative> reps = representativeDAO.getRepresentativesByOrganization(
                 testOrganization.getIdLinkedOrganization());
-
         assertEquals(testRepresentatives.size(), reps.size());
         for (Representative rep : reps) {
-            assertEquals(testOrganization.getIdLinkedOrganization(),
-                    rep.getLinkedOrganization().getIdLinkedOrganization());
+            assertEquals(testOrganization, rep.getLinkedOrganization());
         }
     }
 
@@ -272,11 +250,9 @@ class RepresentativeDAOTest {
     void testGetRepresentativesByOrganization_Success() throws SQLException {
         List<Representative> reps = representativeDAO.getRepresentativesByOrganization(
                 testOrganization.getIdLinkedOrganization());
-
         assertEquals(testRepresentatives.size(), reps.size());
         for (Representative rep : reps) {
-            assertEquals(testOrganization.getIdLinkedOrganization(),
-                    rep.getLinkedOrganization().getIdLinkedOrganization());
+            assertEquals(testOrganization, rep.getLinkedOrganization());
         }
     }
 
@@ -298,14 +274,10 @@ class RepresentativeDAOTest {
         repToUpdate.setFullName("Nombre Actualizado");
         repToUpdate.setEmail("nuevo@email.com");
         repToUpdate.setCellPhone("5550000000");
-
         boolean result = representativeDAO.updateRepresentative(repToUpdate);
         assertTrue(result);
-
         Representative updatedRep = representativeDAO.getRepresentativeById(repToUpdate.getIdRepresentative());
-        assertEquals("Nombre Actualizado", updatedRep.getFullName());
-        assertEquals("nuevo@email.com", updatedRep.getEmail());
-        assertEquals("5550000000", updatedRep.getCellPhone());
+        assertEquals(repToUpdate, updatedRep);
     }
 
     @Test
@@ -315,7 +287,6 @@ class RepresentativeDAOTest {
         nonExistentRep.setFullName("No existe");
         nonExistentRep.setEmail("noexiste@test.com");
         nonExistentRep.setLinkedOrganization(testOrganization);
-
         boolean result = representativeDAO.updateRepresentative(nonExistentRep);
         assertFalse(result);
     }
@@ -327,7 +298,6 @@ class RepresentativeDAOTest {
         nonExistentRep.setFullName("No existe");
         nonExistentRep.setEmail("noexiste@test.com");
         nonExistentRep.setLinkedOrganization(testOrganization);
-
         boolean result = representativeDAO.updateRepresentative(nonExistentRep);
         assertFalse(result);
     }
@@ -341,23 +311,19 @@ class RepresentativeDAOTest {
     void testDeleteRepresentative_Success() throws SQLException {
         Representative testRep = testRepresentatives.get(0);
         int repId = testRep.getIdRepresentative();
-
         int countBefore = representativeDAO.countRepresentatives();
         boolean result = representativeDAO.deleteRepresentative(testRep);
-
         assertTrue(result);
         assertEquals(countBefore - 1, representativeDAO.countRepresentatives());
-        assertNull(representativeDAO.getRepresentativeById(repId));
+        assertEquals(new Representative(-1, "", "", "", null), representativeDAO.getRepresentativeById(repId));
     }
 
     @Test
     void testDeleteRepresentative_NotExists() throws SQLException {
         Representative nonExistentRep = new Representative();
         nonExistentRep.setIdRepresentative(9999);
-
         int initialCount = representativeDAO.countRepresentatives();
         boolean result = representativeDAO.deleteRepresentative(nonExistentRep);
-
         assertFalse(result);
         assertEquals(initialCount, representativeDAO.countRepresentatives());
     }
@@ -366,20 +332,15 @@ class RepresentativeDAOTest {
     void testDeleteRepresentative_Error() throws SQLException {
         Representative nonExistentRep = new Representative();
         nonExistentRep.setIdRepresentative(9999);
-
         int initialCount = representativeDAO.countRepresentatives();
         boolean result = representativeDAO.deleteRepresentative(nonExistentRep);
-
         assertFalse(result);
         assertEquals(initialCount, representativeDAO.countRepresentatives());
     }
 
     @Test
     void testDeleteRepresentative_Exception() {
-        assertDoesNotThrow(() -> {
-            boolean result = representativeDAO.deleteRepresentative(null);
-            assertFalse(result);
-        });
+        assertThrows(IllegalArgumentException.class, () -> representativeDAO.deleteRepresentative(null));
     }
 
     @Test
@@ -413,13 +374,11 @@ class RepresentativeDAOTest {
     void testCountRepresentatives_WithData() throws SQLException {
         int count = representativeDAO.countRepresentatives();
         assertEquals(testRepresentatives.size(), count);
-
         Representative extraRep = new Representative();
         extraRep.setFullName("Extra Rep");
         extraRep.setEmail("extra@empresa.com");
         extraRep.setLinkedOrganization(testOrganization);
         representativeDAO.addRepresentative(extraRep);
-
         assertEquals(count + 1, representativeDAO.countRepresentatives());
     }
 
@@ -427,13 +386,11 @@ class RepresentativeDAOTest {
     void testCountRepresentatives_Success() throws SQLException {
         int count = representativeDAO.countRepresentatives();
         assertEquals(testRepresentatives.size(), count);
-
         Representative extraRep = new Representative();
         extraRep.setFullName("Extra Rep");
         extraRep.setEmail("extra@empresa.com");
         extraRep.setLinkedOrganization(testOrganization);
         representativeDAO.addRepresentative(extraRep);
-
         assertEquals(count + 1, representativeDAO.countRepresentatives());
     }
 

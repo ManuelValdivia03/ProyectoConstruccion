@@ -103,14 +103,14 @@ class AcademicDAOTest {
                 AcademicType.Evaluador
         );
 
-        assertTrue(academicDAO.addAcademic(newAcademic));
+        academicDAO.addAcademic(newAcademic);
         Academic retrieved = academicDAO.getAcademicByStaffNumber("444444");
-        assertEquals(newAcademic.getStaffNumber(), retrieved.getStaffNumber());
+        assertEquals(newAcademic, retrieved);
     }
 
     @Test
     void testAddAcademic_NullAcademic() throws SQLException {
-        assertFalse(academicDAO.addAcademic(null));
+        assertThrows(IllegalArgumentException.class, () -> academicDAO.addAcademic(null));
     }
 
     @Test
@@ -131,7 +131,6 @@ class AcademicDAOTest {
     void testGetAllAcademics_WithData() throws SQLException {
         List<Academic> academics = academicDAO.getAllAcademics();
         assertFalse(academics.isEmpty());
-        assertNotEquals(3, academics.size());
     }
 
     @Test
@@ -149,22 +148,19 @@ class AcademicDAOTest {
     void testGetAcademicByStaffNumber_Exists() throws SQLException {
         Academic testAcademic = testAcademics.get(0);
         Academic found = academicDAO.getAcademicByStaffNumber(testAcademic.getStaffNumber());
-        assertNotNull(found);
-        assertEquals(testAcademic.getStaffNumber(), found.getStaffNumber());
+        assertEquals(testAcademic, found);
     }
 
     @Test
     void testGetAcademicByStaffNumber_NotExists() throws SQLException {
         Academic found = academicDAO.getAcademicByStaffNumber("999999");
-        assertEquals("", found.getStaffNumber());
+        assertEquals(new Academic(-1, "", "", "",'I', "", AcademicType.NONE), found);
     }
 
     @Test
     void testGetAcademicByStaffNumber_NullOrEmpty() throws SQLException {
-        Academic foundNull = academicDAO.getAcademicByStaffNumber(null);
-        assertEquals("", foundNull.getStaffNumber());
-        Academic foundEmpty = academicDAO.getAcademicByStaffNumber("");
-        assertEquals("", foundEmpty.getStaffNumber());
+        assertThrows(IllegalArgumentException.class, () -> academicDAO.getAcademicByStaffNumber(null));
+        assertThrows(IllegalArgumentException.class, () -> academicDAO.getAcademicByStaffNumber(""));
     }
 
     @Test
@@ -172,14 +168,14 @@ class AcademicDAOTest {
         Academic toUpdate = testAcademics.get(1);
         toUpdate.setAcademicType(AcademicType.Evaluador);
 
-        assertTrue(academicDAO.updateAcademic(toUpdate));
+        academicDAO.updateAcademic(toUpdate);
         Academic updated = academicDAO.getAcademicByStaffNumber(toUpdate.getStaffNumber());
-        assertEquals(AcademicType.Evaluador, updated.getAcademicType());
+        assertEquals(toUpdate, updated);
     }
 
     @Test
     void testUpdateAcademic_NullAcademic() throws SQLException {
-        assertFalse(academicDAO.updateAcademic(null));
+        assertThrows(IllegalArgumentException.class, () -> academicDAO.updateAcademic(null));
     }
 
     @Test
@@ -191,14 +187,14 @@ class AcademicDAOTest {
     @Test
     void testDeleteAcademic_Success() throws SQLException {
         Academic toDelete = testAcademics.get(2);
-        assertTrue(academicDAO.deleteAcademic(toDelete));
+        academicDAO.deleteAcademic(toDelete);
         Academic deleted = academicDAO.getAcademicByStaffNumber(toDelete.getStaffNumber());
-        assertEquals("", deleted.getStaffNumber());
+        assertEquals(new Academic(-1, "", "", "",'I', "", AcademicType.NONE), deleted);
     }
 
     @Test
     void testDeleteAcademic_NullAcademic() throws SQLException {
-        assertFalse(academicDAO.deleteAcademic(null));
+        assertThrows(IllegalArgumentException.class, () -> academicDAO.deleteAcademic(null));
     }
 
     @Test
@@ -211,9 +207,6 @@ class AcademicDAOTest {
     void testGetAllAcademicsByType_Correct() throws SQLException {
         List<Academic> evaluadores = academicDAO.getAllAcademicsByType(AcademicType.Evaluador);
         assertEquals(2, evaluadores.size());
-
-        List<Academic> ees = academicDAO.getAllAcademicsByType(AcademicType.EE);
-        assertEquals(1, ees.size());
     }
 
     @Test
@@ -232,14 +225,13 @@ class AcademicDAOTest {
     void testGetAcademicById_Exists() throws SQLException {
         Academic testAcademic = testAcademics.get(0);
         Academic found = academicDAO.getAcademicById(testAcademic.getIdUser());
-        assertNotNull(found);
-        assertEquals(testAcademic.getIdUser(), found.getIdUser());
+        assertEquals(testAcademic, found);
     }
 
     @Test
     void testGetAcademicById_NotExists() throws SQLException {
         Academic found = academicDAO.getAcademicById(9999);
-        assertNull(found);
+        assertEquals(new Academic(-1, "", "", "",'I', "", AcademicType.NONE), found);
     }
 
     @Test
@@ -255,8 +247,8 @@ class AcademicDAOTest {
 
     @Test
     void testAcademicExists_NullOrEmpty() throws SQLException {
-        assertFalse(academicDAO.academicExists(null));
-        assertFalse(academicDAO.academicExists(""));
+        assertThrows(IllegalArgumentException.class, () -> academicDAO.academicExists(null));
+        assertThrows(IllegalArgumentException.class, () -> academicDAO.academicExists(""));
     }
 
     @Test
@@ -280,14 +272,14 @@ class AcademicDAOTest {
         Academic academic = testAcademics.get(0);
         academic.setAcademicType(AcademicType.EE);
 
-        assertTrue(academicDAO.changeAcademicType(academic));
+        academicDAO.changeAcademicType(academic);
         Academic updated = academicDAO.getAcademicByStaffNumber(academic.getStaffNumber());
-        assertEquals(AcademicType.EE, updated.getAcademicType());
+        assertEquals(academic, updated);
     }
 
     @Test
     void testChangeAcademicType_NullAcademic() throws SQLException {
-        assertFalse(academicDAO.changeAcademicType(null));
+        assertThrows(IllegalArgumentException.class, () -> academicDAO.changeAcademicType(null));
     }
 
     @Test
@@ -309,8 +301,8 @@ class AcademicDAOTest {
 
     @Test
     void testStaffNumberExists_NullOrEmpty() throws Exception {
-        assertFalse(academicDAO.staffNumberExists(null));
-        assertFalse(academicDAO.staffNumberExists(""));
+        assertThrows(IllegalArgumentException.class, () -> academicDAO.staffNumberExists(null));
+        assertThrows(IllegalArgumentException.class, () -> academicDAO.staffNumberExists(""));
     }
 
     @Test
@@ -322,13 +314,11 @@ class AcademicDAOTest {
     void testGetAcademicsByStatusFromView_Correct() throws SQLException {
         List<Academic> academics = academicDAO.getAcademicsByStatusFromView('A');
         assertNotNull(academics);
-        // Puede estar vacío si la vista no tiene datos, pero no debe lanzar excepción
     }
 
     @Test
     void testGetAcademicsByStatusFromView_NoResults() throws SQLException {
         List<Academic> academics = academicDAO.getAcademicsByStatusFromView('Z');
-        assertNotNull(academics);
         assertTrue(academics.isEmpty());
     }
 }

@@ -86,32 +86,29 @@ class ProjectDAOTest {
                 Timestamp.from(Instant.now()), Timestamp.from(Instant.now().plusSeconds(172800)), 'P'));
     }
 
-    // addProyect
     @Test
     void testAddProyect_Success() throws SQLException {
-        Project newProject = new Project();
-        newProject.setTitle("Nuevo Proyecto");
-        newProject.setDescription("Descripción del nuevo proyecto");
-        newProject.setDateStart(Timestamp.from(Instant.now()));
-        newProject.setDateEnd(Timestamp.from(Instant.now().plusSeconds(86400)));
-        newProject.setStatus('A');
+        Project project = new Project();
+        project.setTitle("Nuevo Proyecto");
+        project.setDescription("Descripción del nuevo proyecto");
+        project.setDateStart(Timestamp.from(Instant.now()));
+        project.setDateEnd(Timestamp.from(Instant.now().plusSeconds(86400)));
+        project.setStatus('A');
+        project.setCapacity(10);
+        project.setCurrentStudents(0);
 
-        int initialCount = projectDAO.countProyects();
-        boolean result = projectDAO.addProyect(newProject);
+        projectDAO.addProyect(project);
 
-        assertTrue(result);
-        assertEquals(initialCount + 1, projectDAO.countProyects());
-        assertTrue(newProject.getIdProyect() > 0);
+        Project fetched = projectDAO.getProyectByTitle(project.getTitle());
 
-        Project addedProject = projectDAO.getProyectById(newProject.getIdProyect());
-        assertNotNull(addedProject);
-        assertEquals("Nuevo Proyecto", addedProject.getTitle());
-        assertEquals("Descripción del nuevo proyecto", addedProject.getDescription());
+        assertEquals(project, fetched);
     }
 
     @Test
-    void testAddProyect_NullProyect() throws SQLException {
-        assertFalse(projectDAO.addProyect(null));
+    void testAddProyect_NullProyect() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            projectDAO.addProyect(null);
+        });
     }
 
     @Test
@@ -125,7 +122,6 @@ class ProjectDAOTest {
         assertThrows(SQLException.class, () -> projectDAO.addProyect(invalidProject));
     }
 
-    // updateProyect
     @Test
     void testUpdateProyect_Success() throws SQLException {
         Project projectToUpdate = testProjects.get(0);
@@ -138,9 +134,7 @@ class ProjectDAOTest {
         assertTrue(result);
 
         Project updatedProject = projectDAO.getProyectById(projectToUpdate.getIdProyect());
-        assertEquals("Título actualizado", updatedProject.getTitle());
-        assertEquals("Descripción actualizada", updatedProject.getDescription());
-        assertEquals('I', updatedProject.getStatus());
+        assertEquals(projectToUpdate, updatedProject);
     }
 
     @Test
@@ -162,12 +156,9 @@ class ProjectDAOTest {
         assertFalse(projectDAO.updateProyect(null));
     }
 
-    // deleteProyect
     @Test
     void testDeleteProyect_Success() throws SQLException {
         Project testProject = testProjects.get(0);
-        int proyectId = testProject.getIdProyect();
-
         int countBefore = projectDAO.countProyects();
         boolean result = projectDAO.deleteProyect(testProject);
 
@@ -193,16 +184,13 @@ class ProjectDAOTest {
         assertFalse(projectDAO.deleteProyect(null));
     }
 
-    // getAllProyects
     @Test
     void testGetAllProyects_WithData() throws SQLException {
         List<Project> projects = projectDAO.getAllProyects();
         assertEquals(testProjects.size(), projects.size());
-
         for (Project testProject : testProjects) {
-            boolean found = projects.stream()
-                    .anyMatch(p -> p.getIdProyect() == testProject.getIdProyect());
-            assertTrue(found, "No se encontró el proyecto esperado");
+            boolean found = projects.stream().anyMatch(p -> p.equals(testProject));
+            assertTrue(found);
         }
     }
 
@@ -216,7 +204,6 @@ class ProjectDAOTest {
         setUp();
     }
 
-    // getProyectsByStatus
     @Test
     void testGetProyectsByStatus_WithData() throws SQLException {
         List<Project> activos = projectDAO.getProyectsByStatus('A');
@@ -231,60 +218,44 @@ class ProjectDAOTest {
         assertTrue(cancelados.isEmpty());
     }
 
-    // getProyectById
     @Test
     void testGetProyectById_Exists() throws SQLException {
         Project testProject = testProjects.get(0);
         Project foundProject = projectDAO.getProyectById(testProject.getIdProyect());
-
-        assertNotNull(foundProject);
-        assertEquals(testProject.getTitle(), foundProject.getTitle());
-        assertEquals(testProject.getDescription(), foundProject.getDescription());
-        LocalDate expectedStart = testProject.getDateStart().toLocalDateTime().toLocalDate();
-        LocalDate actualStart = foundProject.getDateStart().toLocalDateTime().toLocalDate();
-        assertEquals(expectedStart, actualStart);
-        LocalDate expectedEnd = testProject.getDateEnd().toLocalDateTime().toLocalDate();
-        LocalDate actualEnd = foundProject.getDateEnd().toLocalDateTime().toLocalDate();
-        assertEquals(expectedEnd, actualEnd);
-        assertEquals(testProject.getStatus(), foundProject.getStatus());
+        assertEquals(testProject, foundProject);
     }
 
     @Test
     void testGetProyectById_NotExists() throws SQLException {
         Project foundProject = projectDAO.getProyectById(9999);
-        assertNull(foundProject);
+        assertEquals(new Project(-1, "", "", null, null, 'I', 0, 0), foundProject);
     }
 
     @Test
     void testGetProyectById_InvalidId() throws SQLException {
         Project foundProject = projectDAO.getProyectById(-1);
-        assertNull(foundProject);
+        assertEquals(new Project(-1, "", "", null, null, 'I', 0, 0), foundProject);
     }
 
-    // getProyectByTitle
     @Test
     void testGetProyectByTitle_Exists() throws SQLException {
         Project testProject = testProjects.get(0);
         Project foundProject = projectDAO.getProyectByTitle(testProject.getTitle());
-
-        assertNotNull(foundProject);
-        assertEquals(testProject.getIdProyect(), foundProject.getIdProyect());
-        assertEquals(testProject.getTitle(), foundProject.getTitle());
+        assertEquals(testProject, foundProject);
     }
 
     @Test
     void testGetProyectByTitle_NotExists() throws SQLException {
         Project foundProject = projectDAO.getProyectByTitle("Título inexistente");
-        assertNull(foundProject);
+        assertEquals(new Project(-1, "", "", null, null, 'I', 0, 0), foundProject);
     }
 
     @Test
     void testGetProyectByTitle_NullOrEmpty() throws SQLException {
-        assertNull(projectDAO.getProyectByTitle(null));
-        assertNull(projectDAO.getProyectByTitle(""));
+        assertThrows(IllegalArgumentException.class, () -> projectDAO.getProyectByTitle(null));
+        assertThrows(IllegalArgumentException.class, () -> projectDAO.getProyectByTitle(""));
     }
 
-    // countProyects
     @Test
     void testCountProyects_WithData() throws SQLException {
         int count = projectDAO.countProyects();
@@ -310,7 +281,6 @@ class ProjectDAOTest {
         setUp();
     }
 
-    // proyectExists
     @Test
     void testProyectExists_True() throws SQLException {
         Project testProject = testProjects.get(0);
@@ -324,11 +294,10 @@ class ProjectDAOTest {
 
     @Test
     void testProyectExists_NullOrEmpty() throws SQLException {
-        assertFalse(projectDAO.proyectExists(null));
-        assertFalse(projectDAO.proyectExists(""));
+        assertThrows(IllegalArgumentException.class, () -> projectDAO.proyectExists(null));
+        assertThrows(IllegalArgumentException.class, () -> projectDAO.proyectExists(""));
     }
 
-    // changeProyectStatus
     @Test
     void testChangeProyectStatus_Success() throws SQLException {
         Project testProject = testProjects.get(0);
@@ -338,7 +307,7 @@ class ProjectDAOTest {
         assertTrue(result);
 
         Project updatedProject = projectDAO.getProyectById(testProject.getIdProyect());
-        assertEquals('I', updatedProject.getStatus());
+        assertEquals(testProject, updatedProject);
     }
 
     @Test

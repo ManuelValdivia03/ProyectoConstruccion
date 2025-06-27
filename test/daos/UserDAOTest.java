@@ -41,7 +41,6 @@ class UserDAOTest {
             statement.execute("TRUNCATE TABLE cuenta");
             statement.execute("TRUNCATE TABLE usuario");
             statement.execute("SET FOREIGN_KEY_CHECKS = 1");
-
         }
 
         testUsers = List.of(
@@ -122,18 +121,19 @@ class UserDAOTest {
         User testUser = testUsers.get(0);
         User foundUser = userDAO.getUserById(testUser.getIdUser());
 
-        assertNotNull(foundUser);
-        assertEquals(testUser.getFullName(), foundUser.getFullName());
+        assertEquals(testUser, foundUser);
     }
 
     @Test
     void testGetUserById_NotExists() throws SQLException {
-        assertNull(userDAO.getUserById(9999));
+        User foundUser = userDAO.getUserById(9999);
+        assertEquals(new User(-1, "", "", "", 'I'), foundUser);
     }
 
     @Test
     void testGetUserById_InvalidId() throws SQLException {
-        assertNull(userDAO.getUserById(-1));
+        User foundUser = userDAO.getUserById(-1);
+        assertEquals(new User(-1, "", "", "", 'I'), foundUser);
     }
 
     @Test
@@ -144,7 +144,7 @@ class UserDAOTest {
         assertTrue(userDAO.updateUser(userToUpdate));
 
         User updatedUser = userDAO.getUserById(userToUpdate.getIdUser());
-        assertEquals("Nombre Actualizado", updatedUser.getFullName());
+        assertEquals(userToUpdate, updatedUser);
     }
 
     @Test
@@ -165,7 +165,9 @@ class UserDAOTest {
     void testDeleteUser_Success() throws SQLException {
         User userToDelete = testUsers.get(1);
         assertTrue(userDAO.deleteUser(userToDelete.getIdUser()));
-        assertNull(userDAO.getUserById(userToDelete.getIdUser()));
+
+        User foundUser = userDAO.getUserById(userToDelete.getIdUser());
+        assertEquals(new User(-1, "", "", "", 'I'), foundUser);
     }
 
     @Test

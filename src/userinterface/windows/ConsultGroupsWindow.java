@@ -4,7 +4,12 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -32,7 +37,7 @@ public class ConsultGroupsWindow {
 
         TableColumn<Group, Void> academicCol = new TableColumn<>("Académico Asignado");
         academicCol.setCellFactory(param -> new TableCell<>() {
-            private final Button assignBtn = new Button("Asignar Académico");
+            private final Button assignBtn = new Button();
             private final Label academicLabel = new Label();
 
             {
@@ -45,7 +50,6 @@ public class ConsultGroupsWindow {
                     }
                 });
                 academicLabel.setStyle("-fx-font-size: 14px; -fx-alignment: CENTER; -fx-text-fill: #1A5F4B; -fx-font-weight: bold;");
-                
                 academicLabel.setOnMouseEntered(e -> {
                     Group group = getTableView().getItems().get(getIndex());
                     if (group != null && group.getAcademic() != null) {
@@ -63,14 +67,16 @@ public class ConsultGroupsWindow {
                     Group group = getTableView().getItems().get(getIndex());
                     if (group.getAcademic() != null) {
                         academicLabel.setText(group.getAcademic().getFullName());
-                        setGraphic(academicLabel);
+                        assignBtn.setText("Cambiar Académico");
+                        setGraphic(new HBox(8, academicLabel, assignBtn));
                     } else {
+                        assignBtn.setText("Asignar Académico");
                         setGraphic(assignBtn);
                     }
                 }
             }
         });
-        academicCol.setPrefWidth(200);
+        academicCol.setPrefWidth(250);
         groupTable.getColumns().add(academicCol);
 
         backButton = new Button("Regresar");

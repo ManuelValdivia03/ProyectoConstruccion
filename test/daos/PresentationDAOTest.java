@@ -134,26 +134,29 @@ class PresentationDAOTest {
     void testGetPresentationById_Success() throws SQLException {
         Presentation p = createTestPresentation(testStudents.get(0), Timestamp.from(Instant.now()), PresentationType.Parcial);
         Presentation found = presentationDAO.getPresentationById(p.getIdPresentation());
-        assertNotNull(found);
-        assertEquals(p.getIdPresentation(), found.getIdPresentation());
+        assertEquals(p, found);
     }
 
     @Test
     void testGetPresentationById_Error() throws SQLException {
-        assertNull(presentationDAO.getPresentationById(9999));
+        Presentation found = presentationDAO.getPresentationById(9999);
+        assertEquals(new Presentation(), found);
     }
 
     @Test
     void testGetPresentationById_Exception() throws SQLException {
-        assertNull(presentationDAO.getPresentationById(-1));
+        Presentation found = presentationDAO.getPresentationById(-1);
+        assertEquals(new Presentation(), found);
     }
 
     @Test
     void testGetAllPresentations_Success() throws SQLException {
-        createTestPresentation(testStudents.get(0), Timestamp.from(Instant.now()), PresentationType.Parcial);
-        createTestPresentation(testStudents.get(1), Timestamp.from(Instant.now()), PresentationType.Final);
+        Presentation p1 = createTestPresentation(testStudents.get(0), Timestamp.from(Instant.now()), PresentationType.Parcial);
+        Presentation p2 = createTestPresentation(testStudents.get(1), Timestamp.from(Instant.now()), PresentationType.Final);
         List<Presentation> list = presentationDAO.getAllPresentations();
         assertEquals(2, list.size());
+        assertTrue(list.contains(p1));
+        assertTrue(list.contains(p2));
     }
 
     @Test
@@ -170,9 +173,9 @@ class PresentationDAOTest {
 
     @Test
     void testGetPresentationsByStudent_Success() throws SQLException {
-        createTestPresentation(testStudents.get(0), Timestamp.from(Instant.now()), PresentationType.Parcial);
+        Presentation p = createTestPresentation(testStudents.get(0), Timestamp.from(Instant.now()), PresentationType.Parcial);
         List<Presentation> list = presentationDAO.getPresentationsByStudent(testStudents.get(0).getIdUser());
-        assertFalse(list.isEmpty());
+        assertTrue(list.contains(p));
     }
 
     @Test
@@ -189,9 +192,9 @@ class PresentationDAOTest {
 
     @Test
     void testGetPresentationsByType_Success() throws SQLException {
-        createTestPresentation(testStudents.get(0), Timestamp.from(Instant.now()), PresentationType.Parcial);
+        Presentation p = createTestPresentation(testStudents.get(0), Timestamp.from(Instant.now()), PresentationType.Parcial);
         List<Presentation> list = presentationDAO.getPresentationsByType(PresentationType.Parcial.name());
-        assertFalse(list.isEmpty());
+        assertTrue(list.contains(p));
     }
 
     @Test
@@ -213,7 +216,7 @@ class PresentationDAOTest {
         boolean updated = presentationDAO.updatePresentation(p);
         assertTrue(updated);
         Presentation updatedP = presentationDAO.getPresentationById(p.getIdPresentation());
-        assertEquals(PresentationType.Final, updatedP.getPresentationType());
+        assertEquals(p, updatedP);
     }
 
     @Test
@@ -228,7 +231,7 @@ class PresentationDAOTest {
 
     @Test
     void testUpdatePresentation_Exception() {
-        assertThrows(SQLException.class, () -> presentationDAO.updatePresentation(null));
+        assertThrows(IllegalArgumentException.class, () -> presentationDAO.updatePresentation(null));
     }
 
     @Test
@@ -236,7 +239,8 @@ class PresentationDAOTest {
         Presentation p = createTestPresentation(testStudents.get(0), Timestamp.from(Instant.now()), PresentationType.Parcial);
         boolean deleted = presentationDAO.deletePresentation(p.getIdPresentation());
         assertTrue(deleted);
-        assertNull(presentationDAO.getPresentationById(p.getIdPresentation()));
+        Presentation found = presentationDAO.getPresentationById(p.getIdPresentation());
+        assertEquals(new Presentation(), found);
     }
 
     @Test

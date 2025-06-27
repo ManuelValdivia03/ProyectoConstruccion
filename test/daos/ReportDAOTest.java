@@ -31,7 +31,6 @@ class ReportDAOTest {
         userDAO = new UserDAO();
         testConnection = ConnectionDataBase.getConnection();
 
-        // Clear all test data
         try (var conn = ConnectionDataBase.getConnection();
              var statement = conn.createStatement()) {
             statement.execute("SET FOREIGN_KEY_CHECKS = 0");
@@ -55,14 +54,12 @@ class ReportDAOTest {
             statement.execute("SET FOREIGN_KEY_CHECKS = 1");
         }
 
-        // Create test user
         User user = new User();
         user.setFullName("Estudiante Prueba");
         user.setCellphone("5550000000");
         user.setStatus('A');
         userDAO.addUser(user);
 
-        // Create test student
         testStudent = new Student();
         testStudent.setIdUser(user.getIdUser());
         testStudent.setFullName(user.getFullName());
@@ -70,7 +67,6 @@ class ReportDAOTest {
         testStudent.setStatus(user.getStatus());
         studentDAO.addStudent(testStudent, 0);
 
-        // Create test reports
         testReports = new ArrayList<>();
         testReports.add(createTestReport(
                 Timestamp.valueOf(LocalDateTime.now()),
@@ -113,13 +109,11 @@ class ReportDAOTest {
 
     @BeforeEach
     void setUp() throws SQLException {
-        // Clear reports table
         try (Statement stmt = testConnection.createStatement()) {
             stmt.execute("DELETE FROM reporte");
             stmt.execute("ALTER TABLE reporte AUTO_INCREMENT = 1");
         }
 
-        // Recreate test reports
         testReports = new ArrayList<>();
         testReports.add(createTestReport(
                 Timestamp.valueOf(LocalDateTime.now()),
@@ -157,12 +151,7 @@ class ReportDAOTest {
         assertTrue(newReport.getIdReport() > 0);
 
         Report addedReport = reportDAO.getReportById(newReport.getIdReport());
-        assertNotNull(addedReport);
-        assertEquals(8, addedReport.getHoursReport());
-        assertEquals(ReportType.Final, addedReport.getReportType());
-        assertEquals("Nueva metodología", addedReport.getMethodology());
-        assertEquals("Nueva descripción", addedReport.getDescription());
-        assertEquals(testStudent.getIdUser(), addedReport.getStudent().getIdUser());
+        assertEquals(newReport, addedReport);
     }
 
     @Test
@@ -182,30 +171,22 @@ class ReportDAOTest {
     void testGetReportById_Exists() throws SQLException {
         Report testReport = testReports.get(0);
         Report foundReport = reportDAO.getReportById(testReport.getIdReport());
-
-        assertNotNull(foundReport);
-        assertEquals(testReport.getHoursReport(), foundReport.getHoursReport());
-        assertEquals(testReport.getReportType(), foundReport.getReportType());
-        assertEquals(testReport.getMethodology(), foundReport.getMethodology());
-        assertEquals(testReport.getDescription(), foundReport.getDescription());
-        assertEquals(testReport.getStudent().getIdUser(), foundReport.getStudent().getIdUser());
+        assertEquals(testReport, foundReport);
     }
 
     @Test
     void testGetReportById_NotExists() throws SQLException {
         Report foundReport = reportDAO.getReportById(9999);
-        assertEquals(0, foundReport.getIdReport()); // Should return empty report
+        assertEquals(new Report(), foundReport);
     }
 
     @Test
     void testGetAllReports_WithData() throws SQLException {
         List<Report> reports = reportDAO.getAllReports();
         assertEquals(testReports.size(), reports.size());
-
         for (Report testReport : testReports) {
-            boolean found = reports.stream()
-                    .anyMatch(r -> r.getIdReport() == testReport.getIdReport());
-            assertTrue(found, "No se encontró el reporte esperado");
+            boolean found = reports.stream().anyMatch(r -> r.equals(testReport));
+            assertTrue(found);
         }
     }
 
@@ -213,9 +194,8 @@ class ReportDAOTest {
     void testGetReportsByStudent_Exists() throws SQLException {
         List<Report> reports = reportDAO.getReportsByStudent(testStudent.getIdUser());
         assertEquals(testReports.size(), reports.size());
-
         for (Report report : reports) {
-            assertEquals(testStudent.getIdUser(), report.getStudent().getIdUser());
+            assertEquals(testStudent, report.getStudent());
         }
     }
 
@@ -238,10 +218,7 @@ class ReportDAOTest {
         assertTrue(result);
 
         Report updatedReport = reportDAO.getReportById(reportToUpdate.getIdReport());
-        assertEquals(15, updatedReport.getHoursReport());
-        assertEquals(ReportType.Mensual, updatedReport.getReportType());
-        assertEquals("Metodología actualizada", updatedReport.getMethodology());
-        assertEquals("Descripción actualizada", updatedReport.getDescription());
+        assertEquals(reportToUpdate, updatedReport);
     }
 
     @Test

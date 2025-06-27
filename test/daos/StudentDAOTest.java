@@ -27,6 +27,9 @@ class StudentDAOTest {
         try (var conn = ConnectionDataBase.getConnection();
              var statement = conn.createStatement()) {
             statement.execute("SET FOREIGN_KEY_CHECKS = 0");
+            statement.execute("TRUNCATE TABLE seguimiento_actividad");
+            statement.execute("TRUNCATE TABLE documentos_asignacion");
+            statement.execute("TRUNCATE TABLE proyecto_estudiante");
             statement.execute("TRUNCATE TABLE grupo_estudiante");
             statement.execute("TRUNCATE TABLE estudiante");
             statement.execute("TRUNCATE TABLE academico");
@@ -58,10 +61,7 @@ class StudentDAOTest {
     }
 
     private Student createTestStudent(String enrollment, String fullName, String phone, int grade) throws SQLException {
-        // Create user first
         int userId = createTestUser(fullName, phone);
-
-        // Then create student record
         String sql = "INSERT INTO estudiante (id_usuario, matricula, calificacion) VALUES (?, ?, ?)";
         try (PreparedStatement ps = testConnection.prepareStatement(sql)) {
             ps.setInt(1, userId);
@@ -69,7 +69,6 @@ class StudentDAOTest {
             ps.setInt(3, grade);
             ps.executeUpdate();
         }
-
         Student student = new Student();
         student.setIdUser(userId);
         student.setEnrollment(enrollment);
@@ -86,7 +85,6 @@ class StudentDAOTest {
             ps.setString(1, fullName);
             ps.setString(2, phone);
             ps.executeUpdate();
-
             try (ResultSet rs = ps.getGeneratedKeys()) {
                 if (rs.next()) {
                     return rs.getInt(1);
@@ -114,23 +112,19 @@ class StudentDAOTest {
     private void cleanTestData() throws SQLException {
         if (!testGroupNrcs.isEmpty() || !testStudentIds.isEmpty()) {
             StringBuilder deleteQuery = new StringBuilder("DELETE FROM grupo_estudiante WHERE ");
-
             if (!testGroupNrcs.isEmpty()) {
                 deleteQuery.append("nrc IN (")
                         .append(String.join(",", testGroupNrcs.stream().map(String::valueOf).toArray(String[]::new)))
                         .append(")");
             }
-
             if (!testGroupNrcs.isEmpty() && !testStudentIds.isEmpty()) {
                 deleteQuery.append(" OR ");
             }
-
             if (!testStudentIds.isEmpty()) {
                 deleteQuery.append("id_usuario IN (")
                         .append(String.join(",", testStudentIds.stream().map(String::valueOf).toArray(String[]::new)))
                         .append(")");
             }
-
             try (Statement stmt = testConnection.createStatement()) {
                 stmt.execute(deleteQuery.toString());
             }
@@ -143,14 +137,12 @@ class StudentDAOTest {
             }
             testGroupNrcs.clear();
         }
-
         if (!testStudentIds.isEmpty()) {
             String deleteStudents = "DELETE FROM estudiante WHERE id_usuario IN (" +
                     String.join(",", testStudentIds.stream().map(String::valueOf).toArray(String[]::new)) + ")";
             try (Statement stmt = testConnection.createStatement()) {
                 stmt.execute(deleteStudents);
             }
-
             String deleteUsers = "DELETE FROM usuario WHERE id_usuario IN (" +
                     String.join(",", testStudentIds.stream().map(String::valueOf).toArray(String[]::new)) + ")";
             try (Statement stmt = testConnection.createStatement()) {
@@ -160,10 +152,8 @@ class StudentDAOTest {
         }
     }
 
-    // addStudent
     @Test
     void testAddStudent_Success() throws SQLException {
-        // Crea solo el usuario, no el estudiante
         int userId = createTestUser("New Student", "5554444444");
         Student newStudent = new Student();
         newStudent.setIdUser(userId);
@@ -172,7 +162,6 @@ class StudentDAOTest {
         newStudent.setCellphone("5554444444");
         newStudent.setGrade(6);
         testStudentIds.add(userId);
-
         boolean result = studentDAO.addStudent(newStudent,0);
         assertTrue(result);
     }
@@ -188,7 +177,6 @@ class StudentDAOTest {
         assertThrows(SQLException.class, () -> studentDAO.addStudent(duplicateStudent,0));
     }
 
-    // getStudentByEnrollment
     @Test
     void testGetStudentByEnrollment_Exists() throws SQLException {
         Student foundStudent = studentDAO.getStudentByEnrollment("STEST001");
@@ -207,7 +195,6 @@ class StudentDAOTest {
         assertEquals(-1, foundStudent.getIdUser());
     }
 
-    // getAllStudents
     @Test
     void testGetAllStudents_WithData() throws SQLException {
         List<Student> students = studentDAO.getAllStudents();
@@ -222,7 +209,6 @@ class StudentDAOTest {
         setUp();
     }
 
-    // getSudentsByStatus
     @Test
     void testGetStudentsByStatus_WithData() throws SQLException {
         List<Student> students = studentDAO.getSudentsByStatus('A');
@@ -235,7 +221,6 @@ class StudentDAOTest {
         assertTrue(students.isEmpty());
     }
 
-    // getStudentById
     @Test
     void testGetStudentById_Exists() throws SQLException {
         Student foundStudent = studentDAO.getStudentById(testStudents.get(0).getIdUser());
@@ -245,16 +230,15 @@ class StudentDAOTest {
     @Test
     void testGetStudentById_NotExists() throws SQLException {
         Student foundStudent = studentDAO.getStudentById(999999);
-        assertNull(foundStudent);
+        assertEquals(-1, foundStudent.getIdUser());
     }
 
     @Test
     void testGetStudentById_InvalidId() throws SQLException {
         Student foundStudent = studentDAO.getStudentById(-1);
-        assertNull(foundStudent);
+        assertEquals(-1, foundStudent.getIdUser());
     }
 
-    // updateStudent
     @Test
     void testUpdateStudent_Success() throws SQLException {
         Student toUpdate = testStudents.get(0);
@@ -278,7 +262,6 @@ class StudentDAOTest {
         assertFalse(studentDAO.updateStudent(null));
     }
 
-    // updateStudentGrade
     @Test
     void testUpdateStudentGrade_Success() throws SQLException {
         boolean result = studentDAO.updateStudentGrade(testStudents.get(0).getIdUser(), 9);
@@ -297,13 +280,12 @@ class StudentDAOTest {
         assertFalse(result);
     }
 
-    // deleteStudent
     @Test
     void testDeleteStudent_Success() throws SQLException {
         int idToDelete = testStudents.get(0).getIdUser();
         boolean result = studentDAO.deleteStudent(idToDelete);
         assertTrue(result);
-        testStudentIds.remove(Integer.valueOf(idToDelete)); // Elimina por valor, no por índice
+        testStudentIds.remove(Integer.valueOf(idToDelete));
     }
 
     @Test
@@ -318,7 +300,6 @@ class StudentDAOTest {
         assertFalse(result);
     }
 
-    // getStudentsByGroup
     @Test
     void testGetStudentsByGroup_WithData() throws SQLException {
         int testNrc = createTestGroup(1001);
@@ -341,7 +322,6 @@ class StudentDAOTest {
         assertTrue(students.isEmpty());
     }
 
-    // assignStudentToGroup
     @Test
     void testAssignStudentToGroup_Success() throws SQLException {
         int testNrc = createTestGroup(1003);
@@ -362,7 +342,6 @@ class StudentDAOTest {
         assertFalse(result);
     }
 
-    // studentExistsById
     @Test
     void testStudentExistsById_True() throws SQLException {
         boolean exists = studentDAO.studentExistsById(testStudents.get(0).getIdUser());
@@ -381,7 +360,6 @@ class StudentDAOTest {
         assertFalse(exists);
     }
 
-    // enrollmentExists
     @Test
     void testEnrollmentExists_DuplicateEnrollment_ShouldThrowException() {
         assertThrows(RepeatedEnrollmentException.class, () -> studentDAO.enrollmentExists("STEST001"));
@@ -399,11 +377,9 @@ class StudentDAOTest {
         assertFalse(exists);
     }
 
-    // countStudents
     @Test
     void testCountStudents_WithData() throws SQLException {
         int initialCount = studentDAO.countStudents();
-        // Crea usuario y estudiante nuevos, pero solo inserta el usuario manualmente
         int userId = createTestUser("Count Test", "5555555555");
         Student newStudent = new Student();
         newStudent.setIdUser(userId);
@@ -412,7 +388,6 @@ class StudentDAOTest {
         newStudent.setCellphone("5555555555");
         newStudent.setGrade(7);
         testStudentIds.add(userId);
-
         studentDAO.addStudent(newStudent,0);
         assertEquals(initialCount + 1, studentDAO.countStudents());
     }

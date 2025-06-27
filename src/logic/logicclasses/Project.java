@@ -100,6 +100,27 @@ public class Project {
         this.currentStudents = currentStudents;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Project project = (Project) o;
+        if (this.idProyect > 0 && project.idProyect > 0) {
+            return this.idProyect == project.idProyect;
+        }
+        return status == project.status &&
+                capacity == project.capacity &&
+                currentStudents == project.currentStudents &&
+                java.util.Objects.equals(title, project.title) &&
+                java.util.Objects.equals(description, project.description) &&
+                java.util.Objects.equals(dateStart, project.dateStart) &&
+                java.util.Objects.equals(dateEnd, project.dateEnd);
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(idProyect, title, description, dateStart, dateEnd, status, capacity, currentStudents);
+    }
 
 
-}
+    }

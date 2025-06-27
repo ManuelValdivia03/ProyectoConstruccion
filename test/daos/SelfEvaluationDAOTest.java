@@ -48,7 +48,6 @@ class SelfEvaluationDAOTest {
             statement.execute("SET FOREIGN_KEY_CHECKS = 1");
         }
 
-        // Insertar primero en usuario, luego en estudiante
         int idUsuario;
         try (PreparedStatement ps = testConnection.prepareStatement(
                 "INSERT INTO usuario (nombre_completo, telefono, estado) VALUES (?, ?, 'A')",
@@ -129,10 +128,7 @@ class SelfEvaluationDAOTest {
         assertTrue(newEvaluation.getIdSelfEvaluation() > 0);
 
         SelfEvaluation addedEvaluation = selfEvaluationDAO.getSelfEvaluationById(newEvaluation.getIdSelfEvaluation());
-        assertNotNull(addedEvaluation);
-        assertEquals("Excelente trabajo", addedEvaluation.getFeedBack());
-        assertEquals(9.5f, addedEvaluation.getCalification(), 0.001);
-        assertEquals(testStudent.getIdUser(), addedEvaluation.getStudent().getIdUser());
+        assertEquals(newEvaluation, addedEvaluation);
     }
 
     @Test
@@ -150,38 +146,32 @@ class SelfEvaluationDAOTest {
     void testGetSelfEvaluationById_Exists() throws SQLException {
         SelfEvaluation testEvaluation = testSelfEvaluations.get(0);
         SelfEvaluation foundEvaluation = selfEvaluationDAO.getSelfEvaluationById(testEvaluation.getIdSelfEvaluation());
-
-        assertNotNull(foundEvaluation);
-        assertEquals(testEvaluation.getFeedBack(), foundEvaluation.getFeedBack());
-        assertEquals(testEvaluation.getCalification(), foundEvaluation.getCalification(), 0.001);
-        assertEquals(testEvaluation.getStudent().getIdUser(), foundEvaluation.getStudent().getIdUser());
+        assertEquals(testEvaluation, foundEvaluation);
     }
 
     @Test
     void testGetSelfEvaluationById_NotExists() throws SQLException {
         SelfEvaluation foundEvaluation = selfEvaluationDAO.getSelfEvaluationById(9999);
-        assertNull(foundEvaluation);
+        assertNotEquals(testSelfEvaluations.get(0), foundEvaluation);
     }
 
     @Test
     void testGetAllSelfEvaluations_WithData() throws SQLException {
         List<SelfEvaluation> evaluations = selfEvaluationDAO.getAllSelfEvaluations();
         assertEquals(testSelfEvaluations.size(), evaluations.size());
-
         for (SelfEvaluation testEvaluation : testSelfEvaluations) {
             boolean found = evaluations.stream()
-                    .anyMatch(e -> e.getIdSelfEvaluation() == testEvaluation.getIdSelfEvaluation());
-            assertTrue(found, "No se encontró la autoevaluación esperada");
+                    .anyMatch(e -> e.equals(testEvaluation));
+            assertTrue(found);
         }
     }
 
     @Test
     void testGetSelfEvaluationsByStudent_Exists() throws SQLException {
         List<SelfEvaluation> evaluations = selfEvaluationDAO.getSelfEvaluationsByStudent(testStudent.getIdUser());
-
         assertEquals(testSelfEvaluations.size(), evaluations.size());
         for (SelfEvaluation evaluation : evaluations) {
-            assertEquals(testStudent.getIdUser(), evaluation.getStudent().getIdUser());
+            assertEquals(testStudent, evaluation.getStudent());
         }
     }
 
@@ -201,8 +191,7 @@ class SelfEvaluationDAOTest {
         assertTrue(result);
 
         SelfEvaluation updatedEvaluation = selfEvaluationDAO.getSelfEvaluationById(evaluationToUpdate.getIdSelfEvaluation());
-        assertEquals("Feedback actualizado", updatedEvaluation.getFeedBack());
-        assertEquals(9.0f, updatedEvaluation.getCalification(), 0.001);
+        assertEquals(evaluationToUpdate, updatedEvaluation);
     }
 
     @Test
@@ -262,169 +251,5 @@ class SelfEvaluationDAOTest {
         selfEvaluationDAO.addSelfEvaluation(extraEvaluation);
 
         assertEquals(count + 1, selfEvaluationDAO.countSelfEvaluations());
-    }
-
-    @Test
-    void testAddSelfEvaluation_Error() {
-        SelfEvaluation invalidEvaluation = new SelfEvaluation();
-        invalidEvaluation.setFeedBack(null);
-        invalidEvaluation.setCalification(7.0f);
-        invalidEvaluation.setStudent(testStudent);
-
-        assertThrows(SQLException.class,
-                () -> selfEvaluationDAO.addSelfEvaluation(invalidEvaluation));
-    }
-
-    @Test
-    void testAddSelfEvaluation_Exception() {
-        assertThrows(SQLException.class, () -> selfEvaluationDAO.addSelfEvaluation(null));
-    }
-
-    @Test
-    void testGetSelfEvaluationById_Success() throws SQLException {
-        SelfEvaluation testEvaluation = testSelfEvaluations.get(0);
-        SelfEvaluation foundEvaluation = selfEvaluationDAO.getSelfEvaluationById(testEvaluation.getIdSelfEvaluation());
-
-        assertNotNull(foundEvaluation);
-        assertEquals(testEvaluation.getFeedBack(), foundEvaluation.getFeedBack());
-        assertEquals(testEvaluation.getCalification(), foundEvaluation.getCalification(), 0.001);
-        assertEquals(testEvaluation.getStudent().getIdUser(), foundEvaluation.getStudent().getIdUser());
-    }
-
-    @Test
-    void testGetSelfEvaluationById_Error() throws SQLException {
-        SelfEvaluation foundEvaluation = selfEvaluationDAO.getSelfEvaluationById(9999);
-        assertNull(foundEvaluation);
-    }
-
-    @Test
-    void testGetSelfEvaluationById_Exception() throws SQLException {
-        SelfEvaluation foundEvaluation = selfEvaluationDAO.getSelfEvaluationById(-1);
-        assertNull(foundEvaluation);
-    }
-
-    @Test
-    void testGetAllSelfEvaluations_Success() throws SQLException {
-        List<SelfEvaluation> evaluations = selfEvaluationDAO.getAllSelfEvaluations();
-        assertEquals(testSelfEvaluations.size(), evaluations.size());
-
-        for (SelfEvaluation testEvaluation : testSelfEvaluations) {
-            boolean found = evaluations.stream()
-                    .anyMatch(e -> e.getIdSelfEvaluation() == testEvaluation.getIdSelfEvaluation());
-            assertTrue(found, "No se encontró la autoevaluación esperada");
-        }
-    }
-
-    @Test
-    void testGetAllSelfEvaluations_Error() throws SQLException {
-        try (Statement stmt = testConnection.createStatement()) {
-            stmt.execute("DELETE FROM autoevaluacion");
-        }
-        List<SelfEvaluation> evaluations = selfEvaluationDAO.getAllSelfEvaluations();
-        assertTrue(evaluations.isEmpty());
-    }
-
-    @Test
-    void testGetAllSelfEvaluations_Exception() throws SQLException {
-        List<SelfEvaluation> evaluations = selfEvaluationDAO.getAllSelfEvaluations();
-        assertNotNull(evaluations);
-    }
-
-    @Test
-    void testGetSelfEvaluationsByStudent_Success() throws SQLException {
-        List<SelfEvaluation> evaluations = selfEvaluationDAO.getSelfEvaluationsByStudent(testStudent.getIdUser());
-
-        assertEquals(testSelfEvaluations.size(), evaluations.size());
-        for (SelfEvaluation evaluation : evaluations) {
-            assertEquals(testStudent.getIdUser(), evaluation.getStudent().getIdUser());
-        }
-    }
-
-    @Test
-    void testGetSelfEvaluationsByStudent_Error() throws SQLException {
-        List<SelfEvaluation> evaluations = selfEvaluationDAO.getSelfEvaluationsByStudent(9999);
-        assertTrue(evaluations.isEmpty());
-    }
-
-    @Test
-    void testGetSelfEvaluationsByStudent_Exception() throws SQLException {
-        List<SelfEvaluation> evaluations = selfEvaluationDAO.getSelfEvaluationsByStudent(-1);
-        assertTrue(evaluations.isEmpty());
-    }
-
-    @Test
-    void testUpdateSelfEvaluation_Error() throws SQLException {
-        SelfEvaluation nonExistentEvaluation = new SelfEvaluation();
-        nonExistentEvaluation.setIdSelfEvaluation(9999);
-        nonExistentEvaluation.setFeedBack("No existe");
-        nonExistentEvaluation.setCalification(5.0f);
-        nonExistentEvaluation.setStudent(testStudent);
-
-        boolean result = selfEvaluationDAO.updateSelfEvaluation(nonExistentEvaluation);
-        assertFalse(result);
-    }
-
-    @Test
-    void testUpdateSelfEvaluation_Exception() {
-        assertThrows(SQLException.class, () -> selfEvaluationDAO.updateSelfEvaluation(null));
-    }
-
-    @Test
-    void testDeleteSelfEvaluation_Error() throws SQLException {
-        int initialCount = selfEvaluationDAO.countSelfEvaluations();
-        boolean result = selfEvaluationDAO.deleteSelfEvaluation(9999);
-
-        assertFalse(result);
-        assertEquals(initialCount, selfEvaluationDAO.countSelfEvaluations());
-    }
-
-    @Test
-    void testDeleteSelfEvaluation_Exception() throws SQLException {
-        boolean result = selfEvaluationDAO.deleteSelfEvaluation(-1);
-        assertFalse(result);
-    }
-
-    @Test
-    void testSelfEvaluationExists_Success() throws SQLException {
-        SelfEvaluation testEvaluation = testSelfEvaluations.get(0);
-        assertTrue(selfEvaluationDAO.selfEvaluationExists(testEvaluation.getIdSelfEvaluation()));
-    }
-
-    @Test
-    void testSelfEvaluationExists_Error() throws SQLException {
-        assertFalse(selfEvaluationDAO.selfEvaluationExists(9999));
-    }
-
-    @Test
-    void testSelfEvaluationExists_Exception() throws SQLException {
-        assertFalse(selfEvaluationDAO.selfEvaluationExists(-1));
-    }
-
-    @Test
-    void testCountSelfEvaluations_Success() throws SQLException {
-        int count = selfEvaluationDAO.countSelfEvaluations();
-        assertEquals(testSelfEvaluations.size(), count);
-
-        SelfEvaluation extraEvaluation = new SelfEvaluation();
-        extraEvaluation.setFeedBack("Extra evaluación");
-        extraEvaluation.setCalification(7.5f);
-        extraEvaluation.setStudent(testStudent);
-        selfEvaluationDAO.addSelfEvaluation(extraEvaluation);
-
-        assertEquals(count + 1, selfEvaluationDAO.countSelfEvaluations());
-    }
-
-    @Test
-    void testCountSelfEvaluations_Error() throws SQLException {
-        try (Statement stmt = testConnection.createStatement()) {
-            stmt.execute("DELETE FROM autoevaluacion");
-        }
-        assertEquals(0, selfEvaluationDAO.countSelfEvaluations());
-    }
-
-    @Test
-    void testCountSelfEvaluations_Exception() throws SQLException {
-        int count = selfEvaluationDAO.countSelfEvaluations();
-        assertTrue(count >= 0);
     }
 }

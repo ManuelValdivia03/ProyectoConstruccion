@@ -40,4 +40,19 @@ public class Account {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return idUser == account.idUser &&
+                java.util.Objects.equals(email, account.email) &&
+                java.util.Objects.equals(password, account.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(idUser, email, password);
+    }
 }

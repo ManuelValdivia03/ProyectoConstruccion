@@ -1,6 +1,14 @@
 package logic.services;
 
-import logic.exceptions.*;
+import logic.exceptions.InvalidCellPhoneException;
+import logic.exceptions.InvalidCredentialsException;
+import logic.exceptions.RepeatedCellPhoneException;
+import logic.exceptions.RepeatedEmailException;
+import logic.exceptions.RepeatedEnrollmentException;
+import logic.exceptions.RepeatedNameLinkedOrganizationException;
+import logic.exceptions.RepeatedProyectException;
+import logic.exceptions.RepeatedStaffNumberException;
+import logic.exceptions.UserNotFoundException;
 import java.sql.SQLException;
 
 public class ExceptionManager {
