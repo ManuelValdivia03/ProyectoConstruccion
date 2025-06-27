@@ -30,8 +30,8 @@ class GroupDAOTest {
         studentDAO = new StudentDAO();
         testConnection = ConnectionDataBase.getConnection();
 
-        try (var conn = ConnectionDataBase.getConnection();
-             var statement = conn.createStatement()) {
+        try (var connection = ConnectionDataBase.getConnection();
+             var statement = connection.createStatement()) {
             statement.execute("SET FOREIGN_KEY_CHECKS = 0");
             statement.execute("TRUNCATE TABLE grupo_estudiante");
             statement.execute("TRUNCATE TABLE estudiante");
@@ -90,18 +90,18 @@ class GroupDAOTest {
         group.setGroupName(groupName);
 
         String sql = "INSERT INTO grupo (nrc, nombre) VALUES (?, ?)";
-        try (PreparedStatement ps = testConnection.prepareStatement(sql)) {
-            ps.setInt(1, nrc);
-            ps.setString(2, groupName);
-            ps.executeUpdate();
+        try (PreparedStatement preparedStatement = testConnection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, nrc);
+            preparedStatement.setString(2, groupName);
+            preparedStatement.executeUpdate();
         }
 
         for (Student student : students) {
             String assignSql = "INSERT INTO grupo_estudiante (nrc, id_usuario) VALUES (?, ?)";
-            try (PreparedStatement ps = testConnection.prepareStatement(assignSql)) {
-                ps.setInt(1, nrc);
-                ps.setInt(2, student.getIdUser());
-                ps.executeUpdate();
+            try (PreparedStatement preparedStatement = testConnection.prepareStatement(assignSql)) {
+                preparedStatement.setInt(1, nrc);
+                preparedStatement.setInt(2, student.getIdUser());
+                preparedStatement.executeUpdate();
             }
         }
 

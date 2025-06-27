@@ -29,8 +29,8 @@ class ActivityDAOTest {
         cronogramDAO = new ActivityCronogramDAO();
         testConnection = ConnectionDataBase.getConnection();
 
-        try (var conn = ConnectionDataBase.getConnection();
-             var statement = conn.createStatement()) {
+        try (var connection = ConnectionDataBase.getConnection();
+             var statement = connection.createStatement()) {
             statement.execute("SET FOREIGN_KEY_CHECKS = 0");
             statement.execute("TRUNCATE TABLE grupo_estudiante");
             statement.execute("TRUNCATE TABLE estudiante");
@@ -52,24 +52,24 @@ class ActivityDAOTest {
             statement.execute("SET FOREIGN_KEY_CHECKS = 1");
         }
 
-        try (PreparedStatement psUser = testConnection.prepareStatement(
+        try (PreparedStatement preparedStatement = testConnection.prepareStatement(
                 "INSERT INTO usuario (nombre_completo, telefono, estado) VALUES (?, ?, 'A')",
                 Statement.RETURN_GENERATED_KEYS)) {
-            psUser.setString(1, "Estudiante Test");
-            psUser.setString(2, "5551234567");
-            psUser.executeUpdate();
-            try (ResultSet rs = psUser.getGeneratedKeys()) {
+            preparedStatement.setString(1, "Estudiante Test");
+            preparedStatement.setString(2, "5551234567");
+            preparedStatement.executeUpdate();
+            try (ResultSet rs = preparedStatement.getGeneratedKeys()) {
                 if (rs.next()) {
                     testStudentId = rs.getInt(1);
                 }
             }
         }
-        try (PreparedStatement psEst = testConnection.prepareStatement(
+        try (PreparedStatement preparedStatement = testConnection.prepareStatement(
                 "INSERT INTO estudiante (id_usuario, matricula, calificacion) VALUES (?, ?, ?)")) {
-            psEst.setInt(1, testStudentId);
-            psEst.setString(2, "S0001");
-            psEst.setInt(3, 0);
-            psEst.executeUpdate();
+            preparedStatement.setInt(1, testStudentId);
+            preparedStatement.setString(2, "S0001");
+            preparedStatement.setInt(3, 0);
+            preparedStatement.executeUpdate();
         }
 
         testCronogram = new ActivityCronogram();
@@ -114,9 +114,9 @@ class ActivityDAOTest {
 
     @BeforeEach
     void setUp() throws SQLException {
-        try (Statement stmt = testConnection.createStatement()) {
-            stmt.execute("DELETE FROM actividad");
-            stmt.execute("ALTER TABLE actividad AUTO_INCREMENT = 1");
+        try (Statement statement = testConnection.createStatement()) {
+            statement.execute("DELETE FROM actividad");
+            statement.execute("ALTER TABLE actividad AUTO_INCREMENT = 1");
         }
 
         if (testCronogram == null || !cronogramDAO.cronogramExists(testCronogram.getIdCronogram())) {
@@ -126,19 +126,19 @@ class ActivityDAOTest {
             cronogramDAO.addCronogram(testCronogram);
         }
 
-        try (PreparedStatement psUser = testConnection.prepareStatement(
+        try (PreparedStatement preparedStatement = testConnection.prepareStatement(
                 "INSERT IGNORE INTO usuario (id_usuario, nombre_completo, telefono, estado) VALUES (?, ?, ?, 'A')")) {
-            psUser.setInt(1, testStudentId);
-            psUser.setString(2, "Estudiante Test");
-            psUser.setString(3, "5551234567");
-            psUser.executeUpdate();
+            preparedStatement.setInt(1, testStudentId);
+            preparedStatement.setString(2, "Estudiante Test");
+            preparedStatement.setString(3, "5551234567");
+            preparedStatement.executeUpdate();
         }
-        try (PreparedStatement psEst = testConnection.prepareStatement(
+        try (PreparedStatement preparedStatement = testConnection.prepareStatement(
                 "INSERT IGNORE INTO estudiante (id_usuario, matricula, calificacion) VALUES (?, ?, ?)")) {
-            psEst.setInt(1, testStudentId);
-            psEst.setString(2, "S0001");
-            psEst.setInt(3, 0);
-            psEst.executeUpdate();
+            preparedStatement.setInt(1, testStudentId);
+            preparedStatement.setString(2, "S0001");
+            preparedStatement.setInt(3, 0);
+            preparedStatement.executeUpdate();
         }
 
         testActivities = new ArrayList<>();

@@ -7,7 +7,6 @@ import org.junit.jupiter.api.*;
 
 import java.sql.*;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +22,8 @@ class ProjectDAOTest {
         projectDAO = new ProjectDAO();
         testConnection = ConnectionDataBase.getConnection();
 
-        try (var conn = ConnectionDataBase.getConnection();
-             var statement = conn.createStatement()) {
+        try (var connection = ConnectionDataBase.getConnection();
+             var statement = connection.createStatement()) {
             statement.execute("SET FOREIGN_KEY_CHECKS = 0");
             statement.execute("TRUNCATE TABLE grupo_estudiante");
             statement.execute("TRUNCATE TABLE estudiante");
@@ -75,9 +74,9 @@ class ProjectDAOTest {
 
     @BeforeEach
     void setUp() throws SQLException {
-        try (Statement stmt = testConnection.createStatement()) {
-            stmt.execute("DELETE FROM proyecto");
-            stmt.execute("ALTER TABLE proyecto AUTO_INCREMENT = 1");
+        try (Statement statement = testConnection.createStatement()) {
+            statement.execute("DELETE FROM proyecto");
+            statement.execute("ALTER TABLE proyecto AUTO_INCREMENT = 1");
         }
         testProjects = new ArrayList<>();
         testProjects.add(createTestProyect("Proyecto 1", "Descripción proyecto 1",

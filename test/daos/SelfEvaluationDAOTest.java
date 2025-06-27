@@ -25,8 +25,8 @@ class SelfEvaluationDAOTest {
         studentDAO = new StudentDAO();
         testConnection = ConnectionDataBase.getConnection();
 
-        try (var conn = ConnectionDataBase.getConnection();
-             var statement = conn.createStatement()) {
+        try (var connection = ConnectionDataBase.getConnection();
+             var statement = connection.createStatement()) {
             statement.execute("SET FOREIGN_KEY_CHECKS = 0");
             statement.execute("TRUNCATE TABLE grupo_estudiante");
             statement.execute("TRUNCATE TABLE estudiante");
@@ -49,25 +49,25 @@ class SelfEvaluationDAOTest {
         }
 
         int idUsuario;
-        try (PreparedStatement ps = testConnection.prepareStatement(
+        try (PreparedStatement preparedStatement = testConnection.prepareStatement(
                 "INSERT INTO usuario (nombre_completo, telefono, estado) VALUES (?, ?, 'A')",
                 Statement.RETURN_GENERATED_KEYS)) {
-            ps.setString(1, "Estudiante Prueba");
-            ps.setString(2, "5550000000");
-            ps.executeUpdate();
-            try (ResultSet rs = ps.getGeneratedKeys()) {
-                if (rs.next()) {
-                    idUsuario = rs.getInt(1);
+            preparedStatement.setString(1, "Estudiante Prueba");
+            preparedStatement.setString(2, "5550000000");
+            preparedStatement.executeUpdate();
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    idUsuario = resultSet.getInt(1);
                 } else {
                     throw new SQLException("No se pudo obtener el id_usuario generado.");
                 }
             }
         }
-        try (PreparedStatement psEst = testConnection.prepareStatement(
+        try (PreparedStatement preparedStatement = testConnection.prepareStatement(
                 "INSERT INTO estudiante (id_usuario, matricula) VALUES (?, ?)")) {
-            psEst.setInt(1, idUsuario);
-            psEst.setString(2, "S0001");
-            psEst.executeUpdate();
+            preparedStatement.setInt(1, idUsuario);
+            preparedStatement.setString(2, "S0001");
+            preparedStatement.executeUpdate();
         }
         testStudent = new Student();
         testStudent.setIdUser(idUsuario);
@@ -100,11 +100,11 @@ class SelfEvaluationDAOTest {
 
     @BeforeEach
     void setUp() throws SQLException {
-        try (Statement stmt = testConnection.createStatement()) {
-            stmt.execute("DELETE FROM autoevaluacion");
-            stmt.execute("DELETE FROM presentacion");
-            stmt.execute("ALTER TABLE autoevaluacion AUTO_INCREMENT = 1");
-            stmt.execute("ALTER TABLE presentacion AUTO_INCREMENT = 1");
+        try (Statement statement = testConnection.createStatement()) {
+            statement.execute("DELETE FROM autoevaluacion");
+            statement.execute("DELETE FROM presentacion");
+            statement.execute("ALTER TABLE autoevaluacion AUTO_INCREMENT = 1");
+            statement.execute("ALTER TABLE presentacion AUTO_INCREMENT = 1");
         }
 
         testSelfEvaluations = List.of(

@@ -27,8 +27,8 @@ class AccountDAOTest {
         accountDAO = new AccountDAO();
         userDAO = new UserDAO();
 
-        try (var conn = ConnectionDataBase.getConnection();
-             var statement = conn.createStatement()) {
+        try (var connection = ConnectionDataBase.getConnection();
+             var statement = connection.createStatement()) {
             statement.execute("SET FOREIGN_KEY_CHECKS = 0");
             statement.execute("TRUNCATE TABLE grupo_estudiante");
             statement.execute("TRUNCATE TABLE estudiante");
@@ -89,8 +89,8 @@ class AccountDAOTest {
 
     @Test
     void testGetAllAccounts_EmptyTable() throws SQLException {
-        try (Connection conn = ConnectionDataBase.getConnection();
-             var statement = conn.createStatement()) {
+        try (Connection connection = ConnectionDataBase.getConnection();
+             var statement = connection.createStatement()) {
             statement.execute("DELETE FROM cuenta");
         }
         List<Account> accounts = accountDAO.getAllAccounts();

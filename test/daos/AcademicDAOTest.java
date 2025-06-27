@@ -24,8 +24,8 @@ class AcademicDAOTest {
         academicDAO = new AcademicDAO();
         userDAO = new UserDAO();
 
-        try (var conn = ConnectionDataBase.getConnection();
-             var statement = conn.createStatement()) {
+        try (var connection = ConnectionDataBase.getConnection();
+             var statement = connection.createStatement()) {
             statement.execute("SET FOREIGN_KEY_CHECKS = 0");
             statement.execute("TRUNCATE TABLE grupo_estudiante");
             statement.execute("TRUNCATE TABLE grupo_academico");
@@ -79,10 +79,10 @@ class AcademicDAOTest {
 
     @AfterEach
     void tearDown() throws SQLException {
-        try (var conn = ConnectionDataBase.getConnection();
-             var stmt = conn.createStatement()) {
-            stmt.execute("DELETE FROM academico WHERE id_usuario > 3");
-            stmt.execute("DELETE FROM usuario WHERE id_usuario > 3");
+        try (var connection = ConnectionDataBase.getConnection();
+             var statement = connection.createStatement()) {
+            statement.execute("DELETE FROM academico WHERE id_usuario > 3");
+            statement.execute("DELETE FROM usuario WHERE id_usuario > 3");
         }
     }
 

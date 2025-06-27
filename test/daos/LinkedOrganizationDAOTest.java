@@ -21,8 +21,8 @@ class LinkedOrganizationDAOTest {
         linkedOrganizationDAO = new LinkedOrganizationDAO();
         testConnection = ConnectionDataBase.getConnection();
 
-        try (var conn = ConnectionDataBase.getConnection();
-             var statement = conn.createStatement()) {
+        try (var connection = ConnectionDataBase.getConnection();
+             var statement = connection.createStatement()) {
             statement.execute("SET FOREIGN_KEY_CHECKS = 0");
             statement.execute("TRUNCATE TABLE documentos_organizacion");
             statement.execute("TRUNCATE TABLE grupo_estudiante");
@@ -69,9 +69,9 @@ class LinkedOrganizationDAOTest {
 
     @BeforeEach
     void setUp() throws SQLException {
-        try (Statement stmt = testConnection.createStatement()) {
-            stmt.execute("DELETE FROM organizacion_vinculada");
-            stmt.execute("ALTER TABLE organizacion_vinculada AUTO_INCREMENT = 1");
+        try (Statement statement = testConnection.createStatement()) {
+            statement.execute("DELETE FROM organizacion_vinculada");
+            statement.execute("ALTER TABLE organizacion_vinculada AUTO_INCREMENT = 1");
         }
         testOrganizations = new ArrayList<>();
         testOrganizations.add(createTestOrganization("Empresa A", "5551234567", "contacto@empresaA.com", 'A'));

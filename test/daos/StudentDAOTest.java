@@ -3,7 +3,6 @@ package daos;
 import dataaccess.ConnectionDataBase;
 import logic.daos.StudentDAO;
 import logic.logicclasses.Student;
-import logic.logicclasses.User;
 import logic.exceptions.RepeatedEnrollmentException;
 import org.junit.jupiter.api.*;
 
@@ -24,8 +23,8 @@ class StudentDAOTest {
     static void setUpAll() throws SQLException {
         studentDAO = new StudentDAO();
         testConnection = ConnectionDataBase.getConnection();
-        try (var conn = ConnectionDataBase.getConnection();
-             var statement = conn.createStatement()) {
+        try (var connection = ConnectionDataBase.getConnection();
+             var statement = connection.createStatement()) {
             statement.execute("SET FOREIGN_KEY_CHECKS = 0");
             statement.execute("TRUNCATE TABLE seguimiento_actividad");
             statement.execute("TRUNCATE TABLE documentos_asignacion");
@@ -63,11 +62,11 @@ class StudentDAOTest {
     private Student createTestStudent(String enrollment, String fullName, String phone, int grade) throws SQLException {
         int userId = createTestUser(fullName, phone);
         String sql = "INSERT INTO estudiante (id_usuario, matricula, calificacion) VALUES (?, ?, ?)";
-        try (PreparedStatement ps = testConnection.prepareStatement(sql)) {
-            ps.setInt(1, userId);
-            ps.setString(2, enrollment);
-            ps.setInt(3, grade);
-            ps.executeUpdate();
+        try (PreparedStatement preparedStatement = testConnection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setString(2, enrollment);
+            preparedStatement.setInt(3, grade);
+            preparedStatement.executeUpdate();
         }
         Student student = new Student();
         student.setIdUser(userId);
@@ -81,11 +80,11 @@ class StudentDAOTest {
 
     private int createTestUser(String fullName, String phone) throws SQLException {
         String sql = "INSERT INTO usuario (nombre_completo, telefono) VALUES (?, ?)";
-        try (PreparedStatement ps = testConnection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setString(1, fullName);
-            ps.setString(2, phone);
-            ps.executeUpdate();
-            try (ResultSet rs = ps.getGeneratedKeys()) {
+        try (PreparedStatement preparedStatement = testConnection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setString(1, fullName);
+            preparedStatement.setString(2, phone);
+            preparedStatement.executeUpdate();
+            try (ResultSet rs = preparedStatement.getGeneratedKeys()) {
                 if (rs.next()) {
                     return rs.getInt(1);
                 }
@@ -96,9 +95,9 @@ class StudentDAOTest {
 
     private int createTestGroup(int nrc) throws SQLException {
         String sql = "INSERT INTO grupo (nrc, nombre) VALUES (?, 'Test Group')";
-        try (PreparedStatement ps = testConnection.prepareStatement(sql)) {
-            ps.setInt(1, nrc);
-            ps.executeUpdate();
+        try (PreparedStatement preparedStatement = testConnection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, nrc);
+            preparedStatement.executeUpdate();
         }
         testGroupNrcs.add(nrc);
         return nrc;

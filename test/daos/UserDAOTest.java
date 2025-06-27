@@ -20,8 +20,8 @@ class UserDAOTest {
     static void setUpAll() throws SQLException {
         userDAO = new UserDAO();
 
-        try (var conn = ConnectionDataBase.getConnection();
-             var statement = conn.createStatement()) {
+        try (var connection = ConnectionDataBase.getConnection();
+             var statement = connection.createStatement()) {
             statement.execute("SET FOREIGN_KEY_CHECKS = 0");
             statement.execute("TRUNCATE TABLE grupo_estudiante");
             statement.execute("TRUNCATE TABLE estudiante");
@@ -63,8 +63,8 @@ class UserDAOTest {
 
     @AfterEach
     void tearDown() throws SQLException {
-        try (var conn = ConnectionDataBase.getConnection();
-             var statement = conn.createStatement()) {
+        try (var connection = ConnectionDataBase.getConnection();
+             var statement = connection.createStatement()) {
             statement.execute("DELETE FROM usuario WHERE id_usuario > 5");
             statement.execute("ALTER TABLE usuario AUTO_INCREMENT = 6");
         }
@@ -105,8 +105,8 @@ class UserDAOTest {
 
     @Test
     void testGetAllUsers_EmptyTable() throws SQLException {
-        try (var conn = ConnectionDataBase.getConnection();
-             var statement = conn.createStatement()) {
+        try (var connection = ConnectionDataBase.getConnection();
+             var statement = connection.createStatement()) {
             statement.execute("DELETE FROM usuario");
         }
 

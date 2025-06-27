@@ -36,8 +36,8 @@ class EvaluationDAOTest {
         studentDAO = new StudentDAO();
         testConnection = ConnectionDataBase.getConnection();
 
-        try (var conn = ConnectionDataBase.getConnection();
-             var statement = conn.createStatement()) {
+        try (var connection = ConnectionDataBase.getConnection();
+             var statement = connection.createStatement()) {
             statement.execute("SET FOREIGN_KEY_CHECKS = 0");
             statement.execute("TRUNCATE TABLE grupo_estudiante");
             statement.execute("TRUNCATE TABLE estudiante");
@@ -164,9 +164,9 @@ class EvaluationDAOTest {
 
     @BeforeEach
     void setUp() throws SQLException {
-        try (Statement stmt = testConnection.createStatement()) {
-            stmt.execute("DELETE FROM evaluacion");
-            stmt.execute("ALTER TABLE evaluacion AUTO_INCREMENT = 1");
+        try (Statement statement = testConnection.createStatement()) {
+            statement.execute("DELETE FROM evaluacion");
+            statement.execute("ALTER TABLE evaluacion AUTO_INCREMENT = 1");
         }
 
         testEvaluations = new ArrayList<>();
