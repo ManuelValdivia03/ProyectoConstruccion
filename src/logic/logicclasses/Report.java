@@ -2,6 +2,7 @@ package logic.logicclasses;
 
 import logic.enums.ReportType;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 public class Report {
     private int idReport;
@@ -92,18 +93,20 @@ public class Report {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Report report = (Report) o;
         return idReport == report.idReport &&
                 hoursReport == report.hoursReport &&
-                java.util.Objects.equals(reportDate, report.reportDate) &&
+                Objects.equals(reportDate, report.reportDate) &&
                 reportType == report.reportType &&
-                java.util.Objects.equals(methodology, report.methodology) &&
-                java.util.Objects.equals(description, report.description) &&
-                java.util.Objects.equals(student, report.student);
+                Objects.equals(methodology, report.methodology) &&
+                Objects.equals(description, report.description) &&
+                Objects.equals(student, report.student);
     }
 
     @Override
     public int hashCode() {
-        return java.util.Objects.hash(idReport, reportDate, hoursReport, reportType, methodology, description, student);
+        return Objects.hash(idReport, reportDate, hoursReport, reportType,
+                methodology, description, student);
     }
 }

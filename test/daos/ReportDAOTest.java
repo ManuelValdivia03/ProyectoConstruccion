@@ -136,8 +136,9 @@ class ReportDAOTest {
 
     @Test
     void testAddReport_Success() throws SQLException {
+        Timestamp now = truncateToSeconds(Timestamp.valueOf(LocalDateTime.now()));
         Report newReport = new Report();
-        newReport.setReportDate(Timestamp.valueOf(LocalDateTime.now()));
+        newReport.setReportDate(now);
         newReport.setHoursReport(8);
         newReport.setReportType(ReportType.Final);
         newReport.setMethodology("Nueva metodología");
@@ -152,7 +153,17 @@ class ReportDAOTest {
         assertTrue(newReport.getIdReport() > 0);
 
         Report addedReport = reportDAO.getReportById(newReport.getIdReport());
-        assertEquals(newReport, addedReport);
+
+        assertEquals(newReport.getIdReport(), addedReport.getIdReport());
+        assertEquals(truncateToSeconds(newReport.getReportDate()),
+                truncateToSeconds(addedReport.getReportDate()));
+        assertEquals(newReport.getHoursReport(), addedReport.getHoursReport());
+        assertEquals(newReport.getReportType(), addedReport.getReportType());
+        assertEquals(newReport.getMethodology(), addedReport.getMethodology());
+        assertEquals(newReport.getDescription(), addedReport.getDescription());
+        assertEquals(newReport.getStudent().getIdUser(), addedReport.getStudent().getIdUser());
+        assertEquals(newReport.getStudent().getFullName(), addedReport.getStudent().getFullName());
+        assertEquals(newReport.getStudent().getCellPhone(), addedReport.getStudent().getCellPhone());
     }
 
     @Test
@@ -168,27 +179,11 @@ class ReportDAOTest {
         assertThrows(IllegalArgumentException.class, () -> reportDAO.addReport(invalidReport));
     }
 
-    @Test
-    void testGetReportById_Exists() throws SQLException {
-        Report testReport = testReports.get(0);
-        Report foundReport = reportDAO.getReportById(testReport.getIdReport());
-        assertEquals(testReport, foundReport);
-    }
 
     @Test
     void testGetReportById_NotExists() throws SQLException {
         Report foundReport = reportDAO.getReportById(9999);
         assertEquals(new Report(), foundReport);
-    }
-
-    @Test
-    void testGetAllReports_WithData() throws SQLException {
-        List<Report> reports = reportDAO.getAllReports();
-        assertEquals(testReports.size(), reports.size());
-        for (Report testReport : testReports) {
-            boolean found = reports.stream().anyMatch(r -> r.equals(testReport));
-            assertTrue(found);
-        }
     }
 
     @Test
@@ -207,19 +202,70 @@ class ReportDAOTest {
     }
 
     @Test
+    void testGetReportById_Exists() throws SQLException {
+        Report testReport = testReports.get(0);
+        Report foundReport = reportDAO.getReportById(testReport.getIdReport());
+
+        // Compare fields individually, converting timestamps to dates
+        assertEquals(testReport.getIdReport(), foundReport.getIdReport());
+        assertEquals(truncateToSeconds(testReport.getReportDate()),
+                truncateToSeconds(foundReport.getReportDate()));
+        assertEquals(testReport.getHoursReport(), foundReport.getHoursReport());
+        assertEquals(testReport.getReportType(), foundReport.getReportType());
+        assertEquals(testReport.getMethodology(), foundReport.getMethodology());
+        assertEquals(testReport.getDescription(), foundReport.getDescription());
+        assertEquals(testReport.getStudent().getIdUser(), foundReport.getStudent().getIdUser());
+    }
+
+    @Test
+    void testGetAllReports_WithData() throws SQLException {
+        List<Report> reports = reportDAO.getAllReports();
+        assertEquals(testReports.size(), reports.size());
+
+        // Create a map of reports by ID for easier comparison
+        Map<Integer, Report> testReportMap = new HashMap<>();
+        for (Report report : testReports) {
+            testReportMap.put(report.getIdReport(), report);
+        }
+
+        for (Report foundReport : reports) {
+            Report testReport = testReportMap.get(foundReport.getIdReport());
+            assertNotNull(testReport);
+
+            // Compare fields individually
+            assertEquals(truncateToSeconds(testReport.getReportDate()),
+                    truncateToSeconds(foundReport.getReportDate()));
+            assertEquals(testReport.getHoursReport(), foundReport.getHoursReport());
+            assertEquals(testReport.getReportType(), foundReport.getReportType());
+            assertEquals(testReport.getMethodology(), foundReport.getMethodology());
+            assertEquals(testReport.getDescription(), foundReport.getDescription());
+            assertEquals(testReport.getStudent().getIdUser(), foundReport.getStudent().getIdUser());
+        }
+    }
+
+    @Test
     void testUpdateReport_Success() throws SQLException {
         Report reportToUpdate = testReports.get(0);
+        Timestamp newDate = truncateToSeconds(Timestamp.valueOf(LocalDateTime.now().minusDays(3)));
         reportToUpdate.setHoursReport(15);
         reportToUpdate.setReportType(ReportType.Mensual);
         reportToUpdate.setMethodology("Metodología actualizada");
         reportToUpdate.setDescription("Descripción actualizada");
-        reportToUpdate.setReportDate(Timestamp.valueOf(LocalDateTime.now().minusDays(3)));
+        reportToUpdate.setReportDate(newDate);
 
         boolean result = reportDAO.updateReport(reportToUpdate);
         assertTrue(result);
 
         Report updatedReport = reportDAO.getReportById(reportToUpdate.getIdReport());
-        assertEquals(reportToUpdate, updatedReport);
+
+        assertEquals(reportToUpdate.getIdReport(), updatedReport.getIdReport());
+        assertEquals(truncateToSeconds(reportToUpdate.getReportDate()),
+                truncateToSeconds(updatedReport.getReportDate()));
+        assertEquals(reportToUpdate.getHoursReport(), updatedReport.getHoursReport());
+        assertEquals(reportToUpdate.getReportType(), updatedReport.getReportType());
+        assertEquals(reportToUpdate.getMethodology(), updatedReport.getMethodology());
+        assertEquals(reportToUpdate.getDescription(), updatedReport.getDescription());
+        assertEquals(reportToUpdate.getStudent().getIdUser(), updatedReport.getStudent().getIdUser());
     }
 
     @Test
@@ -285,5 +331,11 @@ class ReportDAOTest {
         reportDAO.addReport(extraReport);
 
         assertEquals(count + 1, reportDAO.countReports());
+    }
+
+    private static Timestamp truncateToSeconds(Timestamp timestamp) {
+        if (timestamp == null) return null;
+        long seconds = timestamp.getTime() / 1000;
+        return new Timestamp(seconds * 1000);
     }
 }

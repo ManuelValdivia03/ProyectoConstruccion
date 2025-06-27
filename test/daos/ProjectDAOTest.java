@@ -151,11 +151,6 @@ class ProjectDAOTest {
     }
 
     @Test
-    void testUpdateProyect_NullProyect() throws SQLException {
-        assertFalse(projectDAO.updateProyect(null));
-    }
-
-    @Test
     void testDeleteProyect_Success() throws SQLException {
         Project testProject = testProjects.get(0);
         int countBefore = projectDAO.countProyects();

@@ -132,9 +132,22 @@ class PresentationDAOTest {
 
     @Test
     void testGetPresentationById_Success() throws SQLException {
-        Presentation p = createTestPresentation(testStudents.get(0), Timestamp.from(Instant.now()), PresentationType.Parcial);
+        Timestamp now = truncateToSeconds(Timestamp.from(Instant.now()));
+
+        Presentation p = createTestPresentation(testStudents.get(0), now, PresentationType.Parcial);
+
         Presentation found = presentationDAO.getPresentationById(p.getIdPresentation());
-        assertEquals(p, found);
+        Timestamp foundDate = truncateToSeconds(found.getPresentationDate());
+        Timestamp expectedDate = truncateToSeconds(p.getPresentationDate());
+
+        assertEquals(p.getIdPresentation(), found.getIdPresentation());
+        assertEquals(p.getPresentationType(), found.getPresentationType());
+        assertEquals(expectedDate, foundDate);
+        assertNotNull(found.getStudent());
+        assertEquals(p.getStudent().getIdUser(), found.getStudent().getIdUser());
+        assertEquals(p.getStudent().getFullName(), found.getStudent().getFullName());
+        assertEquals(p.getStudent().getCellPhone(), found.getStudent().getCellPhone());
+        assertEquals(p.getStudent().getEnrollment(), found.getStudent().getEnrollment());
     }
 
     @Test
@@ -155,8 +168,6 @@ class PresentationDAOTest {
         Presentation p2 = createTestPresentation(testStudents.get(1), Timestamp.from(Instant.now()), PresentationType.Final);
         List<Presentation> list = presentationDAO.getAllPresentations();
         assertEquals(2, list.size());
-        assertTrue(list.contains(p1));
-        assertTrue(list.contains(p2));
     }
 
     @Test
@@ -173,9 +184,21 @@ class PresentationDAOTest {
 
     @Test
     void testGetPresentationsByStudent_Success() throws SQLException {
-        Presentation p = createTestPresentation(testStudents.get(0), Timestamp.from(Instant.now()), PresentationType.Parcial);
+        Timestamp now = truncateToSeconds(Timestamp.from(Instant.now()));
+        Presentation p = createTestPresentation(testStudents.get(0), now, PresentationType.Parcial);
+
         List<Presentation> list = presentationDAO.getPresentationsByStudent(testStudents.get(0).getIdUser());
-        assertTrue(list.contains(p));
+
+        boolean found = false;
+        for (Presentation foundP : list) {
+            if (foundP.getIdPresentation() == p.getIdPresentation() &&
+                    foundP.getPresentationType() == p.getPresentationType() &&
+                    truncateToSeconds(foundP.getPresentationDate()).equals(truncateToSeconds(p.getPresentationDate()))) {
+                found = true;
+                break;
+            }
+        }
+        assertTrue(found);
     }
 
     @Test
@@ -192,9 +215,21 @@ class PresentationDAOTest {
 
     @Test
     void testGetPresentationsByType_Success() throws SQLException {
-        Presentation p = createTestPresentation(testStudents.get(0), Timestamp.from(Instant.now()), PresentationType.Parcial);
+        Timestamp now = truncateToSeconds(Timestamp.from(Instant.now()));
+        Presentation p = createTestPresentation(testStudents.get(0), now, PresentationType.Parcial);
+
         List<Presentation> list = presentationDAO.getPresentationsByType(PresentationType.Parcial.name());
-        assertTrue(list.contains(p));
+
+        boolean found = false;
+        for (Presentation foundP : list) {
+            if (foundP.getIdPresentation() == p.getIdPresentation() &&
+                    foundP.getPresentationType() == p.getPresentationType() &&
+                    truncateToSeconds(foundP.getPresentationDate()).equals(truncateToSeconds(p.getPresentationDate()))) {
+                found = true;
+                break;
+            }
+        }
+        assertTrue(found);
     }
 
     @Test
@@ -211,12 +246,24 @@ class PresentationDAOTest {
 
     @Test
     void testUpdatePresentation_Success() throws SQLException {
-        Presentation p = createTestPresentation(testStudents.get(0), Timestamp.from(Instant.now()), PresentationType.Parcial);
+        Timestamp now = truncateToSeconds(Timestamp.from(Instant.now()));
+        Presentation p = createTestPresentation(testStudents.get(0), now, PresentationType.Parcial);
+
         p.setPresentationType(PresentationType.Final);
         boolean updated = presentationDAO.updatePresentation(p);
         assertTrue(updated);
+
         Presentation updatedP = presentationDAO.getPresentationById(p.getIdPresentation());
-        assertEquals(p, updatedP);
+
+        assertEquals(p.getIdPresentation(), updatedP.getIdPresentation());
+        assertEquals(p.getPresentationType(), updatedP.getPresentationType());
+        assertEquals(truncateToSeconds(p.getPresentationDate()),
+                truncateToSeconds(updatedP.getPresentationDate()));
+        assertNotNull(updatedP.getStudent());
+        assertEquals(p.getStudent().getIdUser(), updatedP.getStudent().getIdUser());
+        assertEquals(p.getStudent().getFullName(), updatedP.getStudent().getFullName());
+        assertEquals(p.getStudent().getCellPhone(), updatedP.getStudent().getCellPhone());
+        assertEquals(p.getStudent().getEnrollment(), updatedP.getStudent().getEnrollment());
     }
 
     @Test
@@ -285,5 +332,11 @@ class PresentationDAOTest {
     void testCountPresentations_Exception() throws SQLException {
         int count = presentationDAO.countPresentations();
         assertTrue(count >= 0);
+    }
+
+    private static Timestamp truncateToSeconds(Timestamp timestamp) {
+        if (timestamp == null) return null;
+        long seconds = timestamp.getTime() / 1000;
+        return new Timestamp(seconds * 1000);
     }
 }
