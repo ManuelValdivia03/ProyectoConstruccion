@@ -49,7 +49,7 @@ public class AccountDAO implements IAccountDAO {
     }
 
     @Override
-    public boolean addAccount(Account account) throws SQLException, RepeatedEmailException {
+    public boolean addAccount(Account account) throws SQLException, RepeatedEmailException, IllegalArgumentException {
         if (account == null) {
             throw new IllegalArgumentException("La cuenta no debe ser nula");
         }
@@ -91,7 +91,7 @@ public class AccountDAO implements IAccountDAO {
     }
 
     @Override
-    public boolean updateAccount(Account account) throws SQLException {
+    public boolean updateAccount(Account account) throws SQLException, IllegalArgumentException {
         if (account == null) {
             throw new IllegalArgumentException("La cuenta no debe ser nula");
         }
@@ -128,7 +128,7 @@ public class AccountDAO implements IAccountDAO {
     }
 
     @Override
-    public boolean verifyCredentials(String email, String plainPassword) throws SQLException {
+    public boolean verifyCredentials(String email, String plainPassword) throws SQLException, IllegalArgumentException {
         if (email == null || email.trim().isEmpty() || plainPassword == null || plainPassword.trim().isEmpty()) {
             throw new IllegalArgumentException("Email and password must not be null or empty");
         }
@@ -183,7 +183,7 @@ public class AccountDAO implements IAccountDAO {
     }
 
     @Override
-    public Account getAccountByEmail(String email) throws SQLException {
+    public Account getAccountByEmail(String email) throws SQLException, IllegalArgumentException {
         if (email == null || email.isEmpty()) {
             throw new IllegalArgumentException("El correo electrónico no debe ser nulo o vacío");
         }
@@ -208,7 +208,7 @@ public class AccountDAO implements IAccountDAO {
     }
 
     @Override
-    public boolean accountExists(String email) throws SQLException {
+    public boolean accountExists(String email) throws SQLException, IllegalArgumentException {
         if (email == null || email.isEmpty()) {
             throw new IllegalArgumentException("El correo electrónico no debe ser nulo o vacío");
         }
@@ -238,7 +238,7 @@ public class AccountDAO implements IAccountDAO {
     }
 
     @Override
-    public boolean updatePasswordByEmail(String email, String newHashedPassword) throws SQLException {
+    public boolean updatePasswordByEmail(String email, String newHashedPassword) throws SQLException, IllegalArgumentException {
         if (email == null || email.trim().isEmpty() || newHashedPassword == null || newHashedPassword.trim().isEmpty()) {
             throw new IllegalArgumentException("Email and password must not be null or empty");
         }

@@ -19,7 +19,7 @@ public class ProjectDAO implements IProjectDAO {
     private static final Logger logger = LogManager.getLogger(ProjectDAO.class);
     private static final Project EMPTY_PROJECT = new Project(-1, "", "", null, null, 'I', 0, 0);
 
-    public boolean addProyect(Project project) throws SQLException {
+    public boolean addProyect(Project project) throws SQLException, IllegalArgumentException {
         if (project == null) {
             throw new IllegalArgumentException("El proyecto no debe ser nulo");
         }
@@ -59,7 +59,7 @@ public class ProjectDAO implements IProjectDAO {
         }
     }
 
-    public boolean updateProyect(Project project) throws SQLException {
+    public boolean updateProyect(Project project) throws SQLException, IllegalArgumentException {
         if (project == null) {
             throw new IllegalArgumentException("El proyecto no debe ser nulo");
         }
@@ -95,7 +95,7 @@ public class ProjectDAO implements IProjectDAO {
         }
     }
 
-    public boolean deleteProyect(Project project) throws SQLException {
+    public boolean deleteProyect(Project project) throws SQLException, IllegalArgumentException {
         if (project == null) {
             throw new IllegalArgumentException("El proyecto no debe ser nulo");
         }
@@ -211,7 +211,7 @@ public class ProjectDAO implements IProjectDAO {
         return EMPTY_PROJECT;
     }
 
-    public Project getProyectByTitle(String title) throws SQLException {
+    public Project getProyectByTitle(String title) throws SQLException, IllegalArgumentException {
         if (title == null || title.isEmpty()) {
             throw new IllegalArgumentException("El título no debe ser nulo o vacío");
         }
@@ -265,7 +265,7 @@ public class ProjectDAO implements IProjectDAO {
         }
     }
 
-    public boolean proyectExists(String title) throws SQLException {
+    public boolean proyectExists(String title) throws SQLException, IllegalArgumentException {
         if (title == null || title.isEmpty()) {
             throw new IllegalArgumentException("El título no debe ser nulo o vacío");
         }
@@ -289,7 +289,7 @@ public class ProjectDAO implements IProjectDAO {
         }
     }
 
-    public boolean changeProyectStatus(Project project) throws SQLException {
+    public boolean changeProyectStatus(Project project) throws SQLException, IllegalArgumentException {
         if (project == null) {
             throw new IllegalArgumentException("El proyecto no debe ser nulo");
         }
@@ -321,7 +321,7 @@ public class ProjectDAO implements IProjectDAO {
         }
     }
 
-    public int addProyectAndGetId(Project project) throws SQLException {
+    public int addProyectAndGetId(Project project) throws SQLException, IllegalArgumentException {
         if (project == null) {
             throw new IllegalArgumentException("El proyecto no debe ser nulo");
         }

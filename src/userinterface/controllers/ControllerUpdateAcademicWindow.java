@@ -69,15 +69,10 @@ public class ControllerUpdateAcademicWindow {
                 return;
             }
 
-            String name = view.getNameField().getText().trim();
-            String phone = view.getPhoneField().getText().trim();
-            String email = view.getEmailField().getText().trim();
-            String password = view.getPassword();
-            AcademicType type = AcademicType.valueOf(view.getTypeComboBox().getValue());
-            char status = view.getStatusComboBox().getValue().charAt(0);
+            AcademicFormData formData = getFormData();
 
-            verifyDataUniqueness(phone, email);
-            updateAcademicData(name, phone, email, password, type, status);
+            verifyDataUniqueness(formData.phone(), formData.email());
+            updateAcademicFromFormData(formData);
             showSuccessAndClose();
 
         } catch (RepeatedCellPhoneException e) {
@@ -92,11 +87,22 @@ public class ControllerUpdateAcademicWindow {
         }
     }
 
-    private void updateAcademicData(String name, String phone, String email,
-                                    String password, AcademicType type, char status) throws SQLException {
-        updateUser(name, phone, status);
-        updateAcademic(type);
-        updateAccount(email, password);
+    private AcademicFormData getFormData() {
+        String name = view.getNameField().getText().trim();
+        String phone = view.getPhoneField().getText().trim();
+        String email = view.getEmailField().getText().trim();
+        String password = view.getPassword();
+        AcademicType type = AcademicType.valueOf(view.getTypeComboBox().getValue());
+        char status = view.getStatusComboBox().getValue().charAt(0);
+        String staffNumber = view.getStaffNumberField().getText().trim();
+        String extension = view.getPhoneExtensionField().getText().trim();
+        return new AcademicFormData(name, phone, email, password, type, status, staffNumber, extension);
+    }
+
+    private void updateAcademicFromFormData(AcademicFormData data) throws SQLException {
+        updateUser(data.name(), data.phone(), data.status());
+        updateAcademic(data.type());
+        updateAccount(data.email(), data.password());
     }
 
     private boolean validateAllFields() {
@@ -238,4 +244,15 @@ public class ControllerUpdateAcademicWindow {
     private void clearError() {
         view.getResultLabel().setText("");
     }
+
+    private static record AcademicFormData(
+            String name,
+            String phone,
+            String email,
+            String password,
+            AcademicType type,
+            char status,
+            String staffNumber,
+            String extension
+    ) {}
 }

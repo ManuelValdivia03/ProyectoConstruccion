@@ -97,6 +97,18 @@ public class ControllerUpdateLinkedOrganizationWindow {
                 !view.getNameField().getText().isEmpty(),
                 "Nombre es obligatorio");
 
+        isValid &= validateField(view.getNameField(),
+                validators.validateName(view.getNameField().getText()),
+                "Nombre solo debe contener letras y espacios");
+
+        isValid &= validateField(view.getDepartmentField(),
+                !view.getDepartmentField().getText().isEmpty(),
+                "Departamento es obligatorio");
+
+        isValid &= validateField(view.getDepartmentField(),
+                validators.validateName(view.getDepartmentField().getText()),
+                "Departamento solo debe contener letras y espacios");
+
         isValid &= validateField(view.getPhoneField(),
                 validators.validateCellPhone(view.getPhoneField().getText()),
                 "Teléfono debe tener 10 dígitos");

@@ -19,7 +19,7 @@ public class CoordinatorDAO implements ICoordinatorDAO {
         this.userDAO = new UserDAO();
     }
 
-    public boolean addCoordinator(Coordinator coordinator) throws SQLException {
+    public boolean addCoordinator(Coordinator coordinator) throws SQLException, IllegalArgumentException {
         if (coordinator == null) {
             throw new IllegalArgumentException("El coordinador no debe ser nulo");
         }
@@ -39,7 +39,7 @@ public class CoordinatorDAO implements ICoordinatorDAO {
         }
     }
 
-    public boolean deleteCoordinator(Coordinator coordinator) throws SQLException {
+    public boolean deleteCoordinator(Coordinator coordinator) throws SQLException, IllegalArgumentException {
         if (coordinator == null) {
             throw new IllegalArgumentException("El coordinador no debe ser nulo");
         }
@@ -57,7 +57,7 @@ public class CoordinatorDAO implements ICoordinatorDAO {
         }
     }
 
-    public boolean updateCoordinator(Coordinator coordinator) throws SQLException {
+    public boolean updateCoordinator(Coordinator coordinator) throws SQLException, IllegalArgumentException {
         if (coordinator == null ||
             coordinator.getStaffNumber() == null || coordinator.getStaffNumber().isEmpty() ||
             coordinator.getFullName() == null || coordinator.getFullName().isEmpty() ||
@@ -108,7 +108,7 @@ public class CoordinatorDAO implements ICoordinatorDAO {
         return coordinators;
     }
 
-    public Coordinator getCoordinatorByStaffNumber(String staffNumber) throws SQLException {
+    public Coordinator getCoordinatorByStaffNumber(String staffNumber) throws SQLException, IllegalArgumentException {
         if (staffNumber == null || staffNumber.isEmpty()) {
             throw new IllegalArgumentException("Numero de personal no debe ser nulo o vacío");
         }
@@ -138,7 +138,7 @@ public class CoordinatorDAO implements ICoordinatorDAO {
         return EMPTY_COORDINATOR;
     }
 
-    public boolean coordinatorExists(String staffNumber) throws SQLException {
+    public boolean coordinatorExists(String staffNumber) throws SQLException, IllegalArgumentException {
         if (staffNumber == null || staffNumber.isEmpty()) {
             throw new IllegalArgumentException("Numero de personal no debe ser nulo o vacío");
         }

@@ -128,13 +128,21 @@ public class ControllerRegistReportWindow implements EventHandler<ActionEvent> {
             isValid = false;
         }
 
-        if (view.getMethodologyTextArea().getText().isEmpty()) {
+        String methodology = view.getMethodologyTextArea().getText();
+        if (methodology.isEmpty()) {
             showFieldError("La metodología es obligatoria", view.getMethodologyTextArea());
+            isValid = false;
+        } else if (!validators.validateReportTextField(methodology)) {
+            showFieldError("La metodología debe contener al menos una letra", view.getMethodologyTextArea());
             isValid = false;
         }
 
-        if (view.getDescriptionTextArea().getText().isEmpty()) {
+        String description = view.getDescriptionTextArea().getText();
+        if (description.isEmpty()) {
             showFieldError("La descripción es obligatoria", view.getDescriptionTextArea());
+            isValid = false;
+        } else if (!validators.validateReportTextField(description)) {
+            showFieldError("La descripción debe contener al menos una letra", view.getDescriptionTextArea());
             isValid = false;
         }
 

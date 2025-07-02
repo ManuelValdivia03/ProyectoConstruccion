@@ -79,8 +79,14 @@ public class ControllerRegistRepresentativeWindow implements EventHandler<Action
     private boolean validateAllFields() {
         boolean isValid = true;
 
-        if (view.getNameTextField().getText().isEmpty()) {
+        String name = view.getNameTextField().getText();
+
+        if (name.isEmpty()) {
             showError("El nombre es obligatorio");
+            highlightField(view.getNameTextField());
+            isValid = false;
+        } else if (!validators.validateName(name)) {
+            showError("El nombre solo debe contener letras y espacios");
             highlightField(view.getNameTextField());
             isValid = false;
         }

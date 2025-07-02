@@ -17,7 +17,7 @@ import java.util.List;
 public class PresentationDAO implements IPresentationDAO {
     private static final Presentation EMPTY_PRESENTATION = new Presentation();
 
-    public boolean addPresentation(Presentation presentation) throws SQLException {
+    public boolean addPresentation(Presentation presentation) throws SQLException, IllegalArgumentException {
         if (presentation == null || presentation.getStudent() == null ||
                 presentation.getPresentationType() == null) {
             throw new IllegalArgumentException("Datos de presentación incompletos");
@@ -175,7 +175,7 @@ public class PresentationDAO implements IPresentationDAO {
         return presentations;
     }
 
-    public boolean updatePresentation(Presentation presentation) throws SQLException {
+    public boolean updatePresentation(Presentation presentation) throws SQLException, IllegalArgumentException {
         if (presentation == null || presentation.getIdPresentation() <= 0 ||
             presentation.getStudent() == null || presentation.getPresentationType() == null) {
             throw new IllegalArgumentException("Datos de presentación incompletos o inválidos");

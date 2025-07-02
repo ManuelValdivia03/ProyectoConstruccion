@@ -114,7 +114,7 @@ public class GroupDAO implements IGroupDAO {
         }
     }
 
-    public boolean addGroup(Group group) throws SQLException {
+    public boolean addGroup(Group group) throws SQLException, IllegalArgumentException {
         if (group == null || group.getGroupName() == null || group.getGroupName().isEmpty()) {
             throw new IllegalArgumentException("El grupo y el nombre del grupo no deben ser nulos o vacíos");
         }
@@ -131,7 +131,7 @@ public class GroupDAO implements IGroupDAO {
         }
     }
 
-    public boolean deleteGroup(Group group) throws SQLException {
+    public boolean deleteGroup(Group group) throws SQLException, IllegalArgumentException {
         if (group == null) {
             throw new IllegalArgumentException("El grupo no debe ser nulo");
         }
@@ -162,7 +162,7 @@ public class GroupDAO implements IGroupDAO {
         }
     }
 
-    public boolean updateGroup(Group group) throws SQLException {
+    public boolean updateGroup(Group group) throws SQLException, IllegalArgumentException {
         if (group == null || group.getGroupName() == null || group.getGroupName().isEmpty()) {
             throw new IllegalArgumentException("El grupo y el nombre del grupo no deben ser nulos o vacíos");
         }
@@ -234,7 +234,7 @@ public class GroupDAO implements IGroupDAO {
         return EMPTY_GROUP;
     }
 
-    public Group getGroupByName(String groupName) throws SQLException {
+    public Group getGroupByName(String groupName) throws SQLException, IllegalArgumentException {
         if (groupName == null || groupName.isEmpty()) {
             throw new IllegalArgumentException("El nombre del grupo no debe ser nulo o vacío");
         }

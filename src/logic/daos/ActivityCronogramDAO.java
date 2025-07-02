@@ -17,10 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityCronogramDAO implements IActivityCronogramDAO {
+
     private static final Logger logger = LogManager.getLogger(ActivityCronogramDAO.class);
     private static final ActivityCronogram EMPTY_CRONOGRAM = new ActivityCronogram();
 
-    public boolean addCronogram(ActivityCronogram cronogram) throws SQLException {
+    public boolean addCronogram(ActivityCronogram cronogram) throws SQLException, IllegalArgumentException {
         if (cronogram == null) {
             throw new IllegalArgumentException("El cronograma no debe ser nulo");
         }
@@ -44,7 +45,7 @@ public class ActivityCronogramDAO implements IActivityCronogramDAO {
         }
     }
 
-    public boolean updateCronogram(ActivityCronogram cronogram) throws SQLException {
+    public boolean updateCronogram(ActivityCronogram cronogram) throws SQLException, IllegalArgumentException {
         if (cronogram == null) {
             throw new IllegalArgumentException("El cronograma no debe ser nulo");
         }

@@ -27,7 +27,7 @@ public class EvaluationDAO implements IEvaluationDAO {
     }
 
     @Override
-    public boolean addEvaluation(Evaluation evaluation) throws SQLException {
+    public boolean addEvaluation(Evaluation evaluation) throws SQLException, IllegalArgumentException {
         if (evaluation == null || evaluation.getAcademic() == null || evaluation.getPresentation() == null) {
             throw new IllegalArgumentException("Evaluacion, Academico y Presentacion no pueden ser nulos");
         }
@@ -292,7 +292,7 @@ public class EvaluationDAO implements IEvaluationDAO {
     }
 
     @Override
-    public boolean updateEvaluation(Evaluation evaluation) throws SQLException {
+    public boolean updateEvaluation(Evaluation evaluation) throws SQLException, IllegalArgumentException {
         if (evaluation == null || evaluation.getIdEvaluation() <= 0 ||
                 evaluation.getAcademic() == null || evaluation.getPresentation() == null) {
             throw new IllegalArgumentException("Datos de evaluación inválidos");

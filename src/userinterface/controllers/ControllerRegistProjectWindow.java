@@ -120,13 +120,21 @@ public class ControllerRegistProjectWindow implements EventHandler<ActionEvent> 
     private boolean validateAllFields() {
         boolean isValid = true;
 
-        if (view.getTitleTextField().getText().isEmpty()) {
+        String title = view.getTitleTextField().getText();
+        if (title.isEmpty()) {
             showFieldError("El título es obligatorio", view.getTitleTextField());
+            isValid = false;
+        } else if (!validators.validateProjectName(title)) {
+            showFieldError("El título debe contener letras válidas", view.getTitleTextField());
             isValid = false;
         }
 
-        if (view.getDescriptionTextField().getText().isEmpty()) {
+        String description = view.getDescriptionTextField().getText();
+        if (description.isEmpty()) {
             showFieldError("La descripción es obligatoria", view.getDescriptionTextField());
+            isValid = false;
+        } else if (!validators.validateProjectDescription(description)) {
+            showFieldError("La descripción debe contener letras válidas", view.getDescriptionTextField());
             isValid = false;
         }
 

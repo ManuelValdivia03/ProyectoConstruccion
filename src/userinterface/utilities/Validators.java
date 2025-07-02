@@ -39,4 +39,32 @@ public class Validators {
         if (extension == null || extension.isEmpty()) return true;
         return extension.matches("^\\d{1,5}$");
     }
+
+    public boolean validateActivityName(String name) {
+        if (name == null || name.trim().isEmpty()) return false;
+        return name.matches(".*[a-zA-ZáéíóúÁÉÍÓÚñÑ].*");
+    }
+
+    public boolean validateActivityDescription(String description) {
+        if (description == null || description.trim().isEmpty()) return false;
+        return description.matches(".*[a-zA-ZáéíóúÁÉÍÓÚñÑ].*");
+    }
+
+    public boolean validateName(String name) {
+        if (name == null || name.trim().isEmpty()) return false;
+        return name.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$");
+    }
+
+    public boolean validateProjectName(String name) {
+        return validateActivityName(name);
+    }
+
+    public boolean validateProjectDescription(String description) {
+        return validateActivityDescription(description);
+    }
+
+    public boolean validateReportTextField(String text) {
+        if (text == null || text.trim().isEmpty()) return false;
+        return text.matches(".*[a-zA-ZáéíóúÁÉÍÓÚñÑ].*");
+    }
 }

@@ -23,7 +23,7 @@ public class ReportDAO implements IReportDAO {
     }
 
     @Override
-    public boolean addReport(Report report) throws SQLException {
+    public boolean addReport(Report report) throws SQLException, IllegalArgumentException {
         if (report == null || report.getReportDate() == null || report.getStudent() == null) {
             throw new IllegalArgumentException("Datos del reporte incompletos");
         }
@@ -114,7 +114,7 @@ public class ReportDAO implements IReportDAO {
     }
 
     @Override
-    public boolean updateReport(Report report) throws SQLException {
+    public boolean updateReport(Report report) throws SQLException, IllegalArgumentException {
         if (report == null || report.getIdReport() <= 0 ||
                 report.getStudent() == null || report.getReportDate() == null) {
             throw new IllegalArgumentException("Datos del reporte incompletos");

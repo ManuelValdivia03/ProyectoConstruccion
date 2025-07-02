@@ -135,10 +135,6 @@ public class ControllerAcademicMenuWindow implements EventHandler<ActionEvent> {
         stage.show();
     }
 
-    private void showNotImplementedMessage() {
-        System.out.println("Funcionalidad en desarrollo");
-    }
-
     private void handleLogout(ActionEvent event) {
         stage.close();
         onLogout.run();
@@ -195,7 +191,6 @@ public class ControllerAcademicMenuWindow implements EventHandler<ActionEvent> {
         }
     }
 
-    // Agrega este método para mostrar la ventana de reportes de estudiantes del grupo
     private void showConsultGroupStudentReportsWindow() {
         try {
             Stage consultStage = new Stage();

@@ -32,46 +32,53 @@ public class ControllerConsultStudentEvaluationsWindow {
 
     private void loadEvaluations() {
         try {
-            EvaluationDAO evaluationDAO = new EvaluationDAO();
-            ProjectStudentDAO projectStudentDAO = new ProjectStudentDAO();
-            ProjectDAO projectDAO = new ProjectDAO();
-            AcademicDAO academicDAO = new AcademicDAO();
-
-            List<Evaluation> evaluations = evaluationDAO.getEvaluationsByStudent(student.getIdUser());
-
-            for (Evaluation evaluation : evaluations) {
-                Presentation presentation = evaluation.getPresentation();
-
-                if (presentation != null && presentation.getStudent() != null && presentation.getStudent().getIdUser() > 0) {
-                    Student fullStudent = new StudentDAO().getStudentById(presentation.getStudent().getIdUser());
-                    if (fullStudent != null) {
-                        presentation.setStudent(fullStudent);
-                    }
-                    Integer projectId = projectStudentDAO.getProyectByStudent(presentation.getStudent().getIdUser());
-                    String projectTitle = "";
-                    if (projectId != null && projectId > 0) {
-                        Project project = projectDAO.getProyectById(projectId);
-                        if (project != null) {
-                            projectTitle = project.getTitle();
-                        }
-                    }
-                    presentation.getStudent().setCellphone(projectTitle);
-                }
-
-                if (evaluation.getAcademic() != null && evaluation.getAcademic().getIdUser() > 0) {
-                    Academic fullAcademic = academicDAO.getAcademicById(evaluation.getAcademic().getIdUser());
-                    if (fullAcademic != null) {
-                        evaluation.setAcademic(fullAcademic);
-                    }
-                }
-            }
-
-            ObservableList<Evaluation> observableEvaluations = FXCollections.observableArrayList(evaluations);
-            view.setEvaluations(observableEvaluations);
+            List<Evaluation> evaluations = loadEvaluationsData();
+            showEvaluations(evaluations);
         } catch (Exception e) {
             String message = ExceptionManager.handleException(e);
             view.showError(message);
         }
     }
-}
 
+    private List<Evaluation> loadEvaluationsData() throws Exception {
+        EvaluationDAO evaluationDAO = new EvaluationDAO();
+        ProjectStudentDAO projectStudentDAO = new ProjectStudentDAO();
+        ProjectDAO projectDAO = new ProjectDAO();
+        AcademicDAO academicDAO = new AcademicDAO();
+
+        List<Evaluation> evaluations = evaluationDAO.getEvaluationsByStudent(student.getIdUser());
+
+        for (Evaluation evaluation : evaluations) {
+            Presentation presentation = evaluation.getPresentation();
+
+            if (presentation != null && presentation.getStudent() != null && presentation.getStudent().getIdUser() > 0) {
+                Student fullStudent = new StudentDAO().getStudentById(presentation.getStudent().getIdUser());
+                if (fullStudent != null) {
+                    presentation.setStudent(fullStudent);
+                }
+                Integer projectId = projectStudentDAO.getProyectByStudent(presentation.getStudent().getIdUser());
+                String projectTitle = "";
+                if (projectId != null && projectId > 0) {
+                    Project project = projectDAO.getProyectById(projectId);
+                    if (project != null) {
+                        projectTitle = project.getTitle();
+                    }
+                }
+                presentation.getStudent().setCellphone(projectTitle);
+            }
+
+            if (evaluation.getAcademic() != null && evaluation.getAcademic().getIdUser() > 0) {
+                Academic fullAcademic = academicDAO.getAcademicById(evaluation.getAcademic().getIdUser());
+                if (fullAcademic != null) {
+                    evaluation.setAcademic(fullAcademic);
+                }
+            }
+        }
+        return evaluations;
+    }
+
+    private void showEvaluations(List<Evaluation> evaluations) {
+        ObservableList<Evaluation> observableEvaluations = FXCollections.observableArrayList(evaluations);
+        view.setEvaluations(observableEvaluations);
+    }
+}

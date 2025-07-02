@@ -19,7 +19,7 @@ public class RepresentativeDAO implements IRepresentativeDAO {
     private static final Logger logger = LogManager.getLogger(RepresentativeDAO.class);
     private static final Representative EMPTY_REPRESENTATIVE = new Representative(-1, "", "", "", null);
 
-    public boolean addRepresentative(Representative representative) throws SQLException {
+    public boolean addRepresentative(Representative representative) throws SQLException, IllegalArgumentException {
         if (representative == null || representative.getFullName() == null ||
                 representative.getLinkedOrganization() == null) {
             throw new IllegalArgumentException("Datos del representante incompletos");
@@ -44,7 +44,7 @@ public class RepresentativeDAO implements IRepresentativeDAO {
         }
     }
 
-    public boolean addRepresentativeWithoutOrganization(Representative representative) throws SQLException {
+    public boolean addRepresentativeWithoutOrganization(Representative representative) throws SQLException, IllegalArgumentException {
         if (representative == null || representative.getFullName() == null) {
             throw new IllegalArgumentException("Datos del representante incompletos");
         }
@@ -77,7 +77,7 @@ public class RepresentativeDAO implements IRepresentativeDAO {
         }
     }
 
-    public boolean deleteRepresentative(Representative representative) throws SQLException {
+    public boolean deleteRepresentative(Representative representative) throws SQLException, IllegalArgumentException {
         if (representative == null) {
             throw new IllegalArgumentException("El representante no debe ser nulo");
         }
@@ -89,7 +89,7 @@ public class RepresentativeDAO implements IRepresentativeDAO {
         }
     }
 
-    public boolean updateRepresentative(Representative representative) throws SQLException {
+    public boolean updateRepresentative(Representative representative) throws SQLException, IllegalArgumentException {
         if (representative == null || representative.getFullName() == null ||
                 representative.getLinkedOrganization() == null) {
             throw new IllegalArgumentException("Datos del representante incompletos");

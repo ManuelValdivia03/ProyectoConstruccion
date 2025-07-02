@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.stage.Stage;
 import logic.daos.LinkedOrganizationDAO;
@@ -34,15 +35,18 @@ public class ControllerConsultRepresentativesWindow {
         this.currentStage = Objects.requireNonNull(stage, "El stage no puede ser nulo");
         this.allRepresentatives = FXCollections.observableArrayList();
 
+        addAssignColumnIfNeeded();
+        setupEventHandlers();
+        loadRepresentativeData();
+    }
+
+    private void addAssignColumnIfNeeded() {
         boolean assignColExists = view.getRepresentativeTable().getColumns().stream()
             .anyMatch(col -> "Acción".equals(col.getText()));
         if (!assignColExists) {
             TableColumn<Representative, Void> assignCol = view.createAssignButtonColumn(this::handleAssignOrganization);
             view.getRepresentativeTable().getColumns().add(assignCol);
         }
-
-        setupEventHandlers();
-        loadRepresentativeData();
     }
 
     private void setupEventHandlers() {
@@ -59,9 +63,8 @@ public class ControllerConsultRepresentativesWindow {
             view.getSearchField().clear();
             hasSearchResults = false;
         } catch (SQLException e) {
-            String message = ExceptionManager.handleException(e);
             showAlert(Alert.AlertType.ERROR, "Error",
-                    "No se pudieron cargar los representantes: " + message);
+                    "No se pudieron cargar los representantes: " + ExceptionManager.handleException(e));
         }
     }
 
@@ -88,9 +91,8 @@ public class ControllerConsultRepresentativesWindow {
                         "No se encontró representante con el nombre: " + name);
             }
         } catch (SQLException e) {
-            String message = ExceptionManager.handleException(e);
             showAlert(Alert.AlertType.ERROR, "Error de búsqueda",
-                    "Ocurrió un error al buscar el representante: " + message);
+                    "Ocurrió un error al buscar el representante: " + ExceptionManager.handleException(e));
         }
     }
 
@@ -104,61 +106,65 @@ public class ControllerConsultRepresentativesWindow {
     }
 
     private void handleAssignOrganization(ActionEvent event) {
-        Object source = event.getSource();
-        if (!(source instanceof javafx.scene.control.Button)) {
-            return;
-        }
+        Representative rep = extractRepresentativeFromEvent(event);
+        if (rep == null) return;
 
-        javafx.scene.control.Button button = (javafx.scene.control.Button) source;
-        Representative rep = (Representative) button.getUserData();
-
-        if (rep == null) {
-            return;
-        }
-
-        LinkOrganizationWindow linkWindow = new LinkOrganizationWindow(linkEvent -> {
-            Object linkSource = linkEvent.getSource();
-            if (!(linkSource instanceof javafx.scene.control.Button)) {
-                return;
-            }
-
-            javafx.scene.control.Button linkButton = (javafx.scene.control.Button) linkSource;
-            LinkedOrganization org = (LinkedOrganization) linkButton.getUserData();
-
-            if (org == null) {
-                return;
-            }
-
-            try {
-                boolean updated = representativeDAO.linkRepresentativeToOrganization(
-                        rep.getIdRepresentative(),
-                        org.getIdLinkedOrganization()
-                );
-                if (updated) {
-                    showAlert(Alert.AlertType.INFORMATION, "Éxito", "Representante vinculado exitosamente.");
-                    loadRepresentativeData();
-                } else {
-                    showAlert(Alert.AlertType.ERROR, "Error", "No se pudo vincular el representante.");
-                }
-            } catch (SQLException e) {
-                String message = ExceptionManager.handleException(e);
-                showAlert(Alert.AlertType.ERROR, "Error", "Error al vincular representante: " + message);
-            }
-        });
-
+        LinkOrganizationWindow linkWindow = createLinkOrganizationWindow(rep);
         Stage orgStage = new Stage();
-        try {
-            List<LinkedOrganization> orgs = organizationDAO.getAllLinkedOrganizations();
-            linkWindow.setOrganizationData(FXCollections.observableArrayList(orgs));
-        } catch (SQLException e) {
-            String message = ExceptionManager.handleException(e);
-            showAlert(Alert.AlertType.ERROR, "Error", "No se pudieron cargar las organizaciones: " + message);
-        }
+        loadOrganizationsForLinkWindow(linkWindow);
         linkWindow.getBackButton().setOnAction(e -> orgStage.close());
 
         orgStage.setScene(new Scene(linkWindow.getView(), 700, 500));
         orgStage.setTitle("Vincular Representante a Organización");
         orgStage.show();
+    }
+
+    private Representative extractRepresentativeFromEvent(ActionEvent event) {
+        Object source = event.getSource();
+        if (!(source instanceof Button)) return null;
+        Button button = (Button) source;
+        return (Representative) button.getUserData();
+    }
+
+    private LinkOrganizationWindow createLinkOrganizationWindow(Representative rep) {
+        return new LinkOrganizationWindow(linkEvent -> {
+            LinkedOrganization org = extractOrganizationFromEvent(linkEvent);
+            if (org == null) return;
+            linkRepresentativeToOrganization(rep, org);
+        });
+    }
+
+    private LinkedOrganization extractOrganizationFromEvent(ActionEvent linkEvent) {
+        Object linkSource = linkEvent.getSource();
+        if (!(linkSource instanceof Button)) return null;
+        Button linkButton = (Button) linkSource;
+        return (LinkedOrganization) linkButton.getUserData();
+    }
+
+    private void linkRepresentativeToOrganization(Representative rep, LinkedOrganization org) {
+        try {
+            boolean updated = representativeDAO.linkRepresentativeToOrganization(
+                    rep.getIdRepresentative(),
+                    org.getIdLinkedOrganization()
+            );
+            if (updated) {
+                showAlert(Alert.AlertType.INFORMATION, "Éxito", "Representante vinculado exitosamente.");
+                loadRepresentativeData();
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Error", "No se pudo vincular el representante.");
+            }
+        } catch (SQLException e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Error al vincular representante: " + ExceptionManager.handleException(e));
+        }
+    }
+
+    private void loadOrganizationsForLinkWindow(LinkOrganizationWindow linkWindow) {
+        try {
+            List<LinkedOrganization> orgs = organizationDAO.getAllLinkedOrganizations();
+            linkWindow.setOrganizationData(FXCollections.observableArrayList(orgs));
+        } catch (SQLException e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "No se pudieron cargar las organizaciones: " + ExceptionManager.handleException(e));
+        }
     }
 
     private void showAlert(Alert.AlertType type, String title, String message) {

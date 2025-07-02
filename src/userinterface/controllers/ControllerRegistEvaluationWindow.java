@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import logic.daos.EvaluationDAO;
@@ -22,6 +23,8 @@ import logic.services.ExceptionManager;
 import userinterface.windows.RegistEvaluationWindow;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class ControllerRegistEvaluationWindow {
@@ -44,7 +47,7 @@ public class ControllerRegistEvaluationWindow {
     private void loadProjectsAndSetupComboBox() {
         try {
             ProjectDAO projectDAO = new ProjectDAO();
-            java.util.List<Project> projects = projectDAO.getAllProyects();
+            List<Project> projects = projectDAO.getAllProyects();
             ObservableList<Project> observableProjects = FXCollections.observableArrayList(projects);
             view.setProjects(observableProjects);
 
@@ -71,8 +74,8 @@ public class ControllerRegistEvaluationWindow {
             try {
                 ProjectStudentDAO projectStudentDAO = new ProjectStudentDAO();
                 StudentDAO studentDAO = new StudentDAO();
-                java.util.List<Integer> studentIds = projectStudentDAO.getStudentsByProyect(selectedProject.getIdProyect());
-                java.util.List<Student> students = new java.util.ArrayList<>();
+                List<Integer> studentIds = projectStudentDAO.getStudentsByProyect(selectedProject.getIdProyect());
+                List<Student> students = new ArrayList<>();
                 for (Integer id : studentIds) {
                     Student s = studentDAO.getStudentById(id);
                     if (s != null && s.getIdUser() > 0) {
@@ -109,7 +112,7 @@ public class ControllerRegistEvaluationWindow {
                 return;
             }
 
-            Map<String, javafx.scene.control.ToggleGroup> rubricGroups = view.getRubricGroups();
+            Map<String, ToggleGroup> rubricGroups = view.getRubricGroups();
             int total = 0;
             int count = 0;
             for (var group : rubricGroups.values()) {

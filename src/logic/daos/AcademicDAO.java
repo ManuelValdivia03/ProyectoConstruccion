@@ -23,7 +23,7 @@ public class AcademicDAO implements IAcademicDAO {
     }
 
     @Override
-    public boolean addAcademic(Academic academic) throws SQLException, RepeatedStaffNumberException {
+    public boolean addAcademic(Academic academic) throws SQLException, RepeatedStaffNumberException, IllegalArgumentException {
         if (academic == null) {
             throw new IllegalArgumentException("Academic must not be null");
         }
@@ -45,7 +45,7 @@ public class AcademicDAO implements IAcademicDAO {
     }
 
     @Override
-    public List<Academic> getAllAcademics() throws SQLException {
+    public List<Academic> getAllAcademics() throws SQLException{
         String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.extension_telefono, u.estado, " +
                 "a.numero_personal, a.tipo FROM academico a " +
                 "JOIN usuario u ON a.id_usuario = u.id_usuario";
@@ -71,7 +71,7 @@ public class AcademicDAO implements IAcademicDAO {
     }
 
     @Override
-    public Academic getAcademicByStaffNumber(String staffNumber) throws SQLException {
+    public Academic getAcademicByStaffNumber(String staffNumber) throws SQLException, IllegalArgumentException {
         if (staffNumber == null || staffNumber.isEmpty()) {
             throw new IllegalArgumentException("Staff number must not be null or empty");
         }
@@ -103,7 +103,7 @@ public class AcademicDAO implements IAcademicDAO {
     }
 
     @Override
-    public boolean updateAcademic(Academic academic) throws SQLException {
+    public boolean updateAcademic(Academic academic) throws SQLException, IllegalArgumentException {
         if (academic == null) {
             throw new IllegalArgumentException("Academic must not be null");
         }
@@ -125,7 +125,7 @@ public class AcademicDAO implements IAcademicDAO {
     }
 
     @Override
-    public boolean deleteAcademic(Academic academic) throws SQLException {
+    public boolean deleteAcademic(Academic academic) throws SQLException, IllegalArgumentException {
         if (academic == null) {
             throw new IllegalArgumentException("Academic must not be null");
         }
@@ -205,7 +205,7 @@ public class AcademicDAO implements IAcademicDAO {
         return EMPTY_ACADEMIC;
     }
 
-    public boolean academicExists(String staffNumber) throws SQLException {
+    public boolean academicExists(String staffNumber) throws SQLException, IllegalArgumentException {
         if (staffNumber == null || staffNumber.isEmpty()) {
             throw new IllegalArgumentException("Staff number must not be null or empty");
         }
@@ -231,7 +231,7 @@ public class AcademicDAO implements IAcademicDAO {
     }
 
     @Override
-    public boolean changeAcademicType(Academic academic) throws SQLException {
+    public boolean changeAcademicType(Academic academic) throws SQLException, IllegalArgumentException {
         if (academic == null) {
             throw new IllegalArgumentException("Academic must not be null");
         }
@@ -248,7 +248,7 @@ public class AcademicDAO implements IAcademicDAO {
     }
 
     @Override
-    public boolean staffNumberExists(String staffNumber) throws RepeatedStaffNumberException {
+    public boolean staffNumberExists(String staffNumber) throws RepeatedStaffNumberException, IllegalArgumentException {
         if (staffNumber == null || staffNumber.isEmpty()) {
             throw new IllegalArgumentException("Staff number must not be null or empty");
         }

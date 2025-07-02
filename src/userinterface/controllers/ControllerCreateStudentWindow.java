@@ -114,8 +114,13 @@ public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> 
         boolean isValid = true;
         resetFieldStyles();
 
-        if (view.getNameField().getText().isEmpty()) {
+        String name = view.getNameField().getText().trim();
+
+        if (name.isEmpty()) {
             showFieldError("Nombre completo es obligatorio", view.getNameField());
+            isValid = false;
+        } else if (!validators.validateName(name)) {
+            showFieldError("El nombre solo debe contener letras y espacios", view.getNameField());
             isValid = false;
         }
 
@@ -162,45 +167,59 @@ public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> 
         return true;
     }
 
-    private void registerNewStudent(StudentRegistrationData data) throws SQLException {
-        User user = createAndSaveUser(data.name(), data.phone());
-        createAndSaveStudent(user, data.enrollment());
-        createAndSaveAccount(user, data.email(), data.passwordHashed());
+    private User createUser(String name, String phone) {
+        return new User(0, name, phone, view.getPhoneExtensionField().getText().trim(), 'A');
     }
 
-    private User createAndSaveUser(String name, String phone) throws SQLException {
-        User user = new User(0, name, phone, view.getPhoneExtensionField().getText().trim(), 'A');
+    private User saveUser(User user) throws SQLException {
         if (!userDAO.addUser(user)) {
             throw new SQLException("No se pudo registrar el usuario");
         }
         return user;
     }
 
-    private void createAndSaveStudent(User user, String enrollment) throws SQLException {
-        Student student = new Student(user.getIdUser(), user.getFullName(), user.getCellPhone(), user.getPhoneExtension() ,'A', enrollment, 0);
-        if (!studentDAO.addStudent(student, academic.getIdUser())) {
-            userDAO.deleteUser(user.getIdUser());
+    private Student createStudent(User user, String enrollment) {
+        return new Student(user.getIdUser(), user.getFullName(), user.getCellPhone(), user.getPhoneExtension(), 'A', enrollment, 0);
+    }
+
+    private void saveStudent(Student student, int academicId) throws SQLException {
+        if (!studentDAO.addStudent(student, academicId)) {
+            userDAO.deleteUser(student.getIdUser());
             throw new SQLException("No se pudo registrar el estudiante");
         }
     }
 
-    private void createAndSaveAccount(User user, String email, String password) throws SQLException {
-        Account account = new Account(user.getIdUser(), email, password);
+    private Account createAccount(User user, String email, String password) {
+        return new Account(user.getIdUser(), email, password);
+    }
+
+    private void saveAccount(Account account, int userId) throws SQLException {
         if (!accountDAO.addAccount(account)) {
-            studentDAO.deleteStudent(user.getIdUser());
-            userDAO.deleteUser(user.getIdUser());
+            studentDAO.deleteStudent(userId);
+            userDAO.deleteUser(userId);
             throw new SQLException("No se pudo registrar la cuenta");
         }
     }
 
+    private void registerNewStudent(StudentRegistrationData data) throws SQLException {
+        User user = createUser(data.name(), data.phone());
+        saveUser(user);
+
+        Student student = createStudent(user, data.enrollment());
+        saveStudent(student, academic.getIdUser());
+
+        Account account = createAccount(user, data.email(), data.passwordHashed());
+        saveAccount(account, user.getIdUser());
+    }
+
     private void showSuccessAndReset() {
         Platform.runLater(() -> {
-            showCustomSuccessDialog();
+            showSuccessDialog();
             clearFields();
         });
     }
 
-    private void showCustomSuccessDialog() {
+    private void showSuccessDialog() {
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Operación exitosa");
         dialog.getDialogPane().getButtonTypes().add(new ButtonType("Aceptar", ButtonBar.ButtonData.OK_DONE));

@@ -8,6 +8,7 @@ import logic.logicclasses.Student;
 import logic.services.ExceptionManager;
 import userinterface.windows.RegistSelfEvaluationWindow;
 
+import java.sql.SQLException;
 import java.util.Map;
 
 public class ControllerRegistSelfEvaluationWindow {
@@ -29,28 +30,18 @@ public class ControllerRegistSelfEvaluationWindow {
     private void handleSaveSelfEvaluation() {
         try {
             Map<String, javafx.scene.control.ToggleGroup> rubricGroups = view.getRubricGroups();
-            int total = 0;
-            int count = 0;
-            for (var group : rubricGroups.values()) {
-                Toggle selected = group.getSelectedToggle();
-                if (selected == null) {
-                    showMessage("Debes calificar todos los criterios.", true);
-                    return;
-                }
-                total += (int) selected.getUserData();
-                count++;
-            }
-            double grade = (total / (double) count) * 2;
 
+            if (!validateRubricGroups(rubricGroups)) {
+                showMessage("Debes calificar todos los criterios.", true);
+                return;
+            }
+
+            double grade = calculateGrade(rubricGroups);
             String comments = view.getCommentsArea().getText();
 
-            SelfEvaluation selfEvaluation = new SelfEvaluation();
-            selfEvaluation.setCalification((float) grade);
-            selfEvaluation.setFeedBack(comments);
-            selfEvaluation.setStudent(student);
+            SelfEvaluation selfEvaluation = buildSelfEvaluation(grade, comments);
 
-            SelfEvaluationDAO selfEvaluationDAO = new SelfEvaluationDAO();
-            if (selfEvaluationDAO.addSelfEvaluation(selfEvaluation)) {
+            if (saveSelfEvaluation(selfEvaluation)) {
                 showMessage("Autoevaluación registrada correctamente.", false);
                 stage.close();
             } else {
@@ -60,6 +51,39 @@ public class ControllerRegistSelfEvaluationWindow {
             String message = ExceptionManager.handleException(ex);
             showMessage(message, true);
         }
+    }
+
+    private boolean validateRubricGroups(Map<String, javafx.scene.control.ToggleGroup> rubricGroups) {
+        for (var group : rubricGroups.values()) {
+            if (group.getSelectedToggle() == null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private double calculateGrade(Map<String, javafx.scene.control.ToggleGroup> rubricGroups) {
+        int total = 0;
+        int count = 0;
+        for (var group : rubricGroups.values()) {
+            Toggle selected = group.getSelectedToggle();
+            total += (int) selected.getUserData();
+            count++;
+        }
+        return (total / (double) count) * 2;
+    }
+
+    private SelfEvaluation buildSelfEvaluation(double grade, String comments) {
+        SelfEvaluation selfEvaluation = new SelfEvaluation();
+        selfEvaluation.setCalification((float) grade);
+        selfEvaluation.setFeedBack(comments);
+        selfEvaluation.setStudent(student);
+        return selfEvaluation;
+    }
+
+    private boolean saveSelfEvaluation(SelfEvaluation selfEvaluation) throws SQLException {
+        SelfEvaluationDAO selfEvaluationDAO = new SelfEvaluationDAO();
+        return selfEvaluationDAO.addSelfEvaluation(selfEvaluation);
     }
 
     private void showMessage(String message, boolean error) {

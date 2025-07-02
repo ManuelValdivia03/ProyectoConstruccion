@@ -128,9 +128,17 @@ public class ControllerUpdateProyectWindow {
                 !view.getTitleTextField().getText().isEmpty(),
                 "El título es obligatorio");
 
+        isValid &= validateField(view.getTitleTextField(),
+                validators.validateProjectName(view.getTitleTextField().getText()),
+                "El título debe contener al menos una letra");
+
         isValid &= validateField(view.getDescriptionTextField(),
                 !view.getDescriptionTextField().getText().isEmpty(),
                 "La descripción es obligatoria");
+
+        isValid &= validateField(view.getDescriptionTextField(),
+                validators.validateProjectDescription(view.getDescriptionTextField().getText()),
+                "La descripción debe contener al menos una letra");
 
         try {
             int maxStudents = Integer.parseInt(view.getMaxStudentsTextField().getText().trim());

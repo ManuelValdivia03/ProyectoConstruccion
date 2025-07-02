@@ -16,12 +16,13 @@ import java.util.List;
 import java.sql.Timestamp;
 
 public class ProjectRequestDAO implements IProjectRequestDAO {
+
     private static final Logger logger = LogManager.getLogger(ProjectRequestDAO.class);
     private static final ProjectRequest EMPTY_REQUEST = new ProjectRequest(
         -1, -1, -1, new Timestamp(0), RequestStatus.RECHAZADA, "", ""
     );
 
-    public boolean createRequest(ProjectRequest request) throws SQLException {
+    public boolean createRequest(ProjectRequest request) throws SQLException, IllegalArgumentException {
         if (request == null) {
             throw new IllegalArgumentException("La solicitud no puede ser nula");
         }

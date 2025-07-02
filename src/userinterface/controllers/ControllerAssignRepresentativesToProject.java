@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.stage.Stage;
 import logic.daos.ProjectDAO;
@@ -57,11 +58,11 @@ public class ControllerAssignRepresentativesToProject {
 
     private void handleAssignToProject(ActionEvent event) {
         Object source = event.getSource();
-        if (!(source instanceof javafx.scene.control.Button)) {
+        if (!(source instanceof Button)) {
             return;
         }
 
-        javafx.scene.control.Button button = (javafx.scene.control.Button) source;
+        Button button = (Button) source;
         Representative rep = (Representative) button.getUserData();
 
         if (rep == null) {

@@ -62,10 +62,6 @@ public class ControllerStatisticsWindow implements EventHandler<ActionEvent> {
         try {
             loadProjectStatistics();
 
-//            loadStudentsPerProject();
-//
-//            loadProjectCapacityStats();
-
             view.showMessage("Datos actualizados correctamente", false);
 
         } catch (SQLException e) {
@@ -89,30 +85,6 @@ public class ControllerStatisticsWindow implements EventHandler<ActionEvent> {
         }
 
         view.updateProjectsChart(withProject, withoutProject);
-    }
-
-    private void loadStudentsPerProject() throws SQLException {
-        Map<String, Integer> studentsPerProject = new HashMap<>();
-        List<Project> projects = projectDAO.getAllProyects();
-
-        for (Project project : projects) {
-            List<Integer> studentIds = projectStudentDAO.getStudentsByProyect(project.getIdProyect());
-            studentsPerProject.put(project.getTitle(), studentIds.size());
-        }
-
-        view.updateStudentsPerProjectChart(studentsPerProject);
-    }
-
-    private void loadProjectCapacityStats() throws SQLException {
-        Map<String, int[]> capacityStats = new HashMap<>();
-        List<Project> projects = projectDAO.getAllProyects();
-
-        for (Project project : projects) {
-            capacityStats.put(project.getTitle(),
-                    new int[]{project.getCurrentStudents(), project.getCapacity()});
-        }
-
-        view.updateCapacityChart(capacityStats);
     }
 
     public void show() {

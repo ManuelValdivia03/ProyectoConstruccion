@@ -3,6 +3,7 @@ package userinterface.controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.stage.Modality;
@@ -149,7 +150,7 @@ public class ControllerConsultStudentsWindow {
                     }
             );
 
-            javafx.scene.Scene scene = new javafx.scene.Scene(updateWindow.getView(), 600, 400);
+            Scene scene = new Scene(updateWindow.getView(), 600, 400);
             updateStage.setScene(scene);
             updateStage.setTitle("Actualizar Estudiante");
             updateStage.show();

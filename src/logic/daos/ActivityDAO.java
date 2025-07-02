@@ -18,7 +18,7 @@ import java.util.List;
 public class ActivityDAO implements IActivityDAO {
     private static final Activity EMPTY_ACTIVITY = new Activity(-1, "", "", null, null, ActivityStatus.NONE);
 
-    public boolean addActivity(Activity activity) throws SQLException {
+    public boolean addActivity(Activity activity) throws SQLException, IllegalArgumentException {
         if (activity == null ||
                 activity.getNameActivity() == null ||
                 activity.getDescriptionActivity() == null ||
@@ -54,7 +54,7 @@ public class ActivityDAO implements IActivityDAO {
         }
     }
 
-    public boolean updateActivity(Activity activity) throws SQLException {
+    public boolean updateActivity(Activity activity) throws SQLException, IllegalArgumentException {
         if (activity == null) {
             throw new IllegalArgumentException("La actividad no puede ser nula");
         }
@@ -167,7 +167,7 @@ public class ActivityDAO implements IActivityDAO {
         return activities;
     }
 
-    public boolean changeActivityStatus(int idActivity, ActivityStatus newStatus) throws SQLException {
+    public boolean changeActivityStatus(int idActivity, ActivityStatus newStatus) throws SQLException, IllegalArgumentException {
         if (newStatus == null) {
             throw new IllegalArgumentException("El nuevo estado no puede ser nulo");
         }

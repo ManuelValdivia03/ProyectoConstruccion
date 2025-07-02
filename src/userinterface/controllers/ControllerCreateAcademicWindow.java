@@ -80,8 +80,12 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
                 return;
             }
 
-            User user = createAndSaveUser(academicData.name(), academicData.phone());
-            createAndSaveAcademic(user, academicData.staffNumber(), academicData.type());
+            User user = createUser(academicData.name(), academicData.phone());
+            saveUser(user);
+
+            Academic academic = createAcademic(user, academicData.staffNumber(), academicData.type());
+            saveAcademic(academic, user);
+
             createAndSaveAccount(user, academicData.email(), PasswordUtils.hashPassword(academicData.password()));
 
             showSuccessAndReset();
@@ -120,6 +124,9 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
 
         isValid &= validateField(view.getNameField().getText().trim().isEmpty(),
                 "Nombre completo es obligatorio", view.getNameField());
+
+        isValid &= validateField(!validators.validateName(view.getNameField().getText().trim()),
+                "El nombre solo debe contener letras y espacios", view.getNameField());
 
         isValid &= validateField(!validators.validateCellPhone(view.getPhoneField().getText()),
                 "Teléfono debe tener 10 dígitos", view.getPhoneField());
@@ -178,16 +185,19 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
         return true;
     }
 
-    private User createAndSaveUser(String name, String phone) throws SQLException {
-        User user = new User(0, name, phone, view.getPhoneExtensionField().getText().trim(), 'A');
+    private User createUser(String name, String phone) {
+        return new User(0, name, phone, view.getPhoneExtensionField().getText().trim(), 'A');
+    }
+
+    private User saveUser(User user) throws SQLException {
         if (!userDAO.addUser(user)) {
             throw new SQLException("No se pudo registrar el usuario");
         }
         return user;
     }
 
-    private void createAndSaveAcademic(User user, String staffNumber, AcademicType type) throws SQLException {
-        Academic academic = new Academic(
+    private Academic createAcademic(User user, String staffNumber, AcademicType type) {
+        return new Academic(
                 user.getIdUser(),
                 user.getFullName(),
                 user.getCellPhone(),
@@ -196,7 +206,9 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
                 staffNumber,
                 type
         );
+    }
 
+    private void saveAcademic(Academic academic, User user) throws SQLException {
         if (!academicDAO.addAcademic(academic)) {
             userDAO.deleteUser(user.getIdUser());
             throw new SQLException("No se pudo registrar el académico");

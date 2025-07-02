@@ -14,7 +14,7 @@ import java.util.List;
 public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
     private static final LinkedOrganization EMPTY_ORGANIZATION = new LinkedOrganization(-1, "", "", "", "", "", 'I');
 
-    public boolean addLinkedOrganization(LinkedOrganization linkedOrganization) throws SQLException {
+    public boolean addLinkedOrganization(LinkedOrganization linkedOrganization) throws SQLException, IllegalArgumentException {
         if (linkedOrganization == null) {
             throw new IllegalArgumentException("La organización vinculada no debe ser nula");
         }
@@ -47,7 +47,7 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
         }
     }
 
-    public boolean deleteLinkedOrganization(LinkedOrganization linkedOrganization) throws SQLException {
+    public boolean deleteLinkedOrganization(LinkedOrganization linkedOrganization) throws SQLException, IllegalArgumentException {
         if (linkedOrganization == null) {
             throw new IllegalArgumentException("La organización vinculada no debe ser nula");
         }
@@ -62,7 +62,7 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
         }
     }
 
-    public boolean updateLinkedOrganization(LinkedOrganization linkedOrganization) throws SQLException {
+    public boolean updateLinkedOrganization(LinkedOrganization linkedOrganization) throws SQLException, IllegalArgumentException {
         if (linkedOrganization == null) {
             throw new IllegalArgumentException("La organización vinculada no debe ser nula");
         }
@@ -109,7 +109,7 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
         return organizations;
     }
 
-    public LinkedOrganization getLinkedOrganizationByTitle(String title) throws SQLException {
+    public LinkedOrganization getLinkedOrganizationByTitle(String title) throws SQLException, IllegalArgumentException {
         if (title == null || title.isEmpty()) {
             throw new IllegalArgumentException("El nombre de la organización no debe ser nulo o vacío");
         }
@@ -167,7 +167,7 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
         return EMPTY_ORGANIZATION;
     }
 
-    public boolean linkedOrganizationExists(String title) throws SQLException {
+    public boolean linkedOrganizationExists(String title) throws SQLException, IllegalArgumentException {
         if (title == null || title.isEmpty()) {
             throw new IllegalArgumentException("El nombre de la organización no debe ser nulo o vacío");
         }
@@ -195,7 +195,7 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
         }
     }
 
-    public boolean phoneNumberExists(String phone) throws SQLException {
+    public boolean phoneNumberExists(String phone) throws SQLException, IllegalArgumentException {
         if (phone == null || phone.isEmpty()) {
             throw new IllegalArgumentException("El teléfono no debe ser nulo o vacío");
         }
@@ -212,7 +212,7 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
         }
     }
 
-    public boolean emailExists(String email) throws SQLException {
+    public boolean emailExists(String email) throws SQLException, IllegalArgumentException {
         if (email == null || email.isEmpty()) {
             throw new IllegalArgumentException("El correo electrónico no debe ser nulo o vacío");
         }

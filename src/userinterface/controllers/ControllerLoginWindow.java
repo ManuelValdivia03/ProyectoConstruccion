@@ -2,6 +2,7 @@ package userinterface.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import logic.logicclasses.Academic;
@@ -12,6 +13,8 @@ import logic.services.ExceptionManager;
 import logic.services.LoginService;
 import logic.services.PasswordRecoveryService;
 import userinterface.windows.LoginWindow;
+
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class ControllerLoginWindow implements EventHandler<ActionEvent> {
@@ -60,6 +63,9 @@ public class ControllerLoginWindow implements EventHandler<ActionEvent> {
         try {
             User user = loginService.login(email, password);
             handleSuccessfulLogin(user);
+        } catch (SQLException e) {
+            String message = ExceptionManager.handleException(e);
+            showAlert(message, ERROR_COLOR);
         } catch (Exception e) {
             String message = ExceptionManager.handleException(e);
             showMessage(message, ERROR_COLOR);
@@ -99,6 +105,14 @@ public class ControllerLoginWindow implements EventHandler<ActionEvent> {
     private void showMessage(String message, String style) {
         view.getMessageLabel().setText(message);
         view.getMessageLabel().setStyle(style);
+    }
+
+    private void showAlert(String message, String style) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error de conexión");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     private void launchNewLoginWindow() {

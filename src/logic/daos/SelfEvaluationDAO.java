@@ -20,7 +20,7 @@ public class SelfEvaluationDAO implements ISelfEvaluationDAO {
         this.studentDAO = new StudentDAO();
     }
 
-    public boolean addSelfEvaluation(SelfEvaluation selfEvaluation) throws SQLException {
+    public boolean addSelfEvaluation(SelfEvaluation selfEvaluation) throws SQLException, IllegalArgumentException {
         if (selfEvaluation == null ||
                 selfEvaluation.getFeedBack() == null ||
                 selfEvaluation.getStudent() == null) {
@@ -145,7 +145,7 @@ public class SelfEvaluationDAO implements ISelfEvaluationDAO {
         return EMPTY_SELFEVALUATION;
     }
 
-    public boolean updateSelfEvaluation(SelfEvaluation selfEvaluation) throws SQLException {
+    public boolean updateSelfEvaluation(SelfEvaluation selfEvaluation) throws SQLException, IllegalArgumentException {
         if (selfEvaluation == null ||
                 selfEvaluation.getIdSelfEvaluation() <= 0 ||
                 selfEvaluation.getStudent() == null) {

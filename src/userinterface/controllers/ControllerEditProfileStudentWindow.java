@@ -130,9 +130,16 @@ public class ControllerEditProfileStudentWindow implements EventHandler<ActionEv
     }
 
     private void showSuccessAndClose() {
+        showSuccessMessage();
+        scheduleClose();
+    }
+
+    private void showSuccessMessage() {
         view.getResultLabel().setText("Cuenta actualizada correctamente");
         view.getResultLabel().setStyle(SUCCESS_STYLE);
+    }
 
+    private void scheduleClose() {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override

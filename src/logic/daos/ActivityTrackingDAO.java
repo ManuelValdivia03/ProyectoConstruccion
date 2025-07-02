@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 public class ActivityTrackingDAO {
+
     private static final Logger logger = Logger.getLogger(ActivityTrackingDAO.class.getName());
 
     public boolean assignCronogramToStudent(int studentId, int cronogramId) throws SQLException {

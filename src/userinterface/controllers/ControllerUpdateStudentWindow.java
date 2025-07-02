@@ -99,6 +99,9 @@ public class ControllerUpdateStudentWindow {
         if (view.getNameField().getText().trim().isEmpty()) {
             showFieldError("Nombre completo es obligatorio", view.getNameField());
             isValid = false;
+        } else if (!validators.validateName(view.getNameField().getText().trim())) {
+            showFieldError("El nombre solo debe contener letras y espacios", view.getNameField());
+            isValid = false;
         }
 
         if (!validators.validateCellPhone(view.getPhoneField().getText())) {

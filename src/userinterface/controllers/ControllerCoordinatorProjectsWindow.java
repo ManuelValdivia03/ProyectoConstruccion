@@ -78,24 +78,9 @@ public class ControllerCoordinatorProjectsWindow implements EventHandler<ActionE
         try {
             for (ProjectRequest request : selectedRequests) {
                 if (request.isPending() && project.getCapacity() > 0) {
-                    requestDAO.approveRequest(request.getRequestId(), projectStudentDAO);
-
-                    StudentDAO studentDAO = new StudentDAO();
-                    PDFAssignmentGenerator pdfAssignmentGenerator = new PDFAssignmentGenerator();
-
-                    byte[] pdfContent = pdfAssignmentGenerator.generateAssignmentPDF(
-                            studentDAO.getStudentById(request.getStudentId()),
-                            project
-                    );
-
-                    assignmentDocumentDAO.saveAssignmentDocument(
-                            project.getIdProyect(),
-                            request.getStudentId(),
-                            pdfContent
-                    );
-
+                    approveRequestAndGenerateDocument(request, project);
                 } else if (project.getCapacity() <= 0) {
-                    requestDAO.rejectRequest(request.getRequestId());
+                    rejectSingleRequest(request);
                 }
             }
             loadProjects();
@@ -106,12 +91,38 @@ public class ControllerCoordinatorProjectsWindow implements EventHandler<ActionE
         }
     }
 
+    private void approveRequestAndGenerateDocument(ProjectRequest request, Project project) throws SQLException, IOException {
+        requestDAO.approveRequest(request.getRequestId(), projectStudentDAO);
+
+        StudentDAO studentDAO = new StudentDAO();
+        byte[] pdfContent = generateAssignmentPDFContent(studentDAO.getStudentById(request.getStudentId()), project);
+
+        saveAssignmentDocument(project.getIdProyect(), request.getStudentId(), pdfContent);
+    }
+
+    private byte[] generateAssignmentPDFContent(logic.logicclasses.Student student, Project project) throws IOException {
+        PDFAssignmentGenerator pdfAssignmentGenerator = new PDFAssignmentGenerator();
+        try {
+            return pdfAssignmentGenerator.generateAssignmentPDF(student, project);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void saveAssignmentDocument(int projectId, int studentId, byte[] pdfContent) throws SQLException {
+        assignmentDocumentDAO.saveAssignmentDocument(projectId, studentId, pdfContent);
+    }
+
+    private void rejectSingleRequest(ProjectRequest request) throws SQLException {
+        requestDAO.rejectRequest(request.getRequestId());
+    }
+
     private void handleRejectRequests(Project project, ObservableList<ProjectRequest> requests) {
         ObservableList<ProjectRequest> selectedRequests = requestsWindow.getRequestsTable().getSelectionModel().getSelectedItems();
         try {
             for (ProjectRequest request : selectedRequests) {
                 if (request.isPending()) {
-                    requestDAO.rejectRequest(request.getRequestId());
+                    rejectSingleRequest(request);
                 }
             }
             view.showMessage("Solicitudes rechazadas correctamente", false);

@@ -1,5 +1,6 @@
 package userinterface.controllers;
 
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -50,21 +51,10 @@ public class ControllerRegistCronogramActivityWindow {
                 return cronograms.get(0).getIdCronogram();
             }
 
-            ActivityCronogram newCronogram = new ActivityCronogram();
-            newCronogram.setDateStart(new Timestamp(System.currentTimeMillis()));
-            newCronogram.setDateEnd(new Timestamp(System.currentTimeMillis() + 365L * 24 * 60 * 60 * 1000));
-
-            if (cronogramDAO.addCronogram(newCronogram)) {
-                if (cronogramDAO.assignCronogramToAllStudents(newCronogram.getIdCronogram())) {
-                    LOGGER.log(Level.INFO, "Nuevo cronograma creado y asignado. ID: {0}", newCronogram.getIdCronogram());
-                    return newCronogram.getIdCronogram();
-                } else {
-                    LOGGER.log(Level.SEVERE, "Error al asignar cronograma a estudiantes");
-                    showError("Error al asignar cronograma a estudiantes");
-                }
-            } else {
-                LOGGER.log(Level.SEVERE, "Error al crear nuevo cronograma");
-                showError("Error al crear nuevo cronograma");
+            ActivityCronogram newCronogram = createNewCronogram();
+            if (newCronogram != null && assignCronogramToAllStudents(newCronogram)) {
+                LOGGER.log(Level.INFO, "Nuevo cronograma creado y asignado. ID: {0}", newCronogram.getIdCronogram());
+                return newCronogram.getIdCronogram();
             }
         } catch (SQLException e) {
             String errorMsg = ExceptionManager.handleException(e);
@@ -72,6 +62,29 @@ public class ControllerRegistCronogramActivityWindow {
             showError(errorMsg);
         }
         return -1;
+    }
+
+    private ActivityCronogram createNewCronogram() throws SQLException {
+        ActivityCronogram newCronogram = new ActivityCronogram();
+        newCronogram.setDateStart(new Timestamp(System.currentTimeMillis()));
+        newCronogram.setDateEnd(new Timestamp(System.currentTimeMillis() + 365L * 24 * 60 * 60 * 1000));
+        if (cronogramDAO.addCronogram(newCronogram)) {
+            return newCronogram;
+        } else {
+            LOGGER.log(Level.SEVERE, "Error al crear nuevo cronograma");
+            showError("Error al crear nuevo cronograma");
+            return null;
+        }
+    }
+
+    private boolean assignCronogramToAllStudents(ActivityCronogram cronogram) throws SQLException {
+        if (cronogramDAO.assignCronogramToAllStudents(cronogram.getIdCronogram())) {
+            return true;
+        } else {
+            LOGGER.log(Level.SEVERE, "Error al asignar cronograma a estudiantes");
+            showError("Error al asignar cronograma a estudiantes");
+            return false;
+        }
     }
 
     private void loadActivities() {
@@ -129,7 +142,7 @@ public class ControllerRegistCronogramActivityWindow {
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.setPadding(new javafx.geometry.Insets(20));
+        grid.setPadding(new Insets(20));
 
         grid.add(new Label("Nombre:"), 0, 0);
         grid.add(new Label(activity.getNameActivity()), 1, 0);
@@ -161,7 +174,7 @@ public class ControllerRegistCronogramActivityWindow {
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.setPadding(new javafx.geometry.Insets(20));
+        grid.setPadding(new Insets(20));
         grid.add(new Label("Nombre:"), 0, 0);
         grid.add(nameField, 1, 0);
         grid.add(new Label("Descripción:"), 0, 1);
@@ -184,13 +197,9 @@ public class ControllerRegistCronogramActivityWindow {
 
     private void updateActivity(Activity activity, String newName, String newDesc) {
         try {
-            activity.setNameActivity(newName);
-            activity.setDescriptionActivity(newDesc);
-
+            setActivityFields(activity, newName, newDesc);
             if (activityDAO.updateActivity(activity)) {
-                loadActivities();
-                view.showMessage("Actividad actualizada", false);
-                LOGGER.log(Level.INFO, "Actividad actualizada ID: {0}", activity.getIdActivity());
+                reloadActivitiesWithMessage("Actividad actualizada", activity.getIdActivity());
             } else {
                 LOGGER.log(Level.WARNING, "No se pudo actualizar actividad ID: {0}", activity.getIdActivity());
                 showError("No se pudo actualizar la actividad");
@@ -200,6 +209,17 @@ public class ControllerRegistCronogramActivityWindow {
             LOGGER.log(Level.SEVERE, errorMsg, e);
             showError(errorMsg);
         }
+    }
+
+    private void setActivityFields(Activity activity, String name, String desc) {
+        activity.setNameActivity(name);
+        activity.setDescriptionActivity(desc);
+    }
+
+    private void reloadActivitiesWithMessage(String message, int activityId) {
+        loadActivities();
+        view.showMessage(message, false);
+        LOGGER.log(Level.INFO, "{0} ID: {1}", new Object[]{message, activityId});
     }
 
     private void showAddActivityDialog(LocalDate date) {
@@ -213,7 +233,7 @@ public class ControllerRegistCronogramActivityWindow {
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.setPadding(new javafx.geometry.Insets(20));
+        grid.setPadding(new Insets(20));
         grid.add(new Label("Nombre:"), 0, 0);
         grid.add(nameField, 1, 0);
         grid.add(new Label("Descripción:"), 0, 1);
@@ -236,26 +256,10 @@ public class ControllerRegistCronogramActivityWindow {
 
     private void createNewActivity(LocalDate date, String name, String description) {
         try {
-            Activity newActivity = new Activity();
-            newActivity.setNameActivity(name);
-            newActivity.setDescriptionActivity(description);
-            newActivity.setStartDate(Timestamp.valueOf(date.atStartOfDay()));
-            newActivity.setEndDate(Timestamp.valueOf(date.atTime(23, 59, 59)));
-            newActivity.setActivityStatus(ActivityStatus.Pendiente);
-
+            Activity newActivity = buildNewActivity(date, name, description);
             if (activityDAO.addActivity(newActivity)) {
-                if (cronogramDAO.addActivityToCronogram(currentCronogramId, newActivity.getIdActivity())) {
-                    if (cronogramDAO.initializeActivityForAllStudents(newActivity.getIdActivity())) {
-                        loadActivities();
-                        view.showMessage("Actividad creada exitosamente", false);
-                        LOGGER.log(Level.INFO, "Nueva actividad creada ID: {0}", newActivity.getIdActivity());
-                    } else {
-                        LOGGER.log(Level.WARNING, "No se pudo inicializar actividad para estudiantes. ID: {0}", newActivity.getIdActivity());
-                        showError("Actividad creada pero no asignada a estudiantes");
-                    }
-                } else {
-                    LOGGER.log(Level.WARNING, "No se pudo agregar actividad al cronograma. ID: {0}", newActivity.getIdActivity());
-                    showError("Actividad creada pero no vinculada al cronograma");
+                if (addActivityToCronogramAndInitialize(newActivity)) {
+                    reloadActivitiesWithMessage("Actividad creada exitosamente", newActivity.getIdActivity());
                 }
             } else {
                 LOGGER.log(Level.SEVERE, "Error al crear nueva actividad");
@@ -266,6 +270,31 @@ public class ControllerRegistCronogramActivityWindow {
             LOGGER.log(Level.SEVERE, errorMsg, e);
             showError(errorMsg);
         }
+    }
+
+    private Activity buildNewActivity(LocalDate date, String name, String description) {
+        Activity newActivity = new Activity();
+        newActivity.setNameActivity(name);
+        newActivity.setDescriptionActivity(description);
+        newActivity.setStartDate(Timestamp.valueOf(date.atStartOfDay()));
+        newActivity.setEndDate(Timestamp.valueOf(date.atTime(23, 59, 59)));
+        newActivity.setActivityStatus(ActivityStatus.Pendiente);
+        return newActivity;
+    }
+
+    private boolean addActivityToCronogramAndInitialize(Activity activity) throws SQLException {
+        if (cronogramDAO.addActivityToCronogram(currentCronogramId, activity.getIdActivity())) {
+            if (cronogramDAO.initializeActivityForAllStudents(activity.getIdActivity())) {
+                return true;
+            } else {
+                LOGGER.log(Level.WARNING, "No se pudo inicializar actividad para estudiantes. ID: {0}", activity.getIdActivity());
+                showError("Actividad creada pero no asignada a estudiantes");
+            }
+        } else {
+            LOGGER.log(Level.WARNING, "No se pudo agregar actividad al cronograma. ID: {0}", activity.getIdActivity());
+            showError("Actividad creada pero no vinculada al cronograma");
+        }
+        return false;
     }
 
     private void deleteActivity(Activity activity) {
@@ -305,3 +334,4 @@ public class ControllerRegistCronogramActivityWindow {
         stage.show();
     }
 }
+

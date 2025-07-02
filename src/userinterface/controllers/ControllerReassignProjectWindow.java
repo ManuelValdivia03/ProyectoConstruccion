@@ -104,40 +104,59 @@ public class ControllerReassignProjectWindow implements EventHandler<ActionEvent
         try {
             Integer currentProjectId = projectStudentDAO.getProyectByStudent(selectedStudent.getIdUser());
 
-            AssignmentDocumentDAO assignmentDocumentDAO = new AssignmentDocumentDAO();
-            assignmentDocumentDAO.deleteAssignmentDocument(selectedStudent.getIdUser());
+            deleteAssignmentDocumentForStudent(selectedStudent.getIdUser());
 
             if (currentProjectId != null) {
-                projectStudentDAO.removeStudentFromProyect(currentProjectId, selectedStudent.getIdUser());
-            }
-
-            boolean success = projectStudentDAO.assignStudentToProject(
-                    selectedProject.getIdProyect(),
-                    selectedStudent.getIdUser()
-            );
-
-            if (success) {
-                PDFAssignmentGenerator pdfAssignmentGenerator = new PDFAssignmentGenerator();
-                byte[] pdfContent = pdfAssignmentGenerator.generateAssignmentPDF(
-                        selectedStudent,
-                        selectedProject
-                );
-                assignmentDocumentDAO.saveAssignmentDocument(
-                        selectedProject.getIdProyect(),
-                        selectedStudent.getIdUser(),
-                        pdfContent
-                );
-
-                view.showMessage("Estudiante reasignado y documento actualizado correctamente", false);
-                updateCurrentProjectDisplay(selectedStudent.getIdUser());
+                reassignStudentToProject(currentProjectId, selectedProject.getIdProyect(), selectedStudent.getIdUser());
             } else {
-                view.showMessage("No se pudo reasignar el estudiante", true);
+                assignStudentToProject(selectedProject.getIdProyect(), selectedStudent.getIdUser());
             }
+
+            generateAndSaveAssignmentPDF(selectedStudent, selectedProject);
+
+            view.showMessage("Estudiante reasignado y documento actualizado correctamente", false);
+            updateCurrentProjectDisplay(selectedStudent.getIdUser());
 
         } catch (Exception e) {
             String message = ExceptionManager.handleException(e);
             view.showMessage("Error al reasignar: " + message, true);
         }
+    }
+
+    private void deleteAssignmentDocumentForStudent(int studentId) throws SQLException {
+        AssignmentDocumentDAO assignmentDocumentDAO = new AssignmentDocumentDAO();
+        assignmentDocumentDAO.deleteAssignmentDocument(studentId);
+    }
+
+    private void reassignStudentToProject(int currentProjectId, int newProjectId, int studentId) throws SQLException {
+        projectStudentDAO.removeStudentFromProyect(currentProjectId, studentId);
+        assignStudentToProject(newProjectId, studentId);
+    }
+
+    private void assignStudentToProject(int projectId, int studentId) throws SQLException {
+        boolean success = projectStudentDAO.assignStudentToProject(projectId, studentId);
+        if (!success) {
+            throw new SQLException("No se pudo reasignar el estudiante");
+        }
+    }
+
+    private void generateAndSaveAssignmentPDF(Student student, Project project) throws Exception {
+        byte[] pdfContent = generateAssignmentPDF(student, project);
+        saveAssignmentDocument(project, student, pdfContent);
+    }
+
+    private byte[] generateAssignmentPDF(Student student, Project project) throws Exception {
+        PDFAssignmentGenerator pdfAssignmentGenerator = new PDFAssignmentGenerator();
+        return pdfAssignmentGenerator.generateAssignmentPDF(student, project);
+    }
+
+    private void saveAssignmentDocument(Project project, Student student, byte[] pdfContent) throws SQLException {
+        AssignmentDocumentDAO assignmentDocumentDAO = new AssignmentDocumentDAO();
+        assignmentDocumentDAO.saveAssignmentDocument(
+                project.getIdProyect(),
+                student.getIdUser(),
+                pdfContent
+        );
     }
 
     public void show() {

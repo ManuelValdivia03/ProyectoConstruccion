@@ -122,7 +122,10 @@ public class ControllerConsultAssignedProjectWindow implements EventHandler<Acti
                     }
                 }
             } else {
-                generateAndSaveAssignment();
+                byte[] generatedPdf = generateAssignmentPDFContent();
+                if (generatedPdf != null) {
+                    saveAssignmentToFile(generatedPdf);
+                }
             }
         } catch (SQLException e) {
             String message = ExceptionManager.handleException(e);
@@ -130,7 +133,7 @@ public class ControllerConsultAssignedProjectWindow implements EventHandler<Acti
         }
     }
 
-    private void generateAndSaveAssignment() {
+    private byte[] generateAssignmentPDFContent() {
         try {
             PDFAssignmentGenerator pdfGenerator = new PDFAssignmentGenerator();
             Student student = studentDAO.getStudentById(studentId);
@@ -142,29 +145,37 @@ public class ControllerConsultAssignedProjectWindow implements EventHandler<Acti
                     studentId,
                     pdfContent
             );
-
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Guardar Oficio de Asignación");
-            fileChooser.setInitialFileName(
-                    "Oficio_Asignacion_" + studentDAO.getStudentById(studentId).getEnrollment() + ".pdf"
-            );
-            fileChooser.getExtensionFilters().add(
-                    new FileChooser.ExtensionFilter("PDF Files", "*.pdf")
-            );
-
-            File file = fileChooser.showSaveDialog(stage);
-
-            if (file != null) {
-                try (FileOutputStream fos = new FileOutputStream(file)) {
-                    fos.write(pdfContent);
-                    view.showMessage("Oficio generado y descargado correctamente", false);
-                } catch (IOException e) {
-                    view.showMessage("Error al guardar el archivo: " + e.getMessage(), true);
-                }
-            }
+            return pdfContent;
         } catch (SQLException | IOException e) {
             String message = ExceptionManager.handleException(e);
             view.showMessage("Error al generar el oficio: " + message, true);
+            return null;
+        }
+    }
+
+    private void saveAssignmentToFile(byte[] pdfContent) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Guardar Oficio de Asignación");
+        try {
+            fileChooser.setInitialFileName(
+                    "Oficio_Asignacion_" + studentDAO.getStudentById(studentId).getEnrollment() + ".pdf"
+            );
+        } catch (SQLException e) {
+            fileChooser.setInitialFileName("Oficio_Asignacion.pdf");
+        }
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("PDF Files", "*.pdf")
+        );
+
+        File file = fileChooser.showSaveDialog(stage);
+
+        if (file != null) {
+            try (FileOutputStream fos = new FileOutputStream(file)) {
+                fos.write(pdfContent);
+                view.showMessage("Oficio generado y descargado correctamente", false);
+            } catch (IOException e) {
+                view.showMessage("Error al guardar el archivo: " + e.getMessage(), true);
+            }
         }
     }
 

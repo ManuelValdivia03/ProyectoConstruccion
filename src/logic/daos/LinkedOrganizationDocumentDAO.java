@@ -14,7 +14,7 @@ public class LinkedOrganizationDocumentDAO {
     private static final String EMPTY_STRING = "";
     private static final String NO_INFO = "No hay información disponible";
 
-    public boolean insertDocument(int organizationId, String fileName, String fileType, byte[] fileBytes) throws SQLException {
+    public boolean insertDocument(int organizationId, String fileName, String fileType, byte[] fileBytes) throws SQLException, IllegalArgumentException {
         if (organizationId <= 0 || fileName == null || fileType == null || fileBytes == null) {
             throw new IllegalArgumentException("Parámetros inválidos para insertar documento");
         }
@@ -76,7 +76,7 @@ public class LinkedOrganizationDocumentDAO {
         return EMPTY_DOCUMENT;
     }
 
-    public boolean deleteDocument(int organizationId) throws SQLException {
+    public boolean deleteDocument(int organizationId) throws SQLException, IllegalArgumentException {
         if (organizationId <= 0) {
             throw new IllegalArgumentException("ID de organización inválido para eliminar documento");
         }

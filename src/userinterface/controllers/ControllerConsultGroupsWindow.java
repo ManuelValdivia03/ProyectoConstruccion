@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.stage.Stage;
 import logic.daos.AcademicDAO;
@@ -53,44 +54,71 @@ public class ControllerConsultGroupsWindow {
     }
 
     private void handleAssignAcademic(ActionEvent event) {
-        Object source = event.getSource();
-        if (!(source instanceof javafx.scene.control.Button)) {
-            return;
-        }
-        javafx.scene.control.Button button = (javafx.scene.control.Button) source;
-        Group group = (Group) button.getUserData();
+        Group group = extractGroupFromEvent(event);
         if (group == null) {
             return;
         }
-
         ConsultAcademicsWindow academicsWindow = new ConsultAcademicsWindow();
-        TableColumn<Academic, Void> assignCol = academicsWindow.createManageButtonColumn(assignEvent -> {
-            Object assignSource = assignEvent.getSource();
-            if (!(assignSource instanceof Academic)) {
-                return;
-            }
-            Academic academic = (Academic) assignSource;
-            try {
-                boolean assigned = groupDAO.assignEeAcademic(group.getNrc(), academic.getIdUser());
-                if (assigned) {
-                    group.setAcademic(academic);
-                    view.getGroupTable().refresh();
-                    showAlert(Alert.AlertType.INFORMATION, "Éxito", 
-                        "Se asignó el académico " + academic.getFullName() + " al grupo " + group.getGroupName());
-                    Stage stage = (Stage) academicsWindow.getView().getScene().getWindow();
-                    stage.close();
-                } else {
-                    showAlert(Alert.AlertType.ERROR, "Error", "No se pudo asignar el académico al grupo.");
-                }
-            } catch (SQLException e) {
-                String message = ExceptionManager.handleException(e);
-                showAlert(Alert.AlertType.ERROR, "Error", "Error al asignar el académico: " + message);
-            }
-        });
+        TableColumn<Academic, Void> assignCol = createAssignColumn(group, academicsWindow);
 
-        assignCol.setText("Asignar");
         academicsWindow.getAcademicTable().getColumns().add(assignCol);
 
+        loadAcademicsData(academicsWindow);
+
+        showAcademicsWindow(academicsWindow);
+    }
+
+    private Group extractGroupFromEvent(ActionEvent event) {
+        Object source = event.getSource();
+        if (!(source instanceof Button)) {
+            return null;
+        }
+        Button button = (Button) source;
+        return (Group) button.getUserData();
+    }
+
+    private TableColumn<Academic, Void> createAssignColumn(Group group, ConsultAcademicsWindow academicsWindow) {
+        return academicsWindow.createManageButtonColumn(assignEvent -> {
+            Academic academic = extractAcademicFromEvent(assignEvent);
+            if (academic == null) {
+                return;
+            }
+            assignAcademicToGroup(group, academic, academicsWindow);
+        });
+    }
+
+    private Academic extractAcademicFromEvent(ActionEvent assignEvent) {
+        Object assignSource = assignEvent.getSource();
+        if (!(assignSource instanceof Academic)) {
+            return null;
+        }
+        return (Academic) assignSource;
+    }
+
+    private void assignAcademicToGroup(Group group, Academic academic, ConsultAcademicsWindow academicsWindow) {
+        try {
+            boolean assigned = groupDAO.assignEeAcademic(group.getNrc(), academic.getIdUser());
+            if (assigned) {
+                group.setAcademic(academic);
+                view.getGroupTable().refresh();
+                showAlert(Alert.AlertType.INFORMATION, "Éxito",
+                    "Se asignó el académico " + academic.getFullName() + " al grupo " + group.getGroupName());
+                closeWindow(academicsWindow);
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Error", "No se pudo asignar el académico al grupo.");
+            }
+        } catch (SQLException e) {
+            String message = ExceptionManager.handleException(e);
+            showAlert(Alert.AlertType.ERROR, "Error", "Error al asignar el académico: " + message);
+        }
+    }
+
+    private void closeWindow(ConsultAcademicsWindow academicsWindow) {
+        Stage stage = (Stage) academicsWindow.getView().getScene().getWindow();
+        stage.close();
+    }
+
+    private void loadAcademicsData(ConsultAcademicsWindow academicsWindow) {
         AcademicDAO academicDAO = new AcademicDAO();
         try {
             List<Academic> academics = academicDAO.getAllAcademicsByType(AcademicType.EE);
@@ -98,9 +126,10 @@ public class ControllerConsultGroupsWindow {
         } catch (SQLException e) {
             String message = ExceptionManager.handleException(e);
             showAlert(Alert.AlertType.ERROR, "Error", "No se pudieron cargar los académicos EE: " + message);
-            return;
         }
+    }
 
+    private void showAcademicsWindow(ConsultAcademicsWindow academicsWindow) {
         Stage academicsStage = new Stage();
         academicsWindow.getBackButton().setOnAction(e -> academicsStage.close());
         academicsStage.setScene(new Scene(academicsWindow.getView(), 800, 600));
