@@ -1,66 +1,114 @@
-2025-06-30 19:12:25 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 0 - State: 08S01 - Message: Communications link failure
+2025-07-02 00:01:39 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-07-02 00:01:39 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-07-02 00:02:21 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Verificando existencia de teléfono celular: 2284452726
+2025-07-02 00:02:21 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - ¿Teléfono celular '2284452726' existe?: false
+2025-07-02 00:02:25 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Verificando existencia de teléfono celular: 2284452726
+2025-07-02 00:02:25 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - ¿Teléfono celular '2284452726' existe?: false
+2025-07-02 00:02:25 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Validando teléfono celular: 2284452726
+2025-07-02 00:02:25 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Verificando existencia de teléfono celular: 2284452726
+2025-07-02 00:02:25 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - ¿Teléfono celular '2284452726' existe?: false
+2025-07-02 00:02:25 [JavaFX Application Thread] INFO  logic.daos.UserDAO - Usuario agregado exitosamente - ID: 4, Nombre: Luchas Hernandez, Teléfono: 2284452726
+2025-07-02 00:02:25 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Generando hash para contraseña
+2025-07-02 00:02:25 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Verificando existencia de usuario con ID: 4
+2025-07-02 00:02:25 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - ¿Usuario ID 4 existe?: true
+2025-07-02 00:02:43 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-07-02 00:02:43 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-07-02 00:03:06 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Buscando estudiantes por grupo NRC: 12345
+2025-07-02 00:03:06 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Se encontraron 0 estudiantes en el grupo NRC: 12345
+2025-07-02 00:03:21 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-07-02 00:03:21 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como académico
+2025-07-02 00:04:13 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Generando hash para contraseña
+2025-07-02 00:04:13 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Verificando existencia de teléfono celular: 2285676767
+2025-07-02 00:04:13 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - ¿Teléfono celular '2285676767' existe?: false
+2025-07-02 00:04:13 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Verificando existencia de matrícula: s21014055
+2025-07-02 00:04:13 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - ¿Matrícula 's21014055' existe?: false
+2025-07-02 00:04:13 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Validando teléfono celular: 2285676767
+2025-07-02 00:04:13 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Verificando existencia de teléfono celular: 2285676767
+2025-07-02 00:04:13 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - ¿Teléfono celular '2285676767' existe?: false
+2025-07-02 00:04:13 [JavaFX Application Thread] INFO  logic.daos.UserDAO - Usuario agregado exitosamente - ID: 5, Nombre: Manuel Zaragoza, Teléfono: 2285676767
+2025-07-02 00:04:13 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Agregando nuevo estudiante con matrícula: s21014055
+2025-07-02 00:04:13 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Asignando estudiante ID: 5 al grupo NRC: 12345
+2025-07-02 00:04:13 [JavaFX Application Thread] INFO  logic.daos.StudentDAO - Estudiante ID: 5 asignado exitosamente al grupo NRC: 12345
+2025-07-02 00:04:13 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Verificando existencia de usuario con ID: 5
+2025-07-02 00:04:13 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - ¿Usuario ID 5 existe?: true
+2025-07-02 00:04:29 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-07-02 00:04:29 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como estudiante
+2025-07-02 00:04:46 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-07-02 00:04:47 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como académico
+2025-07-02 00:04:48 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Buscando estudiantes por grupo NRC: 12345
+2025-07-02 00:04:48 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Se encontraron 1 estudiantes en el grupo NRC: 12345
+2025-07-02 00:04:48 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Buscando estudiantes activos por grupo NRC: 12345
+2025-07-02 00:04:48 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Se encontraron 1 estudiantes activos en el grupo NRC: 12345
+2025-07-02 00:04:53 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Actualizando calificación del estudiante ID: 5
+2025-07-02 00:04:53 [JavaFX Application Thread] INFO  logic.daos.StudentDAO - Calificación actualizada exitosamente - ID: 5, Nueva calificación: 2
+2025-07-02 00:04:53 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Buscando estudiantes por grupo NRC: 12345
+2025-07-02 00:04:53 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Se encontraron 1 estudiantes en el grupo NRC: 12345
+2025-07-02 00:04:53 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Buscando estudiantes activos por grupo NRC: 12345
+2025-07-02 00:04:53 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Se encontraron 1 estudiantes activos en el grupo NRC: 12345
+2025-07-02 00:04:58 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Actualizando calificación del estudiante ID: 5
+2025-07-02 00:04:58 [JavaFX Application Thread] INFO  logic.daos.StudentDAO - Calificación actualizada exitosamente - ID: 5, Nueva calificación: 10
+2025-07-02 00:04:58 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Buscando estudiantes por grupo NRC: 12345
+2025-07-02 00:04:58 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Se encontraron 1 estudiantes en el grupo NRC: 12345
+2025-07-02 00:04:58 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Buscando estudiantes activos por grupo NRC: 12345
+2025-07-02 00:04:58 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Se encontraron 1 estudiantes activos en el grupo NRC: 12345
+2025-07-02 00:05:12 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Actualizando calificación del estudiante ID: 5
+2025-07-02 00:05:12 [JavaFX Application Thread] INFO  logic.daos.StudentDAO - Calificación actualizada exitosamente - ID: 5, Nueva calificación: 0
+2025-07-02 00:05:12 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Buscando estudiantes por grupo NRC: 12345
+2025-07-02 00:05:12 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Se encontraron 1 estudiantes en el grupo NRC: 12345
+2025-07-02 00:05:12 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Buscando estudiantes activos por grupo NRC: 12345
+2025-07-02 00:05:12 [JavaFX Application Thread] DEBUG logic.daos.StudentDAO - Se encontraron 1 estudiantes activos en el grupo NRC: 12345
+2025-07-02 00:05:37 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-07-02 00:05:37 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-07-02 00:06:44 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Verificando existencia de proyecto con título: S
+2025-07-02 00:06:44 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - ¿Proyecto 'S' existe?: false
+2025-07-02 00:07:57 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Insertando documento para organización ID: 1 - Nombre archivo: protoripoCaso2.jpg
+2025-07-02 00:07:57 [JavaFX Application Thread] INFO  logic.daos.LinkedOrganizationDocumentDAO - Documento insertado exitosamente para organización ID: 1 - Archivo: protoripoCaso2.jpg
+2025-07-02 00:08:06 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Verificando existencia de documento para organización ID: 1
+2025-07-02 00:08:06 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - ¿Documento existe para organización ID 1?: true
+2025-07-02 00:08:06 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo documento para organización ID: 1
+2025-07-02 00:08:06 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Documento encontrado para organización ID: 1
+2025-07-02 00:08:06 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Obteniendo información de documento para organización ID: 1
+2025-07-02 00:08:06 [JavaFX Application Thread] DEBUG logic.daos.LinkedOrganizationDocumentDAO - Información de documento encontrada para organización ID: 1 - Nombre: protoripoCaso2.jpg, Tipo: PDF, Fecha: 2025-07-02 00:07:57.0
+2025-07-02 00:09:05 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Buscando proyectos con estado: A
+2025-07-02 00:09:05 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Se encontraron 1 proyectos con estado: A
+2025-07-02 00:09:09 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Actualizando proyecto ID: 1
+2025-07-02 00:09:09 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Proyecto actualizado exitosamente - ID: 1
+2025-07-02 00:09:10 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Buscando proyectos con estado: A
+2025-07-02 00:09:10 [JavaFX Application Thread] INFO  logic.daos.ProjectDAO - Se encontraron 0 proyectos con estado: A
+2025-07-02 00:09:21 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Verificando existencia de proyecto con título: s
+2025-07-02 00:09:21 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - ¿Proyecto 's' existe?: true
+2025-07-02 00:09:26 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Verificando existencia de proyecto con título: L
+2025-07-02 00:09:26 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - ¿Proyecto 'L' existe?: false
+2025-07-02 02:03:22 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
+2025-07-02 02:03:22 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
+2025-07-02 02:03:36 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 0 - State: 08S01 - Message: Communications link failure
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-2025-06-30 19:12:27 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 0 - State: 08S01 - Message: Communications link failure
+2025-07-02 02:03:43 [JavaFX Application Thread] DEBUG logic.daos.ProjectDAO - Buscando proyectos con estado: A
+2025-07-02 02:03:43 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 0 - State: 08S01 - Message: Communications link failure
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-2025-06-30 19:12:27 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 0 - State: 08S01 - Message: Communications link failure
-
-The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-2025-06-30 19:12:28 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 0 - State: 08S01 - Message: Communications link failure
-
-The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-2025-06-30 19:12:28 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 0 - State: 08S01 - Message: Communications link failure
-
-The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-2025-06-30 19:12:28 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 0 - State: 08S01 - Message: Communications link failure
-
-The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-2025-06-30 19:12:28 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 0 - State: 08S01 - Message: Communications link failure
-
-The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-2025-06-30 19:12:28 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 0 - State: 08S01 - Message: Communications link failure
-
-The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-2025-06-30 19:12:28 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 0 - State: 08S01 - Message: Communications link failure
-
-The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-2025-06-30 19:15:44 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 0 - State: 08S01 - Message: Communications link failure
-
-The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-2025-06-30 19:15:50 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 0 - State: 08S01 - Message: Communications link failure
-
-The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-2025-06-30 19:15:51 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 0 - State: 08S01 - Message: Communications link failure
-
-The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-2025-06-30 19:15:55 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 0 - State: 08S01 - Message: Communications link failure
-
-The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-2025-06-30 19:15:57 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 0 - State: 08S01 - Message: Communications link failure
-
-The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-2025-06-30 19:16:20 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-06-30 19:16:20 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-06-30 19:17:16 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Verificando existencia de teléfono celular: 2284452726
-2025-06-30 19:17:16 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 0 - State: 08S01 - Message: Communications link failure
-
-The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-2025-06-30 19:17:16 [JavaFX Application Thread] ERROR logic.daos.UserDAO - Error al verificar existencia de teléfono celular: 2284452726
+2025-07-02 02:03:43 [JavaFX Application Thread] ERROR logic.daos.ProjectDAO - Error al buscar proyectos por estado: A
 java.sql.SQLException: Error de base de datos: Communications link failure
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-	at dataaccess.ConnectionDataBase.getConnection(ConnectionDataBase.java:50) ~[ProyectoPrincipiosConstruccion/:?]
-	at logic.daos.UserDAO.cellPhoneExists(UserDAO.java:257) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.verifyDataUniqueness(ControllerCreateAcademicWindow.java:169) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handleAddAcademic(ControllerCreateAcademicWindow.java:79) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handle(ControllerCreateAcademicWindow.java:62) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handle(ControllerCreateAcademicWindow.java:32) ~[ProyectoPrincipiosConstruccion/:?]
+	at dataaccess.ConnectionDataBase.getConnection(ConnectionDataBase.java:49) ~[ProyectoPrincipiosConstruccion/:?]
+	at logic.daos.ProjectDAO.getProyectsByStatus(ProjectDAO.java:161) ~[ProyectoPrincipiosConstruccion/:?]
+	at userinterface.controllers.ControllerConsultProjectsWindow.loadAllProjects(ControllerConsultProjectsWindow.java:54) ~[ProyectoPrincipiosConstruccion/:?]
+	at userinterface.controllers.ControllerConsultProjectsWindow.<init>(ControllerConsultProjectsWindow.java:32) ~[ProyectoPrincipiosConstruccion/:?]
+	at userinterface.controllers.ControllerCoordinatorMenuWindow.showConsultProjectsWindow(ControllerCoordinatorMenuWindow.java:100) ~[ProyectoPrincipiosConstruccion/:?]
+	at userinterface.controllers.ControllerCoordinatorMenuWindow.lambda$setupEventHandlers$3(ControllerCoordinatorMenuWindow.java:47) ~[ProyectoPrincipiosConstruccion/:?]
 	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86) ~[javafx.base.jar:?]
 	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
 	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
 	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
 	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
 	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
 	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
 	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
@@ -79,6 +127,12 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
 	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
 	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
 	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
 	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
 	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
@@ -110,8 +164,8 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.2.0.jar:9.2.0]
 	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:682) ~[java.sql:?]
 	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230) ~[java.sql:?]
-	at dataaccess.ConnectionDataBase.getConnection(ConnectionDataBase.java:24) ~[ProyectoPrincipiosConstruccion/:?]
-	... 48 more
+	at dataaccess.ConnectionDataBase.getConnection(ConnectionDataBase.java:23) ~[ProyectoPrincipiosConstruccion/:?]
+	... 60 more
 Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
@@ -131,8 +185,8 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.2.0.jar:9.2.0]
 	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:682) ~[java.sql:?]
 	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230) ~[java.sql:?]
-	at dataaccess.ConnectionDataBase.getConnection(ConnectionDataBase.java:24) ~[ProyectoPrincipiosConstruccion/:?]
-	... 48 more
+	at dataaccess.ConnectionDataBase.getConnection(ConnectionDataBase.java:23) ~[ProyectoPrincipiosConstruccion/:?]
+	... 60 more
 Caused by: java.net.ConnectException: Connection refused: connect
 	at java.base/sun.nio.ch.Net.connect0(Native Method) ~[?:?]
 	at java.base/sun.nio.ch.Net.connect(Net.java:589) ~[?:?]
@@ -150,607 +204,8 @@ Caused by: java.net.ConnectException: Connection refused: connect
 	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.2.0.jar:9.2.0]
 	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:682) ~[java.sql:?]
 	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230) ~[java.sql:?]
-	at dataaccess.ConnectionDataBase.getConnection(ConnectionDataBase.java:24) ~[ProyectoPrincipiosConstruccion/:?]
-	... 48 more
-2025-06-30 21:05:34 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 0 - State: 08S01 - Message: Communications link failure
+	at dataaccess.ConnectionDataBase.getConnection(ConnectionDataBase.java:23) ~[ProyectoPrincipiosConstruccion/:?]
+	... 60 more
+2025-07-02 02:03:48 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 0 - State: 08S01 - Message: Communications link failure
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-2025-06-30 21:06:03 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 1045 - State: 28000 - Message: Access denied for user 'admin_proyecto'@'localhost' (using password: YES)
-2025-06-30 21:25:04 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 1045 - State: 28000 - Message: Access denied for user 'admin_proyecto'@'localhost' (using password: YES)
-2025-06-30 21:25:28 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Resultado comparación contraseña: VÁLIDA
-2025-06-30 21:25:28 [JavaFX Application Thread] DEBUG logic.services.LoginService - Usuario identificado como coordinador
-2025-06-30 21:25:46 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 0 - State: 08S01 - Message: Communications link failure
-
-The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-2025-06-30 21:25:53 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 0 - State: 08S01 - Message: Communications link failure
-
-The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-2025-06-30 21:25:55 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 0 - State: 08S01 - Message: Communications link failure
-
-The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-2025-06-30 21:28:30 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 1049 - State: 42000 - Message: Unknown database 'proyectoprincipiosconstruccion'
-2025-06-30 21:33:04 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Verificando existencia de teléfono celular: 1212121212
-2025-06-30 21:33:04 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 1049 - State: 42000 - Message: Unknown database 'proyectoprincipiosconstruccion'
-2025-06-30 21:33:04 [JavaFX Application Thread] ERROR logic.daos.UserDAO - Error al verificar existencia de teléfono celular: 1212121212
-java.sql.SQLException: No existe la base de datos.
-	at dataaccess.ConnectionDataBase.getConnection(ConnectionDataBase.java:50) ~[ProyectoPrincipiosConstruccion/:?]
-	at logic.daos.UserDAO.cellPhoneExists(UserDAO.java:257) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.verifyDataUniqueness(ControllerCreateAcademicWindow.java:169) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handleAddAcademic(ControllerCreateAcademicWindow.java:79) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handle(ControllerCreateAcademicWindow.java:62) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handle(ControllerCreateAcademicWindow.java:32) ~[ProyectoPrincipiosConstruccion/:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49) ~[javafx.base.jar:?]
-	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
-	at javafx.graphics/javafx.scene.Node.fireEvent(Node.java:9005) ~[javafx.graphics.jar:?]
-	at javafx.controls/javafx.scene.control.Button.fire(Button.java:203) ~[javafx.controls.jar:?]
-	at javafx.controls/com.sun.javafx.scene.control.behavior.ButtonBehavior.mouseReleased(ButtonBehavior.java:207) ~[javafx.controls.jar:?]
-	at javafx.controls/com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274) ~[javafx.controls.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:247) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54) ~[javafx.base.jar:?]
-	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
-	at javafx.graphics/javafx.scene.Scene$MouseHandler.process(Scene.java:4005) ~[javafx.graphics.jar:?]
-	at javafx.graphics/javafx.scene.Scene.processMouseEvent(Scene.java:1934) ~[javafx.graphics.jar:?]
-	at javafx.graphics/javafx.scene.Scene$ScenePeerListener.mouseEvent(Scene.java:2763) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:352) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:254) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:424) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.handleMouseEvent(GlassViewEventHandler.java:386) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.View.handleMouseEvent(View.java:560) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.View.notifyMouse(View.java:946) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$0(WinApplication.java:168) ~[javafx.graphics.jar:?]
-	at java.base/java.lang.Thread.run(Thread.java:1575) [?:?]
-Caused by: java.sql.SQLSyntaxErrorException: Unknown database 'proyectoprincipiosconstruccion'
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:112) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:837) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:420) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:238) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:682) ~[java.sql:?]
-	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230) ~[java.sql:?]
-	at dataaccess.ConnectionDataBase.getConnection(ConnectionDataBase.java:24) ~[ProyectoPrincipiosConstruccion/:?]
-	... 48 more
-2025-06-30 21:33:05 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Verificando existencia de teléfono celular: 1212121212
-2025-06-30 21:33:05 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 1049 - State: 42000 - Message: Unknown database 'proyectoprincipiosconstruccion'
-2025-06-30 21:33:05 [JavaFX Application Thread] ERROR logic.daos.UserDAO - Error al verificar existencia de teléfono celular: 1212121212
-java.sql.SQLException: No existe la base de datos.
-	at dataaccess.ConnectionDataBase.getConnection(ConnectionDataBase.java:50) ~[ProyectoPrincipiosConstruccion/:?]
-	at logic.daos.UserDAO.cellPhoneExists(UserDAO.java:257) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.verifyDataUniqueness(ControllerCreateAcademicWindow.java:169) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handleAddAcademic(ControllerCreateAcademicWindow.java:79) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handle(ControllerCreateAcademicWindow.java:62) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handle(ControllerCreateAcademicWindow.java:32) ~[ProyectoPrincipiosConstruccion/:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49) ~[javafx.base.jar:?]
-	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
-	at javafx.graphics/javafx.scene.Node.fireEvent(Node.java:9005) ~[javafx.graphics.jar:?]
-	at javafx.controls/javafx.scene.control.Button.fire(Button.java:203) ~[javafx.controls.jar:?]
-	at javafx.controls/com.sun.javafx.scene.control.behavior.ButtonBehavior.mouseReleased(ButtonBehavior.java:207) ~[javafx.controls.jar:?]
-	at javafx.controls/com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274) ~[javafx.controls.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:247) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54) ~[javafx.base.jar:?]
-	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
-	at javafx.graphics/javafx.scene.Scene$MouseHandler.process(Scene.java:4005) ~[javafx.graphics.jar:?]
-	at javafx.graphics/javafx.scene.Scene.processMouseEvent(Scene.java:1934) ~[javafx.graphics.jar:?]
-	at javafx.graphics/javafx.scene.Scene$ScenePeerListener.mouseEvent(Scene.java:2763) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:352) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:254) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:424) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.handleMouseEvent(GlassViewEventHandler.java:386) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.View.handleMouseEvent(View.java:560) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.View.notifyMouse(View.java:946) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$0(WinApplication.java:168) ~[javafx.graphics.jar:?]
-	at java.base/java.lang.Thread.run(Thread.java:1575) [?:?]
-Caused by: java.sql.SQLSyntaxErrorException: Unknown database 'proyectoprincipiosconstruccion'
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:112) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:837) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:420) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:238) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:682) ~[java.sql:?]
-	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230) ~[java.sql:?]
-	at dataaccess.ConnectionDataBase.getConnection(ConnectionDataBase.java:24) ~[ProyectoPrincipiosConstruccion/:?]
-	... 48 more
-2025-06-30 21:33:05 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Verificando existencia de teléfono celular: 1212121212
-2025-06-30 21:33:05 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 1049 - State: 42000 - Message: Unknown database 'proyectoprincipiosconstruccion'
-2025-06-30 21:33:05 [JavaFX Application Thread] ERROR logic.daos.UserDAO - Error al verificar existencia de teléfono celular: 1212121212
-java.sql.SQLException: No existe la base de datos.
-	at dataaccess.ConnectionDataBase.getConnection(ConnectionDataBase.java:50) ~[ProyectoPrincipiosConstruccion/:?]
-	at logic.daos.UserDAO.cellPhoneExists(UserDAO.java:257) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.verifyDataUniqueness(ControllerCreateAcademicWindow.java:169) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handleAddAcademic(ControllerCreateAcademicWindow.java:79) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handle(ControllerCreateAcademicWindow.java:62) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handle(ControllerCreateAcademicWindow.java:32) ~[ProyectoPrincipiosConstruccion/:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49) ~[javafx.base.jar:?]
-	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
-	at javafx.graphics/javafx.scene.Node.fireEvent(Node.java:9005) ~[javafx.graphics.jar:?]
-	at javafx.controls/javafx.scene.control.Button.fire(Button.java:203) ~[javafx.controls.jar:?]
-	at javafx.controls/com.sun.javafx.scene.control.behavior.ButtonBehavior.mouseReleased(ButtonBehavior.java:207) ~[javafx.controls.jar:?]
-	at javafx.controls/com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274) ~[javafx.controls.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:247) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54) ~[javafx.base.jar:?]
-	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
-	at javafx.graphics/javafx.scene.Scene$MouseHandler.process(Scene.java:4005) ~[javafx.graphics.jar:?]
-	at javafx.graphics/javafx.scene.Scene.processMouseEvent(Scene.java:1934) ~[javafx.graphics.jar:?]
-	at javafx.graphics/javafx.scene.Scene$ScenePeerListener.mouseEvent(Scene.java:2763) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:352) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:254) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:424) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.handleMouseEvent(GlassViewEventHandler.java:386) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.View.handleMouseEvent(View.java:560) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.View.notifyMouse(View.java:946) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$0(WinApplication.java:168) ~[javafx.graphics.jar:?]
-	at java.base/java.lang.Thread.run(Thread.java:1575) [?:?]
-Caused by: java.sql.SQLSyntaxErrorException: Unknown database 'proyectoprincipiosconstruccion'
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:112) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:837) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:420) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:238) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:682) ~[java.sql:?]
-	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230) ~[java.sql:?]
-	at dataaccess.ConnectionDataBase.getConnection(ConnectionDataBase.java:24) ~[ProyectoPrincipiosConstruccion/:?]
-	... 48 more
-2025-06-30 21:33:05 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Verificando existencia de teléfono celular: 1212121212
-2025-06-30 21:33:05 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 1049 - State: 42000 - Message: Unknown database 'proyectoprincipiosconstruccion'
-2025-06-30 21:33:05 [JavaFX Application Thread] ERROR logic.daos.UserDAO - Error al verificar existencia de teléfono celular: 1212121212
-java.sql.SQLException: No existe la base de datos.
-	at dataaccess.ConnectionDataBase.getConnection(ConnectionDataBase.java:50) ~[ProyectoPrincipiosConstruccion/:?]
-	at logic.daos.UserDAO.cellPhoneExists(UserDAO.java:257) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.verifyDataUniqueness(ControllerCreateAcademicWindow.java:169) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handleAddAcademic(ControllerCreateAcademicWindow.java:79) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handle(ControllerCreateAcademicWindow.java:62) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handle(ControllerCreateAcademicWindow.java:32) ~[ProyectoPrincipiosConstruccion/:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49) ~[javafx.base.jar:?]
-	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
-	at javafx.graphics/javafx.scene.Node.fireEvent(Node.java:9005) ~[javafx.graphics.jar:?]
-	at javafx.controls/javafx.scene.control.Button.fire(Button.java:203) ~[javafx.controls.jar:?]
-	at javafx.controls/com.sun.javafx.scene.control.behavior.ButtonBehavior.mouseReleased(ButtonBehavior.java:207) ~[javafx.controls.jar:?]
-	at javafx.controls/com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274) ~[javafx.controls.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:247) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54) ~[javafx.base.jar:?]
-	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
-	at javafx.graphics/javafx.scene.Scene$MouseHandler.process(Scene.java:4005) ~[javafx.graphics.jar:?]
-	at javafx.graphics/javafx.scene.Scene.processMouseEvent(Scene.java:1934) ~[javafx.graphics.jar:?]
-	at javafx.graphics/javafx.scene.Scene$ScenePeerListener.mouseEvent(Scene.java:2763) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:352) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:254) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:424) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.handleMouseEvent(GlassViewEventHandler.java:386) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.View.handleMouseEvent(View.java:560) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.View.notifyMouse(View.java:946) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$0(WinApplication.java:168) ~[javafx.graphics.jar:?]
-	at java.base/java.lang.Thread.run(Thread.java:1575) [?:?]
-Caused by: java.sql.SQLSyntaxErrorException: Unknown database 'proyectoprincipiosconstruccion'
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:112) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:837) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:420) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:238) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:682) ~[java.sql:?]
-	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230) ~[java.sql:?]
-	at dataaccess.ConnectionDataBase.getConnection(ConnectionDataBase.java:24) ~[ProyectoPrincipiosConstruccion/:?]
-	... 48 more
-2025-06-30 21:33:05 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Verificando existencia de teléfono celular: 1212121212
-2025-06-30 21:33:05 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 1049 - State: 42000 - Message: Unknown database 'proyectoprincipiosconstruccion'
-2025-06-30 21:33:05 [JavaFX Application Thread] ERROR logic.daos.UserDAO - Error al verificar existencia de teléfono celular: 1212121212
-java.sql.SQLException: No existe la base de datos.
-	at dataaccess.ConnectionDataBase.getConnection(ConnectionDataBase.java:50) ~[ProyectoPrincipiosConstruccion/:?]
-	at logic.daos.UserDAO.cellPhoneExists(UserDAO.java:257) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.verifyDataUniqueness(ControllerCreateAcademicWindow.java:169) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handleAddAcademic(ControllerCreateAcademicWindow.java:79) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handle(ControllerCreateAcademicWindow.java:62) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handle(ControllerCreateAcademicWindow.java:32) ~[ProyectoPrincipiosConstruccion/:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49) ~[javafx.base.jar:?]
-	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
-	at javafx.graphics/javafx.scene.Node.fireEvent(Node.java:9005) ~[javafx.graphics.jar:?]
-	at javafx.controls/javafx.scene.control.Button.fire(Button.java:203) ~[javafx.controls.jar:?]
-	at javafx.controls/com.sun.javafx.scene.control.behavior.ButtonBehavior.mouseReleased(ButtonBehavior.java:207) ~[javafx.controls.jar:?]
-	at javafx.controls/com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274) ~[javafx.controls.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:247) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54) ~[javafx.base.jar:?]
-	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
-	at javafx.graphics/javafx.scene.Scene$MouseHandler.process(Scene.java:4005) ~[javafx.graphics.jar:?]
-	at javafx.graphics/javafx.scene.Scene.processMouseEvent(Scene.java:1934) ~[javafx.graphics.jar:?]
-	at javafx.graphics/javafx.scene.Scene$ScenePeerListener.mouseEvent(Scene.java:2763) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:352) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:254) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:424) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.handleMouseEvent(GlassViewEventHandler.java:386) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.View.handleMouseEvent(View.java:560) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.View.notifyMouse(View.java:946) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$0(WinApplication.java:168) ~[javafx.graphics.jar:?]
-	at java.base/java.lang.Thread.run(Thread.java:1575) [?:?]
-Caused by: java.sql.SQLSyntaxErrorException: Unknown database 'proyectoprincipiosconstruccion'
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:112) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:837) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:420) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:238) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:682) ~[java.sql:?]
-	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230) ~[java.sql:?]
-	at dataaccess.ConnectionDataBase.getConnection(ConnectionDataBase.java:24) ~[ProyectoPrincipiosConstruccion/:?]
-	... 48 more
-2025-06-30 21:33:06 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Verificando existencia de teléfono celular: 1212121212
-2025-06-30 21:33:06 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 1049 - State: 42000 - Message: Unknown database 'proyectoprincipiosconstruccion'
-2025-06-30 21:33:06 [JavaFX Application Thread] ERROR logic.daos.UserDAO - Error al verificar existencia de teléfono celular: 1212121212
-java.sql.SQLException: No existe la base de datos.
-	at dataaccess.ConnectionDataBase.getConnection(ConnectionDataBase.java:50) ~[ProyectoPrincipiosConstruccion/:?]
-	at logic.daos.UserDAO.cellPhoneExists(UserDAO.java:257) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.verifyDataUniqueness(ControllerCreateAcademicWindow.java:169) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handleAddAcademic(ControllerCreateAcademicWindow.java:79) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handle(ControllerCreateAcademicWindow.java:62) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handle(ControllerCreateAcademicWindow.java:32) ~[ProyectoPrincipiosConstruccion/:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49) ~[javafx.base.jar:?]
-	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
-	at javafx.graphics/javafx.scene.Node.fireEvent(Node.java:9005) ~[javafx.graphics.jar:?]
-	at javafx.controls/javafx.scene.control.Button.fire(Button.java:203) ~[javafx.controls.jar:?]
-	at javafx.controls/com.sun.javafx.scene.control.behavior.ButtonBehavior.mouseReleased(ButtonBehavior.java:207) ~[javafx.controls.jar:?]
-	at javafx.controls/com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274) ~[javafx.controls.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:247) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54) ~[javafx.base.jar:?]
-	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
-	at javafx.graphics/javafx.scene.Scene$MouseHandler.process(Scene.java:4005) ~[javafx.graphics.jar:?]
-	at javafx.graphics/javafx.scene.Scene.processMouseEvent(Scene.java:1934) ~[javafx.graphics.jar:?]
-	at javafx.graphics/javafx.scene.Scene$ScenePeerListener.mouseEvent(Scene.java:2763) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:352) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:254) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:424) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.handleMouseEvent(GlassViewEventHandler.java:386) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.View.handleMouseEvent(View.java:560) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.View.notifyMouse(View.java:946) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$0(WinApplication.java:168) ~[javafx.graphics.jar:?]
-	at java.base/java.lang.Thread.run(Thread.java:1575) [?:?]
-Caused by: java.sql.SQLSyntaxErrorException: Unknown database 'proyectoprincipiosconstruccion'
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:112) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:837) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:420) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:238) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:682) ~[java.sql:?]
-	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230) ~[java.sql:?]
-	at dataaccess.ConnectionDataBase.getConnection(ConnectionDataBase.java:24) ~[ProyectoPrincipiosConstruccion/:?]
-	... 48 more
-2025-06-30 21:33:06 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Verificando existencia de teléfono celular: 1212121212
-2025-06-30 21:33:06 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 1049 - State: 42000 - Message: Unknown database 'proyectoprincipiosconstruccion'
-2025-06-30 21:33:06 [JavaFX Application Thread] ERROR logic.daos.UserDAO - Error al verificar existencia de teléfono celular: 1212121212
-java.sql.SQLException: No existe la base de datos.
-	at dataaccess.ConnectionDataBase.getConnection(ConnectionDataBase.java:50) ~[ProyectoPrincipiosConstruccion/:?]
-	at logic.daos.UserDAO.cellPhoneExists(UserDAO.java:257) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.verifyDataUniqueness(ControllerCreateAcademicWindow.java:169) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handleAddAcademic(ControllerCreateAcademicWindow.java:79) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handle(ControllerCreateAcademicWindow.java:62) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handle(ControllerCreateAcademicWindow.java:32) ~[ProyectoPrincipiosConstruccion/:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49) ~[javafx.base.jar:?]
-	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
-	at javafx.graphics/javafx.scene.Node.fireEvent(Node.java:9005) ~[javafx.graphics.jar:?]
-	at javafx.controls/javafx.scene.control.Button.fire(Button.java:203) ~[javafx.controls.jar:?]
-	at javafx.controls/com.sun.javafx.scene.control.behavior.ButtonBehavior.mouseReleased(ButtonBehavior.java:207) ~[javafx.controls.jar:?]
-	at javafx.controls/com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274) ~[javafx.controls.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:247) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54) ~[javafx.base.jar:?]
-	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
-	at javafx.graphics/javafx.scene.Scene$MouseHandler.process(Scene.java:4005) ~[javafx.graphics.jar:?]
-	at javafx.graphics/javafx.scene.Scene.processMouseEvent(Scene.java:1934) ~[javafx.graphics.jar:?]
-	at javafx.graphics/javafx.scene.Scene$ScenePeerListener.mouseEvent(Scene.java:2763) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:352) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:254) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:424) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.handleMouseEvent(GlassViewEventHandler.java:386) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.View.handleMouseEvent(View.java:560) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.View.notifyMouse(View.java:946) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$0(WinApplication.java:168) ~[javafx.graphics.jar:?]
-	at java.base/java.lang.Thread.run(Thread.java:1575) [?:?]
-Caused by: java.sql.SQLSyntaxErrorException: Unknown database 'proyectoprincipiosconstruccion'
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:112) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:837) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:420) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:238) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:682) ~[java.sql:?]
-	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230) ~[java.sql:?]
-	at dataaccess.ConnectionDataBase.getConnection(ConnectionDataBase.java:24) ~[ProyectoPrincipiosConstruccion/:?]
-	... 48 more
-2025-06-30 21:33:06 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Verificando existencia de teléfono celular: 1212121212
-2025-06-30 21:33:06 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 1049 - State: 42000 - Message: Unknown database 'proyectoprincipiosconstruccion'
-2025-06-30 21:33:06 [JavaFX Application Thread] ERROR logic.daos.UserDAO - Error al verificar existencia de teléfono celular: 1212121212
-java.sql.SQLException: No existe la base de datos.
-	at dataaccess.ConnectionDataBase.getConnection(ConnectionDataBase.java:50) ~[ProyectoPrincipiosConstruccion/:?]
-	at logic.daos.UserDAO.cellPhoneExists(UserDAO.java:257) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.verifyDataUniqueness(ControllerCreateAcademicWindow.java:169) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handleAddAcademic(ControllerCreateAcademicWindow.java:79) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handle(ControllerCreateAcademicWindow.java:62) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handle(ControllerCreateAcademicWindow.java:32) ~[ProyectoPrincipiosConstruccion/:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49) ~[javafx.base.jar:?]
-	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
-	at javafx.graphics/javafx.scene.Node.fireEvent(Node.java:9005) ~[javafx.graphics.jar:?]
-	at javafx.controls/javafx.scene.control.Button.fire(Button.java:203) ~[javafx.controls.jar:?]
-	at javafx.controls/com.sun.javafx.scene.control.behavior.ButtonBehavior.mouseReleased(ButtonBehavior.java:207) ~[javafx.controls.jar:?]
-	at javafx.controls/com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274) ~[javafx.controls.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:247) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54) ~[javafx.base.jar:?]
-	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
-	at javafx.graphics/javafx.scene.Scene$MouseHandler.process(Scene.java:4005) ~[javafx.graphics.jar:?]
-	at javafx.graphics/javafx.scene.Scene.processMouseEvent(Scene.java:1934) ~[javafx.graphics.jar:?]
-	at javafx.graphics/javafx.scene.Scene$ScenePeerListener.mouseEvent(Scene.java:2763) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:352) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:254) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:424) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.handleMouseEvent(GlassViewEventHandler.java:386) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.View.handleMouseEvent(View.java:560) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.View.notifyMouse(View.java:946) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$0(WinApplication.java:168) ~[javafx.graphics.jar:?]
-	at java.base/java.lang.Thread.run(Thread.java:1575) [?:?]
-Caused by: java.sql.SQLSyntaxErrorException: Unknown database 'proyectoprincipiosconstruccion'
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:112) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:837) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:420) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:238) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:682) ~[java.sql:?]
-	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230) ~[java.sql:?]
-	at dataaccess.ConnectionDataBase.getConnection(ConnectionDataBase.java:24) ~[ProyectoPrincipiosConstruccion/:?]
-	... 48 more
-2025-06-30 21:33:06 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Verificando existencia de teléfono celular: 1212121212
-2025-06-30 21:33:06 [JavaFX Application Thread] ERROR dataaccess.ConnectionDataBase - Connection error to jdbc:mysql://localhost:3306/proyectoprincipiosconstruccion - Code: 1049 - State: 42000 - Message: Unknown database 'proyectoprincipiosconstruccion'
-2025-06-30 21:33:06 [JavaFX Application Thread] ERROR logic.daos.UserDAO - Error al verificar existencia de teléfono celular: 1212121212
-java.sql.SQLException: No existe la base de datos.
-	at dataaccess.ConnectionDataBase.getConnection(ConnectionDataBase.java:50) ~[ProyectoPrincipiosConstruccion/:?]
-	at logic.daos.UserDAO.cellPhoneExists(UserDAO.java:257) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.verifyDataUniqueness(ControllerCreateAcademicWindow.java:169) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handleAddAcademic(ControllerCreateAcademicWindow.java:79) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handle(ControllerCreateAcademicWindow.java:62) ~[ProyectoPrincipiosConstruccion/:?]
-	at userinterface.controllers.ControllerCreateAcademicWindow.handle(ControllerCreateAcademicWindow.java:32) ~[ProyectoPrincipiosConstruccion/:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49) ~[javafx.base.jar:?]
-	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
-	at javafx.graphics/javafx.scene.Node.fireEvent(Node.java:9005) ~[javafx.graphics.jar:?]
-	at javafx.controls/javafx.scene.control.Button.fire(Button.java:203) ~[javafx.controls.jar:?]
-	at javafx.controls/com.sun.javafx.scene.control.behavior.ButtonBehavior.mouseReleased(ButtonBehavior.java:207) ~[javafx.controls.jar:?]
-	at javafx.controls/com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274) ~[javafx.controls.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:247) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:232) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:189) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74) ~[javafx.base.jar:?]
-	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54) ~[javafx.base.jar:?]
-	at javafx.base/javafx.event.Event.fireEvent(Event.java:199) ~[javafx.base.jar:?]
-	at javafx.graphics/javafx.scene.Scene$MouseHandler.process(Scene.java:4005) ~[javafx.graphics.jar:?]
-	at javafx.graphics/javafx.scene.Scene.processMouseEvent(Scene.java:1934) ~[javafx.graphics.jar:?]
-	at javafx.graphics/javafx.scene.Scene$ScenePeerListener.mouseEvent(Scene.java:2763) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:352) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.get(GlassViewEventHandler.java:254) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:424) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.handleMouseEvent(GlassViewEventHandler.java:386) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.View.handleMouseEvent(View.java:560) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.View.notifyMouse(View.java:946) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method) ~[javafx.graphics.jar:?]
-	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$0(WinApplication.java:168) ~[javafx.graphics.jar:?]
-	at java.base/java.lang.Thread.run(Thread.java:1575) [?:?]
-Caused by: java.sql.SQLSyntaxErrorException: Unknown database 'proyectoprincipiosconstruccion'
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:112) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:837) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:420) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:238) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.2.0.jar:9.2.0]
-	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:682) ~[java.sql:?]
-	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230) ~[java.sql:?]
-	at dataaccess.ConnectionDataBase.getConnection(ConnectionDataBase.java:24) ~[ProyectoPrincipiosConstruccion/:?]
-	... 48 more
-2025-06-30 21:37:05 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Verificando existencia de teléfono celular: 1212121212
-2025-06-30 21:37:05 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - ¿Teléfono celular '1212121212' existe?: false
-2025-06-30 21:37:05 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Validando teléfono celular: 1212121212
-2025-06-30 21:37:05 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Verificando existencia de teléfono celular: 1212121212
-2025-06-30 21:37:05 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - ¿Teléfono celular '1212121212' existe?: false
-2025-06-30 21:37:05 [JavaFX Application Thread] INFO  logic.daos.UserDAO - Usuario agregado exitosamente - ID: 3, Nombre: jadopsdoajopsijda, Teléfono: 1212121212
-2025-06-30 21:37:05 [JavaFX Application Thread] DEBUG dataaccess.PasswordUtils - Generando hash para contraseña
-2025-06-30 21:37:05 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - Verificando existencia de usuario con ID: 3
-2025-06-30 21:37:05 [JavaFX Application Thread] DEBUG logic.daos.UserDAO - ¿Usuario ID 3 existe?: true

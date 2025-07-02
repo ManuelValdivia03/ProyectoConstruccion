@@ -22,6 +22,7 @@ import logic.exceptions.*;
 import logic.logicclasses.Academic;
 import logic.logicclasses.Account;
 import logic.logicclasses.User;
+import logic.services.DataVerificationService;
 import logic.services.ExceptionManager;
 import userinterface.utilities.Validators;
 import userinterface.windows.CreateAcademicWindow;
@@ -64,31 +65,36 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
     }
 
     private void handleAddAcademic() {
+        boolean canContinue = true;
         try {
             clearError();
 
             if (!validateAcademicTypeSelected()) {
-                return;
+                canContinue = false;
             }
 
-            if (!validateAllFields()) {
-                return;
+            if (canContinue && !validateAllFields()) {
+                canContinue = false;
             }
 
-            AcademicData academicData = collectAcademicData();
-            if (!verifyDataUniqueness(academicData.phone(), academicData.staffNumber(), academicData.email())) {
-                return;
+            AcademicData academicData = null;
+            if (canContinue) {
+                academicData = collectAcademicData();
+                canContinue = DataVerificationService.verifyAcademicDataUniqueness(
+                    academicData.phone(), academicData.staffNumber(), academicData.email());
             }
 
-            User user = createUser(academicData.name(), academicData.phone());
-            saveUser(user);
+            if (canContinue) {
+                User user = createUser(academicData.name(), academicData.phone());
+                saveUser(user);
 
-            Academic academic = createAcademic(user, academicData.staffNumber(), academicData.type());
-            saveAcademic(academic, user);
+                Academic academic = createAcademic(user, academicData.staffNumber(), academicData.type());
+                saveAcademic(academic, user);
 
-            createAndSaveAccount(user, academicData.email(), PasswordUtils.hashPassword(academicData.password()));
+                createAndSaveAccount(user, academicData.email(), PasswordUtils.hashPassword(academicData.password()));
 
-            showSuccessAndReset();
+                showSuccessAndReset();
+            }
 
         } catch (RepeatedCellPhoneException e) {
             showFieldError("El número de teléfono ya está registrado", view.getPhoneField());
@@ -169,20 +175,6 @@ public class ControllerCreateAcademicWindow implements EventHandler<ActionEvent>
             view.getTypeComboBox().setStyle("");
             return true;
         }
-    }
-
-    private boolean verifyDataUniqueness(String phone, String staffNumber, String email)
-            throws SQLException, RepeatedCellPhoneException, RepeatedStaffNumberException, RepeatedEmailException {
-        if (userDAO.cellPhoneExists(phone)) {
-            throw new RepeatedCellPhoneException();
-        }
-        if (academicDAO.academicExists(staffNumber)) {
-            throw new RepeatedStaffNumberException();
-        }
-        if (accountDAO.accountExists(email)) {
-            throw new RepeatedEmailException();
-        }
-        return true;
     }
 
     private User createUser(String name, String phone) {

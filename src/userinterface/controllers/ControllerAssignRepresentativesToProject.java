@@ -57,33 +57,38 @@ public class ControllerAssignRepresentativesToProject {
     }
 
     private void handleAssignToProject(ActionEvent event) {
+        boolean shouldContinue = true;
         Object source = event.getSource();
         if (!(source instanceof Button)) {
-            return;
+            shouldContinue = false;
         }
 
-        Button button = (Button) source;
-        Representative rep = (Representative) button.getUserData();
-
-        if (rep == null) {
-            return;
-        }
-
-        try {
-            boolean success = projectDAO.linkProjectToRepresentative(projectId, rep.getIdRepresentative());
-
-            if (success) {
-                showAlert(Alert.AlertType.INFORMATION, "Éxito",
-                        "Representante " + rep.getFullName() + " asignado al proyecto exitosamente.");
-                currentStage.close();
-            } else {
-                showAlert(Alert.AlertType.ERROR, "Error",
-                        "No se pudo asignar el representante al proyecto.");
+        Button button = null;
+        Representative rep = null;
+        if (shouldContinue) {
+            button = (Button) source;
+            rep = (Representative) button.getUserData();
+            if (rep == null) {
+                shouldContinue = false;
             }
-        } catch (SQLException e) {
-            String message = ExceptionManager.handleException(e);
-            showAlert(Alert.AlertType.ERROR, "Error",
-                    "Error al asignar representante: " + message);
+        }
+
+        if (shouldContinue) {
+            try {
+                boolean success = projectDAO.linkProjectToRepresentative(projectId, rep.getIdRepresentative());
+                if (success) {
+                    showAlert(Alert.AlertType.INFORMATION, "Éxito",
+                            "Representante " + rep.getFullName() + " asignado al proyecto exitosamente.");
+                    currentStage.close();
+                } else {
+                    showAlert(Alert.AlertType.ERROR, "Error",
+                            "No se pudo asignar el representante al proyecto.");
+                }
+            } catch (SQLException e) {
+                String message = ExceptionManager.handleException(e);
+                showAlert(Alert.AlertType.ERROR, "Error",
+                        "Error al asignar representante: " + message);
+            }
         }
     }
 

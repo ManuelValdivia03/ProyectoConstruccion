@@ -63,22 +63,22 @@ public class ControllerAssignGradeWindow implements EventHandler<ActionEvent> {
     }
 
     private boolean isValidGrade(String gradeText) {
+        boolean isValid = false;
         if (gradeText.isEmpty()) {
             showError("La calificación no puede estar vacía");
-            return false;
-        }
-
-        try {
-            int grade = Integer.parseInt(gradeText);
-            if (grade < MIN_GRADE || grade > MAX_GRADE) {
-                showError(String.format("La calificación debe estar entre %d y %d", MIN_GRADE, MAX_GRADE));
-                return false;
+        } else {
+            try {
+                int grade = Integer.parseInt(gradeText);
+                if (grade < MIN_GRADE || grade > MAX_GRADE) {
+                    showError(String.format("La calificación debe estar entre %d y %d", MIN_GRADE, MAX_GRADE));
+                } else {
+                    isValid = true;
+                }
+            } catch (NumberFormatException e) {
+                showError("Formato de calificación inválido");
             }
-            return true;
-        } catch (NumberFormatException e) {
-            showError("Formato de calificación inválido");
-            return false;
         }
+        return isValid;
     }
 
     private void updateStudentGrade(int grade) throws SQLException {

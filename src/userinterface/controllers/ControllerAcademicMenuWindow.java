@@ -59,8 +59,19 @@ public class ControllerAcademicMenuWindow implements EventHandler<ActionEvent> {
                 configureEvaluatorButtons();
                 break;
             default:
-                throw new IllegalArgumentException("Tipo académico no soportado: " + type);
+                showErrorDialog("Tipo académico no soportado: " + type);
+                disableAllButtons();
         }
+    }
+
+    private void disableAllButtons() {
+        view.getRegisterStudentButton().setDisable(true);
+        view.getConsultStudentsButton().setDisable(true);
+        view.getRegisterFinalGradeButton().setDisable(true);
+        view.getConsultPresentationEvaluationsButton().setDisable(true);
+        view.getConsultGroupStudentReportsButton().setDisable(true);
+        view.getRegisterPartialEvaluationButton().setDisable(true);
+        view.getConsultPartialEvaluationsButton().setDisable(true);
     }
 
     private void configureEEButtons() {

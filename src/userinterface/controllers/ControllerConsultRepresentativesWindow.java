@@ -123,11 +123,16 @@ public class ControllerConsultRepresentativesWindow {
     }
 
     private Representative extractRepresentativeFromEvent(ActionEvent event) {
+        Representative result = EMPTY_REPRESENTATIVE;
         Object source = event.getSource();
-        if (!(source instanceof Button)) return EMPTY_REPRESENTATIVE;
-        Button button = (Button) source;
-        Representative rep = (Representative) button.getUserData();
-        return rep != null ? rep : EMPTY_REPRESENTATIVE;
+        if (source instanceof Button) {
+            Button button = (Button) source;
+            Object userData = button.getUserData();
+            if (userData instanceof Representative) {
+                result = (Representative) userData;
+            }
+        }
+        return result;
     }
 
     private LinkOrganizationWindow createLinkOrganizationWindow(Representative rep) {
@@ -139,11 +144,16 @@ public class ControllerConsultRepresentativesWindow {
     }
 
     private LinkedOrganization extractOrganizationFromEvent(ActionEvent linkEvent) {
+        LinkedOrganization result = EMPTY_ORGANIZATION;
         Object linkSource = linkEvent.getSource();
-        if (!(linkSource instanceof Button)) return EMPTY_ORGANIZATION;
-        Button linkButton = (Button) linkSource;
-        LinkedOrganization org = (LinkedOrganization) linkButton.getUserData();
-        return org != null ? org : EMPTY_ORGANIZATION;
+        if (linkSource instanceof Button) {
+            Button linkButton = (Button) linkSource;
+            Object userData = linkButton.getUserData();
+            if (userData instanceof LinkedOrganization) {
+                result = (LinkedOrganization) userData;
+            }
+        }
+        return result;
     }
 
     private void linkRepresentativeToOrganization(Representative rep, LinkedOrganization org) {

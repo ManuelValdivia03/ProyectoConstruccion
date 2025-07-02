@@ -104,64 +104,79 @@ public class ControllerRegistEvaluationWindow {
     }
 
     private void handleSaveEvaluation() {
+        boolean canContinue = true;
         try {
             Project project = view.getProjectComboBox().getValue();
             Student student = view.getStudentComboBox().getValue();
             if (project == null || student == null) {
                 showMessage("Selecciona un proyecto y un estudiante.", true);
-                return;
+                canContinue = false;
             }
 
             Map<String, ToggleGroup> rubricGroups = view.getRubricGroups();
             int total = 0;
             int count = 0;
-            for (var group : rubricGroups.values()) {
-                Toggle selected = group.getSelectedToggle();
-                if (selected == null) {
-                    showMessage("Debes calificar todos los criterios.", true);
-                    return;
+            if (canContinue) {
+                for (var group : rubricGroups.values()) {
+                    Toggle selected = group.getSelectedToggle();
+                    if (selected == null) {
+                        showMessage("Debes calificar todos los criterios.", true);
+                        canContinue = false;
+                        break;
+                    }
+                    total += (int) selected.getUserData();
+                    count++;
                 }
-                total += (int) selected.getUserData();
-                count++;
             }
-            double grade = (total / (double) count) * 2;
 
-            String comments = view.getCommentsArea().getText();
+            double grade = 0;
+            if (canContinue) {
+                grade = (total / (double) count) * 2;
+            }
 
-            PresentationDAO presentationDAO = new PresentationDAO();
+            String comments = "";
+            if (canContinue) {
+                comments = view.getCommentsArea().getText();
+            }
+
             Presentation presentation = null;
-            for (Presentation p : presentationDAO.getPresentationsByStudent(student.getIdUser())) {
-                if (p.getPresentationType() == PresentationType.Parcial) {
-                    presentation = p;
-                    break;
+            if (canContinue) {
+                PresentationDAO presentationDAO = new PresentationDAO();
+                for (Presentation p : presentationDAO.getPresentationsByStudent(student.getIdUser())) {
+                    if (p.getPresentationType() == PresentationType.Parcial) {
+                        presentation = p;
+                        break;
+                    }
+                }
+
+                if (presentation == null) {
+                    presentation = new Presentation();
+                    presentation.setPresentationType(PresentationType.Parcial);
+                    presentation.setPresentationDate(Timestamp.from(Instant.now()));
+                    presentation.setStudent(student);
+                    boolean created = presentationDAO.addPresentation(presentation);
+                    if (!created) {
+                        showMessage("No se pudo crear la presentación parcial para este estudiante.", true);
+                        canContinue = false;
+                    }
                 }
             }
 
-            if (presentation == null) {
-                presentation = new Presentation();
-                presentation.setPresentationType(PresentationType.Parcial);
-                presentation.setPresentationDate(Timestamp.from(Instant.now()));
-                presentation.setStudent(student);
-                boolean created = presentationDAO.addPresentation(presentation);
-                if (!created) {
-                    showMessage("No se pudo crear la presentación parcial para este estudiante.", true);
-                    return;
+            if (canContinue) {
+                Evaluation evaluation = new Evaluation();
+                evaluation.setCalification((int) Math.round(grade));
+                evaluation.setDescription(comments);
+                evaluation.setEvaluationDate(Timestamp.from(Instant.now()));
+                evaluation.setAcademic(evaluator);
+                evaluation.setPresentation(presentation);
+
+                EvaluationDAO evaluationDAO = new EvaluationDAO();
+                if (evaluationDAO.addEvaluation(evaluation)) {
+                    showMessage("Evaluación registrada correctamente.", false);
+                    stage.close();
+                } else {
+                    showMessage("No se pudo registrar la evaluación.", true);
                 }
-            }
-
-            Evaluation evaluation = new Evaluation();
-            evaluation.setCalification((int) Math.round(grade));
-            evaluation.setDescription(comments);
-            evaluation.setEvaluationDate(Timestamp.from(Instant.now()));
-            evaluation.setAcademic(evaluator);
-            evaluation.setPresentation(presentation);
-
-            EvaluationDAO evaluationDAO = new EvaluationDAO();
-            if (evaluationDAO.addEvaluation(evaluation)) {
-                showMessage("Evaluación registrada correctamente.", false);
-                stage.close();
-            } else {
-                showMessage("No se pudo registrar la evaluación.", true);
             }
         } catch (Exception ex) {
             String message = ExceptionManager.handleException(ex);

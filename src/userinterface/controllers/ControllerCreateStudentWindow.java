@@ -24,6 +24,7 @@ import logic.logicclasses.Academic;
 import logic.logicclasses.Account;
 import logic.logicclasses.Student;
 import logic.logicclasses.User;
+import logic.services.DataVerificationService;
 import logic.services.ExceptionManager;
 import userinterface.utilities.Validators;
 import userinterface.windows.CreateStudentWindow;
@@ -79,7 +80,8 @@ public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> 
 
             StudentRegistrationData data = collectRegistrationData();
 
-            if (!verifyDataUniqueness(data.phone(), data.enrollment(), data.email())) {
+            if (!DataVerificationService.verifyStudentDataUniqueness(
+                    data.phone(), data.enrollment(), data.email())) {
                 return;
             }
 
@@ -151,20 +153,6 @@ public class ControllerCreateStudentWindow implements EventHandler<ActionEvent> 
         }
 
         return isValid;
-    }
-
-    private boolean verifyDataUniqueness(String phone, String enrollment, String email)
-            throws SQLException, RepeatedCellPhoneException, RepeatedEnrollmentException, RepeatedEmailException {
-        if (userDAO.cellPhoneExists(phone)) {
-            throw new RepeatedCellPhoneException();
-        }
-        if (studentDAO.enrollmentExists(enrollment)) {
-            throw new RepeatedEnrollmentException();
-        }
-        if (accountDAO.accountExists(email)) {
-            throw new RepeatedEmailException();
-        }
-        return true;
     }
 
     private User createUser(String name, String phone) {

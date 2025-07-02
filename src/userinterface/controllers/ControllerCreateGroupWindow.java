@@ -57,42 +57,48 @@ public class ControllerCreateGroupWindow implements EventHandler<ActionEvent> {
         String nrcText = view.getNrcField().getText().trim();
         String groupName = view.getGroupNameField().getText().trim();
 
-        boolean isValid = true;
+        boolean canContinue = true;
 
         if (nrcText.isEmpty()) {
             showFieldError("NRC es obligatorio", view.getNrcField());
-            isValid = false;
+            canContinue = false;
         } else if (!nrcText.matches("\\d{5}")) {
             showFieldError("NRC debe ser un número de 5 dígitos", view.getNrcField());
-            isValid = false;
+            canContinue = false;
         }
 
         if (groupName.isEmpty()) {
             showFieldError("Nombre del grupo es obligatorio", view.getGroupNameField());
-            isValid = false;
+            canContinue = false;
         }
 
-        if (!isValid) {
-            return;
-        }
-
-        int nrc = Integer.parseInt(nrcText);
-
-        try {
-            if (groupDAO.groupExists(nrc)) {
-                showFieldError("Ya existe un grupo con ese NRC", view.getNrcField());
-                return;
+        int nrc = 0;
+        if (canContinue) {
+            nrc = Integer.parseInt(nrcText);
+            try {
+                if (groupDAO.groupExists(nrc)) {
+                    showFieldError("Ya existe un grupo con ese NRC", view.getNrcField());
+                    canContinue = false;
+                }
+            } catch (SQLException e) {
+                String message = ExceptionManager.handleException(e);
+                showError(message);
+                canContinue = false;
             }
+        }
 
+        if (canContinue) {
             Group group = new Group(nrc, groupName, null, null);
-            if (groupDAO.addGroup(group)) {
-                showSuccessAndReset();
-            } else {
-                showError("No se pudo registrar el grupo");
+            try {
+                if (groupDAO.addGroup(group)) {
+                    showSuccessAndReset();
+                } else {
+                    showError("No se pudo registrar el grupo");
+                }
+            } catch (SQLException e) {
+                String message = ExceptionManager.handleException(e);
+                showError(message);
             }
-        } catch (SQLException e) {
-            String message = ExceptionManager.handleException(e);
-            showError(message);
         }
     }
 

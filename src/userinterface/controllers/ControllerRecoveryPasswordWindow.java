@@ -115,31 +115,34 @@ public class ControllerRecoveryPasswordWindow {
     }
 
     private void handleUpdatePassword() {
+        boolean canContinue = true;
         String newPassword = newPasswordField.getText();
         String confirmPassword = confirmPasswordField.getText();
 
+        passwordMessageLabel.setStyle("-fx-text-fill: #d32f2f;");
+
         if (newPassword.isEmpty() || confirmPassword.isEmpty()) {
             passwordMessageLabel.setText("Ambos campos son requeridos.");
-            return;
-        }
-        if (!newPassword.equals(confirmPassword)) {
+            canContinue = false;
+        } else if (!newPassword.equals(confirmPassword)) {
             passwordMessageLabel.setText("Las contraseñas no coinciden.");
-            return;
-        }
-        if (newPassword.length() < 8) {
+            canContinue = false;
+        } else if (newPassword.length() < 8) {
             passwordMessageLabel.setText("La contraseña debe tener al menos 8 caracteres.");
-            return;
+            canContinue = false;
         }
 
-        try {
-            recoveryService.updatePassword(validatedEmail, newPassword);
-            passwordMessageLabel.setStyle("-fx-text-fill: #388e3c;");
-            passwordMessageLabel.setText("Contraseña actualizada exitosamente.");
-            submitButton.setDisable(true);
-        } catch (Exception ex) {
-            String message = ExceptionManager.handleException(ex);
-            passwordMessageLabel.setStyle("-fx-text-fill: #d32f2f;");
-            passwordMessageLabel.setText(message);
+        if (canContinue) {
+            try {
+                recoveryService.updatePassword(validatedEmail, newPassword);
+                passwordMessageLabel.setStyle("-fx-text-fill: #388e3c;");
+                passwordMessageLabel.setText("Contraseña actualizada exitosamente.");
+                submitButton.setDisable(true);
+            } catch (Exception ex) {
+                String message = ExceptionManager.handleException(ex);
+                passwordMessageLabel.setStyle("-fx-text-fill: #d32f2f;");
+                passwordMessageLabel.setText(message);
+            }
         }
     }
 }

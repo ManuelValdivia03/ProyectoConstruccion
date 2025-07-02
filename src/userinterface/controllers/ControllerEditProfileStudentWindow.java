@@ -63,28 +63,31 @@ public class ControllerEditProfileStudentWindow implements EventHandler<ActionEv
     }
 
     private void handleUpdateAccount() {
+        boolean canContinue = true;
         try {
             clearError();
 
             if (!validateAllFields()) {
-                return;
+                canContinue = false;
             }
 
             String email = view.getEmailField().getText().trim();
             String password = view.getPassword();
             String confirmPassword = view.getConfirmPassword();
 
-            if (!validatePasswordsMatch(password, confirmPassword)) {
-                return;
+            if (canContinue && !validatePasswordsMatch(password, confirmPassword)) {
+                canContinue = false;
             }
 
-            if (!email.equals(originalEmail) && accountDAO.accountExists(email)) {
+            if (canContinue && !email.equals(originalEmail) && accountDAO.accountExists(email)) {
                 showError("El email ya está registrado");
-                return;
+                canContinue = false;
             }
 
-            updateAccount(email, password);
-            showSuccessAndClose();
+            if (canContinue) {
+                updateAccount(email, password);
+                showSuccessAndClose();
+            }
 
         } catch (SQLException e) {
             String message = ExceptionManager.handleException(e);

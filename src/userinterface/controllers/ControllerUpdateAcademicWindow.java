@@ -12,6 +12,7 @@ import logic.exceptions.RepeatedEmailException;
 import logic.logicclasses.Academic;
 import logic.logicclasses.Account;
 import logic.logicclasses.User;
+import logic.services.DataVerificationService;
 import logic.services.ExceptionManager;
 import userinterface.utilities.Validators;
 import userinterface.windows.UpdateAcademicWindow;
@@ -71,7 +72,9 @@ public class ControllerUpdateAcademicWindow {
 
             AcademicFormData formData = getFormData();
 
-            verifyDataUniqueness(formData.phone(), formData.email());
+            DataVerificationService.verifyAcademicUpdateUniqueness(
+                formData.phone(), formData.email(), originalAcademic.getCellPhone(), originalEmail);
+
             updateAcademicFromFormData(formData);
             showSuccessAndClose();
 
@@ -140,21 +143,6 @@ public class ControllerUpdateAcademicWindow {
             return false;
         }
         return true;
-    }
-
-    private void verifyDataUniqueness(String phone, String email)
-            throws SQLException, RepeatedCellPhoneException, RepeatedEmailException {
-        if (!phone.equals(originalAcademic.getCellPhone())) {
-            if (userDAO.cellPhoneExists(phone)) {
-                throw new RepeatedCellPhoneException();
-            }
-        }
-
-        if (!email.equals(originalEmail)) {
-            if (accountDAO.accountExists(email)) {
-                throw new RepeatedEmailException();
-            }
-        }
     }
 
     private void updateUser(String name, String phone, char status) throws SQLException {

@@ -18,6 +18,7 @@ import logic.exceptions.RepeatedEmailException;
 import logic.exceptions.RepeatedCellPhoneException;
 import logic.logicclasses.LinkedOrganization;
 import logic.services.ExceptionManager;
+import logic.services.DataVerificationService;
 import userinterface.utilities.Validators;
 import userinterface.windows.CreateLinkedOrganizationWindow;
 import userinterface.windows.DocumentUploadWindow;
@@ -68,7 +69,8 @@ public class ControllerCreateLinkedOrganizationWindow implements EventHandler<Ac
             }
 
             OrganizationData data = collectOrganizationData();
-            verifyDataUniqueness(data.name(), data.phone(), data.email());
+            DataVerificationService.verifyLinkedOrganizationDataUniqueness(
+                data.name(), data.phone(), data.email());
 
             organization = createOrganization(data);
             if (linkedOrganizationDAO.addLinkedOrganization(organization)) {
@@ -129,23 +131,6 @@ public class ControllerCreateLinkedOrganizationWindow implements EventHandler<Ac
             return false;
         }
         return true;
-    }
-
-    private void verifyDataUniqueness(String name, String phone, String email)
-            throws SQLException, RepeatedNameLinkedOrganizationException,
-            RepeatedCellPhoneException, RepeatedEmailException {
-
-        if (linkedOrganizationDAO.linkedOrganizationExists(name)) {
-            throw new RepeatedNameLinkedOrganizationException("La organización ya está registrada");
-        }
-
-        if (linkedOrganizationDAO.phoneNumberExists(phone)) {
-            throw new RepeatedCellPhoneException("El número de teléfono ya está registrado");
-        }
-
-        if (linkedOrganizationDAO.emailExists(email)) {
-            throw new RepeatedEmailException("El correo electrónico ya está registrado");
-        }
     }
 
     private LinkedOrganization createOrganization(OrganizationData data) {

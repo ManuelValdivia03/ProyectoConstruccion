@@ -62,32 +62,37 @@ public class ControllerRegistProjectWindow implements EventHandler<ActionEvent> 
     }
 
     private void handleRegisterProject() {
+        boolean canContinue = true;
         try {
             clearError();
             resetFieldStyles();
 
             if (!validateAllFields()) {
-                return;
+                canContinue = false;
             }
 
-            ProjectRegistrationData data = collectProjectData();
-
-            if (!validateDates(data.startDate(), data.endDate())) {
-                return;
+            ProjectRegistrationData data = null;
+            if (canContinue) {
+                data = collectProjectData();
+                if (!validateDates(data.startDate(), data.endDate())) {
+                    canContinue = false;
+                }
             }
 
-            if (projectDAO.proyectExists(data.title())) {
+            if (canContinue && projectDAO.proyectExists(data.title())) {
                 throw new RepeatedProyectException("Ya existe un proyecto con ese título");
             }
 
-            Project project = new Project(0, data.title(), data.description(),
-                    data.startDate(), data.endDate(), 'A', data.maxStudents(), 0);
+            if (canContinue) {
+                Project project = new Project(0, data.title(), data.description(),
+                        data.startDate(), data.endDate(), 'A', data.maxStudents(), 0);
 
-            createdProjectId = projectDAO.addProyectAndGetId(project);
-            if (createdProjectId > 0) {
-                showSuccessAndOpenRepresentativeSelector();
-            } else {
-                showError("No se pudo registrar el proyecto");
+                createdProjectId = projectDAO.addProyectAndGetId(project);
+                if (createdProjectId > 0) {
+                    showSuccessAndOpenRepresentativeSelector();
+                } else {
+                    showError("No se pudo registrar el proyecto");
+                }
             }
 
         } catch (RepeatedProyectException e) {

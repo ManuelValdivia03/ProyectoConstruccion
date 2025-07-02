@@ -14,6 +14,7 @@ import logic.logicclasses.Student;
 import logic.logicclasses.Account;
 import logic.logicclasses.User;
 import logic.services.ExceptionManager;
+import logic.services.DataVerificationService;
 import userinterface.utilities.Validators;
 import userinterface.windows.UpdateStudentWindow;
 
@@ -75,7 +76,8 @@ public class ControllerUpdateStudentWindow {
             String email = view.getEmailField().getText().trim();
             String password = view.getPassword();
 
-            verifyDataUniqueness(phone, email);
+            DataVerificationService.verifyStudentUpdateUniqueness(
+                phone, email, originalStudent.getCellPhone(), originalEmail);
 
             updateUser(name, phone);
             updateStudent();
@@ -121,16 +123,6 @@ public class ControllerUpdateStudentWindow {
         }
 
         return isValid;
-    }
-
-    private void verifyDataUniqueness(String phone, String email)
-            throws SQLException, RepeatedCellPhoneException, RepeatedEmailException {
-        if (!phone.equals(originalStudent.getCellPhone()) && userDAO.cellPhoneExists(phone)) {
-            throw new RepeatedCellPhoneException();
-        }
-        if (!email.equals(originalEmail) && accountDAO.accountExists(email)) {
-            throw new RepeatedEmailException();
-        }
     }
 
     private void updateUser(String name, String phone) throws SQLException {

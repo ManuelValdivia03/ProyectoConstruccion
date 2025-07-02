@@ -8,6 +8,7 @@ import logic.exceptions.RepeatedEmailException;
 import logic.exceptions.RepeatedCellPhoneException;
 import logic.logicclasses.LinkedOrganization;
 import logic.services.ExceptionManager;
+import logic.services.DataVerificationService;
 import userinterface.utilities.Validators;
 import userinterface.windows.UpdateLinkedOrganizationWindow;
 
@@ -56,7 +57,9 @@ public class ControllerUpdateLinkedOrganizationWindow {
             }
 
             LinkedOrganization updatedOrg = createUpdatedOrganization();
-            verifyDataUniqueness(updatedOrg);
+            DataVerificationService.verifyLinkedOrganizationUpdateUniqueness(
+                updatedOrg, originalOrg);
+
             updateOrganization(updatedOrg);
 
         } catch (RepeatedCellPhoneException e) {
@@ -132,26 +135,6 @@ public class ControllerUpdateLinkedOrganizationWindow {
             return false;
         }
         return true;
-    }
-
-    private void verifyDataUniqueness(LinkedOrganization org)
-            throws SQLException, RepeatedCellPhoneException, RepeatedEmailException {
-
-        if (isPhoneNumberChanged(org) && organizationDAO.phoneNumberExists(org.getCellPhoneLinkedOrganization())) {
-            throw new RepeatedCellPhoneException("Teléfono duplicado");
-        }
-
-        if (isEmailChanged(org) && organizationDAO.emailExists(org.getEmailLinkedOrganization())) {
-            throw new RepeatedEmailException("Email duplicado");
-        }
-    }
-
-    private boolean isPhoneNumberChanged(LinkedOrganization org) {
-        return !org.getCellPhoneLinkedOrganization().equals(originalOrg.getCellPhoneLinkedOrganization());
-    }
-
-    private boolean isEmailChanged(LinkedOrganization org) {
-        return !org.getEmailLinkedOrganization().equals(originalOrg.getEmailLinkedOrganization());
     }
 
     private void resetFieldStyles() {
