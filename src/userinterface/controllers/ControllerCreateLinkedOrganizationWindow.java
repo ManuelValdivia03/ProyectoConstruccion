@@ -22,7 +22,6 @@ import logic.services.DataVerificationService;
 import userinterface.utilities.Validators;
 import userinterface.windows.CreateLinkedOrganizationWindow;
 import userinterface.windows.DocumentUploadWindow;
-
 import java.sql.SQLException;
 import java.util.Objects;
 

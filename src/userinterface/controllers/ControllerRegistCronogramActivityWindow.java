@@ -23,7 +23,9 @@ import logic.services.ExceptionManager;
 
 public class ControllerRegistCronogramActivityWindow {
     private static final Logger LOGGER = Logger.getLogger(ControllerRegistCronogramActivityWindow.class.getName());
-
+    private static final long MILLISECONDS_IN_DAY = 24L * 60 * 60 * 1000;
+    private static final long DAYS_IN_YEAR = 365L;
+    private static final long MILLISECONDS_IN_YEAR = DAYS_IN_YEAR * MILLISECONDS_IN_DAY;
     private final Stage stage;
     private final RegistCronogramActivityWindow view;
     private final ActivityDAO activityDAO;
@@ -67,7 +69,7 @@ public class ControllerRegistCronogramActivityWindow {
     private ActivityCronogram createNewCronogram() throws SQLException {
         ActivityCronogram newCronogram = new ActivityCronogram();
         newCronogram.setDateStart(new Timestamp(System.currentTimeMillis()));
-        newCronogram.setDateEnd(new Timestamp(System.currentTimeMillis() + 365L * 24 * 60 * 60 * 1000));
+        newCronogram.setDateEnd(new Timestamp(System.currentTimeMillis() + MILLISECONDS_IN_YEAR));
         if (cronogramDAO.addCronogram(newCronogram)) {
             return newCronogram;
         } else {

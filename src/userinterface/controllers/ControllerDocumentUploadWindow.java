@@ -71,29 +71,67 @@ public class ControllerDocumentUploadWindow implements EventHandler<ActionEvent>
 
     private void handleUploadDocument() {
         try {
-            validateDocumentSelection();
+            String fileName = view.getFileName();
+            String selectedExtension = view.getFileType();
 
-            boolean uploadSuccessful = documentDAO.insertDocument(
-                    view.getOrganizationId(),
-                    view.getFileName(),
-                    view.getFileType(),
-                    view.getFileBytes());
-
-            handleUploadResult(uploadSuccessful);
-
+            if (validateFileExtension(fileName, selectedExtension)) {
+                boolean uploadSuccessful = documentDAO.insertDocument(
+                        view.getOrganizationId(),
+                        fileName,
+                        selectedExtension,
+                        view.getFileBytes()
+                );
+                handleUploadResult(uploadSuccessful);
+            }
         } catch (IOException | SQLException e) {
             String message = ExceptionManager.handleException(e);
             handleUploadError(new Exception(message, e));
         }
     }
 
-    private void validateDocumentSelection() throws IOException {
-        if (view.getFileType() == null) {
-            throw new IllegalStateException("Document type not selected");
+    private boolean validateFileExtension(String fileName, String selectedExtension) {
+        boolean isValid = true;
+        if (fileName == null || selectedExtension == null) {
+            showError("El archivo o la extensión seleccionada no pueden ser nulos");
+            isValid = false;
         }
-        if (view.getFileBytes() == null) {
-            throw new IllegalStateException("No file selected");
+
+        String fileExtension = fileName.toLowerCase();
+        selectedExtension = selectedExtension.toLowerCase();
+
+        switch (selectedExtension) {
+            case "pdf":
+                if (!fileExtension.endsWith(".pdf")) {
+                    showError("El archivo debe ser de tipo PDF");
+                    isValid = false;
+                }
+                break;
+            case "doc":
+            case "docx":
+                if (!fileExtension.endsWith(".doc") && !fileExtension.endsWith(".docx")) {
+                    showError("El archivo debe ser de tipo DOC o DOCX");
+                    isValid = false;
+                }
+                break;
+            case "jpg":
+            case "jpeg":
+                if (!fileExtension.endsWith(".jpg") && !fileExtension.endsWith(".jpeg")) {
+                    showError("El archivo debe ser de tipo JPG o JPEG");
+                    isValid = false;
+                }
+                break;
+            case "png":
+                if (!fileExtension.endsWith(".png")) {
+                    showError("El archivo debe ser de tipo PNG");
+                    isValid = false;
+                }
+                break;
+            default:
+                showError("Tipo de archivo no soportado");
+                isValid = false;
         }
+
+        return isValid;
     }
 
     private void handleUploadResult(boolean uploadSuccessful) {
