@@ -220,7 +220,7 @@ public class AcademicDAO implements IAcademicDAO {
     }
 
     @Override
-    public int countAcademics() throws SQLException {
+    public int countAllAcademics() throws SQLException {
         String sql = "SELECT COUNT(*) FROM academico";
         try (Connection connection = ConnectionDataBase.getConnection();
              Statement statement = connection.createStatement();

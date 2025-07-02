@@ -20,38 +20,23 @@ public class UserDAO implements IUserDAO {
     private static final Logger logger = LogManager.getLogger(UserDAO.class);
     private static final User EMPTY_USER = new User(-1, "", "", "",'I');
 
+
     public boolean addUser(User user) throws SQLException, IllegalArgumentException, RepeatedCellPhoneException {
-        if (user == null) {
-            logger.warn("Intento de agregar usuario nulo");
-            throw new IllegalArgumentException("El usuario no puede ser nulo");
-        }
-
+        validateUser(user);
         String cleanPhone = user.getCellPhone().replaceAll("[^0-9]", "");
-        logger.debug("Validando teléfono celular: {}", cleanPhone);
-
-        if (!cleanPhone.matches("^\\d{10}$")) {
-            logger.warn("Teléfono celular inválido: {}", cleanPhone);
-            throw new IllegalArgumentException("El teléfono celular debe tener 10 dígitos");
-        }
-
-        if (cellPhoneExists(cleanPhone)) {
-            logger.warn("Teléfono celular ya registrado: {}", cleanPhone);
-            throw new RepeatedCellPhoneException();
-        }
-
         String query = "INSERT INTO usuario (nombre_completo, telefono, extension_telefono, estado) VALUES (?, ?, ?, ?)";
 
-        try (Connection conn = ConnectionDataBase.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
-            stmt.setString(1, user.getFullName());
-            stmt.setString(2, cleanPhone);
-            stmt.setString(3, user.getPhoneExtension());
-            stmt.setString(4, String.valueOf(user.getStatus()));
+            preparedStatement.setString(1, user.getFullName());
+            preparedStatement.setString(2, cleanPhone);
+            preparedStatement.setString(3, user.getPhoneExtension());
+            preparedStatement.setString(4, String.valueOf(user.getStatus()));
 
-            int rowsInserted = stmt.executeUpdate();
+            int rowsInserted = preparedStatement.executeUpdate();
             if (rowsInserted == 1) {
-                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         user.setIdUser(generatedKeys.getInt(1));
                         logger.info("Usuario agregado exitosamente - ID: {}, Nombre: {}, Teléfono: {}",
@@ -283,6 +268,26 @@ public class UserDAO implements IUserDAO {
         } catch (SQLException e) {
             logger.error("Error al contar usuarios", e);
             throw new SQLException();
+        }
+    }
+
+    private void validateUser(User user) throws IllegalArgumentException, SQLException, RepeatedCellPhoneException {
+        if (user == null) {
+            logger.warn("Intento de agregar usuario nulo");
+            throw new IllegalArgumentException("El usuario no puede ser nulo");
+        }
+
+        String cleanPhone = user.getCellPhone().replaceAll("[^0-9]", "");
+        logger.debug("Validando teléfono celular: {}", cleanPhone);
+
+        if (!cleanPhone.matches("^\\d{10}$")) {
+            logger.warn("Teléfono celular inválido: {}", cleanPhone);
+            throw new IllegalArgumentException("El teléfono celular debe tener 10 dígitos");
+        }
+
+        if (cellPhoneExists(cleanPhone)) {
+            logger.warn("Teléfono celular ya registrado: {}", cleanPhone);
+            throw new RepeatedCellPhoneException();
         }
     }
 }

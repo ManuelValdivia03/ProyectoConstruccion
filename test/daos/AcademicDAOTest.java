@@ -254,7 +254,7 @@ class AcademicDAOTest {
 
     @Test
     void testCountAcademics_WithData() throws SQLException {
-        int count = academicDAO.countAcademics();
+        int count = academicDAO.countAllAcademics();
         assertEquals(3, count);
     }
 
@@ -264,7 +264,7 @@ class AcademicDAOTest {
              var stmt = conn.createStatement()) {
             stmt.execute("DELETE FROM academico");
         }
-        assertEquals(0, academicDAO.countAcademics());
+        assertEquals(0, academicDAO.countAllAcademics());
         setUpAll();
     }
 

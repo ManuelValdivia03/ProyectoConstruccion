@@ -24,13 +24,16 @@ public class RepresentativeDAO implements IRepresentativeDAO {
                 representative.getLinkedOrganization() == null) {
             throw new IllegalArgumentException("Datos del representante incompletos");
         }
+
         String sql = "INSERT INTO representante (nombre_completo, correo_e, telefono, Id_empresa) VALUES (?, ?, ?, ?)";
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
             preparedStatement.setString(1, representative.getFullName());
             preparedStatement.setString(2, representative.getEmail());
             preparedStatement.setString(3, representative.getCellPhone());
             preparedStatement.setInt(4, representative.getLinkedOrganization().getIdLinkedOrganization());
+
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows > 0) {
                 try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
@@ -48,12 +51,14 @@ public class RepresentativeDAO implements IRepresentativeDAO {
         if (representative == null || representative.getFullName() == null) {
             throw new IllegalArgumentException("Datos del representante incompletos");
         }
+
         String sql = "INSERT INTO representante (nombre_completo, correo_e, telefono, Id_empresa) VALUES (?, ?, ?, NULL)";
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, representative.getFullName());
             preparedStatement.setString(2, representative.getEmail());
             preparedStatement.setString(3, representative.getCellPhone());
+
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows > 0) {
                 try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
@@ -69,6 +74,7 @@ public class RepresentativeDAO implements IRepresentativeDAO {
 
     public boolean linkRepresentativeToOrganization(int representativeId, int organizationId) throws SQLException {
         String sql = "UPDATE representante SET Id_empresa = ? WHERE id_representante = ?";
+
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, organizationId);
@@ -94,6 +100,7 @@ public class RepresentativeDAO implements IRepresentativeDAO {
                 representative.getLinkedOrganization() == null) {
             throw new IllegalArgumentException("Datos del representante incompletos");
         }
+
         String sql = "UPDATE representante SET nombre_completo = ?, correo_e = ?, telefono = ?, Id_empresa = ? WHERE id_representante = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -210,10 +217,10 @@ public class RepresentativeDAO implements IRepresentativeDAO {
     }
 
     private Representative mapRepresentativeFromResultSet(ResultSet resultSet) throws SQLException {
-        LinkedOrganization org = null;
+        LinkedOrganization organization = null;
         int orgId = resultSet.getInt("Id_empresa");
         if (!resultSet.wasNull()) {
-            org = new LinkedOrganization(
+            organization = new LinkedOrganization(
                     orgId,
                     resultSet.getString("nombre_empresa"),
                     resultSet.getString("org_telefono"),
@@ -229,7 +236,7 @@ public class RepresentativeDAO implements IRepresentativeDAO {
                 resultSet.getString("nombre_completo"),
                 resultSet.getString("correo_e"),
                 resultSet.getString("telefono"),
-                org
+                organization
         );
     }
 

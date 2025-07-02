@@ -24,5 +24,5 @@ public interface IAcademicDAO {
     boolean existsAcademic(int userId) throws SQLException;
 
     boolean changeAcademicType(Academic academic) throws SQLException;
-    int countAcademics() throws SQLException;
+    int countAllAcademics() throws SQLException;
 }

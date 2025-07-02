@@ -31,32 +31,32 @@ public class GroupDAO implements IGroupDAO {
         String updateSql = "UPDATE grupo_academico SET id_usuario = ? WHERE nrc = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement checkStmt = connection.prepareStatement(checkSql);
-             PreparedStatement existsStmt = connection.prepareStatement(existsSql);
-             PreparedStatement insertStmt = connection.prepareStatement(insertSql);
-             PreparedStatement updateStmt = connection.prepareStatement(updateSql)) {
+             PreparedStatement checkStatement = connection.prepareStatement(checkSql);
+             PreparedStatement existsStatement = connection.prepareStatement(existsSql);
+             PreparedStatement insertStatement = connection.prepareStatement(insertSql);
+             PreparedStatement updateStament = connection.prepareStatement(updateSql)) {
 
-            checkStmt.setInt(1, academicId);
-            try (ResultSet rs = checkStmt.executeQuery()) {
+            checkStatement.setInt(1, academicId);
+            try (ResultSet rs = checkStatement.executeQuery()) {
                 if (!rs.next()) {
                     return false;
                 }
             }
 
-            existsStmt.setInt(1, nrc);
+            existsStatement.setInt(1, nrc);
             boolean exists;
-            try (ResultSet rs = existsStmt.executeQuery()) {
+            try (ResultSet rs = existsStatement.executeQuery()) {
                 exists = rs.next();
             }
 
             if (exists) {
-                updateStmt.setInt(1, academicId);
-                updateStmt.setInt(2, nrc);
-                return updateStmt.executeUpdate() > 0;
+                updateStament.setInt(1, academicId);
+                updateStament.setInt(2, nrc);
+                return updateStament.executeUpdate() > 0;
             } else {
-                insertStmt.setInt(1, nrc);
-                insertStmt.setInt(2, academicId);
-                return insertStmt.executeUpdate() > 0;
+                insertStatement.setInt(1, nrc);
+                insertStatement.setInt(2, academicId);
+                return insertStatement.executeUpdate() > 0;
             }
         }
     }
@@ -65,11 +65,11 @@ public class GroupDAO implements IGroupDAO {
         String sql = "DELETE FROM grupo_academico WHERE nrc = ? AND id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            stmt.setInt(1, nrc);
-            stmt.setInt(2, academicId);
-            return stmt.executeUpdate() > 0;
+            preparedStatement.setInt(1, nrc);
+            preparedStatement.setInt(2, academicId);
+            return preparedStatement.executeUpdate() > 0;
         }
     }
 
@@ -84,15 +84,15 @@ public class GroupDAO implements IGroupDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, nrc);
-            try (ResultSet rs = preparedStatement.executeQuery()) {
-                if (rs.next()) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
                     return new Academic(
-                        rs.getInt("id_usuario"),
-                        rs.getString("nombre_completo").trim(),
-                        rs.getString("telefono") != null ? rs.getString("telefono").trim() : "",
-                        rs.getString("extension_telefono") != null ? rs.getString("extension_telefono").trim() : "",
-                        rs.getString("estado").trim().charAt(0),
-                        rs.getString("numero_personal").trim(),
+                        resultSet.getInt("id_usuario"),
+                        resultSet.getString("nombre_completo").trim(),
+                        resultSet.getString("telefono") != null ? resultSet.getString("telefono").trim() : "",
+                        resultSet.getString("extension_telefono") != null ? resultSet.getString("extension_telefono").trim() : "",
+                        resultSet.getString("estado").trim().charAt(0),
+                        resultSet.getString("numero_personal").trim(),
                         AcademicType.EE
                     );
                 }
@@ -105,10 +105,10 @@ public class GroupDAO implements IGroupDAO {
         String sql = "SELECT 1 FROM grupo_academico WHERE id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            stmt.setInt(1, academicId);
-            try (ResultSet rs = stmt.executeQuery()) {
+            preparedStatement.setInt(1, academicId);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
                 return rs.next();
             }
         }
@@ -271,8 +271,8 @@ public class GroupDAO implements IGroupDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, nrc);
-            try (ResultSet rs = preparedStatement.executeQuery()) {
-                return rs.next();
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return resultSet.next();
             }
         }
     }

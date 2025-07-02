@@ -166,9 +166,9 @@ public class CoordinatorDAO implements ICoordinatorDAO {
     public boolean existsForUser(int userId) throws SQLException {
         String sql = "SELECT 1 FROM coordinador WHERE id_usuario = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, userId);
-            return stmt.executeQuery().next();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, userId);
+            return preparedStatement.executeQuery().next();
         }
     }
 
@@ -181,15 +181,15 @@ public class CoordinatorDAO implements ICoordinatorDAO {
         try (Connection connection = ConnectionDataBase.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, userId);
-            try (ResultSet rs = statement.executeQuery()) {
-                if (rs.next()) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
                     return new Coordinator(
-                            rs.getInt("id_usuario"),
-                            rs.getString("nombre_completo"),
-                            rs.getString("telefono"),
-                            rs.getString("extension_telefono"),
-                            rs.getString("numero_personal"),
-                            rs.getString("estado").charAt(0)
+                            resultSet.getInt("id_usuario"),
+                            resultSet.getString("nombre_completo"),
+                            resultSet.getString("telefono"),
+                            resultSet.getString("extension_telefono"),
+                            resultSet.getString("numero_personal"),
+                            resultSet.getString("estado").charAt(0)
                     );
                 }
             }

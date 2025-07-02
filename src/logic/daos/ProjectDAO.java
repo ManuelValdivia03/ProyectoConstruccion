@@ -328,8 +328,8 @@ public class ProjectDAO implements IProjectDAO {
         String sql = "INSERT INTO proyecto (titulo, descripcion, fecha_inicial, fecha_terminal, " +
                     "estado, cupo, estudiantes_actuales) VALUES (?, ?, ?, ?, ?, ?, 0)";
 
-        try (Connection conn = getConnection();
-             PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, project.getTitle());
             statement.setString(2, project.getDescription());
@@ -361,8 +361,8 @@ public class ProjectDAO implements IProjectDAO {
 
         String sql = "UPDATE proyecto SET id_representante = ? WHERE id_proyecto = ?";
 
-        try (Connection conn = getConnection();
-             PreparedStatement statement = conn.prepareStatement(sql)) {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, representativeId);
             statement.setInt(2, projectId);
@@ -374,11 +374,11 @@ public class ProjectDAO implements IProjectDAO {
 
     public boolean assignProjectToCurrentUser(int projectId, User user) throws SQLException {
         String sql = "UPDATE proyecto SET id_usuario = ? WHERE id_proyecto = ?";
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, getCurrentUserId(user));
-            stmt.setInt(2, projectId);
-            return stmt.executeUpdate() > 0;
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, getCurrentUserId(user));
+            preparedStatement.setInt(2, projectId);
+            return preparedStatement.executeUpdate() > 0;
         }
     }
 
@@ -423,11 +423,11 @@ public class ProjectDAO implements IProjectDAO {
         String sql = "UPDATE proyecto SET estudiantes_actuales = estudiantes_actuales + 1 " +
                 "WHERE id_proyecto = ? AND estudiantes_actuales < cupo";
 
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            stmt.setInt(1, projectId);
-            return stmt.executeUpdate() > 0;
+            preparedStatement.setInt(1, projectId);
+            return preparedStatement.executeUpdate() > 0;
         }
     }
 }

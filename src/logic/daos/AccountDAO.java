@@ -50,6 +50,21 @@ public class AccountDAO implements IAccountDAO {
 
     @Override
     public boolean addAccount(Account account) throws SQLException, RepeatedEmailException, IllegalArgumentException {
+        validateAccountData(account);
+
+        String sql = "INSERT INTO cuenta (id_usuario, correo_e, contraseña) VALUES (?, ?, ?)";
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, account.getIdUser());
+            preparedStatement.setString(2, account.getEmail());
+            preparedStatement.setString(3, account.getPassword());
+
+            return preparedStatement.executeUpdate() > 0;
+        }
+    }
+
+    private void validateAccountData(Account account) throws SQLException, RepeatedEmailException, IllegalArgumentException {
         if (account == null) {
             throw new IllegalArgumentException("La cuenta no debe ser nula");
         }
@@ -61,17 +76,6 @@ public class AccountDAO implements IAccountDAO {
         }
         if (accountExists(account.getEmail())) {
             throw new RepeatedEmailException();
-        }
-
-        String sql = "INSERT INTO cuenta (id_usuario, correo_e, contraseña) VALUES (?, ?, ?)";
-        try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
-            preparedStatement.setInt(1, account.getIdUser());
-            preparedStatement.setString(2, account.getEmail());
-            preparedStatement.setString(3, account.getPassword());
-
-            return preparedStatement.executeUpdate() > 0;
         }
     }
 

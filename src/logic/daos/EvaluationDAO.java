@@ -343,8 +343,8 @@ public class EvaluationDAO implements IEvaluationDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, idEvaluation);
-            try (ResultSet rs = preparedStatement.executeQuery()) {
-                return rs.next();
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return resultSet.next();
             }
         }
     }

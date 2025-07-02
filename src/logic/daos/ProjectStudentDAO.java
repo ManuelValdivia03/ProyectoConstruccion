@@ -17,18 +17,18 @@ public class ProjectStudentDAO implements IProjectStudentDAO {
 
         String sql = "{CALL asignar_estudiante_seguro(?, ?, ?, ?)}";
 
-        try (Connection conn = ConnectionDataBase.getConnection();
-             CallableStatement stmt = conn.prepareCall(sql)) {
+        try (Connection connection = ConnectionDataBase.getConnection();
+             CallableStatement statement = connection.prepareCall(sql)) {
 
-            stmt.setInt(1, projectId);
-            stmt.setInt(2, studentId);
-            stmt.registerOutParameter(3, Types.BOOLEAN);
-            stmt.registerOutParameter(4, Types.VARCHAR);
+            statement.setInt(1, projectId);
+            statement.setInt(2, studentId);
+            statement.registerOutParameter(3, Types.BOOLEAN);
+            statement.registerOutParameter(4, Types.VARCHAR);
 
-            stmt.execute();
+            statement.execute();
 
-            boolean exito = stmt.getBoolean(3);
-            String mensaje = stmt.getString(4);
+            boolean exito = statement.getBoolean(3);
+            String mensaje = statement.getString(4);
 
             if (!exito) {
                 logger.warn("Fallo en asignación: {}", mensaje);
@@ -52,10 +52,10 @@ public class ProjectStudentDAO implements IProjectStudentDAO {
         try (Connection connection = ConnectionDataBase.getConnection()) {
             connection.setAutoCommit(false);
 
-            try (PreparedStatement deleteStmt = connection.prepareStatement(deleteSql)) {
-                deleteStmt.setInt(1, proyectId);
-                deleteStmt.setInt(2, studentId);
-                int affectedRows = deleteStmt.executeUpdate();
+            try (PreparedStatement deleteStatement = connection.prepareStatement(deleteSql)) {
+                deleteStatement.setInt(1, proyectId);
+                deleteStatement.setInt(2, studentId);
+                int affectedRows = deleteStatement.executeUpdate();
 
                 if (affectedRows == 0) {
                     logger.warn("No se encontró la asignación estudiante-proyecto");
@@ -63,9 +63,9 @@ public class ProjectStudentDAO implements IProjectStudentDAO {
                 }
             }
 
-            try (PreparedStatement updateStmt = connection.prepareStatement(updateSql)) {
-                updateStmt.setInt(1, proyectId);
-                updateStmt.executeUpdate();
+            try (PreparedStatement updateStatement = connection.prepareStatement(updateSql)) {
+                updateStatement.setInt(1, proyectId);
+                updateStatement.executeUpdate();
             }
 
             connection.commit();
@@ -88,12 +88,12 @@ public class ProjectStudentDAO implements IProjectStudentDAO {
         String sql = "SELECT id_estudiante FROM proyecto_estudiante WHERE id_proyecto = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             
-            stmt.setInt(1, proyectId);
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    studentIds.add(rs.getInt("id_estudiante"));
+            preparedStatement.setInt(1, proyectId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    studentIds.add(resultSet.getInt("id_estudiante"));
                 }
             }
         } catch (SQLException e) {
@@ -114,12 +114,12 @@ public class ProjectStudentDAO implements IProjectStudentDAO {
         String sql = "SELECT id_proyecto FROM proyecto_estudiante WHERE id_estudiante = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            stmt.setInt(1, studentId);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt("id_proyecto");
+            preparedStatement.setInt(1, studentId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("id_proyecto");
                 }
             }
         } catch (SQLException e) {

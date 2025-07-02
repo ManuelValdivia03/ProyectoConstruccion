@@ -50,10 +50,10 @@ public class StudentDAO implements IStudentDAO {
                 String groupSql = "SELECT nrc FROM grupo_academico WHERE id_usuario = ?";
                 try (PreparedStatement groupStmt = connection.prepareStatement(groupSql)) {
                     groupStmt.setInt(1, academicId);
-                    ResultSet rs = groupStmt.executeQuery();
+                    ResultSet resultSet = groupStmt.executeQuery();
 
-                    if (rs.next()) {
-                        int nrc = rs.getInt("nrc");
+                    if (resultSet.next()) {
+                        int nrc = resultSet.getInt("nrc");
                         return assignStudentToGroup(student.getIdUser(), nrc);
                     } else {
                         logger.warn("El académico con ID {} no tiene un grupo asignado", academicId);

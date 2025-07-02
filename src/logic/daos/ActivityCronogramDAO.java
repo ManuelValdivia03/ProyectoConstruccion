@@ -175,11 +175,11 @@ public class ActivityCronogramDAO implements IActivityCronogramDAO {
         String sql = "INSERT INTO estudiante_cronograma (id_estudiante, id_cronograma) " +
                 "SELECT id_usuario, ? FROM estudiante";
 
-        try (Connection conn = ConnectionDataBase.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            stmt.setInt(1, cronogramId);
-            return stmt.executeUpdate() > 0;
+            preparedStatement.setInt(1, cronogramId);
+            return preparedStatement.executeUpdate() > 0;
         }
     }
 
@@ -188,49 +188,49 @@ public class ActivityCronogramDAO implements IActivityCronogramDAO {
                 "SELECT id_estudiante, ?, FALSE FROM estudiante_cronograma " +
                 "WHERE id_cronograma = (SELECT id_cronograma FROM cronograma_actividad WHERE id_actividad = ? LIMIT 1)";
 
-        try (Connection conn = ConnectionDataBase.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            stmt.setInt(1, activityId);
-            stmt.setInt(2, activityId);
-            return stmt.executeUpdate() > 0;
+            preparedStatement.setInt(1, activityId);
+            preparedStatement.setInt(2, activityId);
+            return preparedStatement.executeUpdate() > 0;
         }
     }
 
     public boolean deleteActivityCompletely(int activityId) throws SQLException {
-        Connection conn = null;
+        Connection connection = null;
         try {
-            conn = ConnectionDataBase.getConnection();
-            conn.setAutoCommit(false);
+            connection = ConnectionDataBase.getConnection();
+            connection.setAutoCommit(false);
 
             String sql1 = "DELETE FROM seguimiento_actividad WHERE id_actividad = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(sql1)) {
-                stmt.setInt(1, activityId);
-                stmt.executeUpdate();
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql1)) {
+                preparedStatement.setInt(1, activityId);
+                preparedStatement.executeUpdate();
             }
 
             String sql2 = "DELETE FROM cronograma_actividad WHERE id_actividad = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(sql2)) {
-                stmt.setInt(1, activityId);
-                stmt.executeUpdate();
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql2)) {
+                preparedStatement.setInt(1, activityId);
+                preparedStatement.executeUpdate();
             }
 
             String sql3 = "DELETE FROM actividad WHERE id_actividad = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(sql3)) {
-                stmt.setInt(1, activityId);
-                stmt.executeUpdate();
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql3)) {
+                preparedStatement.setInt(1, activityId);
+                preparedStatement.executeUpdate();
             }
 
-            conn.commit();
+            connection.commit();
             return true;
         } catch (SQLException e) {
-            if (conn != null) conn.rollback();
+            if (connection != null) connection.rollback();
             throw e;
         } finally {
-            if (conn != null) {
+            if (connection != null) {
                 try {
-                    conn.setAutoCommit(true);
-                    conn.close();
+                    connection.setAutoCommit(true);
+                    connection.close();
                 } catch (SQLException e) {
                     throw e;
                 }

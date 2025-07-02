@@ -49,12 +49,12 @@ public class ActivityTrackingDAO {
                 "SELECT id_estudiante, ?, FALSE, 'PENDIENTE' FROM estudiante_cronograma " +
                 "WHERE id_cronograma = (SELECT id_cronograma FROM cronograma_actividad WHERE id_actividad = ? LIMIT 1)";
 
-        try (Connection conn = ConnectionDataBase.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection connection = ConnectionDataBase.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            stmt.setInt(1, activityId);
-            stmt.setInt(2, activityId);
-            return stmt.executeUpdate() > 0;
+            preparedStatement.setInt(1, activityId);
+            preparedStatement.setInt(2, activityId);
+            return preparedStatement.executeUpdate() > 0;
         }
     }
 

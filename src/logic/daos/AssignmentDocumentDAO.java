@@ -32,9 +32,9 @@ public class AssignmentDocumentDAO implements IAssignmentDocumentDAO {
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, studentId);
-            try (ResultSet rs = statement.executeQuery()) {
-                if (rs.next()) {
-                    byte[] content = rs.getBytes("contenido");
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    byte[] content = resultSet.getBytes("contenido");
                     return content != null ? content : EMPTY_DOCUMENT;
                 }
                 return EMPTY_DOCUMENT;
