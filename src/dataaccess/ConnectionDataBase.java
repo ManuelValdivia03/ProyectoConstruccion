@@ -2,6 +2,7 @@ package dataaccess;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import logic.services.ExceptionManager;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -22,31 +23,9 @@ public class ConnectionDataBase {
         try {
             return DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
-            String userMessage;
-            switch (e.getSQLState()) {
-                case "28000":
-                    userMessage = "Acceso denegado: usuario o contraseña invalida.";
-                    break;
-                case "42000":
-                    if (e.getErrorCode() == 1049) {
-                        userMessage = "No existe la base de datos.";
-                    } else if (e.getErrorCode() == 1044) {
-                        userMessage = "Acceso denegado a la base de datos para el usuario.";
-                    } else if (e.getErrorCode() == 1146) {
-                        userMessage = "No existe la tabla.";
-                    } else {
-                        userMessage = "SQL syntax error o violación de permisos.";
-                    }
-                    break;
-                case "42S02":
-                    userMessage = "Tabla no existe.";
-                    break;
-                default:
-                    userMessage = "Error de base de datos: " + e.getMessage();
-            }
-            logger.error("Connection error to {} - Code: {} - State: {} - Message: {}",
-                    url, e.getErrorCode(), e.getSQLState(), e.getMessage());
-            throw new SQLException(userMessage, e);
+            String errorMessage = ExceptionManager.handleException(e);
+            logger.error(errorMessage);
+            throw e;
         }
     }
 }
