@@ -267,7 +267,7 @@ public class RepresentativeDAO implements IRepresentativeDAO {
 
     public String getRepresentativeNameByProjectId(int projectId) throws SQLException {
         if (projectId <= 0) {
-            return "";
+            return "N/A";
         }
         String query = "SELECT r.nombre_completo FROM representante r " +
                      "JOIN proyecto p ON r.id_representante = p.id_representante " +
@@ -281,6 +281,6 @@ public class RepresentativeDAO implements IRepresentativeDAO {
                 }
             }
         }
-        return "";
+        return "N/A";
     }
 }
