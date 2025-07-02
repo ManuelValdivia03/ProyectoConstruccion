@@ -20,9 +20,8 @@ public class CoordinatorDAO implements ICoordinatorDAO {
     }
 
     public boolean addCoordinator(Coordinator coordinator) throws SQLException, IllegalArgumentException {
-        if (coordinator == null) {
-            throw new IllegalArgumentException("El coordinador no debe ser nulo");
-        }
+        validateCoordinator(coordinator);
+
         boolean userAdded = userDAO.addUser(coordinator);
         if (!userAdded) {
             return false;
@@ -196,4 +195,11 @@ public class CoordinatorDAO implements ICoordinatorDAO {
         }
         return EMPTY_COORDINATOR;
     }
+
+    private void validateCoordinator(Coordinator coordinator) throws IllegalArgumentException {
+        if (coordinator == null) {
+            throw new IllegalArgumentException("El coordinador no debe ser nulo");
+        }
+    }
+
 }

@@ -19,14 +19,7 @@ public class ActivityDAO implements IActivityDAO {
     private static final Activity EMPTY_ACTIVITY = new Activity(-1, "", "", null, null, ActivityStatus.NONE);
 
     public boolean addActivity(Activity activity) throws SQLException, IllegalArgumentException {
-        if (activity == null ||
-                activity.getNameActivity() == null ||
-                activity.getDescriptionActivity() == null ||
-                activity.getStartDate() == null ||
-                activity.getEndDate() == null ||
-                activity.getActivityStatus() == null) {
-            throw new IllegalArgumentException("Datos de actividad incompletos o nulos");
-        }
+        validateActivity(activity);
 
         String sql = "INSERT INTO actividad (nombre, descripcion, fecha_inicial, fecha_terminal, estado) VALUES (?, ?, ?, ?, ?)";
 
@@ -221,6 +214,17 @@ public class ActivityDAO implements IActivityDAO {
             statement.setInt(2, idActivity);
 
             return statement.executeUpdate() > 0;
+        }
+    }
+
+    private void validateActivity(Activity activity) throws IllegalArgumentException {
+        if (activity == null ||
+                activity.getNameActivity() == null ||
+                activity.getDescriptionActivity() == null ||
+                activity.getStartDate() == null ||
+                activity.getEndDate() == null ||
+                activity.getActivityStatus() == null) {
+            throw new IllegalArgumentException("Datos de actividad incompletos o nulos");
         }
     }
 }

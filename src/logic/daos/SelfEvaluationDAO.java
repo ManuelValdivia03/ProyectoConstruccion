@@ -21,11 +21,7 @@ public class SelfEvaluationDAO implements ISelfEvaluationDAO {
     }
 
     public boolean addSelfEvaluation(SelfEvaluation selfEvaluation) throws SQLException, IllegalArgumentException {
-        if (selfEvaluation == null ||
-                selfEvaluation.getFeedBack() == null ||
-                selfEvaluation.getStudent() == null) {
-            throw new IllegalArgumentException("Datos de autoevaluación incompletos");
-        }
+        validateSelfEvaluation(selfEvaluation);
 
         String sql = "INSERT INTO autoevaluacion (calificacion, comentarios, id_usuario) VALUES (?, ?, ?)";
 
@@ -206,6 +202,14 @@ public class SelfEvaluationDAO implements ISelfEvaluationDAO {
              ResultSet resultSet = statement.executeQuery(sql)) {
 
             return resultSet.next() ? resultSet.getInt(1) : 0;
+        }
+    }
+
+    private void validateSelfEvaluation(SelfEvaluation selfEvaluation) throws IllegalArgumentException {
+        if (selfEvaluation == null ||
+                selfEvaluation.getFeedBack() == null ||
+                selfEvaluation.getStudent() == null) {
+            throw new IllegalArgumentException("Datos de autoevaluación incompletos");
         }
     }
 }

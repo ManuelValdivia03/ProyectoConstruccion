@@ -24,13 +24,7 @@ public class AcademicDAO implements IAcademicDAO {
 
     @Override
     public boolean addAcademic(Academic academic) throws SQLException, RepeatedStaffNumberException, IllegalArgumentException {
-        if (academic == null) {
-            throw new IllegalArgumentException("Academic must not be null");
-        }
-
-        if (academicExists(academic.getStaffNumber())) {
-            throw new RepeatedStaffNumberException();
-        }
+        validateAcademic(academic);
 
         String sql = "INSERT INTO academico (id_usuario, numero_personal, tipo) VALUES (?, ?, ?)";
         try (Connection connection = ConnectionDataBase.getConnection();
@@ -321,6 +315,16 @@ public class AcademicDAO implements IAcademicDAO {
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, userId);
             return statement.executeQuery().next();
+        }
+    }
+
+    private void validateAcademic(Academic academic) throws IllegalArgumentException, SQLException, RepeatedStaffNumberException {
+        if (academic == null) {
+            throw new IllegalArgumentException("Academic must not be null");
+        }
+
+        if (academicExists(academic.getStaffNumber())) {
+            throw new RepeatedStaffNumberException();
         }
     }
 }
