@@ -123,7 +123,7 @@ public class SelfEvaluationDAO implements ISelfEvaluationDAO {
 
     public SelfEvaluation getSelfEvaluationByStudent(int studentId) throws SQLException {
         if (studentId <= 0) {
-            return null;
+            return EMPTY_SELFEVALUATION;
         }
 
         String sql = "SELECT * FROM autoevaluacion WHERE id_usuario = ? ORDER BY id_autoevaluacion DESC LIMIT 1";

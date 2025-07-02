@@ -39,7 +39,7 @@ public class RegistProjectWindow {
         dateStartPicker.setConverter(new javafx.util.StringConverter<LocalDate>() {
             @Override
             public String toString(LocalDate date) {
-                if (date != null) {
+                if (date != null && !date.equals(LocalDate.MIN)) {
                     return formatter.format(date);
                 } else {
                     return "";
@@ -50,7 +50,7 @@ public class RegistProjectWindow {
                 if (string != null && !string.isEmpty()) {
                     return LocalDate.parse(string, formatter);
                 } else {
-                    return null;
+                    return LocalDate.MIN;
                 }
             }
         });
@@ -58,7 +58,7 @@ public class RegistProjectWindow {
         dateEndPicker.setConverter(new javafx.util.StringConverter<LocalDate>() {
             @Override
             public String toString(LocalDate date) {
-                if (date != null) {
+                if (date != null && !date.equals(LocalDate.MIN)) {
                     return formatter.format(date);
                 } else {
                     return "";
@@ -69,7 +69,7 @@ public class RegistProjectWindow {
                 if (string != null && !string.isEmpty()) {
                     return LocalDate.parse(string, formatter);
                 } else {
-                    return null;
+                    return LocalDate.MIN;
                 }
             }
         });

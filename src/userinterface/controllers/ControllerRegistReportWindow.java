@@ -89,12 +89,12 @@ public class ControllerRegistReportWindow implements EventHandler<ActionEvent> {
     }
 
     private Report createReportFromInput() {
-        ReportType type = view.getTypeComboBox().getValue();
-        int hours = Integer.parseInt(view.getHoursTextField().getText().trim());
-        LocalDate localDate = view.getDatePicker().getValue();
-        Timestamp date = Timestamp.valueOf(localDate.atStartOfDay());
-        String methodology = view.getMethodologyTextArea().getText().trim();
-        String description = view.getDescriptionTextArea().getText().trim();
+        ReportType type = view.getSelectedReportType();
+        int hours = Integer.parseInt(view.getHoursText().trim());
+        LocalDate localDate = view.getSelectedDate();
+        Timestamp date = !localDate.equals(LocalDate.MIN) ? Timestamp.valueOf(localDate.atStartOfDay()) : null;
+        String methodology = view.getMethodologyText().trim();
+        String description = view.getDescriptionText().trim();
 
         return new Report(0, date, hours, type, methodology, description, currentStudent);
     }
@@ -107,12 +107,12 @@ public class ControllerRegistReportWindow implements EventHandler<ActionEvent> {
             isValid = false;
         }
 
-        if (view.getHoursTextField().getText().isEmpty()) {
+        if (view.getHoursText().isEmpty()) {
             showFieldError("Las horas son obligatorias", view.getHoursTextField());
             isValid = false;
         } else {
             try {
-                int hours = Integer.parseInt(view.getHoursTextField().getText());
+                int hours = Integer.parseInt(view.getHoursText());
                 if (hours <= 0) {
                     showFieldError("Las horas deben ser mayores a 0", view.getHoursTextField());
                     isValid = false;
@@ -123,12 +123,13 @@ public class ControllerRegistReportWindow implements EventHandler<ActionEvent> {
             }
         }
 
-        if (view.getDatePicker().getValue() == null) {
+        LocalDate date = view.getSelectedDate();
+        if (date == null || date.equals(LocalDate.MIN)) {
             showFieldError("La fecha es obligatoria", view.getDatePicker());
             isValid = false;
         }
 
-        String methodology = view.getMethodologyTextArea().getText();
+        String methodology = view.getMethodologyText();
         if (methodology.isEmpty()) {
             showFieldError("La metodología es obligatoria", view.getMethodologyTextArea());
             isValid = false;
@@ -137,7 +138,7 @@ public class ControllerRegistReportWindow implements EventHandler<ActionEvent> {
             isValid = false;
         }
 
-        String description = view.getDescriptionTextArea().getText();
+        String description = view.getDescriptionText();
         if (description.isEmpty()) {
             showFieldError("La descripción es obligatoria", view.getDescriptionTextArea());
             isValid = false;
@@ -178,7 +179,7 @@ public class ControllerRegistReportWindow implements EventHandler<ActionEvent> {
     private void clearFields() {
         view.getTypeComboBox().setValue(null);
         view.getHoursTextField().clear();
-        view.getDatePicker().setValue(null);
+        view.getDatePicker().setValue(LocalDate.MIN);
         view.getMethodologyTextArea().clear();
         view.getDescriptionTextArea().clear();
         clearError();

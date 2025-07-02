@@ -83,15 +83,16 @@ public class DocumentUploadWindow {
         if (selectedFile != null) {
             return Files.readAllBytes(selectedFile.toPath());
         }
-        return null;
+        return new byte[0];
     }
 
     public String getFileType() {
-        return fileTypeComboBox.getValue();
+        String value = fileTypeComboBox.getValue();
+        return value != null ? value : "";
     }
 
     public String getFileName() {
-        return selectedFile != null ? selectedFile.getName() : null;
+        return selectedFile != null ? selectedFile.getName() : "";
     }
 
     public VBox getView() { return view; }

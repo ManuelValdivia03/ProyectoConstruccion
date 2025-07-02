@@ -95,8 +95,6 @@ public class StudentDAO implements IStudentDAO {
                     student.setIdUser(resultSet.getInt("id_usuario"));
                     student.setFullName(resultSet.getString("nombre_completo"));
                     student.setCellphone(resultSet.getString("telefono"));
-
-                    // Manejo seguro del estado
                     String estado = resultSet.getString("estado");
                     student.setStatus(estado != null && !estado.isEmpty() ? estado.charAt(0) : 'I');
 

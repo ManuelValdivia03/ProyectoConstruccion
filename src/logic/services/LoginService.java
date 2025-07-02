@@ -58,8 +58,6 @@ public class LoginService {
             logger.debug("Usuario identificado como estudiante");
             return studentDAO.getFullStudent(userId);
         }
-
-        // Este caso teóricamente nunca debería ocurrir según los requisitos
         logger.error("Usuario sin tipo asignado para: {}", email);
         throw new IllegalStateException("Estado inválido: usuario sin tipo asignado");
     }

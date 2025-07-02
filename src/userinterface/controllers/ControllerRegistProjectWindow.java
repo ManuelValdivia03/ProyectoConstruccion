@@ -108,12 +108,19 @@ public class ControllerRegistProjectWindow implements EventHandler<ActionEvent> 
         LocalDate startLocalDate = view.getDateStartPicker().getValue();
         LocalDate endLocalDate = view.getDateEndPicker().getValue();
 
+        Timestamp startTimestamp = (startLocalDate != null && !startLocalDate.equals(LocalDate.MIN))
+                ? Timestamp.valueOf(startLocalDate.atStartOfDay())
+                : null;
+        Timestamp endTimestamp = (endLocalDate != null && !endLocalDate.equals(LocalDate.MIN))
+                ? Timestamp.valueOf(endLocalDate.atStartOfDay())
+                : null;
+
         return new ProjectRegistrationData(
                 title,
                 description,
                 maxStudents,
-                Timestamp.valueOf(startLocalDate.atStartOfDay()),
-                endLocalDate != null ? Timestamp.valueOf(endLocalDate.atStartOfDay()) : null
+                startTimestamp,
+                endTimestamp
         );
     }
 
@@ -154,7 +161,8 @@ public class ControllerRegistProjectWindow implements EventHandler<ActionEvent> 
             }
         }
 
-        if (view.getDateStartPicker().getValue() == null) {
+        LocalDate startDate = view.getDateStartPicker().getValue();
+        if (startDate == null || startDate.equals(LocalDate.MIN)) {
             showError("La fecha de inicio es obligatoria");
             view.getDateStartPicker().setStyle(ERROR_STYLE);
             isValid = false;
@@ -222,8 +230,8 @@ public class ControllerRegistProjectWindow implements EventHandler<ActionEvent> 
         view.getTitleTextField().clear();
         view.getDescriptionTextField().clear();
         view.getMaxStudentsTextField().clear();
-        view.getDateStartPicker().setValue(null);
-        view.getDateEndPicker().setValue(null);
+        view.getDateStartPicker().setValue(LocalDate.MIN);
+        view.getDateEndPicker().setValue(LocalDate.MIN);
         clearError();
     }
 

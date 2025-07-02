@@ -38,7 +38,7 @@ public class RegistReportWindow {
         datePicker.setConverter(new javafx.util.StringConverter<LocalDate>() {
             @Override
             public String toString(LocalDate date) {
-                if (date != null) {
+                if (date != null && !date.equals(LocalDate.MIN)) {
                     return formatter.format(date);
                 } else {
                     return "";
@@ -49,7 +49,7 @@ public class RegistReportWindow {
                 if (string != null && !string.isEmpty()) {
                     return LocalDate.parse(string, formatter);
                 } else {
-                    return null;
+                    return LocalDate.MIN;
                 }
             }
         });
@@ -127,5 +127,30 @@ public class RegistReportWindow {
 
     public Label getResultLabel() {
         return resultLabel;
+    }
+
+    public ReportType getSelectedReportType() {
+        ReportType value = typeComboBox.getValue();
+        return value != null ? value : ReportType.values()[0];
+    }
+
+    public String getHoursText() {
+        String value = hoursTextField.getText();
+        return value != null ? value : "";
+    }
+
+    public LocalDate getSelectedDate() {
+        LocalDate date = datePicker.getValue();
+        return date != null ? date : LocalDate.MIN;
+    }
+
+    public String getMethodologyText() {
+        String value = methodologyTextArea.getText();
+        return value != null ? value : "";
+    }
+
+    public String getDescriptionText() {
+        String value = descriptionTextArea.getText();
+        return value != null ? value : "";
     }
 }

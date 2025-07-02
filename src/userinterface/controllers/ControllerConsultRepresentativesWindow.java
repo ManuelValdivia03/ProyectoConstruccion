@@ -28,6 +28,9 @@ public class ControllerConsultRepresentativesWindow {
     private ObservableList<Representative> allRepresentatives;
     private boolean hasSearchResults = false;
 
+    private static final Representative EMPTY_REPRESENTATIVE = new Representative(-1, "", "", "", null);
+    private static final LinkedOrganization EMPTY_ORGANIZATION = new LinkedOrganization(-1, "", "", "", "", "", ' ');
+
     public ControllerConsultRepresentativesWindow(ConsultRepresentativesWindow view, Stage stage) {
         this.view = Objects.requireNonNull(view, "La vista no puede ser nula");
         this.representativeDAO = new RepresentativeDAO();
@@ -107,7 +110,7 @@ public class ControllerConsultRepresentativesWindow {
 
     private void handleAssignOrganization(ActionEvent event) {
         Representative rep = extractRepresentativeFromEvent(event);
-        if (rep == null) return;
+        if (rep == EMPTY_REPRESENTATIVE) return;
 
         LinkOrganizationWindow linkWindow = createLinkOrganizationWindow(rep);
         Stage orgStage = new Stage();
@@ -121,24 +124,26 @@ public class ControllerConsultRepresentativesWindow {
 
     private Representative extractRepresentativeFromEvent(ActionEvent event) {
         Object source = event.getSource();
-        if (!(source instanceof Button)) return null;
+        if (!(source instanceof Button)) return EMPTY_REPRESENTATIVE;
         Button button = (Button) source;
-        return (Representative) button.getUserData();
+        Representative rep = (Representative) button.getUserData();
+        return rep != null ? rep : EMPTY_REPRESENTATIVE;
     }
 
     private LinkOrganizationWindow createLinkOrganizationWindow(Representative rep) {
         return new LinkOrganizationWindow(linkEvent -> {
             LinkedOrganization org = extractOrganizationFromEvent(linkEvent);
-            if (org == null) return;
+            if (org == EMPTY_ORGANIZATION) return;
             linkRepresentativeToOrganization(rep, org);
         });
     }
 
     private LinkedOrganization extractOrganizationFromEvent(ActionEvent linkEvent) {
         Object linkSource = linkEvent.getSource();
-        if (!(linkSource instanceof Button)) return null;
+        if (!(linkSource instanceof Button)) return EMPTY_ORGANIZATION;
         Button linkButton = (Button) linkSource;
-        return (LinkedOrganization) linkButton.getUserData();
+        LinkedOrganization org = (LinkedOrganization) linkButton.getUserData();
+        return org != null ? org : EMPTY_ORGANIZATION;
     }
 
     private void linkRepresentativeToOrganization(Representative rep, LinkedOrganization org) {

@@ -1,4 +1,3 @@
-// src/dataaccess/ConnectionDataBase.java
 package dataaccess;
 
 import org.apache.logging.log4j.LogManager;

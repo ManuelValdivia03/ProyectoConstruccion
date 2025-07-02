@@ -123,8 +123,10 @@ public class ControllerConsultAssignedProjectWindow implements EventHandler<Acti
                 }
             } else {
                 byte[] generatedPdf = generateAssignmentPDFContent();
-                if (generatedPdf != null) {
+                if (generatedPdf != null && generatedPdf.length > 0) {
                     saveAssignmentToFile(generatedPdf);
+                } else {
+                    view.showMessage("No se pudo generar el oficio de asignación.", true);
                 }
             }
         } catch (SQLException e) {
@@ -137,6 +139,9 @@ public class ControllerConsultAssignedProjectWindow implements EventHandler<Acti
         try {
             PDFAssignmentGenerator pdfGenerator = new PDFAssignmentGenerator();
             Student student = studentDAO.getStudentById(studentId);
+            if (student == null) {
+                student = new Student();
+            }
 
             byte[] pdfContent = pdfGenerator.generateAssignmentPDF(student, assignedProject);
 
@@ -145,11 +150,11 @@ public class ControllerConsultAssignedProjectWindow implements EventHandler<Acti
                     studentId,
                     pdfContent
             );
-            return pdfContent;
+            return pdfContent != null ? pdfContent : new byte[0];
         } catch (SQLException | IOException e) {
             String message = ExceptionManager.handleException(e);
             view.showMessage("Error al generar el oficio: " + message, true);
-            return null;
+            return new byte[0];
         }
     }
 
@@ -157,8 +162,12 @@ public class ControllerConsultAssignedProjectWindow implements EventHandler<Acti
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Guardar Oficio de Asignación");
         try {
+            Student student = studentDAO.getStudentById(studentId);
+            if (student == null) {
+                student = new Student();
+            }
             fileChooser.setInitialFileName(
-                    "Oficio_Asignacion_" + studentDAO.getStudentById(studentId).getEnrollment() + ".pdf"
+                    "Oficio_Asignacion_" + student.getEnrollment() + ".pdf"
             );
         } catch (SQLException e) {
             fileChooser.setInitialFileName("Oficio_Asignacion.pdf");

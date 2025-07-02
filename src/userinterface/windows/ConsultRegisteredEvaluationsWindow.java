@@ -21,7 +21,7 @@ public class ConsultRegisteredEvaluationsWindow {
 
         TableColumn<Evaluation, String> projectCol = new TableColumn<>("Proyecto");
         projectCol.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(
-                data.getValue().getPresentation().getStudent().getCellPhone() // Aquí se muestra el título del proyecto
+                data.getValue().getPresentation().getStudent().getCellPhone()
         ));
 
         TableColumn<Evaluation, String> typeCol = new TableColumn<>("Tipo Presentación");

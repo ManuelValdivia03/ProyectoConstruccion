@@ -16,6 +16,7 @@ import logic.enums.AcademicType;
 import userinterface.windows.ConsultGroupsWindow;
 import userinterface.windows.ConsultAcademicsWindow;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import logic.services.ExceptionManager;
@@ -25,6 +26,9 @@ public class ControllerConsultGroupsWindow {
     private final GroupDAO groupDAO;
     private final Stage currentStage;
     private ObservableList<Group> allGroups;
+
+    private static final Group EMPTY_GROUP = new Group(-1, "", Collections.emptyList(), null);
+    private static final Academic EMPTY_ACADEMIC = new Academic(-1, "", "", "",'I', "", AcademicType.NONE);
 
     public ControllerConsultGroupsWindow(ConsultGroupsWindow view, Stage stage) {
         this.view = Objects.requireNonNull(view);
@@ -55,7 +59,7 @@ public class ControllerConsultGroupsWindow {
 
     private void handleAssignAcademic(ActionEvent event) {
         Group group = extractGroupFromEvent(event);
-        if (group == null) {
+        if (group == EMPTY_GROUP) {
             return;
         }
         ConsultAcademicsWindow academicsWindow = new ConsultAcademicsWindow();
@@ -71,16 +75,20 @@ public class ControllerConsultGroupsWindow {
     private Group extractGroupFromEvent(ActionEvent event) {
         Object source = event.getSource();
         if (!(source instanceof Button)) {
-            return null;
+            return EMPTY_GROUP;
         }
         Button button = (Button) source;
-        return (Group) button.getUserData();
+        Object userData = button.getUserData();
+        if (userData instanceof Group) {
+            return (Group) userData;
+        }
+        return EMPTY_GROUP;
     }
 
     private TableColumn<Academic, Void> createAssignColumn(Group group, ConsultAcademicsWindow academicsWindow) {
         return academicsWindow.createManageButtonColumn(assignEvent -> {
             Academic academic = extractAcademicFromEvent(assignEvent);
-            if (academic == null) {
+            if (academic == EMPTY_ACADEMIC) {
                 return;
             }
             assignAcademicToGroup(group, academic, academicsWindow);
@@ -89,10 +97,10 @@ public class ControllerConsultGroupsWindow {
 
     private Academic extractAcademicFromEvent(ActionEvent assignEvent) {
         Object assignSource = assignEvent.getSource();
-        if (!(assignSource instanceof Academic)) {
-            return null;
+        if (assignSource instanceof Academic) {
+            return (Academic) assignSource;
         }
-        return (Academic) assignSource;
+        return EMPTY_ACADEMIC;
     }
 
     private void assignAcademicToGroup(Group group, Academic academic, ConsultAcademicsWindow academicsWindow) {

@@ -206,7 +206,6 @@ class ReportDAOTest {
         Report testReport = testReports.get(0);
         Report foundReport = reportDAO.getReportById(testReport.getIdReport());
 
-        // Compare fields individually, converting timestamps to dates
         assertEquals(testReport.getIdReport(), foundReport.getIdReport());
         assertEquals(truncateToSeconds(testReport.getReportDate()),
                 truncateToSeconds(foundReport.getReportDate()));
@@ -222,7 +221,6 @@ class ReportDAOTest {
         List<Report> reports = reportDAO.getAllReports();
         assertEquals(testReports.size(), reports.size());
 
-        // Create a map of reports by ID for easier comparison
         Map<Integer, Report> testReportMap = new HashMap<>();
         for (Report report : testReports) {
             testReportMap.put(report.getIdReport(), report);
@@ -232,7 +230,6 @@ class ReportDAOTest {
             Report testReport = testReportMap.get(foundReport.getIdReport());
             assertNotNull(testReport);
 
-            // Compare fields individually
             assertEquals(truncateToSeconds(testReport.getReportDate()),
                     truncateToSeconds(foundReport.getReportDate()));
             assertEquals(testReport.getHoursReport(), foundReport.getHoursReport());

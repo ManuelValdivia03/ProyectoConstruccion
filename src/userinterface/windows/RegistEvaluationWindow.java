@@ -40,13 +40,11 @@ public class RegistEvaluationWindow {
         rubricGrid.setVgap(10);
         rubricGrid.setPadding(new Insets(10, 0, 10, 0));
 
-        // Header
         rubricGrid.add(new Label("Criterio"), 0, 0);
         for (int i = 1; i <= 5; i++) {
             rubricGrid.add(new Label(String.valueOf(i)), i, 0);
         }
 
-        // Rows for each criterion
         for (int row = 0; row < CRITERIA.length; row++) {
             String criterion = CRITERIA[row];
             rubricGrid.add(new Label(criterion), 0, row + 1);
