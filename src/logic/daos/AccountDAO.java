@@ -27,12 +27,12 @@ public class AccountDAO implements IAccountDAO {
 
     @Override
     public List<Account> getAllAccounts() throws SQLException {
-        String sql = "SELECT id_usuario, correo_e, contraseña FROM cuenta";
+        String query = "SELECT id_usuario, correo_e, contraseña FROM cuenta";
         List<Account> accounts = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             while (resultSet.next()) {
                 accounts.add(new Account(
@@ -52,9 +52,9 @@ public class AccountDAO implements IAccountDAO {
     public boolean addAccount(Account account) throws SQLException, RepeatedEmailException, IllegalArgumentException {
         validateAccountData(account);
 
-        String sql = "INSERT INTO cuenta (id_usuario, correo_e, contraseña) VALUES (?, ?, ?)";
+        String query = "INSERT INTO cuenta (id_usuario, correo_e, contraseña) VALUES (?, ?, ?)";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, account.getIdUser());
             preparedStatement.setString(2, account.getEmail());
@@ -81,10 +81,10 @@ public class AccountDAO implements IAccountDAO {
 
     @Override
     public boolean deleteAccount(int idUser) throws SQLException {
-        String sql = "DELETE FROM cuenta WHERE id_usuario = ?";
+        String query = "DELETE FROM cuenta WHERE id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, idUser);
             return preparedStatement.executeUpdate() > 0;
@@ -117,11 +117,11 @@ public class AccountDAO implements IAccountDAO {
             return false;
         }
 
-        String sql = "UPDATE cuenta SET " + String.join(", ", updates) + " WHERE id_usuario = ?";
+        String query = "UPDATE cuenta SET " + String.join(", ", updates) + " WHERE id_usuario = ?";
         parameters.add(account.getIdUser());
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             for (int i = 0; i < parameters.size(); i++) {
                 preparedStatement.setObject(i + 1, parameters.get(i));
@@ -137,12 +137,12 @@ public class AccountDAO implements IAccountDAO {
             throw new IllegalArgumentException("Email and password must not be null or empty");
         }
 
-        final String sql = "SELECT c.contraseña, u.estado FROM cuenta c " +
+        final String query = "SELECT c.contraseña, u.estado FROM cuenta c " +
                 "JOIN usuario u ON c.id_usuario = u.id_usuario " +
                 "WHERE c.correo_e = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, email);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -167,10 +167,10 @@ public class AccountDAO implements IAccountDAO {
 
     @Override
     public Account getAccountByUserId(int userId) throws SQLException {
-        String sql = "SELECT id_usuario, correo_e, contraseña FROM cuenta WHERE id_usuario = ?";
+        String query = "SELECT id_usuario, correo_e, contraseña FROM cuenta WHERE id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, userId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -192,10 +192,10 @@ public class AccountDAO implements IAccountDAO {
             throw new IllegalArgumentException("El correo electrónico no debe ser nulo o vacío");
         }
 
-        String sql = "SELECT id_usuario, correo_e, contraseña FROM cuenta WHERE correo_e = ?";
+        String query = "SELECT id_usuario, correo_e, contraseña FROM cuenta WHERE correo_e = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, email);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -217,10 +217,10 @@ public class AccountDAO implements IAccountDAO {
             throw new IllegalArgumentException("El correo electrónico no debe ser nulo o vacío");
         }
 
-        String sql = "SELECT 1 FROM cuenta WHERE correo_e = ?";
+        String query = "SELECT 1 FROM cuenta WHERE correo_e = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, email);
             return preparedStatement.executeQuery().next();
@@ -229,10 +229,10 @@ public class AccountDAO implements IAccountDAO {
 
     @Override
     public String getEmailById(int id) throws SQLException {
-        String sql = "SELECT correo_e FROM cuenta WHERE id_usuario = ?";
+        String query = "SELECT correo_e FROM cuenta WHERE id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -247,10 +247,10 @@ public class AccountDAO implements IAccountDAO {
             throw new IllegalArgumentException("Email and password must not be null or empty");
         }
 
-        String sql = "UPDATE cuenta SET contraseña = ? WHERE correo_e = ?";
+        String query = "UPDATE cuenta SET contraseña = ? WHERE correo_e = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, newHashedPassword);
             preparedStatement.setString(2, email);

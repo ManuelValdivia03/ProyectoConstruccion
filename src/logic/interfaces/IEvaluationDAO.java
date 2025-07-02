@@ -13,5 +13,5 @@ public interface IEvaluationDAO {
     boolean updateEvaluation(Evaluation evaluation) throws SQLException;
     boolean deleteEvaluation(int idEvaluation) throws SQLException;
     boolean evaluationExists(int idEvaluation) throws SQLException;
-    int countEvaluations() throws SQLException;
+    int countAllEvaluations() throws SQLException;
 }

@@ -26,10 +26,10 @@ public class ProjectDAO implements IProjectDAO {
 
         logger.debug("Agregando nuevo proyecto: {}", project.getTitle());
 
-        String sql = "INSERT INTO proyecto (titulo, descripcion, fecha_inicial, fecha_terminal, estado, cupo, estudiantes_actuales) VALUES (?, ?, ?, ?, ?, ?, 0)";
+        String query = "INSERT INTO proyecto (titulo, descripcion, fecha_inicial, fecha_terminal, estado, cupo, estudiantes_actuales) VALUES (?, ?, ?, ?, ?, ?, 0)";
 
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, project.getTitle());
             preparedStatement.setString(2, project.getDescription());
@@ -66,12 +66,12 @@ public class ProjectDAO implements IProjectDAO {
 
         logger.debug("Actualizando proyecto ID: {}", project.getIdProyect());
 
-        String sql = "UPDATE proyecto SET titulo = ?, descripcion = ?, fecha_inicial = ?, " +
+        String query = "UPDATE proyecto SET titulo = ?, descripcion = ?, fecha_inicial = ?, " +
                     "fecha_terminal = ?, estado = ?, cupo = ?, estudiantes_actuales = ? " +
                     "WHERE id_proyecto = ?";
 
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, project.getTitle());
             preparedStatement.setString(2, project.getDescription());
@@ -102,10 +102,10 @@ public class ProjectDAO implements IProjectDAO {
 
         logger.debug("Eliminando proyecto ID: {}", project.getIdProyect());
 
-        String sql = "DELETE FROM proyecto WHERE id_proyecto = ?";
+        String query = "DELETE FROM proyecto WHERE id_proyecto = ?";
 
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, project.getIdProyect());
             boolean result = preparedStatement.executeUpdate() > 0;
@@ -124,12 +124,12 @@ public class ProjectDAO implements IProjectDAO {
     public List<Project> getAllProyects() throws SQLException {
         logger.info("Obteniendo todos los proyectos");
 
-        String sql = "SELECT id_proyecto, titulo, descripcion, fecha_inicial, fecha_terminal, estado, cupo, estudiantes_actuales FROM proyecto";
+        String query = "SELECT id_proyecto, titulo, descripcion, fecha_inicial, fecha_terminal, estado, cupo, estudiantes_actuales FROM proyecto";
         List<Project> projects = new ArrayList<>();
 
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             while (resultSet.next()) {
                 Project project = new Project(
@@ -155,11 +155,11 @@ public class ProjectDAO implements IProjectDAO {
     public List<Project> getProyectsByStatus(char status) throws SQLException {
         logger.debug("Buscando proyectos con estado: {}", status);
 
-        String sql = "SELECT id_proyecto, titulo, descripcion, fecha_inicial, fecha_terminal, estado, cupo, estudiantes_actuales FROM proyecto WHERE estado = ?";
+        String query = "SELECT id_proyecto, titulo, descripcion, fecha_inicial, fecha_terminal, estado, cupo, estudiantes_actuales FROM proyecto WHERE estado = ?";
         List<Project> projects = new ArrayList<>();
 
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, String.valueOf(status));
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -186,11 +186,11 @@ public class ProjectDAO implements IProjectDAO {
     }
 
     public Project getProyectById(int id) throws SQLException {
-        String sql = "SELECT id_proyecto, titulo, descripcion, fecha_inicial, fecha_terminal, estado, cupo, estudiantes_actuales " +
+        String query = "SELECT id_proyecto, titulo, descripcion, fecha_inicial, fecha_terminal, estado, cupo, estudiantes_actuales " +
                 "FROM proyecto WHERE id_proyecto = ?";
 
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -218,10 +218,10 @@ public class ProjectDAO implements IProjectDAO {
 
         logger.debug("Buscando proyecto por título: {}", title);
 
-        String sql = "SELECT id_proyecto, titulo, descripcion, fecha_inicial, fecha_terminal, estado, cupo, estudiantes_actuales FROM proyecto WHERE titulo = ?";
+        String query = "SELECT id_proyecto, titulo, descripcion, fecha_inicial, fecha_terminal, estado, cupo, estudiantes_actuales FROM proyecto WHERE titulo = ?";
 
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, title);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -250,11 +250,11 @@ public class ProjectDAO implements IProjectDAO {
     public int countProyects() throws SQLException {
         logger.debug("Contando proyectos");
 
-        String sql = "SELECT COUNT(*) FROM proyecto";
+        String query = "SELECT COUNT(*) FROM proyecto";
 
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             int count = resultSet.next() ? resultSet.getInt(1) : 0;
             logger.info("Total de proyectos: {}", count);
@@ -272,10 +272,10 @@ public class ProjectDAO implements IProjectDAO {
 
         logger.debug("Verificando existencia de proyecto con título: {}", title);
 
-        String sql = "SELECT 1 FROM proyecto WHERE titulo = ?";
+        String query = "SELECT 1 FROM proyecto WHERE titulo = ?";
 
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, title);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -297,10 +297,10 @@ public class ProjectDAO implements IProjectDAO {
         logger.debug("Cambiando estado de proyecto ID: {} a {}",
                 project.getIdProyect(), project.getStatus());
 
-        String sql = "UPDATE proyecto SET estado = ? WHERE id_proyecto = ?";
+        String query = "UPDATE proyecto SET estado = ? WHERE id_proyecto = ?";
 
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, String.valueOf(project.getStatus()));
             preparedStatement.setInt(2, project.getIdProyect());
@@ -325,11 +325,11 @@ public class ProjectDAO implements IProjectDAO {
         if (project == null) {
             throw new IllegalArgumentException("El proyecto no debe ser nulo");
         }
-        String sql = "INSERT INTO proyecto (titulo, descripcion, fecha_inicial, fecha_terminal, " +
+        String query = "INSERT INTO proyecto (titulo, descripcion, fecha_inicial, fecha_terminal, " +
                     "estado, cupo, estudiantes_actuales) VALUES (?, ?, ?, ?, ?, ?, 0)";
 
         try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, project.getTitle());
             statement.setString(2, project.getDescription());
@@ -359,10 +359,10 @@ public class ProjectDAO implements IProjectDAO {
             return false;
         }
 
-        String sql = "UPDATE proyecto SET id_representante = ? WHERE id_proyecto = ?";
+        String query = "UPDATE proyecto SET id_representante = ? WHERE id_proyecto = ?";
 
         try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, representativeId);
             statement.setInt(2, projectId);
@@ -373,9 +373,9 @@ public class ProjectDAO implements IProjectDAO {
 
 
     public boolean assignProjectToCurrentUser(int projectId, User user) throws SQLException {
-        String sql = "UPDATE proyecto SET id_usuario = ? WHERE id_proyecto = ?";
+        String query = "UPDATE proyecto SET id_usuario = ? WHERE id_proyecto = ?";
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, getCurrentUserId(user));
             preparedStatement.setInt(2, projectId);
             return preparedStatement.executeUpdate() > 0;
@@ -389,13 +389,13 @@ public class ProjectDAO implements IProjectDAO {
     public List<Project> getAvailableProjects() throws SQLException {
         logger.debug("Obteniendo proyectos disponibles");
 
-        String sql = "SELECT id_proyecto, titulo, descripcion, fecha_inicial, fecha_terminal, estado, cupo, estudiantes_actuales " +
+        String query = "SELECT id_proyecto, titulo, descripcion, fecha_inicial, fecha_terminal, estado, cupo, estudiantes_actuales " +
                      "FROM proyecto WHERE estado = 'A' AND cupo > 0";
 
         List<Project> projects = new ArrayList<>();
 
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
@@ -420,11 +420,11 @@ public class ProjectDAO implements IProjectDAO {
     }
 
     public boolean incrementStudentCount(int projectId) throws SQLException {
-        String sql = "UPDATE proyecto SET estudiantes_actuales = estudiantes_actuales + 1 " +
+        String query = "UPDATE proyecto SET estudiantes_actuales = estudiantes_actuales + 1 " +
                 "WHERE id_proyecto = ? AND estudiantes_actuales < cupo";
 
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, projectId);
             return preparedStatement.executeUpdate() > 0;

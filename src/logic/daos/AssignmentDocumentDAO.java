@@ -12,10 +12,10 @@ public class AssignmentDocumentDAO implements IAssignmentDocumentDAO {
 
     @Override
     public void saveAssignmentDocument(int projectId, int studentId, byte[] pdfContent) throws SQLException {
-        String sql = "INSERT INTO documentos_asignacion (id_proyecto, id_estudiante, contenido) VALUES (?, ?, ?)";
+        String query = "INSERT INTO documentos_asignacion (id_proyecto, id_estudiante, contenido) VALUES (?, ?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, projectId);
             statement.setInt(2, studentId);
@@ -26,10 +26,10 @@ public class AssignmentDocumentDAO implements IAssignmentDocumentDAO {
 
     @Override
     public byte[] getAssignmentDocument(int studentId) throws SQLException {
-        String sql = "SELECT contenido FROM documentos_asignacion WHERE id_estudiante = ? ORDER BY fecha_creacion DESC LIMIT 1";
+        String query = "SELECT contenido FROM documentos_asignacion WHERE id_estudiante = ? ORDER BY fecha_creacion DESC LIMIT 1";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, studentId);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -43,9 +43,9 @@ public class AssignmentDocumentDAO implements IAssignmentDocumentDAO {
     }
 
     public void deleteAssignmentDocument(int studentId) throws SQLException {
-        String sql = "DELETE FROM documentos_asignacion WHERE id_estudiante = ?";
+        String query = "DELETE FROM documentos_asignacion WHERE id_estudiante = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, studentId);
             statement.executeUpdate();
         }

@@ -28,11 +28,11 @@ public class ReportDAO implements IReportDAO {
             throw new IllegalArgumentException("Datos del reporte incompletos");
         }
 
-        String sql = "INSERT INTO reporte (tipo, horas, fecha_reporte, metodologia, descripcion, id_estudiante) " +
+        String query = "INSERT INTO reporte (tipo, horas, fecha_reporte, metodologia, descripcion, id_estudiante) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, report.getReportType().toString());
             statement.setInt(2, report.getHoursReport());
@@ -61,9 +61,9 @@ public class ReportDAO implements IReportDAO {
             return EMPTY_REPORT;
         }
 
-        String sql = "SELECT * FROM reporte WHERE id_reporte = ?";
+        String query = "SELECT * FROM reporte WHERE id_reporte = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, idReport);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -77,12 +77,12 @@ public class ReportDAO implements IReportDAO {
 
     @Override
     public List<Report> getAllReports() throws SQLException {
-        String sql = "SELECT * FROM reporte";
+        String query = "SELECT * FROM reporte";
         List<Report> reports = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             while (resultSet.next()) {
                 reports.add(mapResultSetToReport(resultSet));
@@ -97,11 +97,11 @@ public class ReportDAO implements IReportDAO {
             return Collections.emptyList();
         }
 
-        String sql = "SELECT * FROM reporte WHERE id_estudiante = ?";
+        String query = "SELECT * FROM reporte WHERE id_estudiante = ?";
         List<Report> reports = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, studentId);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -120,12 +120,12 @@ public class ReportDAO implements IReportDAO {
             throw new IllegalArgumentException("Datos del reporte incompletos");
         }
 
-        String sql = "UPDATE reporte SET tipo = ?, horas = ?, fecha_reporte = ?, " +
+        String query = "UPDATE reporte SET tipo = ?, horas = ?, fecha_reporte = ?, " +
                 "metodologia = ?, descripcion = ?, id_estudiante = ? " +
                 "WHERE id_reporte = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, report.getReportType().toString());
             statement.setInt(2, report.getHoursReport());
@@ -145,10 +145,10 @@ public class ReportDAO implements IReportDAO {
             return false;
         }
 
-        String sql = "DELETE FROM reporte WHERE id_reporte = ?";
+        String query = "DELETE FROM reporte WHERE id_reporte = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, idReport);
             return statement.executeUpdate() > 0;
@@ -161,10 +161,10 @@ public class ReportDAO implements IReportDAO {
             return false;
         }
 
-        String sql = "SELECT 1 FROM reporte WHERE id_reporte = ?";
+        String query = "SELECT 1 FROM reporte WHERE id_reporte = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, idReport);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -175,11 +175,11 @@ public class ReportDAO implements IReportDAO {
 
     @Override
     public int countReports() throws SQLException {
-        String sql = "SELECT COUNT(*) FROM reporte";
+        String query = "SELECT COUNT(*) FROM reporte";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             return resultSet.next() ? resultSet.getInt(1) : 0;
         }

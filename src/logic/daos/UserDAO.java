@@ -55,12 +55,12 @@ public class UserDAO implements IUserDAO {
 
     public List<User> getAllUsers() throws SQLException {
         logger.debug("Obteniendo todos los usuarios");
-        String sql = "SELECT * FROM usuario";
+        String query = "SELECT * FROM usuario";
         List<User> users = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             while (resultSet.next()) {
                 User user = new User();
@@ -86,11 +86,11 @@ public class UserDAO implements IUserDAO {
         }
 
         logger.debug("Buscando usuario por ID: {}", id);
-        String sql = "SELECT * FROM usuario WHERE id_usuario = ?";
+        String query = "SELECT * FROM usuario WHERE id_usuario = ?";
         User user = null;
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -123,10 +123,10 @@ public class UserDAO implements IUserDAO {
         }
 
         logger.debug("Actualizando usuario ID: {}", user.getIdUser());
-        String sql = "UPDATE usuario SET nombre_completo = ?, telefono = ?, extension_telefono = ?, estado = ? WHERE id_usuario = ?";
+        String query = "UPDATE usuario SET nombre_completo = ?, telefono = ?, extension_telefono = ?, estado = ? WHERE id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, user.getFullName());
             statement.setString(2, user.getCellPhone());
@@ -154,10 +154,10 @@ public class UserDAO implements IUserDAO {
         }
 
         logger.debug("Eliminando usuario ID: {}", id);
-        String sql = "DELETE FROM usuario WHERE id_usuario = ?";
+        String query = "DELETE FROM usuario WHERE id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, id);
             boolean result = statement.executeUpdate() > 0;
@@ -180,11 +180,11 @@ public class UserDAO implements IUserDAO {
         }
 
         logger.debug("Buscando usuarios por nombre: {}", name);
-        String sql = "SELECT * FROM usuario WHERE nombre_completo LIKE ?";
+        String query = "SELECT * FROM usuario WHERE nombre_completo LIKE ?";
         List<User> users = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, "%" + name + "%");
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -213,10 +213,10 @@ public class UserDAO implements IUserDAO {
         }
 
         logger.debug("Verificando existencia de usuario con ID: {}", id);
-        String sql = "SELECT 1 FROM usuario WHERE id_usuario = ?";
+        String query = "SELECT 1 FROM usuario WHERE id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -237,10 +237,10 @@ public class UserDAO implements IUserDAO {
         }
 
         logger.debug("Verificando existencia de teléfono celular: {}", cellPhone);
-        String sql = "SELECT 1 FROM usuario WHERE telefono = ?";
+        String query = "SELECT 1 FROM usuario WHERE telefono = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, cellPhone);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -256,11 +256,11 @@ public class UserDAO implements IUserDAO {
 
     public int countUsers() throws SQLException {
         logger.debug("Contando usuarios");
-        String sql = "SELECT COUNT(*) FROM usuario";
+        String query = "SELECT COUNT(*) FROM usuario";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             int count = resultSet.next() ? resultSet.getInt(1) : 0;
             logger.info("Total de usuarios: {}", count);

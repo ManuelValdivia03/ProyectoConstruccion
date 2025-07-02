@@ -23,10 +23,10 @@ public class SelfEvaluationDAO implements ISelfEvaluationDAO {
     public boolean addSelfEvaluation(SelfEvaluation selfEvaluation) throws SQLException, IllegalArgumentException {
         validateSelfEvaluation(selfEvaluation);
 
-        String sql = "INSERT INTO autoevaluacion (calificacion, comentarios, id_usuario) VALUES (?, ?, ?)";
+        String query = "INSERT INTO autoevaluacion (calificacion, comentarios, id_usuario) VALUES (?, ?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setFloat(1, selfEvaluation.getCalification());
             statement.setString(2, selfEvaluation.getFeedBack());
@@ -52,9 +52,9 @@ public class SelfEvaluationDAO implements ISelfEvaluationDAO {
             return EMPTY_SELFEVALUATION;
         }
 
-        String sql = "SELECT * FROM autoevaluacion WHERE id_autoevaluacion = ?";
+        String query = "SELECT * FROM autoevaluacion WHERE id_autoevaluacion = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, idSelfEvaluation);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -72,12 +72,12 @@ public class SelfEvaluationDAO implements ISelfEvaluationDAO {
     }
 
     public List<SelfEvaluation> getAllSelfEvaluations() throws SQLException {
-        String sql = "SELECT * FROM autoevaluacion";
+        String query = "SELECT * FROM autoevaluacion";
         List<SelfEvaluation> selfEvaluations = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             while (resultSet.next()) {
                 SelfEvaluation selfEvaluation = new SelfEvaluation();
@@ -96,11 +96,11 @@ public class SelfEvaluationDAO implements ISelfEvaluationDAO {
             return Collections.emptyList();
         }
 
-        String sql = "SELECT * FROM autoevaluacion WHERE id_usuario = ?";
+        String query = "SELECT * FROM autoevaluacion WHERE id_usuario = ?";
         List<SelfEvaluation> selfEvaluations = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, studentId);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -122,9 +122,9 @@ public class SelfEvaluationDAO implements ISelfEvaluationDAO {
             return EMPTY_SELFEVALUATION;
         }
 
-        String sql = "SELECT * FROM autoevaluacion WHERE id_usuario = ? ORDER BY id_autoevaluacion DESC LIMIT 1";
+        String query = "SELECT * FROM autoevaluacion WHERE id_usuario = ? ORDER BY id_autoevaluacion DESC LIMIT 1";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, studentId);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -148,10 +148,10 @@ public class SelfEvaluationDAO implements ISelfEvaluationDAO {
             throw new IllegalArgumentException("Datos de autoevaluación incompletos");
         }
 
-        String sql = "UPDATE autoevaluacion SET calificacion = ?, comentarios = ?, id_usuario = ? WHERE id_autoevaluacion = ?";
+        String query = "UPDATE autoevaluacion SET calificacion = ?, comentarios = ?, id_usuario = ? WHERE id_autoevaluacion = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setFloat(1, selfEvaluation.getCalification());
             statement.setString(2, selfEvaluation.getFeedBack());
@@ -167,10 +167,10 @@ public class SelfEvaluationDAO implements ISelfEvaluationDAO {
             return false;
         }
 
-        String sql = "DELETE FROM autoevaluacion WHERE id_autoevaluacion = ?";
+        String query = "DELETE FROM autoevaluacion WHERE id_autoevaluacion = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, idSelfEvaluation);
             return statement.executeUpdate() > 0;
@@ -195,11 +195,11 @@ public class SelfEvaluationDAO implements ISelfEvaluationDAO {
     }
 
     public int countSelfEvaluations() throws SQLException {
-        String sql = "SELECT COUNT(*) FROM autoevaluacion";
+        String query = "SELECT COUNT(*) FROM autoevaluacion";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             return resultSet.next() ? resultSet.getInt(1) : 0;
         }

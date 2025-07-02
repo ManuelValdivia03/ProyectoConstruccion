@@ -26,9 +26,9 @@ public class AcademicDAO implements IAcademicDAO {
     public boolean addAcademic(Academic academic) throws SQLException, RepeatedStaffNumberException, IllegalArgumentException {
         validateAcademic(academic);
 
-        String sql = "INSERT INTO academico (id_usuario, numero_personal, tipo) VALUES (?, ?, ?)";
+        String query = "INSERT INTO academico (id_usuario, numero_personal, tipo) VALUES (?, ?, ?)";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, academic.getIdUser());
             preparedStatement.setString(2, academic.getStaffNumber());
@@ -40,14 +40,14 @@ public class AcademicDAO implements IAcademicDAO {
 
     @Override
     public List<Academic> getAllAcademics() throws SQLException{
-        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.extension_telefono, u.estado, " +
+        String query = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.extension_telefono, u.estado, " +
                 "a.numero_personal, a.tipo FROM academico a " +
                 "JOIN usuario u ON a.id_usuario = u.id_usuario";
         List<Academic> academics = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             while (resultSet.next()) {
                 academics.add(new Academic(
@@ -70,13 +70,13 @@ public class AcademicDAO implements IAcademicDAO {
             throw new IllegalArgumentException("Staff number must not be null or empty");
         }
 
-        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.extension_telefono, u.estado, " +
+        String query = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.extension_telefono, u.estado, " +
                 "a.numero_personal, a.tipo FROM academico a " +
                 "JOIN usuario u ON a.id_usuario = u.id_usuario " +
                 "WHERE a.numero_personal = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, staffNumber);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -106,9 +106,9 @@ public class AcademicDAO implements IAcademicDAO {
             return false;
         }
 
-        String sql = "UPDATE academico SET numero_personal = ?, tipo = ? WHERE id_usuario = ?";
+        String query = "UPDATE academico SET numero_personal = ?, tipo = ? WHERE id_usuario = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, academic.getStaffNumber());
             statement.setString(2, academic.getAcademicType().toString());
@@ -124,9 +124,9 @@ public class AcademicDAO implements IAcademicDAO {
             throw new IllegalArgumentException("Academic must not be null");
         }
 
-        String sql = "DELETE FROM academico WHERE id_usuario = ?";
+        String query = "DELETE FROM academico WHERE id_usuario = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, academic.getIdUser());
             int rowsAffected = statement.executeUpdate();
@@ -144,14 +144,14 @@ public class AcademicDAO implements IAcademicDAO {
             return Collections.emptyList();
         }
 
-        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.extension_telefono, u.estado, " +
+        String query = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.extension_telefono, u.estado, " +
                 "a.numero_personal, a.tipo FROM academico a " +
                 "JOIN usuario u ON a.id_usuario = u.id_usuario " +
                 "WHERE a.tipo = ?";
 
         List<Academic> academics = new ArrayList<>();
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, type.toString());
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -173,13 +173,13 @@ public class AcademicDAO implements IAcademicDAO {
 
     @Override
     public Academic getAcademicById(int idUser) throws SQLException {
-        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.extension_telefono, u.estado, " +
+        String query = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.extension_telefono, u.estado, " +
                 "a.numero_personal, a.tipo FROM academico a " +
                 "JOIN usuario u ON a.id_usuario = u.id_usuario " +
                 "WHERE u.id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, idUser);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -204,9 +204,9 @@ public class AcademicDAO implements IAcademicDAO {
             throw new IllegalArgumentException("Staff number must not be null or empty");
         }
 
-        String sql = "SELECT 1 FROM academico WHERE numero_personal = ?";
+        String query = "SELECT 1 FROM academico WHERE numero_personal = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, staffNumber);
             return statement.executeQuery().next();
@@ -215,10 +215,10 @@ public class AcademicDAO implements IAcademicDAO {
 
     @Override
     public int countAllAcademics() throws SQLException {
-        String sql = "SELECT COUNT(*) FROM academico";
+        String query = "SELECT COUNT(*) FROM academico";
         try (Connection connection = ConnectionDataBase.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+                 ResultSet resultSet = statement.executeQuery(query)) {
 
             return resultSet.next() ? resultSet.getInt(1) : 0;
         }
@@ -230,9 +230,9 @@ public class AcademicDAO implements IAcademicDAO {
             throw new IllegalArgumentException("Academic must not be null");
         }
 
-        String sql = "UPDATE academico SET tipo = ? WHERE numero_personal = ?";
+        String query = "UPDATE academico SET tipo = ? WHERE numero_personal = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, academic.getAcademicType().toString());
             statement.setString(2, academic.getStaffNumber());
@@ -247,9 +247,9 @@ public class AcademicDAO implements IAcademicDAO {
             throw new IllegalArgumentException("Staff number must not be null or empty");
         }
 
-        String sql = "SELECT 1 FROM academico WHERE numero_personal = ?";
+        String query = "SELECT 1 FROM academico WHERE numero_personal = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, staffNumber);
             return statement.executeQuery().next();
@@ -260,12 +260,12 @@ public class AcademicDAO implements IAcademicDAO {
 
     @Override
     public List<Academic> getAllAcademicsFromView() throws SQLException {
-        String sql = "SELECT * FROM vista_academicos_completa";
+        String query = "SELECT * FROM vista_academicos_completa";
         List<Academic> academics = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+                 ResultSet resultSet = statement.executeQuery(query)) {
 
             while (resultSet.next()) {
                 academics.add(new Academic(
@@ -284,11 +284,11 @@ public class AcademicDAO implements IAcademicDAO {
 
     @Override
     public List<Academic> getAcademicsByStatusFromView(char estado) throws SQLException {
-        String sql = "SELECT * FROM vista_academicos_completa WHERE estado = ?";
+        String query = "SELECT * FROM vista_academicos_completa WHERE estado = ?";
         List<Academic> academics = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, String.valueOf(estado));
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -310,9 +310,9 @@ public class AcademicDAO implements IAcademicDAO {
 
     @Override
     public boolean existsAcademic(int userId) throws SQLException {
-        String sql = "SELECT 1 FROM academico WHERE id_usuario = ?";
+        String query = "SELECT 1 FROM academico WHERE id_usuario = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+                 PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, userId);
             return statement.executeQuery().next();
         }

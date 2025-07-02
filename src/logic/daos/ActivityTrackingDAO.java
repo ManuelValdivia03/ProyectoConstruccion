@@ -18,10 +18,10 @@ public class ActivityTrackingDAO {
     private static final Logger logger = Logger.getLogger(ActivityTrackingDAO.class.getName());
 
     public boolean assignCronogramToStudent(int studentId, int cronogramId) throws SQLException {
-        String sql = "INSERT INTO estudiante_cronograma (id_estudiante, id_cronograma) VALUES (?, ?)";
+        String query = "INSERT INTO estudiante_cronograma (id_estudiante, id_cronograma) VALUES (?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, studentId);
             statement.setInt(2, cronogramId);
@@ -31,11 +31,11 @@ public class ActivityTrackingDAO {
     }
 
     public boolean markActivityAsCompleted(int studentId, int activityId) throws SQLException {
-        String sql = "UPDATE seguimiento_actividad SET completada = TRUE, fecha_completado = CURRENT_TIMESTAMP "
+        String query = "UPDATE seguimiento_actividad SET completada = TRUE, fecha_completado = CURRENT_TIMESTAMP "
                 + "WHERE id_estudiante = ? AND id_actividad = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, studentId);
             statement.setInt(2, activityId);
@@ -45,12 +45,12 @@ public class ActivityTrackingDAO {
     }
 
     public boolean initializeActivityForAllStudents(int activityId) throws SQLException {
-        String sql = "INSERT INTO seguimiento_actividad (id_estudiante, id_actividad, completada, estado) " +
+        String query = "INSERT INTO seguimiento_actividad (id_estudiante, id_actividad, completada, estado) " +
                 "SELECT id_estudiante, ?, FALSE, 'PENDIENTE' FROM estudiante_cronograma " +
                 "WHERE id_cronograma = (SELECT id_cronograma FROM cronograma_actividad WHERE id_actividad = ? LIMIT 1)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, activityId);
             preparedStatement.setInt(2, activityId);
@@ -59,12 +59,12 @@ public class ActivityTrackingDAO {
     }
 
     public List<Integer> getCompletedActivities(int studentId) throws SQLException {
-        String sql = "SELECT id_actividad FROM seguimiento_actividad "
+        String query = "SELECT id_actividad FROM seguimiento_actividad "
                 + "WHERE id_estudiante = ? AND completada = TRUE";
         List<Integer> completedActivities = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, studentId);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -77,11 +77,11 @@ public class ActivityTrackingDAO {
     }
 
     public List<Integer> getStudentCronograms(int studentId) throws SQLException {
-        String sql = "SELECT id_cronograma FROM estudiante_cronograma WHERE id_estudiante = ?";
+        String query = "SELECT id_cronograma FROM estudiante_cronograma WHERE id_estudiante = ?";
         List<Integer> cronogramIds = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, studentId);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -94,11 +94,11 @@ public class ActivityTrackingDAO {
     }
 
     public boolean updateActivityStatus(int studentId, int activityId, ActivityStatus status) throws SQLException {
-        String sql = "UPDATE seguimiento_actividad SET estado = ?, completada = ? " +
+        String query = "UPDATE seguimiento_actividad SET estado = ?, completada = ? " +
                 "WHERE id_estudiante = ? AND id_actividad = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, status.getDbValue());
             statement.setBoolean(2, status == ActivityStatus.Completada);
@@ -110,11 +110,11 @@ public class ActivityTrackingDAO {
     }
 
     public Map<Integer, ActivityStatus> getStudentActivitiesStatus(int studentId) throws SQLException {
-        String sql = "SELECT id_actividad, estado FROM seguimiento_actividad WHERE id_estudiante = ?";
+        String query = "SELECT id_actividad, estado FROM seguimiento_actividad WHERE id_estudiante = ?";
         Map<Integer, ActivityStatus> statusMap = new HashMap<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, studentId);
             try (ResultSet rs = statement.executeQuery()) {
@@ -130,13 +130,13 @@ public class ActivityTrackingDAO {
     }
 
     public List<Activity> getStudentActivitiesWithStatus(int studentId) throws SQLException {
-        String sql = "SELECT a.*, sa.completada FROM actividad a " +
+        String query = "SELECT a.*, sa.completada FROM actividad a " +
                 "JOIN seguimiento_actividad sa ON a.id_actividad = sa.id_actividad " +
                 "WHERE sa.id_estudiante = ?";
         List<Activity> activities = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, studentId);
             try (ResultSet rs = statement.executeQuery()) {

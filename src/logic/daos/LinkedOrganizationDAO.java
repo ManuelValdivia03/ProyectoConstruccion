@@ -19,11 +19,11 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
             throw new IllegalArgumentException("La organización vinculada no debe ser nula");
         }
 
-        String sql = "INSERT INTO organizacion_vinculada (nombre_empresa, telefono, extension_telefono, departamento, " +
+        String query = "INSERT INTO organizacion_vinculada (nombre_empresa, telefono, extension_telefono, departamento, " +
                     "correo_empresarial, estado) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, linkedOrganization.getNameLinkedOrganization());
             preparedStatement.setString(2, linkedOrganization.getCellPhoneLinkedOrganization());
@@ -52,10 +52,10 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
             throw new IllegalArgumentException("La organización vinculada no debe ser nula");
         }
 
-        String sql = "DELETE FROM organizacion_vinculada WHERE id_empresa = ?";
+        String query = "DELETE FROM organizacion_vinculada WHERE id_empresa = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, linkedOrganization.getIdLinkedOrganization());
             return preparedStatement.executeUpdate() > 0;
@@ -67,11 +67,11 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
             throw new IllegalArgumentException("La organización vinculada no debe ser nula");
         }
 
-        String sql = "UPDATE organizacion_vinculada SET nombre_empresa = ?, telefono = ?, extension_telefono = ?, " +
+        String query = "UPDATE organizacion_vinculada SET nombre_empresa = ?, telefono = ?, extension_telefono = ?, " +
                     "departamento = ?, correo_empresarial = ?, estado = ? WHERE id_empresa = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, linkedOrganization.getNameLinkedOrganization());
             preparedStatement.setString(2, linkedOrganization.getCellPhoneLinkedOrganization());
@@ -86,13 +86,13 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
     }
 
     public List<LinkedOrganization> getAllLinkedOrganizations() throws SQLException {
-        String sql = "SELECT id_empresa, nombre_empresa, telefono, extension_telefono, departamento, " +
+        String query = "SELECT id_empresa, nombre_empresa, telefono, extension_telefono, departamento, " +
                     "correo_empresarial, estado FROM organizacion_vinculada";
         List<LinkedOrganization> organizations = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             while (resultSet.next()) {
                 organizations.add(new LinkedOrganization(
@@ -114,11 +114,11 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
             throw new IllegalArgumentException("El nombre de la organización no debe ser nulo o vacío");
         }
 
-        String sql = "SELECT id_empresa, nombre_empresa, telefono, extension_telefono, departamento, " +
+        String query = "SELECT id_empresa, nombre_empresa, telefono, extension_telefono, departamento, " +
                     "correo_empresarial, estado FROM organizacion_vinculada WHERE nombre_empresa = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, title);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -143,11 +143,11 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
             return EMPTY_ORGANIZATION;
         }
 
-        String sql = "SELECT id_empresa, nombre_empresa, telefono, extension_telefono, departamento, " +
+        String query = "SELECT id_empresa, nombre_empresa, telefono, extension_telefono, departamento, " +
                     "correo_empresarial, estado FROM organizacion_vinculada WHERE id_empresa = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -172,10 +172,10 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
             throw new IllegalArgumentException("El nombre de la organización no debe ser nulo o vacío");
         }
 
-        String sql = "SELECT 1 FROM organizacion_vinculada WHERE nombre_empresa = ?";
+        String query = "SELECT 1 FROM organizacion_vinculada WHERE nombre_empresa = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, title);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -185,11 +185,11 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
     }
 
     public int countLinkedOrganizations() throws SQLException {
-        String sql = "SELECT COUNT(*) FROM organizacion_vinculada";
+        String query = "SELECT COUNT(*) FROM organizacion_vinculada";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             return resultSet.next() ? resultSet.getInt(1) : 0;
         }
@@ -200,10 +200,10 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
             throw new IllegalArgumentException("El teléfono no debe ser nulo o vacío");
         }
 
-        String sql = "SELECT 1 FROM organizacion_vinculada WHERE telefono = ?";
+        String query = "SELECT 1 FROM organizacion_vinculada WHERE telefono = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, phone);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -217,10 +217,10 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
             throw new IllegalArgumentException("El correo electrónico no debe ser nulo o vacío");
         }
 
-        String sql = "SELECT 1 FROM organizacion_vinculada WHERE correo_empresarial = ?";
+        String query = "SELECT 1 FROM organizacion_vinculada WHERE correo_empresarial = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, email);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -230,10 +230,10 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
     }
 
     public int getRepresentativeId(int organizationId) throws SQLException {
-        String sql = "SELECT id_representante FROM organizacionvinculada WHERE id_organizacion = ?";
+        String query = "SELECT id_representante FROM organizacionvinculada WHERE id_organizacion = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, organizationId);
 

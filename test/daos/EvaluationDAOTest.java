@@ -195,10 +195,10 @@ class EvaluationDAOTest {
         newEvaluation.setDescription("Muy buen desempeño");
         newEvaluation.setEvaluationDate(Timestamp.from(Instant.now()));
 
-        int initialCount = evaluationDAO.countEvaluations();
+        int initialCount = evaluationDAO.countAllEvaluations();
         boolean result = evaluationDAO.addEvaluation(newEvaluation);
         assertTrue(result);
-        assertEquals(initialCount + 1, evaluationDAO.countEvaluations());
+        assertEquals(initialCount + 1, evaluationDAO.countAllEvaluations());
         Evaluation addedEvaluation = evaluationDAO.getEvaluationById(newEvaluation.getIdEvaluation());
         assertEquals(newEvaluation.getCalification(), addedEvaluation.getCalification());
         assertEquals(newEvaluation.getDescription(), addedEvaluation.getDescription());
@@ -286,19 +286,19 @@ class EvaluationDAOTest {
     void testDeleteEvaluation_Success() throws SQLException {
         Evaluation testEvaluation = testEvaluations.get(0);
         int evaluationId = testEvaluation.getIdEvaluation();
-        int countBefore = evaluationDAO.countEvaluations();
+        int countBefore = evaluationDAO.countAllEvaluations();
         boolean result = evaluationDAO.deleteEvaluation(evaluationId);
         assertTrue(result);
-        assertEquals(countBefore - 1, evaluationDAO.countEvaluations());
+        assertEquals(countBefore - 1, evaluationDAO.countAllEvaluations());
         assertFalse(evaluationDAO.evaluationExists(evaluationId));
     }
 
     @Test
     void testDeleteEvaluation_NotExists() throws SQLException {
-        int initialCount = evaluationDAO.countEvaluations();
+        int initialCount = evaluationDAO.countAllEvaluations();
         boolean result = evaluationDAO.deleteEvaluation(9999);
         assertFalse(result);
-        assertEquals(initialCount, evaluationDAO.countEvaluations());
+        assertEquals(initialCount, evaluationDAO.countAllEvaluations());
     }
 
     @Test
@@ -314,7 +314,7 @@ class EvaluationDAOTest {
 
     @Test
     void testCountEvaluations_WithData() throws SQLException {
-        int count = evaluationDAO.countEvaluations();
+        int count = evaluationDAO.countAllEvaluations();
         assertEquals(testEvaluations.size(), count);
         Evaluation extraEvaluation = new Evaluation();
         extraEvaluation.setAcademic(testAcademics.get(0));
@@ -323,6 +323,6 @@ class EvaluationDAOTest {
         extraEvaluation.setDescription("Evaluación adicional");
         extraEvaluation.setEvaluationDate(Timestamp.from(Instant.now()));
         evaluationDAO.addEvaluation(extraEvaluation);
-        assertEquals(count + 1, evaluationDAO.countEvaluations());
+        assertEquals(count + 1, evaluationDAO.countAllEvaluations());
     }
 }

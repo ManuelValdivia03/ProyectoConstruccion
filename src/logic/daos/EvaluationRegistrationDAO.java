@@ -9,9 +9,9 @@ import java.sql.SQLException;
 public class EvaluationRegistrationDAO {
 
     public boolean isRegistrationEnabled() throws SQLException {
-        String sql = "SELECT habilitado FROM evaluaciones_habilitadas WHERE id = 1";
+        String query = "SELECT habilitado FROM evaluaciones_habilitadas WHERE id = 1";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql);
+             PreparedStatement statement = connection.prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
             if (resultSet.next()) {
                 return resultSet.getBoolean("habilitado");
@@ -21,9 +21,9 @@ public class EvaluationRegistrationDAO {
     }
 
     public boolean setRegistrationEnabled(boolean enabled) throws SQLException {
-        String sql = "UPDATE evaluaciones_habilitadas SET habilitado = ? WHERE id = 1";
+        String query = "UPDATE evaluaciones_habilitadas SET habilitado = ? WHERE id = 1";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setBoolean(1, enabled);
             return statement.executeUpdate() > 0;
         }

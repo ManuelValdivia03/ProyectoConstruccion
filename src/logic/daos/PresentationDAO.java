@@ -23,10 +23,10 @@ public class PresentationDAO implements IPresentationDAO {
             throw new IllegalArgumentException("Datos de presentación incompletos");
         }
 
-        String sql = "INSERT INTO presentacion (tipo, fecha, id_estudiante) VALUES (?, ?, ?)";
+        String query = "INSERT INTO presentacion (tipo, fecha, id_estudiante) VALUES (?, ?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, presentation.getPresentationType().name());
             preparedStatement.setTimestamp(2, presentation.getPresentationDate());
@@ -52,14 +52,14 @@ public class PresentationDAO implements IPresentationDAO {
             return EMPTY_PRESENTATION;
         }
 
-        String sql = "SELECT p.*, u.nombre_completo, u.telefono, e.matricula " +
+        String query = "SELECT p.*, u.nombre_completo, u.telefono, e.matricula " +
                 "FROM presentacion p " +
                 "JOIN estudiante e ON p.id_estudiante = e.id_usuario " +
                 "JOIN usuario u ON e.id_usuario = u.id_usuario " +
                 "WHERE p.id_presentacion = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, idPresentation);
 
@@ -87,7 +87,7 @@ public class PresentationDAO implements IPresentationDAO {
     }
 
     public List<Presentation> getAllPresentations() throws SQLException {
-        String sql = "SELECT p.*, u.nombre_completo, u.telefono, e.matricula " +
+        String query = "SELECT p.*, u.nombre_completo, u.telefono, e.matricula " +
                 "FROM presentacion p " +
                 "JOIN estudiante e ON p.id_estudiante = e.id_usuario " +
                 "JOIN usuario u ON e.id_usuario = u.id_usuario";
@@ -96,7 +96,7 @@ public class PresentationDAO implements IPresentationDAO {
 
         try (Connection connection = ConnectionDataBase.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             while (resultSet.next()) {
                 Presentation presentation = new Presentation();
@@ -122,11 +122,11 @@ public class PresentationDAO implements IPresentationDAO {
             return Collections.emptyList();
         }
 
-        String sql = "SELECT * FROM presentacion WHERE id_estudiante = ?";
+        String query = "SELECT * FROM presentacion WHERE id_estudiante = ?";
         List<Presentation> presentations = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, studentId);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -151,11 +151,11 @@ public class PresentationDAO implements IPresentationDAO {
             return Collections.emptyList();
         }
 
-        String sql = "SELECT * FROM presentacion WHERE tipo = ?";
+        String query = "SELECT * FROM presentacion WHERE tipo = ?";
         List<Presentation> presentations = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, presentationType);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -181,10 +181,10 @@ public class PresentationDAO implements IPresentationDAO {
             throw new IllegalArgumentException("Datos de presentación incompletos o inválidos");
         }
 
-        String sql = "UPDATE presentacion SET tipo = ?, fecha = ?, id_estudiante = ? WHERE id_presentacion = ?";
+        String query = "UPDATE presentacion SET tipo = ?, fecha = ?, id_estudiante = ? WHERE id_presentacion = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, presentation.getPresentationType().name());
             preparedStatement.setTimestamp(2, presentation.getPresentationDate());
@@ -200,10 +200,10 @@ public class PresentationDAO implements IPresentationDAO {
             return false;
         }
 
-        String sql = "DELETE FROM presentacion WHERE id_presentacion = ?";
+        String query = "DELETE FROM presentacion WHERE id_presentacion = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, idPresentation);
             return preparedStatement.executeUpdate() > 0;
@@ -215,10 +215,10 @@ public class PresentationDAO implements IPresentationDAO {
             return false;
         }
 
-        String sql = "SELECT 1 FROM presentacion WHERE id_presentacion = ?";
+        String query = "SELECT 1 FROM presentacion WHERE id_presentacion = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, idPresentation);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -228,11 +228,11 @@ public class PresentationDAO implements IPresentationDAO {
     }
 
     public int countPresentations() throws SQLException {
-        String sql = "SELECT COUNT(*) FROM presentacion";
+        String query = "SELECT COUNT(*) FROM presentacion";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             return resultSet.next() ? resultSet.getInt(1) : 0;
         }

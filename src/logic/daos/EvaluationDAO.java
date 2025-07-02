@@ -32,10 +32,10 @@ public class EvaluationDAO implements IEvaluationDAO {
             throw new IllegalArgumentException("Evaluacion, Academico y Presentacion no pueden ser nulos");
         }
 
-        String sql = "INSERT INTO evaluacion (calificacion, comentarios, fecha, id_academicoevaluador, id_presentacion) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO evaluacion (calificacion, comentarios, fecha, id_academicoevaluador, id_presentacion) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setInt(1, evaluation.getCalification());
             preparedStatement.setString(2, evaluation.getDescription());
@@ -64,14 +64,14 @@ public class EvaluationDAO implements IEvaluationDAO {
             return EMPTY_EVALUATION;
         }
 
-        String sql = "SELECT e.*, a.numero_personal, p.id_presentacion, p.fecha as p_fecha, p.tipo, p.id_estudiante " +
+        String query = "SELECT e.*, a.numero_personal, p.id_presentacion, p.fecha as p_fecha, p.tipo, p.id_estudiante " +
                 "FROM evaluacion e " +
                 "JOIN academico a ON e.id_academicoevaluador = a.id_usuario " +
                 "JOIN presentacion p ON e.id_presentacion = p.id_presentacion " +
                 "WHERE e.id_evaluacion = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, idEvaluation);
 
@@ -106,7 +106,7 @@ public class EvaluationDAO implements IEvaluationDAO {
 
     @Override
     public List<Evaluation> getAllEvaluations() throws SQLException {
-        String sql = "SELECT e.*, a.numero_personal, p.fecha, p.tipo, p.id_estudiante " +
+        String query = "SELECT e.*, a.numero_personal, p.fecha, p.tipo, p.id_estudiante " +
                 "FROM evaluacion e " +
                 "JOIN academico a ON e.id_academicoevaluador = a.id_usuario " +
                 "JOIN presentacion p ON e.id_presentacion = p.id_presentacion";
@@ -115,7 +115,7 @@ public class EvaluationDAO implements IEvaluationDAO {
 
         try (Connection connection = ConnectionDataBase.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             while (resultSet.next()) {
                 Evaluation evaluation = new Evaluation();
@@ -151,7 +151,7 @@ public class EvaluationDAO implements IEvaluationDAO {
             return Collections.emptyList();
         }
 
-        String sql = "SELECT e.*, a.numero_personal, p.fecha, p.tipo, p.id_estudiante " +
+        String query = "SELECT e.*, a.numero_personal, p.fecha, p.tipo, p.id_estudiante " +
                 "FROM evaluacion e " +
                 "JOIN academico a ON e.id_academicoevaluador = a.id_usuario " +
                 "JOIN presentacion p ON e.id_presentacion = p.id_presentacion " +
@@ -160,7 +160,7 @@ public class EvaluationDAO implements IEvaluationDAO {
         List<Evaluation> evaluations = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, academicId);
 
@@ -200,7 +200,7 @@ public class EvaluationDAO implements IEvaluationDAO {
             return Collections.emptyList();
         }
 
-        String sql = "SELECT e.*, a.numero_personal, p.fecha, p.tipo, p.id_estudiante " +
+        String query = "SELECT e.*, a.numero_personal, p.fecha, p.tipo, p.id_estudiante " +
                 "FROM evaluacion e " +
                 "JOIN academico a ON e.id_academicoevaluador = a.id_usuario " +
                 "JOIN presentacion p ON e.id_presentacion = p.id_presentacion " +
@@ -209,7 +209,7 @@ public class EvaluationDAO implements IEvaluationDAO {
         List<Evaluation> evaluations = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, presentationId);
 
@@ -248,7 +248,7 @@ public class EvaluationDAO implements IEvaluationDAO {
             return Collections.emptyList();
         }
 
-        String sql = "SELECT e.*, a.numero_personal, p.fecha, p.tipo, p.id_estudiante " +
+        String query = "SELECT e.*, a.numero_personal, p.fecha, p.tipo, p.id_estudiante " +
                 "FROM evaluacion e " +
                 "JOIN academico a ON e.id_academicoevaluador = a.id_usuario " +
                 "JOIN presentacion p ON e.id_presentacion = p.id_presentacion " +
@@ -257,7 +257,7 @@ public class EvaluationDAO implements IEvaluationDAO {
         List<Evaluation> evaluations = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, studentId);
 
@@ -298,11 +298,11 @@ public class EvaluationDAO implements IEvaluationDAO {
             throw new IllegalArgumentException("Datos de evaluación inválidos");
         }
 
-        String sql = "UPDATE evaluacion SET calificacion = ?, comentarios = ?, fecha = ?, " +
+        String query = "UPDATE evaluacion SET calificacion = ?, comentarios = ?, fecha = ?, " +
                 "id_academicoevaluador = ?, id_presentacion = ? WHERE id_evaluacion = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, evaluation.getCalification());
             preparedStatement.setString(2, evaluation.getDescription());
@@ -321,10 +321,10 @@ public class EvaluationDAO implements IEvaluationDAO {
             return false;
         }
 
-        String sql = "DELETE FROM evaluacion WHERE id_evaluacion = ?";
+        String query = "DELETE FROM evaluacion WHERE id_evaluacion = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, idEvaluation);
             return preparedStatement.executeUpdate() > 0;
@@ -337,10 +337,10 @@ public class EvaluationDAO implements IEvaluationDAO {
             return false;
         }
 
-        String sql = "SELECT 1 FROM evaluacion WHERE id_evaluacion = ?";
+        String query = "SELECT 1 FROM evaluacion WHERE id_evaluacion = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, idEvaluation);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -350,12 +350,12 @@ public class EvaluationDAO implements IEvaluationDAO {
     }
 
     @Override
-    public int countEvaluations() throws SQLException {
-        String sql = "SELECT COUNT(*) FROM evaluacion";
+    public int countAllEvaluations() throws SQLException {
+        String query = "SELECT COUNT(*) FROM evaluacion";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             return resultSet.next() ? resultSet.getInt(1) : 0;
         }

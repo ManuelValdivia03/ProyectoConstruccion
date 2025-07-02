@@ -32,10 +32,10 @@ public class StudentDAO implements IStudentDAO {
 
         logger.debug("Agregando nuevo estudiante con matrícula: {}", student.getEnrollment());
 
-        String sql = "INSERT INTO estudiante (id_usuario, matricula, calificacion) VALUES (?, ?, ?)";
+        String query = "INSERT INTO estudiante (id_usuario, matricula, calificacion) VALUES (?, ?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, student.getIdUser());
             preparedStatement.setString(2, student.getEnrollment());
@@ -79,12 +79,12 @@ public class StudentDAO implements IStudentDAO {
 
         logger.debug("Buscando estudiante por matrícula: {}", enrollment);
 
-        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.estado, e.matricula, e.calificacion " +
+        String query = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.estado, e.matricula, e.calificacion " +
                 "FROM usuario u JOIN estudiante e ON u.id_usuario = e.id_usuario " +
                 "WHERE e.matricula = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, enrollment);
 
@@ -115,12 +115,12 @@ public class StudentDAO implements IStudentDAO {
     public List<Student> getAllStudents() throws SQLException {
         logger.info("Obteniendo todos los estudiantes");
 
-        String sql = "SELECT u.*, e.matricula, e.calificacion FROM usuario u JOIN estudiante e ON u.id_usuario = e.id_usuario";
+        String query = "SELECT u.*, e.matricula, e.calificacion FROM usuario u JOIN estudiante e ON u.id_usuario = e.id_usuario";
         List<Student> students = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             while (resultSet.next()) {
                 Student student = new Student();
@@ -143,11 +143,11 @@ public class StudentDAO implements IStudentDAO {
     public List<Student> getSudentsByStatus(char status) throws SQLException {
         logger.info("Obteniendo estudiantes con estado: {}", status);
 
-        String sql = "SELECT u.*, e.matricula, e.calificacion FROM usuario u JOIN estudiante e ON u.id_usuario = e.id_usuario WHERE u.estado = ?";
+        String query = "SELECT u.*, e.matricula, e.calificacion FROM usuario u JOIN estudiante e ON u.id_usuario = e.id_usuario WHERE u.estado = ?";
         List<Student> students = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, String.valueOf(status));
 
@@ -179,10 +179,10 @@ public class StudentDAO implements IStudentDAO {
 
         logger.debug("Buscando estudiante por ID: {}", id);
 
-        String sql = "SELECT u.*, e.matricula, e.calificacion FROM usuario u JOIN estudiante e ON u.id_usuario = e.id_usuario WHERE u.id_usuario = ?";
+        String query = "SELECT u.*, e.matricula, e.calificacion FROM usuario u JOIN estudiante e ON u.id_usuario = e.id_usuario WHERE u.id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -219,10 +219,10 @@ public class StudentDAO implements IStudentDAO {
             return false;
         }
 
-        String sql = "UPDATE estudiante SET matricula = ?, calificacion = ? WHERE id_usuario = ?";
+        String query = "UPDATE estudiante SET matricula = ?, calificacion = ? WHERE id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, student.getEnrollment());
             preparedStatement.setInt(2, student.getGrade());
@@ -250,10 +250,10 @@ public class StudentDAO implements IStudentDAO {
 
         logger.debug("Actualizando calificación del estudiante ID: {}", studentId);
 
-        String sql = "UPDATE estudiante SET calificacion = ? WHERE id_usuario = ?";
+        String query = "UPDATE estudiante SET calificacion = ? WHERE id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, grade);
             preparedStatement.setInt(2, studentId);
@@ -280,10 +280,10 @@ public class StudentDAO implements IStudentDAO {
 
         logger.debug("Eliminando estudiante ID: {}", id);
 
-        String sql = "DELETE FROM estudiante WHERE id_usuario = ?";
+        String query = "DELETE FROM estudiante WHERE id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
@@ -309,12 +309,12 @@ public class StudentDAO implements IStudentDAO {
 
         logger.debug("Buscando estudiantes por grupo NRC: {}", nrc);
 
-        String sql = "SELECT u.*, e.matricula, e.calificacion FROM usuario u JOIN estudiante e ON u.id_usuario = e.id_usuario " +
+        String query = "SELECT u.*, e.matricula, e.calificacion FROM usuario u JOIN estudiante e ON u.id_usuario = e.id_usuario " +
                 "JOIN grupo_estudiante ge ON e.id_usuario = ge.id_usuario WHERE ge.nrc = ?";
         List<Student> students = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, nrc);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -346,10 +346,10 @@ public class StudentDAO implements IStudentDAO {
 
         logger.debug("Asignando estudiante ID: {} al grupo NRC: {}", studentId, nrcGrupo);
 
-        String sql = "INSERT INTO grupo_estudiante (nrc, id_usuario) VALUES (?, ?)";
+        String query = "INSERT INTO grupo_estudiante (nrc, id_usuario) VALUES (?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, nrcGrupo);
             preparedStatement.setInt(2, studentId);
@@ -378,10 +378,10 @@ public class StudentDAO implements IStudentDAO {
 
         logger.debug("Verificando existencia de estudiante con ID: {}", id);
 
-        String sql = "SELECT 1 FROM estudiante WHERE id_usuario = ?";
+        String query = "SELECT 1 FROM estudiante WHERE id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -403,10 +403,10 @@ public class StudentDAO implements IStudentDAO {
 
         logger.debug("Verificando existencia de matrícula: {}", enrollment);
 
-        String sql = "SELECT 1 FROM estudiante WHERE matricula = ?";
+        String query = "SELECT 1 FROM estudiante WHERE matricula = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, enrollment);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -426,11 +426,11 @@ public class StudentDAO implements IStudentDAO {
     public int countStudents() throws SQLException {
         logger.debug("Contando estudiantes");
 
-        String sql = "SELECT COUNT(*) FROM estudiante";
+        String query = "SELECT COUNT(*) FROM estudiante";
 
         try (Connection connection = ConnectionDataBase.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             int count = resultSet.next() ? resultSet.getInt(1) : 0;
             logger.info("Total de estudiantes: {}", count);
@@ -442,9 +442,9 @@ public class StudentDAO implements IStudentDAO {
     }
 
     public boolean existsForUser(int userId) throws SQLException {
-        String sql = "SELECT 1 FROM estudiante WHERE id_usuario = ?";
+        String query = "SELECT 1 FROM estudiante WHERE id_usuario = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql)) {
+        PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, userId);
             return statement.executeQuery().next();
         }
@@ -455,13 +455,13 @@ public class StudentDAO implements IStudentDAO {
             return EMPTY_STUDENT;
         }
 
-        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.extension_telefono, u.estado, " +
+        String query = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.extension_telefono, u.estado, " +
                 "e.matricula, e.calificacion FROM usuario u " +
                 "JOIN estudiante e ON u.id_usuario = e.id_usuario " +
                 "WHERE u.id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql)) {
+        PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, userId);
             ResultSet resultSet = statement.executeQuery();
 
@@ -488,14 +488,14 @@ public class StudentDAO implements IStudentDAO {
 
         logger.debug("Buscando estudiantes activos por grupo NRC: {}", nrc);
 
-        String sql = "SELECT u.*, e.matricula, e.calificacion FROM usuario u " +
+        String query = "SELECT u.*, e.matricula, e.calificacion FROM usuario u " +
                     "JOIN estudiante e ON u.id_usuario = e.id_usuario " +
                     "JOIN grupo_estudiante ge ON e.id_usuario = ge.id_usuario " +
                     "WHERE ge.nrc = ? AND u.estado = 'A'";
         List<Student> students = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, nrc);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {

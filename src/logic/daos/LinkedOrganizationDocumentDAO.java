@@ -21,10 +21,10 @@ public class LinkedOrganizationDocumentDAO {
 
         logger.debug("Insertando documento para organización ID: {} - Nombre archivo: {}", organizationId, fileName);
 
-        String sql = "INSERT INTO documentos_organizacion (id_empresa, nombre_archivo, tipo_archivo, archivo) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO documentos_organizacion (id_empresa, nombre_archivo, tipo_archivo, archivo) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, organizationId);
             preparedStatement.setString(2, fileName);
@@ -54,10 +54,10 @@ public class LinkedOrganizationDocumentDAO {
 
         logger.debug("Obteniendo documento para organización ID: {}", organizationId);
 
-        String sql = "SELECT archivo FROM documentos_organizacion WHERE id_empresa = ?";
+        String query = "SELECT archivo FROM documentos_organizacion WHERE id_empresa = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, organizationId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -83,10 +83,10 @@ public class LinkedOrganizationDocumentDAO {
 
         logger.debug("Eliminando documento para organización ID: {}", organizationId);
 
-        String sql = "DELETE FROM documentos_organizacion WHERE id_empresa = ?";
+        String query = "DELETE FROM documentos_organizacion WHERE id_empresa = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, organizationId);
             int affectedRows = preparedStatement.executeUpdate();
@@ -112,10 +112,10 @@ public class LinkedOrganizationDocumentDAO {
 
         logger.debug("Verificando existencia de documento para organización ID: {}", organizationId);
 
-        String sql = "SELECT 1 FROM documentos_organizacion WHERE id_empresa = ? LIMIT 1";
+        String query = "SELECT 1 FROM documentos_organizacion WHERE id_empresa = ? LIMIT 1";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, organizationId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -136,10 +136,10 @@ public class LinkedOrganizationDocumentDAO {
 
         logger.debug("Obteniendo información de documento para organización ID: {}", organizationId);
 
-        String sql = "SELECT nombre_archivo, tipo_archivo, fecha_subida FROM documentos_organizacion WHERE id_empresa = ?";
+        String query = "SELECT nombre_archivo, tipo_archivo, fecha_subida FROM documentos_organizacion WHERE id_empresa = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, organizationId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -166,10 +166,10 @@ public class LinkedOrganizationDocumentDAO {
             return EMPTY_STRING;
         }
 
-        String sql = "SELECT tipo_archivo FROM documentos_organizacion WHERE id_empresa = ?";
+        String query = "SELECT tipo_archivo FROM documentos_organizacion WHERE id_empresa = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, organizationId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {

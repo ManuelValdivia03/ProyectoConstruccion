@@ -15,10 +15,10 @@ public class ProjectStudentDAO implements IProjectStudentDAO {
     public boolean assignStudentToProject(int projectId, int studentId) throws SQLException {
         logger.debug("Asignando estudiante {} al proyecto {}", studentId, projectId);
 
-        String sql = "{CALL asignar_estudiante_seguro(?, ?, ?, ?)}";
+        String query = "{CALL asignar_estudiante_seguro(?, ?, ?, ?)}";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             CallableStatement statement = connection.prepareCall(sql)) {
+             CallableStatement statement = connection.prepareCall(query)) {
 
             statement.setInt(1, projectId);
             statement.setInt(2, studentId);
@@ -27,15 +27,15 @@ public class ProjectStudentDAO implements IProjectStudentDAO {
 
             statement.execute();
 
-            boolean exito = statement.getBoolean(3);
-            String mensaje = statement.getString(4);
+            boolean success = statement.getBoolean(3);
+            String message = statement.getString(4);
 
-            if (!exito) {
-                logger.warn("Fallo en asignación: {}", mensaje);
-                throw new SQLException(mensaje);
+            if (!success) {
+                logger.warn("Fallo en asignación: {}", message);
+                throw new SQLException(message);
             }
 
-            logger.info("Asignación exitosa: {}", mensaje);
+            logger.info("Asignación exitosa: {}", message);
             return true;
         } catch (SQLException e) {
             logger.error("Error en asignación: {}", e.getMessage());
@@ -46,13 +46,13 @@ public class ProjectStudentDAO implements IProjectStudentDAO {
     public boolean removeStudentFromProyect(int proyectId, int studentId) throws SQLException {
         logger.debug("Eliminando estudiante {} del proyecto {}", studentId, proyectId);
 
-        String deleteSql = "DELETE FROM proyecto_estudiante WHERE id_proyecto = ? AND id_estudiante = ?";
-        String updateSql = "UPDATE proyecto SET estudiantes_actuales = estudiantes_actuales - 1 WHERE id_proyecto = ?";
+        String deleteQuery = "DELETE FROM proyecto_estudiante WHERE id_proyecto = ? AND id_estudiante = ?";
+        String updateQuery = "UPDATE proyecto SET estudiantes_actuales = estudiantes_actuales - 1 WHERE id_proyecto = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection()) {
             connection.setAutoCommit(false);
 
-            try (PreparedStatement deleteStatement = connection.prepareStatement(deleteSql)) {
+            try (PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery)) {
                 deleteStatement.setInt(1, proyectId);
                 deleteStatement.setInt(2, studentId);
                 int affectedRows = deleteStatement.executeUpdate();
@@ -63,7 +63,7 @@ public class ProjectStudentDAO implements IProjectStudentDAO {
                 }
             }
 
-            try (PreparedStatement updateStatement = connection.prepareStatement(updateSql)) {
+            try (PreparedStatement updateStatement = connection.prepareStatement(updateQuery)) {
                 updateStatement.setInt(1, proyectId);
                 updateStatement.executeUpdate();
             }
@@ -85,10 +85,10 @@ public class ProjectStudentDAO implements IProjectStudentDAO {
         }
 
         List<Integer> studentIds = new ArrayList<>();
-        String sql = "SELECT id_estudiante FROM proyecto_estudiante WHERE id_proyecto = ?";
+        String query = "SELECT id_estudiante FROM proyecto_estudiante WHERE id_proyecto = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             
             preparedStatement.setInt(1, proyectId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -111,10 +111,10 @@ public class ProjectStudentDAO implements IProjectStudentDAO {
             return NO_PROJECT;
         }
 
-        String sql = "SELECT id_proyecto FROM proyecto_estudiante WHERE id_estudiante = ?";
+        String query = "SELECT id_proyecto FROM proyecto_estudiante WHERE id_estudiante = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, studentId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {

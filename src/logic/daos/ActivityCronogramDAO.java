@@ -25,9 +25,9 @@ public class ActivityCronogramDAO implements IActivityCronogramDAO {
         if (cronogram == null) {
             throw new IllegalArgumentException("El cronograma no debe ser nulo");
         }
-        String sql = "INSERT INTO cronograma_actividades (fecha_inicial, fecha_terminal) VALUES (?, ?)";
+        String query = "INSERT INTO cronograma_actividades (fecha_inicial, fecha_terminal) VALUES (?, ?)";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setDate(1, new java.sql.Date(cronogram.getDateStart().getTime()));
             statement.setDate(2, new java.sql.Date(cronogram.getDateEnd().getTime()));
@@ -49,9 +49,9 @@ public class ActivityCronogramDAO implements IActivityCronogramDAO {
         if (cronogram == null) {
             throw new IllegalArgumentException("El cronograma no debe ser nulo");
         }
-        String sql = "UPDATE cronograma_actividades SET fecha_inicial = ?, fecha_terminal = ? WHERE id_cronograma = ?";
+        String query = "UPDATE cronograma_actividades SET fecha_inicial = ?, fecha_terminal = ? WHERE id_cronograma = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setDate(1, new java.sql.Date(cronogram.getDateStart().getTime()));
             statement.setDate(2, new java.sql.Date(cronogram.getDateEnd().getTime()));
@@ -62,9 +62,9 @@ public class ActivityCronogramDAO implements IActivityCronogramDAO {
     }
 
     public boolean deleteCronogram(int idCronogram) throws SQLException {
-        String sql = "DELETE FROM cronograma_actividades WHERE id_cronograma = ?";
+        String query = "DELETE FROM cronograma_actividades WHERE id_cronograma = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, idCronogram);
             return statement.executeUpdate() > 0;
@@ -72,9 +72,9 @@ public class ActivityCronogramDAO implements IActivityCronogramDAO {
     }
 
     public ActivityCronogram getCronogramById(int idCronogram) throws SQLException {
-        String sql = "SELECT * FROM cronograma_actividades WHERE id_cronograma = ?";
+        String query = "SELECT * FROM cronograma_actividades WHERE id_cronograma = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, idCronogram);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -92,11 +92,11 @@ public class ActivityCronogramDAO implements IActivityCronogramDAO {
     }
 
     public List<ActivityCronogram> getAllCronograms() throws SQLException {
-        String sql = "SELECT * FROM cronograma_actividades";
+        String query = "SELECT * FROM cronograma_actividades";
         List<ActivityCronogram> cronograms = new ArrayList<>();
         try (Connection connection = ConnectionDataBase.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             while (resultSet.next()) {
                 ActivityCronogram cronogram = new ActivityCronogram();
@@ -112,9 +112,9 @@ public class ActivityCronogramDAO implements IActivityCronogramDAO {
     }
 
     public boolean addActivityToCronogram(int idCronogram, int idActivity) throws SQLException {
-        String sql = "INSERT INTO cronograma_actividad (id_cronograma, id_actividad) VALUES (?, ?)";
+        String query = "INSERT INTO cronograma_actividad (id_cronograma, id_actividad) VALUES (?, ?)";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, idCronogram);
             statement.setInt(2, idActivity);
@@ -123,9 +123,9 @@ public class ActivityCronogramDAO implements IActivityCronogramDAO {
     }
 
     public boolean removeActivityFromCronogram(int idCronogram, int idActivity) throws SQLException {
-        String sql = "DELETE FROM cronograma_actividad WHERE id_cronograma = ? AND id_actividad = ?";
+        String query = "DELETE FROM cronograma_actividad WHERE id_cronograma = ? AND id_actividad = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, idCronogram);
             statement.setInt(2, idActivity);
@@ -134,9 +134,9 @@ public class ActivityCronogramDAO implements IActivityCronogramDAO {
     }
 
     public boolean cronogramExists(int idCronogram) throws SQLException {
-        String sql = "SELECT 1 FROM cronograma_actividades WHERE id_cronograma = ?";
+        String query = "SELECT 1 FROM cronograma_actividades WHERE id_cronograma = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, idCronogram);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -146,13 +146,13 @@ public class ActivityCronogramDAO implements IActivityCronogramDAO {
     }
 
     public List<Activity> getActivitiesByCronogram(int idCronogram) throws SQLException {
-        String sql = "SELECT a.*, sa.estado FROM actividad a " +
+        String query = "SELECT a.*, sa.estado FROM actividad a " +
                 "JOIN cronograma_actividad ca ON a.id_actividad = ca.id_actividad " +
                 "LEFT JOIN seguimiento_actividad sa ON a.id_actividad = sa.id_actividad " +
                 "WHERE ca.id_cronograma = ?";
         List<Activity> activities = new ArrayList<>();
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, idCronogram);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -172,11 +172,11 @@ public class ActivityCronogramDAO implements IActivityCronogramDAO {
     }
 
     public boolean assignCronogramToAllStudents(int cronogramId) throws SQLException {
-        String sql = "INSERT INTO estudiante_cronograma (id_estudiante, id_cronograma) " +
+        String query = "INSERT INTO estudiante_cronograma (id_estudiante, id_cronograma) " +
                 "SELECT id_usuario, ? FROM estudiante";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, cronogramId);
             return preparedStatement.executeUpdate() > 0;
@@ -184,12 +184,12 @@ public class ActivityCronogramDAO implements IActivityCronogramDAO {
     }
 
     public boolean initializeActivityForAllStudents(int activityId) throws SQLException {
-        String sql = "INSERT INTO seguimiento_actividad (id_estudiante, id_actividad, completada) " +
+        String query = "INSERT INTO seguimiento_actividad (id_estudiante, id_actividad, completada) " +
                 "SELECT id_estudiante, ?, FALSE FROM estudiante_cronograma " +
                 "WHERE id_cronograma = (SELECT id_cronograma FROM cronograma_actividad WHERE id_actividad = ? LIMIT 1)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, activityId);
             preparedStatement.setInt(2, activityId);
@@ -203,20 +203,20 @@ public class ActivityCronogramDAO implements IActivityCronogramDAO {
             connection = ConnectionDataBase.getConnection();
             connection.setAutoCommit(false);
 
-            String sql1 = "DELETE FROM seguimiento_actividad WHERE id_actividad = ?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql1)) {
+            String queryDeleteFollow = "DELETE FROM seguimiento_actividad WHERE id_actividad = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(queryDeleteFollow)) {
                 preparedStatement.setInt(1, activityId);
                 preparedStatement.executeUpdate();
             }
 
-            String sql2 = "DELETE FROM cronograma_actividad WHERE id_actividad = ?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql2)) {
+            String queryDeleteCronogram = "DELETE FROM cronograma_actividad WHERE id_actividad = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(queryDeleteCronogram)) {
                 preparedStatement.setInt(1, activityId);
                 preparedStatement.executeUpdate();
             }
 
-            String sql3 = "DELETE FROM actividad WHERE id_actividad = ?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql3)) {
+            String querySelect = "DELETE FROM actividad WHERE id_actividad = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(querySelect)) {
                 preparedStatement.setInt(1, activityId);
                 preparedStatement.executeUpdate();
             }
@@ -239,9 +239,9 @@ public class ActivityCronogramDAO implements IActivityCronogramDAO {
     }
 
     public boolean isActivityInAnyCronogram(int activityId) throws SQLException {
-        String sql = "SELECT 1 FROM cronograma_actividad WHERE id_actividad = ? LIMIT 1";
+        String query = "SELECT 1 FROM cronograma_actividad WHERE id_actividad = ? LIMIT 1";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, activityId);
             try (ResultSet resultSet = statement.executeQuery()) {

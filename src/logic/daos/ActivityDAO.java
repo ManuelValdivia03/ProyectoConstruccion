@@ -21,10 +21,10 @@ public class ActivityDAO implements IActivityDAO {
     public boolean addActivity(Activity activity) throws SQLException, IllegalArgumentException {
         validateActivity(activity);
 
-        String sql = "INSERT INTO actividad (nombre, descripcion, fecha_inicial, fecha_terminal, estado) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO actividad (nombre, descripcion, fecha_inicial, fecha_terminal, estado) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, activity.getNameActivity());
             statement.setString(2, activity.getDescriptionActivity());
@@ -52,10 +52,10 @@ public class ActivityDAO implements IActivityDAO {
             throw new IllegalArgumentException("La actividad no puede ser nula");
         }
 
-        String sql = "UPDATE actividad SET nombre = ?, descripcion = ?, estado = ?, fecha_inicial = ?, fecha_terminal = ? WHERE id_actividad = ?";
+        String query = "UPDATE actividad SET nombre = ?, descripcion = ?, estado = ?, fecha_inicial = ?, fecha_terminal = ? WHERE id_actividad = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, activity.getNameActivity());
             statement.setString(2, activity.getDescriptionActivity());
@@ -69,10 +69,10 @@ public class ActivityDAO implements IActivityDAO {
     }
 
     public boolean deleteActivity(int idActivity) throws SQLException {
-        String sql = "DELETE FROM actividad WHERE id_actividad = ?";
+        String query = "DELETE FROM actividad WHERE id_actividad = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, idActivity);
             return statement.executeUpdate() > 0;
@@ -80,10 +80,10 @@ public class ActivityDAO implements IActivityDAO {
     }
 
     public Activity getActivityById(int idActivity) throws SQLException {
-        String sql = "SELECT * FROM actividad WHERE id_actividad = ?";
+        String query = "SELECT * FROM actividad WHERE id_actividad = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, idActivity);
 
@@ -106,12 +106,12 @@ public class ActivityDAO implements IActivityDAO {
     }
 
     public List<Activity> getAllActivities() throws SQLException {
-        String sql = "SELECT * FROM actividad";
+        String query = "SELECT * FROM actividad";
         List<Activity> activities = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             while (resultSet.next()) {
                 Date startDate = resultSet.getDate("fecha_inicial");
@@ -134,11 +134,11 @@ public class ActivityDAO implements IActivityDAO {
             return Collections.emptyList();
         }
 
-        String sql = "SELECT * FROM actividad WHERE estado = ?";
+        String query = "SELECT * FROM actividad WHERE estado = ?";
         List<Activity> activities = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, status.toString());
 
@@ -165,10 +165,10 @@ public class ActivityDAO implements IActivityDAO {
             throw new IllegalArgumentException("El nuevo estado no puede ser nulo");
         }
 
-        String sql = "UPDATE actividad SET estado = ? WHERE id_actividad = ?";
+        String query = "UPDATE actividad SET estado = ? WHERE id_actividad = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, newStatus.toString());
             statement.setInt(2, idActivity);
@@ -178,10 +178,10 @@ public class ActivityDAO implements IActivityDAO {
     }
 
     public boolean activityExists(int idActivity) throws SQLException {
-        String sql = "SELECT 1 FROM actividad WHERE id_actividad = ?";
+        String query = "SELECT 1 FROM actividad WHERE id_actividad = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, idActivity);
 
@@ -192,10 +192,10 @@ public class ActivityDAO implements IActivityDAO {
     }
 
     public boolean assignActivityToStudent(int idActivity, int idStudent) throws SQLException {
-        String sql = "UPDATE actividad SET id_usuario = ? WHERE id_actividad = ?";
+        String query = "UPDATE actividad SET id_usuario = ? WHERE id_actividad = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, idStudent);
             statement.setInt(2, idActivity);
@@ -205,10 +205,10 @@ public class ActivityDAO implements IActivityDAO {
     }
 
     public boolean assignActivityToCronogram(int idActivity, int idCronogram) throws SQLException {
-        String sql = "UPDATE actividad SET id_cronograma = ? WHERE id_actividad = ?";
+        String query = "UPDATE actividad SET id_cronograma = ? WHERE id_actividad = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, idCronogram);
             statement.setInt(2, idActivity);

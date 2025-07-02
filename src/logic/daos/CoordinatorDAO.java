@@ -27,9 +27,9 @@ public class CoordinatorDAO implements ICoordinatorDAO {
             return false;
         }
 
-        String sql = "INSERT INTO coordinador (id_usuario, numero_personal) VALUES (?, ?)";
+        String query = "INSERT INTO coordinador (id_usuario, numero_personal) VALUES (?, ?)";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, coordinator.getIdUser());
             preparedStatement.setString(2, coordinator.getStaffNumber());
@@ -42,9 +42,9 @@ public class CoordinatorDAO implements ICoordinatorDAO {
         if (coordinator == null) {
             throw new IllegalArgumentException("El coordinador no debe ser nulo");
         }
-        String sql = "DELETE FROM coordinador WHERE id_usuario = ?";
+        String query = "DELETE FROM coordinador WHERE id_usuario = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, coordinator.getIdUser());
             int rowsAffected = statement.executeUpdate();
@@ -69,9 +69,9 @@ public class CoordinatorDAO implements ICoordinatorDAO {
             return false;
         }
 
-        String sql = "UPDATE coordinador SET numero_personal = ? WHERE id_usuario = ?";
+        String query = "UPDATE coordinador SET numero_personal = ? WHERE id_usuario = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, coordinator.getStaffNumber());
             statement.setInt(2, coordinator.getIdUser());
@@ -81,7 +81,7 @@ public class CoordinatorDAO implements ICoordinatorDAO {
     }
 
     public List<Coordinator> getAllCoordinators() throws SQLException {
-        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.extension_telefono, u.estado, " +
+        String query = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.extension_telefono, u.estado, " +
                 "c.numero_personal " +
                 "FROM coordinador c " +
                 "JOIN usuario u ON c.id_usuario = u.id_usuario";
@@ -90,7 +90,7 @@ public class CoordinatorDAO implements ICoordinatorDAO {
 
         try (Connection connection = ConnectionDataBase.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             while (resultSet.next()) {
                 Coordinator coordinator = new Coordinator(
@@ -111,14 +111,14 @@ public class CoordinatorDAO implements ICoordinatorDAO {
         if (staffNumber == null || staffNumber.isEmpty()) {
             throw new IllegalArgumentException("Numero de personal no debe ser nulo o vacío");
         }
-        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.extension_telefono, u.estado, " +
+        String query = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.extension_telefono, u.estado, " +
                 "c.numero_personal " +
                 "FROM coordinador c " +
                 "JOIN usuario u ON c.id_usuario = u.id_usuario " +
                 "WHERE c.numero_personal = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, staffNumber);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -141,9 +141,9 @@ public class CoordinatorDAO implements ICoordinatorDAO {
         if (staffNumber == null || staffNumber.isEmpty()) {
             throw new IllegalArgumentException("Numero de personal no debe ser nulo o vacío");
         }
-        String sql = "SELECT 1 FROM coordinador WHERE numero_personal = ?";
+        String query = "SELECT 1 FROM coordinador WHERE numero_personal = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, staffNumber);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -153,32 +153,32 @@ public class CoordinatorDAO implements ICoordinatorDAO {
     }
 
     public int countCoordinators() throws SQLException {
-        String sql = "SELECT COUNT(*) FROM coordinador";
+        String query = "SELECT COUNT(*) FROM coordinador";
         try (Connection connection = ConnectionDataBase.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             return resultSet.next() ? resultSet.getInt(1) : 0;
         }
     }
 
     public boolean existsForUser(int userId) throws SQLException {
-        String sql = "SELECT 1 FROM coordinador WHERE id_usuario = ?";
+        String query = "SELECT 1 FROM coordinador WHERE id_usuario = ?";
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, userId);
             return preparedStatement.executeQuery().next();
         }
     }
 
     public Coordinator getFullCoordinator(int userId) throws SQLException {
-        String sql = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.extension_telefono, u.estado, " +
+        String query = "SELECT u.id_usuario, u.nombre_completo, u.telefono, u.extension_telefono, u.estado, " +
                 "c.numero_personal FROM usuario u " +
                 "JOIN coordinador c ON u.id_usuario = c.id_usuario " +
                 "WHERE u.id_usuario = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, userId);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {

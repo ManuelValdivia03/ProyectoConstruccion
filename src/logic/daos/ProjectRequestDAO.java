@@ -27,10 +27,10 @@ public class ProjectRequestDAO implements IProjectRequestDAO {
             throw new IllegalArgumentException("La solicitud no puede ser nula");
         }
 
-        String sql = "INSERT INTO solicitud_proyecto (id_proyecto, id_estudiante) VALUES (?, ?)";
+        String query = "INSERT INTO solicitud_proyecto (id_proyecto, id_estudiante) VALUES (?, ?)";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setInt(1, request.getProjectId());
             preparedStatement.setInt(2, request.getStudentId());
@@ -59,7 +59,7 @@ public class ProjectRequestDAO implements IProjectRequestDAO {
     }
 
     public List<ProjectRequest> getPendingRequests() throws SQLException {
-        String sql = "SELECT sp.id_solicitud, sp.id_proyecto, p.titulo AS proyecto_titulo, " +
+        String query = "SELECT sp.id_solicitud, sp.id_proyecto, p.titulo AS proyecto_titulo, " +
                 "sp.id_estudiante, e.matricula AS estudiante_matricula, " +
                 "sp.fecha_solicitud, sp.estado " +
                 "FROM solicitud_proyecto sp " +
@@ -71,7 +71,7 @@ public class ProjectRequestDAO implements IProjectRequestDAO {
 
         try (Connection connection = ConnectionDataBase.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             while (resultSet.next()) {
                 ProjectRequest request = new ProjectRequest(
@@ -109,10 +109,10 @@ public class ProjectRequestDAO implements IProjectRequestDAO {
     }
 
     private boolean updateRequestStatus(int requestId, RequestStatus status) throws SQLException {
-        String sql = "UPDATE solicitud_proyecto SET estado = ? WHERE id_solicitud = ?";
+        String query = "UPDATE solicitud_proyecto SET estado = ? WHERE id_solicitud = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, status.getDisplayName());
             statement.setInt(2, requestId);
@@ -134,7 +134,7 @@ public class ProjectRequestDAO implements IProjectRequestDAO {
             return EMPTY_REQUEST;
         }
 
-        String sql = "SELECT sp.id_solicitud, sp.id_proyecto, p.titulo AS proyecto_titulo, " +
+        String query = "SELECT sp.id_solicitud, sp.id_proyecto, p.titulo AS proyecto_titulo, " +
                 "sp.id_estudiante, e.matricula AS estudiante_matricula, " +
                 "sp.fecha_solicitud, sp.estado " +
                 "FROM solicitud_proyecto sp " +
@@ -143,7 +143,7 @@ public class ProjectRequestDAO implements IProjectRequestDAO {
                 "WHERE sp.id_solicitud = ?";
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, requestId);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -190,7 +190,7 @@ public class ProjectRequestDAO implements IProjectRequestDAO {
             return new ArrayList<>();
         }
 
-        String sql = "SELECT sp.id_solicitud, sp.id_proyecto, p.titulo AS proyecto_titulo, " +
+        String query = "SELECT sp.id_solicitud, sp.id_proyecto, p.titulo AS proyecto_titulo, " +
                 "sp.id_estudiante, e.matricula AS estudiante_matricula, " +
                 "sp.fecha_solicitud, sp.estado " +
                 "FROM solicitud_proyecto sp " +
@@ -201,7 +201,7 @@ public class ProjectRequestDAO implements IProjectRequestDAO {
         List<ProjectRequest> requests = new ArrayList<>();
 
         try (Connection connection = ConnectionDataBase.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, projectId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
